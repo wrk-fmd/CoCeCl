@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent">
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:id="@+id/patmanrelayout">
 
 
     <EditText
@@ -48,7 +49,8 @@
         android:id="@+id/button22"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="54dp" />
+        android:layout_marginBottom="54dp"
+        android:onClick="sendpatdat" />
 
     <Button
         android:layout_width="wrap_content"
@@ -97,10 +99,10 @@
         android:layout_alignTop="@+id/bettbtn"
         android:layout_alignBottom="@+id/bettbtn"
         android:gravity="center"
-        android:editable="false"
+        android:editable="true"
         android:enabled="true"
-        android:inputType="text"
-        android:hint="Abteilung" />
+        android:hint="Abteilung"
+        android:textSize="20dp" />
 
     <EditText
         android:layout_width="wrap_content"

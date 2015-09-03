@@ -58,6 +58,7 @@
     <string name="derma">Dermatologie</string>
     <string name="spezbett">Spezialbett</string>
     <string name="andbett">Andere Abteilung</string>
+    <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
 
     //String Array//
     <string-array name="Gender">

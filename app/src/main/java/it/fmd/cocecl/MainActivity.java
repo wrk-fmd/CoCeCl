@@ -1224,7 +1224,11 @@ public class MainActivity extends FragmentActivity {
     // Bett abbuchen btn //
 
     public void bettbuchen(View v) {
-        setContentView(R.layout.patman);
+
+        LayoutInflater inflater = getLayoutInflater();
+        getWindow().addContentView(inflater.inflate(R.layout.patman, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
+
         if (v.getId() == R.id.bettbtn) {
 
             AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(MainActivity.this);
@@ -1236,58 +1240,65 @@ public class MainActivity extends FragmentActivity {
 
                         public void onClick(DialogInterface dialog, int which) {
 
+                            TextView abtedit = (TextView) findViewById(R.id.textView11);
                             switch (which) {
 
                                 case 0:
-                                    TextView abtedit = (TextView) findViewById(R.id.textView11);
-                                    abtedit.setText(R.string.intern, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Intern", Toast.LENGTH_SHORT).show();
+                                    abtedit.setText(R.string.intern);
+                                    Toast.makeText(MainActivity.this, R.string.intern, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 1:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.unfall, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Unfall", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.unfall, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 2:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.chir, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Chirurgie", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.chir, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 3:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.hno, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "HNO", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.hno, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 4:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.derma, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Dermatologie", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(MainActivity.this, R.string.derma, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 5:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.spezbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Leitstelle BV anrufen!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
                                     break;
 
                                 case 6:
-                                    abtedit = (TextView) findViewById(R.id.textView11);
                                     abtedit.setText(R.string.andbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, "Leitstelle BV anrufen!", Toast.LENGTH_LONG).show();
+                                    Toast.makeText(MainActivity.this, R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
                                     break;
                             }
                         }
                     }
-
             );
 
             dlgbuilder.create().
 
                     show();
+        }
+    }
+
+    // send Patienten Daten btn //
+
+    public void sendpatdat (View v) {
+        if (v.getId() == R.id.button22) {
+            v.setVisibility(View.GONE);
+
+            View viewToRemove= findViewById(R.id.patmanrelayout);
+            if (viewToRemove != null && (ViewGroup) viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
+            Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
         }
     }
 

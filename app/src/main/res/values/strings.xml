@@ -1,0 +1,68 @@
+<resources>
+    //App strings//
+    <string name="app_name">CoCeCl</string>
+    <string name="app_fullname">Communication Center Client</string>
+    <string name="action_settings">Settings</string>
+
+    //Settins strings DE//
+    <string name="full_screen">Fullscreen</string>
+    <string name="gps">GPS</string>
+    <string name="radio">Funk</string>
+
+    //Tab strings DE//
+    <string name="einsatztab">Einsatzdaten</string>
+    <string name="statustab">Statusfenster</string>
+    <string name="abgabetab">Abgabeort</string>
+
+    //Status Button strings DE//
+    <string name="stbutton1">1 EB Funk</string>
+    <string name="stbutton2">2 EB Station</string>
+    <string name="stbutton3">3 ZBO</string>
+    <string name="stbutton4">4 ABO</string>
+    <string name="stbutton5">5 Selectiv</string>
+    <string name="stbutton6">6 NEB</string>
+    <string name="stbutton7">7 ZAO</string>
+    <string name="stbutton8">8 AAO</string>
+    <string name="stbutton9">9 AD</string>
+    <string name="stbutton10">Int Unt</string>
+    <string name="stbutton11">Bel/Verweigert</string>
+    <string name="stbutton12">NOTRUF</string>
+    <string name="stbutton13">anderes RM</string>
+
+    //Einsatzdaten strings DE//
+    <string name="edat">Einsatzdaten</string>
+    <string name="bo">Berufungsort</string>
+    <string name="bg">Berufungsgrund</string>
+    <string name="brfr">Berufer</string>
+    <string name="info">Information</string>
+    <string name="eingeteiltefzg">Zugewiesene Fahrzeuge</string>
+    <string name="meldungen">Meldungen</string>
+    <string name="ssig">Sondersignal</string>
+
+    //Abgabeort strings DE//
+    <string name="ao">Abgabeort</string>
+    <string name="abt">Abteilung</string>
+    <string name="tcnr">Transport/Casus-Nummer</string>
+    <string name="title_activity_settings">SettingActivity</string>
+
+    //Tel. Nr.//
+    <string name="lsallg">+?</string>
+    <string name="lsdispo">+?</string>
+    <string name="lsbv">+436604898783</string>
+
+    // Bettenvergabe //
+    <string name="intern">Intern</string>
+    <string name="unfall">Unfall</string>
+    <string name="chir">Chirurgie</string>
+    <string name="hno">HNO</string>
+    <string name="derma">Dermatologie</string>
+    <string name="spezbett">Spezialbett</string>
+    <string name="andbett">Andere Abteilung</string>
+
+    //String Array//
+    <string-array name="Gender">
+        <item>männlich</item>
+        <item>weiblich</item>
+    </string-array>
+
+</resources>

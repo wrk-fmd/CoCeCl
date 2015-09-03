@@ -1,0 +1,261 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingLeft="16dp"
+    android:paddingRight="16dp"
+    android:paddingTop="16dp"
+    android:paddingBottom="16dp"
+    tools:context="it.fmd.cocecl.status"
+    android:background="#757575">
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </View>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton1"
+            android:textSize="12dp"
+            android:id="@+id/button"
+            android:enabled="true"
+            android:clickable="true"
+            android:onClick="st1"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_play_arrow_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton2"
+            android:textSize="12dp"
+            android:id="@+id/button2"
+            android:clickable="true"
+            android:onClick="st2"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_play_circle_outline_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton3"
+            android:textSize="12dp"
+            android:id="@+id/button3"
+            android:clickable="true"
+            android:onClick="st3"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_fast_forward_black_18dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout2"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton4"
+            android:textSize="12dp"
+            android:id="@+id/button4"
+            android:clickable="true"
+            android:onClick="st4"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_skip_next_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton5"
+            android:textSize="12dp"
+            android:id="@+id/button5"
+            android:clickable="true"
+            android:enabled="true"
+            android:onClick="st5"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_phone_forwarded_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton6"
+            android:textSize="12dp"
+            android:id="@+id/button6"
+            android:clickable="true"
+            android:onClick="st6"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_pause_black_18dp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/linearLayout2"
+        android:layout_centerHorizontal="true"
+        android:id="@+id/linearLayout3"
+        android:gravity="center">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton7"
+            android:textSize="12dp"
+            android:id="@+id/button7"
+            android:clickable="true"
+            android:onClick="st7"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_call_made_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton8"
+            android:textSize="12dp"
+            android:id="@+id/button8"
+            android:clickable="true"
+            android:onClick="st8"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_local_hospital_black_18dp"/>
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:text="@string/stbutton9"
+            android:textSize="12dp"
+            android:id="@+id/button9"
+            android:clickable="true"
+            android:onClick="st9"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/ic_stop_black_18dp"/>
+
+    </LinearLayout>
+
+<View
+    android:layout_width="fill_parent"
+    android:layout_height="2dip"
+    android:background="#000000"
+    android:layout_below="@+id/linearLayout3"
+    android:layout_alignParentLeft="true"
+    android:layout_alignParentStart="true">
+</View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/meldungen"
+        android:id="@+id/textView4"
+        android:textColor="#ff000000"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_centerHorizontal="true"
+            android:gravity="center"
+            android:id="@+id/linearLayout4">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/stbutton10"
+                android:textSize="12dp"
+                android:id="@+id/button10"
+                android:clickable="true"
+                android:onClick="st10"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_call_missed_black_18dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/stbutton13"
+                android:textSize="12dp"
+                android:id="@+id/button13"
+                android:clickable="true"
+                android:onClick="st13"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_repeat_black_18dp"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:text="@string/stbutton11"
+                android:textSize="12dp"
+                android:id="@+id/button11"
+                android:clickable="true"
+                android:onClick="st11"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/ic_directions_run_black_18dp"/>
+
+        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="70dp"
+            android:text="@string/stbutton12"
+            android:textSize="12dp"
+            android:id="@+id/button12"
+            android:layout_below="@+id/linearLayout4"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:drawableLeft="@drawable/ic_warning_black_18dp"
+            android:clickable="true"
+            android:onClick="st12"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        android:layout_alignBottom="@+id/button12"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/button16">
+    </View>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:hint="aktueller Funk"
+        android:id="@+id/textView8"
+        android:gravity="center"
+        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
+        android:background="@drawable/edit_text_style"
+        android:textColorHint="@color/primary_dark_material_dark"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_below="@+id/button16"
+        android:layout_marginTop="5dp"/>
+
+</RelativeLayout>

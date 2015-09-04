@@ -16,11 +16,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,7 +28,6 @@ import static android.graphics.Color.RED;
 
 public class MainActivity extends FragmentActivity {
     private FragmentTabHost mTabHost;
-    private View mDecorView;
 
     // TabHost Controller // // status einsatzdaten abgabeort
 
@@ -65,58 +61,6 @@ public class MainActivity extends FragmentActivity {
     }
         // TABHOST END
 
-
-        // (Toggle) Fullscreen START
-
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-
-        View rootView = inflater.inflate(R.layout.activity_main, container, false);
-
-        mDecorView = getWindow().getDecorView();
-
-        Switch sw3 = (Switch) getWindow().findViewById(R.id.switch3);
-
-        sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-
-                    // The toggle is enabled
-                    mDecorView.setSystemUiVisibility(
-                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION //hides nav bar
-                                    // | View.SYSTEM_UI_FLAG_FULLSCREEN // hides status bar
-                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
-                                    | View.INVISIBLE);
-                } else {
-
-                    // The toggle is disabled
-                    mDecorView.setSystemUiVisibility(0);
-                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-                }
-            }
-
-        });
-        return rootView;
-    }
-
-
-
-        //exit button on infopage//
-
-    public void exitbtn(View v) {
-        if (v.getId() == R.id.button20) {
-            Button button20 = (Button) findViewById(R.id.button20);
-            button20.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    finish(); System.exit(0);
-                }
-            });
-        }
-    }
 /**
     // Fullscreen //
     @Override
@@ -1192,6 +1136,7 @@ public class MainActivity extends FragmentActivity {
             alert.show();
         }
     }
+    // Button state & color functions END
 
     // Patienten Management dialog builder //
 
@@ -1297,7 +1242,7 @@ public class MainActivity extends FragmentActivity {
             Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
         }
     }
-
+    // Emergency light yes/no //
     public void checkBox(View v) {
         if (v.getId() == R.id.checkBox) {
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
@@ -1323,6 +1268,17 @@ public class MainActivity extends FragmentActivity {
  */
         }
     }
+
+    public void navao (View v) {
+        if (v.getId() == R.id.button19) {
+
+            TextView text = (TextView) findViewById(R.id.aofield);
+            String navadress = "google.navigation:" + text.getText().toString();
+            Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+            nav.setData(Uri.parse(navadress));
+            startActivity(nav);
+        }
+    }
 }
 
- // Button state & color functions END
+

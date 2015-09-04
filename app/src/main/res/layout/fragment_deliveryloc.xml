@@ -96,7 +96,8 @@
             android:id="@+id/button19"
             android:clickable="true"
             android:enabled="true"
-            android:drawableLeft="@drawable/ic_navigation_black_18dp"/>
+            android:drawableLeft="@drawable/ic_navigation_black_18dp"
+            android:onClick="navao" />
 
         <View
             android:layout_width="fill_parent"

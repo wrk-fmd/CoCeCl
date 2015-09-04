@@ -72,8 +72,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/edit_text_style"
-            android:editable="false"
-            android:text="Währinger Strasse 168\n1180 Wien"/>
+            android:editable="false"/>
 
         <Space
             android:layout_width="match_parent"

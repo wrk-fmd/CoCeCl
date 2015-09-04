@@ -1,43 +1,49 @@
 package it.fmd.cocecl;
 
 import android.os.Bundle;
-import android.widget.ImageView;
+import android.view.View;
+import android.view.WindowManager;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 public class SettingsActivity extends MainActivity {
+    private View mDecorView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        // shows connection image //
-        ImageView imageView = (ImageView) findViewById(R.id.imageView);
-        imageView.setImageResource(R.drawable.connected64);
-    }
-}
 
-            /** pre generated code
+        // (Toggle) Fullscreen START
+        mDecorView = getWindow().getDecorView();
+
+        Switch sw3 = (Switch) getWindow().findViewById(R.id.switch3);
+
+        sw3.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+
+                    // The toggle is enabled
+                    mDecorView.setSystemUiVisibility(
+                            View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION //hides nav bar
+                                    // | View.SYSTEM_UI_FLAG_FULLSCREEN // hides status bar
+                                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                                    | View.INVISIBLE);
+                } else {
+
+                    // The toggle is disabled
+                    mDecorView.setSystemUiVisibility(0);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                }
+            }
+
+        });
         }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_setting, menu);
-        return true;
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    */
 

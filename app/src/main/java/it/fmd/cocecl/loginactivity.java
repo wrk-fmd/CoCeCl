@@ -44,6 +44,7 @@ public class loginactivity extends MainActivity {
         }
         return false;
     }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

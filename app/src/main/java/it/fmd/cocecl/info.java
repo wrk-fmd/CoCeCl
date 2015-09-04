@@ -53,36 +53,18 @@ public class info extends MainActivity {
             }
         });
     }
-}
 
+    // stop/exit button //
 
-/** >>pre generated code<<
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_info, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+    public void exitbtn(View v) {
+        if (v.getId() == R.id.button20) {
+            Button button20 = (Button) findViewById(R.id.button20);
+            button20.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish(); System.exit(0);
+                }
+            });
         }
-
-        return super.onOptionsItemSelected(item);
     }
 }
-*/

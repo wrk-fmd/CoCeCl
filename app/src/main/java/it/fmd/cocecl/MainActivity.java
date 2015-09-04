@@ -171,12 +171,13 @@ public class MainActivity extends FragmentActivity {
                     Log.i(LOG_TAG, "restart app");
 
                     // restart app
+                    /**
                     Intent restartph = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage(
                                     getBaseContext().getPackageName());
                     restartph.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(restartph);
-
+*/
                     isPhoneCalling = false;
                 }
             }
@@ -955,7 +956,6 @@ public class MainActivity extends FragmentActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, "Nein", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -1008,7 +1008,6 @@ public class MainActivity extends FragmentActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, "Nein", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -1086,7 +1085,6 @@ public class MainActivity extends FragmentActivity {
                                     Toast.makeText(MainActivity.this, "Patient verweigert", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 2:
-                                    Toast.makeText(MainActivity.this, "Nein", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                         }
@@ -1130,7 +1128,6 @@ public class MainActivity extends FragmentActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, "Nein", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -1180,7 +1177,7 @@ public class MainActivity extends FragmentActivity {
                     button7.setClickable(false);
                     button7.setBackgroundResource(android.R.drawable.btn_default);
 
-                    Toast.makeText(MainActivity.this, "JA", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -1188,7 +1185,6 @@ public class MainActivity extends FragmentActivity {
 
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, "NEIN", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -1308,6 +1304,23 @@ public class MainActivity extends FragmentActivity {
             checkBox.setEnabled(true);
             checkBox.setClickable(false);
             checkBox.setHintTextColor(BLUE);
+        }
+    }
+
+    public void navbo (View v) {
+        if (v.getId()==R.id.button18) {
+
+            TextView text = (TextView)findViewById(R.id.bofield);
+            String navadress = "google.navigation:" + text.getText().toString();
+            Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+            nav.setData(Uri.parse(navadress));
+            startActivity(nav);
+
+/**
+            Intent nav = new Intent(android.content.Intent.ACTION_VIEW,
+                    Uri.parse("google.navigation:" + navadress));
+            startActivity(nav);
+ */
         }
     }
 }

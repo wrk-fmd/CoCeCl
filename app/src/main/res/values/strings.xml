@@ -35,7 +35,7 @@
     <string name="bg">Berufungsgrund</string>
     <string name="brfr">Berufer</string>
     <string name="info">Information</string>
-    <string name="eingeteiltefzg">Zugewiesene Fahrzeuge</string>
+    <string name="eingeteiltefzg">Zugewiesene Einheiten</string>
     <string name="meldungen">Meldungen</string>
     <string name="ssig">Sondersignal</string>
 
@@ -59,6 +59,10 @@
     <string name="spezbett">Spezialbett</string>
     <string name="andbett">Andere Abteilung</string>
     <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
+
+    //Database//
+    <string name="con">Connected</string>
+    <string name="discon">Disconnected</string>
 
     //String Array//
     <string-array name="Gender">

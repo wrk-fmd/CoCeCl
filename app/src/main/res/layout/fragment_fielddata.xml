@@ -7,8 +7,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.fmd.cocecl.fielddata"
-    android:background="#757575"
-    android:clickable="true">
+    android:background="#757575">
 
     <TextView
         android:layout_width="180dp"
@@ -73,7 +72,8 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/edit_text_style"
-            android:editable="false" />
+            android:editable="false"
+            android:text="Währinger Strasse 168\n1180 Wien"/>
 
         <Space
             android:layout_width="match_parent"
@@ -149,7 +149,8 @@
             android:id="@+id/button18"
             android:clickable="true"
             android:enabled="true"
-            android:drawableLeft="@drawable/ic_navigation_black_18dp"/>
+            android:drawableLeft="@drawable/ic_navigation_black_18dp"
+            android:onClick="navbo" />
 
         <Space
             android:layout_width="match_parent"
@@ -184,28 +185,6 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center_horizontal">
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Einheit"
-                android:id="@+id/unitbutton1"
-                android:drawableLeft="@drawable/ic_local_taxi_black_18dp"
-                android:background="#ff65ff30"
-                android:layout_marginRight="5dp"
-                android:clickable="true"
-                android:enabled="true" />
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:hint="Einheit"
-                android:id="@+id/unitbutton2"
-                android:drawableLeft="@drawable/ic_local_taxi_black_18dp"
-                android:background="#ff65ff30"
-                android:layout_marginRight="5dp"
-                android:clickable="true"
-                android:enabled="true" />
 
         </LinearLayout>
 

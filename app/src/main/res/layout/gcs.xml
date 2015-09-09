@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Glascow Come Scale"
+        android:id="@+id/textView51"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Space
+        android:layout_width="20px"
+        android:layout_height="30dp"
+        android:layout_below="@+id/textView51"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_gravity="center_horizontal"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/space6" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Augen öffnen"
+        android:id="@+id/textView52"
+        android:layout_below="@+id/space6"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView52"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_toLeftOf="@+id/textView53"
+        android:layout_toStartOf="@+id/textView53">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="4"
+                android:id="@+id/textView56"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox2"
+                android:layout_column="2"
+                android:text="spontan"
+                android:onClick="onCheckboxClicked" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="3"
+                android:id="@+id/textView68"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox3"
+                android:layout_column="2"
+                android:text="auf Aufforderung"
+                android:onClick="onCheckboxClicked" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="2"
+                android:id="@+id/textView69"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox4"
+                android:layout_column="2"
+                android:text="auf Schmerzreiz"
+                android:onClick="onCheckboxClicked" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1"
+                android:id="@+id/textView70"
+                android:layout_column="1" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/checkBox5"
+                android:layout_column="2"
+                android:text="nicht"
+                android:onClick="onCheckboxClicked" />
+        </TableRow>
+    </TableLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="verbale Reaktion"
+        android:id="@+id/textView53"
+        android:layout_alignTop="@+id/textView52"
+        android:layout_toRightOf="@+id/textView52"
+        android:layout_toEndOf="@+id/textView52"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="10dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="motorische Reaktion"
+        android:id="@+id/textView54"
+        android:layout_alignTop="@+id/textView53"
+        android:layout_toRightOf="@+id/textView53"
+        android:layout_toEndOf="@+id/textView53"
+        android:layout_marginBottom="10dp"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView53"
+        android:layout_toRightOf="@+id/textView52"
+        android:layout_toLeftOf="@+id/textView54"
+        android:layout_toStartOf="@+id/textView54">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="5"
+                android:id="@+id/textView71"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="orientiert"
+                android:id="@+id/checkBox6"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="4"
+                android:id="@+id/textView72"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="desorietiert"
+                android:id="@+id/checkBox7"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="3"
+                android:id="@+id/textView73"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="inadäquate Äusserung"
+                android:id="@+id/checkBox8"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="2"
+                android:id="@+id/textView74"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="unverständliche Laute"
+                android:id="@+id/checkBox9"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1"
+                android:id="@+id/textView75"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="keine"
+                android:id="@+id/checkBox10"
+                android:layout_column="1" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView54"
+        android:layout_alignLeft="@+id/textView54"
+        android:layout_alignStart="@+id/textView54"
+        android:layout_alignRight="@+id/textView54"
+        android:layout_alignEnd="@+id/textView54">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="6"
+                android:id="@+id/textView55"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="auf Aufforderung"
+                android:id="@+id/checkBox11"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="5"
+                android:id="@+id/textView65"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="gezielt auf Schmerzreiz"
+                android:id="@+id/checkBox12"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="4"
+                android:id="@+id/textView66"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ungezielt auf Schmerzreiz"
+                android:id="@+id/checkBox13"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="3"
+                android:id="@+id/textView67"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="abnorme Beugeabwehr"
+                android:id="@+id/checkBox14"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="2"
+                android:id="@+id/textView76"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Streckneigung"
+                android:id="@+id/checkBox15"
+                android:layout_column="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="1"
+                android:id="@+id/textView77"
+                android:layout_column="0" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="keine"
+                android:id="@+id/checkBox16"
+                android:layout_column="1" />
+        </TableRow>
+    </TableLayout>
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/editText13"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:enabled="true"
+        android:editable="false"
+        android:hint="GCS Summe" />
+
+</RelativeLayout>

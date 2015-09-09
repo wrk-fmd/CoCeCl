@@ -45,5 +45,9 @@ public class SettingsActivity extends MainActivity {
 
         });
         }
+    protected void onStop(Bundle savedInstanceState) {
+        super.onStop();
+
+    }
     }
 

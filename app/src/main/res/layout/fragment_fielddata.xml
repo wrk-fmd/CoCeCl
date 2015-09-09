@@ -32,7 +32,6 @@
         android:layout_alignEnd="@+id/space3"
         android:checked="false"
         android:clickable="false"
-        android:onClick="checkBox"
         android:enabled="true" />
 
     <Space

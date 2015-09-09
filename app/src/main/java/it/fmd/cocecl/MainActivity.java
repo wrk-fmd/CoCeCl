@@ -37,7 +37,7 @@ public class MainActivity extends FragmentActivity {
         setContentView(R.layout.activity_main);
 
         {
-            // add PhoneStateListener //
+            // PhoneStateListener //
             PhoneCallListener phoneListener = new PhoneCallListener();
             TelephonyManager telephonyManager = (TelephonyManager) this
                     .getSystemService(Context.TELEPHONY_SERVICE);
@@ -59,30 +59,10 @@ public class MainActivity extends FragmentActivity {
                 deliveryloc.class, null);
 
     }
-        // TABHOST END
 
-/**
-    // Fullscreen //
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        super.onWindowFocusChanged(hasFocus);
-        if (hasFocus) {
-            getWindow().getDecorView().setSystemUiVisibility(
-                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                            //| View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                            | View.SYSTEM_UI_FLAG_FULLSCREEN
-                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
-    }
-*/
-    // (Toggle) Fullscreen END
 
 
     // Phone Call Manager //
-
-
     //monitor phone call activities
     private class PhoneCallListener extends PhoneStateListener {
 
@@ -667,6 +647,74 @@ public class MainActivity extends FragmentActivity {
                                     Toast.makeText(MainActivity.this, "Mat. nachfassen", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 3:
+                                    button = (Button) findViewById(R.id.button);
+                                    button.setEnabled(true);
+                                    button.setClickable(true);
+                                    button.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button2 = (Button) findViewById(R.id.button2);
+                                    button2.setEnabled(true);
+                                    button2.setClickable(true);
+                                    button2.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button3 = (Button) findViewById(R.id.button3);
+                                    button3.setEnabled(false);
+                                    button3.setClickable(false);
+                                    button3.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button4 = (Button) findViewById(R.id.button4);
+                                    button4.setEnabled(false);
+                                    button4.setClickable(false);
+                                    button4.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    //Button button5 = (Button) findViewById(R.id.button5);
+                                    //button5.setEnabled(true);
+                                    //button5.setClickable(true);
+                                    //button5.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button6 = (Button) findViewById(R.id.button6);
+                                    button6.setEnabled(true);
+                                    button6.setClickable(false);
+                                    button6.setBackgroundColor(Color.parseColor("#9C27B0"));
+
+                                    button7 = (Button) findViewById(R.id.button7);
+                                    button7.setEnabled(false);
+                                    button7.setClickable(false);
+                                    button7.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button8 = (Button) findViewById(R.id.button8);
+                                    button8.setEnabled(false);
+                                    button8.setClickable(false);
+                                    button8.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button9 = (Button) findViewById(R.id.button9);
+                                    button9.setEnabled(true);
+                                    button9.setClickable(true);
+                                    button9.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button10 = (Button) findViewById(R.id.button10);
+                                    button10.setEnabled(false);
+                                    button10.setClickable(false);
+                                    button10.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button11 = (Button) findViewById(R.id.button11);
+                                    button11.setEnabled(false);
+                                    button11.setClickable(false);
+                                    button11.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    //button12 = (Button) findViewById(R.id.button12);
+                                    //button12.setEnabled(true);
+                                    //button12.setClickable(true);
+                                    //button12.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    button13 = (Button) findViewById(R.id.button13);
+                                    button13.setEnabled(false);
+                                    button13.setClickable(false);
+                                    button13.setBackgroundResource(android.R.drawable.btn_default);
+
+                                    Toast.makeText(MainActivity.this, "Bereitschaft", Toast.LENGTH_SHORT).show();
+                                    break;
+                                case 4:
                                     Toast.makeText(MainActivity.this, "weiter EB", Toast.LENGTH_SHORT).show();
                                     break;
                             }
@@ -1242,6 +1290,25 @@ public class MainActivity extends FragmentActivity {
             Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
         }
     }
+
+    // PatMan start btn //
+
+    public void patmanstr (View v) {
+        if (v.getId() == R.id.button21) {
+
+            Button button21 = (Button) findViewById(R.id.button21);
+            button21.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View arg0) {
+                    Intent ipatman = new Intent(getApplicationContext(), patmanActivity.class);
+                    startActivity(ipatman);
+                }
+            });
+
+        }
+    }
+
     // Emergency light yes/no //
     public void checkBox(View v) {
         if (v.getId() == R.id.checkBox) {

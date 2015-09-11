@@ -16,6 +16,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -28,8 +29,8 @@ import static android.graphics.Color.RED;
 
 public class MainActivity extends FragmentActivity {
     private FragmentTabHost mTabHost;
-
-    // TabHost Controller // // status einsatzdaten abgabeort
+    private WebView gisView;
+    // TabHost Controller // // status einsatzdaten abgabeort //
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +58,18 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
                 deliveryloc.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
+                map.class, null);
+       /** mTabHost.addTab(
+                mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
+                communication.class, null);
+        */
 
     }
 
 
-
-    // Phone Call Manager //
+// Phone Call Manager //
     //monitor phone call activities
     private class PhoneCallListener extends PhoneStateListener {
 
@@ -129,6 +136,22 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    // Alert Push Notification Manager //
+/**
+    public void onClick(View v) {
+        String tittle=ed1.getText().toString().trim();
+        String subject=ed2.getText().toString().trim();
+        String body=ed3.getText().toString().trim();
+
+        NotificationManager notif=(NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        Notification notify=new Notification(R.drawable.noti,tittle,System.currentTimeMillis());
+        PendingIntent pending= PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
+
+        notify.setLatestEventInfo(getApplicationContext(),subject,body,pending);
+        notif.notify(0, notify);
+    }
+});
+*/
 
     // Button state & color functions START
 
@@ -1346,6 +1369,21 @@ public class MainActivity extends FragmentActivity {
             startActivity(nav);
         }
     }
+
+    public void showgis (View v) {
+        if (v.getId() == R.id.button30) {
+
+            WebView gisView = (WebView) findViewById(R.id.gisView);
+
+            gisView.getSettings().setJavaScriptEnabled(true);
+            gisView.getSettings().getAllowFileAccessFromFileURLs();
+            gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+
+            gisView.loadUrl("file:///android_asset/viennagissite.html");
+        }
+    }
 }
+
+
 
 

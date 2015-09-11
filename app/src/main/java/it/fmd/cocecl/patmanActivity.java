@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -42,9 +43,9 @@ public class patmanActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Trauma", null),
                 trauma.class, null);
-        /**mTabHost.addTab(
-         mTabHost.newTabSpec("tab4").setIndicator("Anamnese&Diagnose", null),
-         trauma.class, null);*/
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab4").setIndicator("Anamnese&Diagnose", null),
+                anamnesis.class, null);
     }
 
     public void btnClick() {
@@ -189,6 +190,10 @@ public class patmanActivity extends FragmentActivity {
                     .setPositiveButton("speichern&zurück", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+
+                            View viewToRemove= findViewById(R.id.gcsrelayout);
+                            if (viewToRemove != null && (ViewGroup) viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
                         }
                     });
 
@@ -198,7 +203,12 @@ public class patmanActivity extends FragmentActivity {
         }
     }
 
+
     public void onCheckboxClicked(View view) {
+
+        LayoutInflater inflater = getLayoutInflater();
+        getWindow().addContentView(inflater.inflate(R.layout.gcs, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT));
 
         // Is the view now checked?
         boolean checked = ((CheckBox) view).isChecked();
@@ -212,19 +222,19 @@ public class patmanActivity extends FragmentActivity {
                             "checked", Toast.LENGTH_LONG).show();
 
                     CheckBox checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-                    //checkBox2.setEnabled(true);
+                    checkBox2.setEnabled(true);
                     checkBox2.setClickable(true);
 
                     CheckBox checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
-                    //checkBox3.setEnabled(false);
+                    checkBox3.setEnabled(false);
                     checkBox3.setClickable(false);
 
                     CheckBox checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
-                    //checkBox4.setEnabled(false);
+                    checkBox4.setEnabled(false);
                     checkBox4.setClickable(false);
 
                     CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
-                    //checkBox5.setEnabled(false);
+                    checkBox5.setEnabled(false);
                     checkBox5.setClickable(false);
                 }
                     else
@@ -233,19 +243,19 @@ public class patmanActivity extends FragmentActivity {
                             "unchecked", Toast.LENGTH_LONG).show();
 
                     CheckBox checkBox2 = (CheckBox) findViewById(R.id.checkBox2);
-                    //checkBox2.setEnabled(true);
+                    checkBox2.setEnabled(true);
                     checkBox2.setClickable(true);
 
                     CheckBox checkBox3 = (CheckBox) findViewById(R.id.checkBox3);
-                    //checkBox3.setEnabled(true);
+                    checkBox3.setEnabled(true);
                     checkBox3.setClickable(true);
 
                     CheckBox checkBox4 = (CheckBox) findViewById(R.id.checkBox4);
-                    //checkBox4.setEnabled(true);
+                    checkBox4.setEnabled(true);
                     checkBox4.setClickable(true);
 
                     CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
-                    //checkBox5.setEnabled(true);
+                    checkBox5.setEnabled(true);
                     checkBox5.setClickable(true);
                 }
                     break;
@@ -274,7 +284,7 @@ public class patmanActivity extends FragmentActivity {
                             // I'm lactose intolerant
                         }
                         break;
-                    // TODO: Veggie sandwich
+
                 }
         }
 
@@ -292,8 +302,8 @@ public class patmanActivity extends FragmentActivity {
             }
         });
     }
- */
 
+*/
     public void checkBox3(View v) {
         if (v.getId() == R.id.checkBox3) {
 

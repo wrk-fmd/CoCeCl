@@ -192,7 +192,7 @@ public class patmanActivity extends FragmentActivity {
                         public void onClick(DialogInterface dialog, int which) {
 
                             View viewToRemove= findViewById(R.id.gcsrelayout);
-                            if (viewToRemove != null && (ViewGroup) viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
                         }
                     });

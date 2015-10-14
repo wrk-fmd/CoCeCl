@@ -20,9 +20,10 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="B - Atmung"
         android:id="@+id/textView29"
-        android:layout_centerVertical="true"
+        android:layout_below="@+id/spinner2"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="130dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -42,9 +43,9 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="D - Neurologie"
         android:id="@+id/textView31"
-        android:layout_alignTop="@+id/textView29"
-        android:layout_alignLeft="@+id/textView30"
-        android:layout_alignStart="@+id/textView30" />
+        android:layout_above="@+id/tableLayout4"
+        android:layout_alignLeft="@+id/tableLayout5"
+        android:layout_alignStart="@+id/tableLayout5" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -53,7 +54,10 @@
         android:text="E - Erweitert"
         android:id="@+id/textView32"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_toLeftOf="@+id/textView33"
+        android:layout_toStartOf="@+id/textView33"
+        android:layout_marginRight="160dp"
+        android:layout_marginEnd="160dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -84,8 +88,8 @@
         android:layout_below="@+id/textView33"
         android:layout_alignLeft="@+id/textView33"
         android:layout_alignStart="@+id/textView33"
-        android:layout_alignBottom="@+id/textView31"
-        android:id="@+id/tableLayout">
+        android:id="@+id/tableLayout"
+        android:layout_above="@+id/textView41">
 
         <TableRow
             android:layout_width="match_parent"
@@ -248,60 +252,21 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="EKG"
         android:id="@+id/textView41"
-        android:layout_alignTop="@+id/textView31"
-        android:layout_alignLeft="@+id/tableLayout"
-        android:layout_alignStart="@+id/tableLayout" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Hautkolorit"
-        android:id="@+id/textView47"
-        android:layout_below="@+id/textView30"
-        android:layout_alignLeft="@+id/textView30"
-        android:layout_alignStart="@+id/textView30" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Pulse periph. tastbar"
-        android:id="@+id/textView48"
-        android:layout_below="@+id/textView47"
-        android:layout_alignLeft="@+id/textView47"
-        android:layout_alignStart="@+id/textView47" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Exsikkose"
-        android:id="@+id/textView49"
-        android:layout_below="@+id/textView48"
-        android:layout_alignLeft="@+id/textView48"
-        android:layout_alignStart="@+id/textView48" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Medium Text"
-        android:id="@+id/textView50"
-        android:layout_below="@+id/textView49"
-        android:layout_alignLeft="@+id/textView49"
-        android:layout_alignStart="@+id/textView49" />
+        android:layout_centerVertical="true"
+        android:layout_toRightOf="@+id/tableLayout2"
+        android:layout_toEndOf="@+id/tableLayout2" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView32"
+        android:layout_toLeftOf="@+id/tableLayout"
+        android:id="@+id/tableLayout2"
+        android:layout_toEndOf="@+id/textView32"
         android:layout_alignLeft="@+id/textView32"
         android:layout_alignStart="@+id/textView32"
-        android:layout_alignBottom="@+id/textView41"
-        android:layout_toLeftOf="@+id/tableLayout"
-        android:layout_toStartOf="@+id/tableLayout"
-        android:id="@+id/tableLayout2">
+        android:layout_alignParentBottom="true">
 
         <TableRow
             android:layout_width="match_parent"
@@ -390,6 +355,13 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Schmerzen - OPQRST"
+                android:id="@+id/button32"
+                android:layout_column="0" />
         </TableRow>
 
         <TableRow
@@ -402,12 +374,13 @@
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/tableLayout"
         android:layout_alignLeft="@+id/textView31"
         android:layout_alignStart="@+id/textView31"
         android:layout_alignParentBottom="true"
         android:layout_toLeftOf="@+id/tableLayout2"
-        android:layout_toStartOf="@+id/tableLayout2">
+        android:layout_toStartOf="@+id/tableLayout2"
+        android:id="@+id/tableLayout3"
+        android:layout_below="@+id/textView31">
 
         <TableRow
             android:layout_width="match_parent"
@@ -687,6 +660,148 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/editText19"
                 android:layout_column="1" />
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView30"
+        android:layout_alignLeft="@+id/textView30"
+        android:layout_alignStart="@+id/textView30"
+        android:layout_toStartOf="@+id/textView32"
+        android:layout_above="@+id/textView31"
+        android:id="@+id/tableLayout5"
+        android:layout_toLeftOf="@+id/textView32">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Pulse"
+                android:id="@+id/button36"
+                android:layout_column="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="ReKap-Zeit"
+                android:id="@+id/textView47"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/editText13"
+                android:layout_column="1"
+                android:hint="sek" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Hautkolorit"
+                android:id="@+id/textView48"
+                android:layout_column="0" />
+
+            <Spinner
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner16"
+                android:layout_column="1"
+                android:entries="@array/Hautkolorit"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/textView29"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/tableLayout3"
+        android:layout_toStartOf="@+id/tableLayout3"
+        android:id="@+id/tableLayout4">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spinner15"
+                android:layout_column="0"
+                android:entries="@array/Atmung"/>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auskultation"
+                android:id="@+id/button33"
+                android:layout_column="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Palpation"
+                android:id="@+id/button34"
+                android:layout_column="0" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                style="?android:attr/buttonStyleSmall"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Beschreibung"
+                android:id="@+id/button35"
+                android:layout_column="0" />
         </TableRow>
     </TableLayout>
 

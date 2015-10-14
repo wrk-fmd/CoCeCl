@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.net.URL;
+import java.net.URLConnection;
 
 
 public class loginactivity extends MainActivity {
@@ -21,14 +24,15 @@ public class loginactivity extends MainActivity {
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
-        TextView textView13 = (TextView)findViewById(R.id.textView13);
-        ImageView imageView2 = (ImageView)findViewById(R.id.imageView2);
+        TextView textView13 = (TextView) findViewById(R.id.textView13);
+        ImageView imageView2 = (ImageView) findViewById(R.id.imageView2);
         // connection symbol //
         if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
 
                 cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+
             imageView2.setImageResource(R.drawable.connected64);
             textView13.setText(R.string.con);
             Toast.makeText(this, R.string.con, Toast.LENGTH_LONG).show();
@@ -37,6 +41,7 @@ public class loginactivity extends MainActivity {
         } else if (
                 cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
                         cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+
             imageView2.setImageResource(R.drawable.disconnected64);
             textView13.setText(R.string.discon);
             Toast.makeText(this, R.string.discon, Toast.LENGTH_LONG).show();
@@ -45,11 +50,81 @@ public class loginactivity extends MainActivity {
         return false;
     }
 
+
+    public boolean isConnectedToServer() {
+
+        TextView textView49 = (TextView) findViewById(R.id.textView49);
+        ImageView imageView3 = (ImageView) findViewById(R.id.imageView3);
+
+        try {
+            URL myUrl = new URL("https://saturn.kuga28.at");
+            URLConnection connection = myUrl.openConnection();
+            connection.setConnectTimeout(10 * 1000);
+            connection.connect();
+
+            imageView3.setImageResource(R.drawable.connected64);
+            textView49.setText(R.string.mlscon);
+            Toast.makeText(this, R.string.mlscon, Toast.LENGTH_LONG).show();
+            Log.wtf("Connection to MLS established", "Success!");
+            return true;
+
+        } catch (Exception e) {
+
+        imageView3.setImageResource(R.drawable.disconnected64);
+        textView49.setText(R.string.mlsdiscon);
+        Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
+        return false;
+        }
+    }
+/**
+    public boolean isConnectedToServer() {
+
+        TextView textView49 = (TextView)findViewById(R.id.textView13);
+        ImageView imageView3 = (ImageView)findViewById(R.id.imageView2);
+
+        try{
+            URL myUrl = new URL("https://saturn.kuga28.at"); // String url "https://saturn.kuga28.at"
+            URLConnection connection = myUrl.openConnection();
+            connection.setRequestProperty("Connection", "close");
+            connection.setConnectTimeout(10*1000); //10s int timeout 10*1000
+            connection.connect();
+
+            if (connection.getResponseCode() == 200) {        // 200 = successful response
+                Log.wtf("Connection to MLS established", "Success!");
+                return true;
+            } else {
+                return false;
+            }
+
+            imageView3.setImageResource(R.drawable.connected64);
+            textView49.setText(R.string.mlscon);
+            Toast.makeText(this, R.string.mlscon, Toast.LENGTH_LONG).show();
+            return true;
+
+        } catch (Exception e) {
+
+            // exceptions
+
+        } catch (MalformedURLException e1) {
+            return false;
+        } catch (IOException e) {
+            return false;
+        }
+
+            imageView3.setImageResource(R.drawable.disconnected64);
+            textView49.setText(R.string.mlsdiscon);
+            Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
+            return false;
+        }
+**/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
         isOnline();
+        isConnectedToServer();
 
     // LogIn form //
     final int counter = 3;
@@ -63,7 +138,7 @@ public class loginactivity extends MainActivity {
     {
         @Override
         public void onClick (View v){
-        if (dnrlogin.getText().toString().equals("1460") && password.getText().toString().equals("admin")) {
+        if (dnrlogin.getText().toString().equals("0000") && password.getText().toString().equals("admin")) {
 
             //starts info activity//
             Intent iinfoact = new Intent(getApplicationContext(), info.class);

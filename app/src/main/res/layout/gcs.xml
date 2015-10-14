@@ -392,16 +392,4 @@
         </TableRow>
     </TableLayout>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="number"
-        android:ems="10"
-        android:id="@+id/editText13"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"
-        android:enabled="true"
-        android:editable="false"
-        android:hint="GCS Summe" />
-
 </RelativeLayout>

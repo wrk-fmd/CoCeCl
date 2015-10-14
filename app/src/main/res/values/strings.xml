@@ -60,9 +60,11 @@
     <string name="andbett">Andere Abteilung</string>
     <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
 
-    //Database//
-    <string name="con">Connected</string>
-    <string name="discon">Disconnected</string>
+    //Connection//
+    <string name="con">Internet verbunden</string>
+    <string name="discon">Internet nicht verbunden</string>
+    <string name="mlscon">Mit MLS verbunden</string>
+    <string name="mlsdiscon">Nicht mit MLS verbunden</string>
 
     //String Array//
     <string-array name="Gender">
@@ -144,10 +146,28 @@
         <item>Linksschenkelblock</item>
         <item>Rechtsschenkelblock</item>
     </string-array>
+    <string-array name="Atmung">
+        <item>---</item>
+        <item>unauffällig</item>
+        <item>Hyperventilation</item>
+        <item>Dyspnoe</item>
+        <item>Zyanose</item>
+        <item>Spastik</item>
+        <item>Rasselgeräusche</item>
+        <item>Stridor</item>
+        <item>Atemwegsverlegung</item>
+        <item>Atemdepression</item>
+        <item>Schnappatmung</item>
+        <item>beatmeter Patient</item>
+        <item>Apnoe</item>
+        <item>andere Atemstörung</item>
+    </string-array>
+    <string-array name="Hautkolorit">
+        <item>---</item>
+        <item>rosig</item>
+        <item>blass</item>
+    </string-array>
 
     <string name="title_activity_patman">Patienten Manager</string>
-
-<!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

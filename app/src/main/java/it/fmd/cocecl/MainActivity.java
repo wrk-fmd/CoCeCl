@@ -1,10 +1,13 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,6 +17,8 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
@@ -28,23 +33,120 @@ import static android.graphics.Color.RED;
 
 
 public class MainActivity extends FragmentActivity {
+
     private FragmentTabHost mTabHost;
+
     private WebView gisView;
-    // TabHost Controller // // status einsatzdaten abgabeort //
+    private TextView latituteField;
+    private TextView longitudeField;
+    private LocationManager locationManager;
+    private String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // GPS Controller //
+        // Location Manager //
+/**
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service
+                .isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if (!enabled) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+
+        latituteField = (TextView) findViewById(R.id.TextView02);
+        longitudeField = (TextView) findViewById(R.id.TextView04);
+
+        // Get the location manager
+        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        // Define the criteria how to select the locatioin provider -> use
+        // default
+        Criteria criteria = new Criteria();
+        provider = locationManager.getBestProvider(criteria, false);
+        Location location = locationManager.getLastKnownLocation(provider);
+
+        // Initialize the location fields
+        if (location != null) {
+            System.out.println("Provider " + provider + " has been selected.");
+            onLocationChanged(location);
+        } else {
+            latituteField.setText("Location not available");
+            longitudeField.setText("Location not available");
+        }
+
+
+    // Request updates at startup //
+    @Override
+    protected void onResume() {
+        super.onResume();
+        locationManager.requestLocationUpdates(provider, 400, 1, this);
+    }
+
+    // Remove the locationlistener updates when Activity is paused //
+    @Override
+    protected void onPause() {
+        super.onPause();
+        locationManager.removeUpdates(this);
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+        int lat = (int) (location.getLatitude());
+        int lng = (int) (location.getLongitude());
+        latituteField.setText(String.valueOf(lat));
+        longitudeField.setText(String.valueOf(lng));
+    }
+
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) {
+        // TODO Auto-generated method stub
+
+    }
+
+    @Override
+    public void onProviderEnabled(String provider) {
+        Toast.makeText(this, "Enabled new provider " + provider,
+                Toast.LENGTH_SHORT).show();
+
+    }
+
+    @Override
+    public void onProviderDisabled(String provider) {
+        Toast.makeText(this, "Disabled provider " + provider,
+                Toast.LENGTH_SHORT).show();
+    }
+**/
+        // GPS END //
+
+        // Phone Manager //
+
         {
-            // PhoneStateListener //
+            //PhoneStateListener//
             PhoneCallListener phoneListener = new PhoneCallListener();
             TelephonyManager telephonyManager = (TelephonyManager) this
                     .getSystemService(Context.TELEPHONY_SERVICE);
             telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         }
 
+        // Fragment Manager //
+
+        FragmentManager fm = getFragmentManager();
+
+
+        // Transaction start
+        FragmentTransaction ft = fm.beginTransaction();
+
+
+        // Transaction commint
+        ft.commit();
+
+
+        // TabHost Controller //
 
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
@@ -61,6 +163,7 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
                 map.class, null);
+        // Funk Telefonbuch Einheiten//
        /** mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
                 communication.class, null);
@@ -68,8 +171,15 @@ public class MainActivity extends FragmentActivity {
 
     }
 
+    // Menu on ActionBar/TitleBar //
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
-// Phone Call Manager //
+    // Phone Call Manager //
     //monitor phone call activities
     private class PhoneCallListener extends PhoneStateListener {
 
@@ -127,7 +237,7 @@ public class MainActivity extends FragmentActivity {
                 public void onClick(View view) {
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:+436604898783"));
+                    callIntent.setData(Uri.parse("tel:"));
 
                     startActivity(callIntent);
                 }
@@ -153,7 +263,7 @@ public class MainActivity extends FragmentActivity {
 });
 */
 
-    // Button state & color functions START
+    // Button state & color functions START //
 
     public void st1(View v) {
         if (v.getId() == R.id.button) {
@@ -458,7 +568,7 @@ public class MainActivity extends FragmentActivity {
             AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(MainActivity.this);
             dlgbuilder.setTitle("Einheit nicht einsatzbereit melden?");
             dlgbuilder.setItems(new CharSequence[]
-                            {"NEB (andere Grund)", "Tanken", "Material nachfassen", "Nein"},
+                            {"NEB (andere Grund)", "Tanken", "Material nachfassen", "Bereitschaft", "Nein"},
 
                     new DialogInterface.OnClickListener() {
 
@@ -1307,7 +1417,7 @@ public class MainActivity extends FragmentActivity {
             v.setVisibility(View.GONE);
 
             View viewToRemove= findViewById(R.id.patmanrelayout);
-            if (viewToRemove != null && (ViewGroup) viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
             Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
@@ -1380,6 +1490,8 @@ public class MainActivity extends FragmentActivity {
             gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
             gisView.loadUrl("file:///android_asset/viennagissite.html");
+
+            Toast.makeText(MainActivity.this, "Stadtplan Wien GIS", Toast.LENGTH_SHORT).show();
         }
     }
 }

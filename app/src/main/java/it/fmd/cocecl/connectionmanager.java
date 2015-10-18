@@ -1,14 +1,9 @@
 package it.fmd.cocecl;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,10 +12,7 @@ import java.net.URL;
 import java.net.URLConnection;
 
 
-public class loginactivity extends MainActivity {
-   // private connectionmanager connman = new connectionmanager();
-
-
+public class connectionmanager extends loginactivity {
 
     public boolean isOnline() {
         ConnectivityManager cm =
@@ -84,49 +76,45 @@ public class loginactivity extends MainActivity {
         }
     }
 
+    /**
+     public boolean isConnectedToServer() {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_login);
+     TextView textView49 = (TextView)findViewById(R.id.textView13);
+     ImageView imageView3 = (ImageView)findViewById(R.id.imageView2);
 
-        isOnline();
-        isConnectedToServer();
-        /*
-        connman.isOnline();
-        connman.isConnectedToServer();
-*/
-    // LogIn form //
-    final int counter = 3;
-    final Button dnr_sign_in_button = (Button) findViewById(R.id.dnr_sign_in_button);
+     try{
+     URL myUrl = new URL("https://saturn.kuga28.at"); // String url "https://saturn.kuga28.at"
+     URLConnection connection = myUrl.openConnection();
+     connection.setRequestProperty("Connection", "close");
+     connection.setConnectTimeout(10*1000); //10s int timeout 10*1000
+     connection.connect();
 
-    final EditText dnrlogin = (EditText) findViewById(R.id.dnrlogin);
-    final EditText password = (EditText) findViewById(R.id.password);
+     if (connection.getResponseCode() == 200) {        // 200 = successful response
+     Log.wtf("Connection to MLS established", "Success!");
+     return true;
+     } else {
+     return false;
+     }
 
-    dnr_sign_in_button.setOnClickListener(new View.OnClickListener()
+     imageView3.setImageResource(R.drawable.connected64);
+     textView49.setText(R.string.mlscon);
+     Toast.makeText(this, R.string.mlscon, Toast.LENGTH_LONG).show();
+     return true;
 
-    {
-        @Override
-        public void onClick (View v){
-        if (dnrlogin.getText().toString().equals("0000") && password.getText().toString().equals("admin")) {
+     } catch (Exception e) {
 
-            //starts infoActivity activity//
-            Intent iinfoact = new Intent(getApplicationContext(), infoActivity.class);
-            startActivity(iinfoact);
+     // exceptions
 
-            Toast.makeText(getApplicationContext(), "Starting Application", Toast.LENGTH_SHORT).show();
-        } else {
+     } catch (MalformedURLException e1) {
+     return false;
+     } catch (IOException e) {
+     return false;
+     }
 
-            Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
-
-
-            if (counter == 0) {
-                dnr_sign_in_button.setEnabled(false);
-            }
-        }
-    }
-    }
-
-    );
-}
+     imageView3.setImageResource(R.drawable.disconnected64);
+     textView49.setText(R.string.mlsdiscon);
+     Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
+     return false;
+     }
+     **/
 }

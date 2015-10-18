@@ -1,8 +1,6 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -46,10 +44,44 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+/*
+        {
+            // FRAGMENT MANAGER //
 
-        // GPS Controller //
+            Fragment statusFrag = new statusFragment();
+            Fragment fielddataFrag = new fielddataFragment();
+
+            android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+
+            //getSupportFragmentManager().findFragmentById(R.id.fragment_status);
+
+
+            // Transaction start
+            android.support.v4.app.FragmentTransaction ft = fm.beginTransaction();
+
+            ft.add(R.id.framelayout_1, statusFrag);
+
+            if (findViewById(R.id.framelayout_2) != null) {
+
+                ft.add(R.id.framelayout_2, fielddataFrag);
+            }
+
+            // Transaction commit
+            ft.commit();
+        }
+
+        // OPTIONS MENU //
+/*
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = new MenuInflater(this);
+        inflater.inflate(R.menu.search, menu);
+        return true;
+    }
+*/
+        // GPS CONTROLLER //
         // Location Manager //
-/**
+/*
         LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
         boolean enabled = service
                 .isProviderEnabled(LocationManager.GPS_PROVIDER);
@@ -103,7 +135,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    public void onStatusChanged(String provider, int status, Bundle extras) {
+    public void onStatusChanged(String provider, int statusFragment, Bundle extras) {
         // TODO Auto-generated method stub
 
     }
@@ -123,7 +155,7 @@ public class MainActivity extends FragmentActivity {
 **/
         // GPS END //
 
-        // Phone Manager //
+        // PHONE STATE MANAGER //
 
         {
             //PhoneStateListener//
@@ -133,36 +165,24 @@ public class MainActivity extends FragmentActivity {
             telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
         }
 
-        // Fragment Manager //
 
-        FragmentManager fm = getFragmentManager();
-
-
-        // Transaction start
-        FragmentTransaction ft = fm.beginTransaction();
-
-
-        // Transaction commint
-        ft.commit();
-
-
-        // TabHost Controller //
+        // TABHOST CONTROLLER //
 
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("Status", null),
-                status.class, null);
+                statusFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                fielddata.class, null);
+                fielddataFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
-                deliveryloc.class, null);
+                deliverylocFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
-                map.class, null);
+                mapFragment.class, null);
         // Funk Telefonbuch Einheiten//
        /** mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
@@ -171,7 +191,7 @@ public class MainActivity extends FragmentActivity {
 
     }
 
-    // Menu on ActionBar/TitleBar //
+    // Menu on the right of ActionBar/TitleBar //
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -179,7 +199,78 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
-    // Phone Call Manager //
+    // Actionbar custom view //
+/**
+    {
+        LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
+                .getSystemService(LAYOUT_INFLATER_SERVICE);
+
+        final View customActionBarView = inflater.inflate(
+                R.layout.actionbar_layout, null);
+
+        // Show the custom action bar view and hide the normal Home icon and title
+        final ActionBar actionBar = getActionBar();
+        actionBar.setHomeButtonEnabled(true);
+        actionBar.setDisplayHomeAsUpEnabled(false);
+        actionBar.setDisplayShowTitleEnabled(true);
+        actionBar.setCustomView(customActionBarView);
+        actionBar.setDisplayShowCustomEnabled(true);
+
+    }
+**/
+    //action bar version2
+/**
+    public void addTextToActionBar( String textToSet ) {
+
+        mActionbar.setDisplayShowCustomEnabled( true );
+
+        // Inflate the custom view
+        LayoutInflater inflater = LayoutInflater.from( this );
+        View header = inflater.inflate( R.layout.actionbar_layout, null );
+
+        //Here do whatever you need to do with the view (set text if it's a textview or whatever)
+        TextView tv = (TextView) header.findViewById( R.id.program_title );
+        tv.setText( textToSet );
+
+        // Magic happens to center it.
+        int actionBarWidth = DeviceHelper.getDeviceWidth( this ); //Google for this method. Kinda easy.
+
+        tv.measure( 0, 0 );
+        int tvSize = tv.getMeasuredWidth();
+
+        try
+        {
+            int leftSpace = 0;
+
+            View homeButton = findViewById( android.R.id.home );
+            final ViewGroup holder = (ViewGroup) homeButton.getParent();
+
+            View firstChild =  holder.getChildAt( 0 );
+            View secondChild =  holder.getChildAt( 1 );
+
+            leftSpace = firstChild.getWidth()+secondChild.getWidth();
+        }
+        catch ( Exception ignored )
+
+        {}
+
+        mActionbar.setCustomView( header );
+
+        if ( null != header )
+        {
+            ActionBar.LayoutParams params = (ActionBar.LayoutParams) header.getLayoutParams();
+
+            if ( null != params )
+            {
+                int leftMargin =  ( actionBarWidth / 2 - ( leftSpace ) ) - ( tvSize / 2 ) ;
+
+                params.leftMargin = 0 >= leftMargin ? 0 : leftMargin;
+            }
+        }
+    }
+
+**/
+    // PHONE CALL MANAGER //
     //monitor phone call activities
     private class PhoneCallListener extends PhoneStateListener {
 
@@ -225,7 +316,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    //Call LS Button on deliveryloc//
+    //Call LS Button on deliverylocFragment//
 
     public void lscall(View v) {
         if (v.getId() == R.id.button17) {
@@ -1263,9 +1354,6 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    /**
-     * TODO: Alertbuilder with options Trupp/KTW/RTW/NAW/NEF/RTH
-     */
     public void st13(View v) {
         if (v.getId() == R.id.button13) {
 
@@ -1416,9 +1504,12 @@ public class MainActivity extends FragmentActivity {
         if (v.getId() == R.id.button22) {
             v.setVisibility(View.GONE);
 
+            //remove layout
             View viewToRemove= findViewById(R.id.patmanrelayout);
             if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
+            //send data
 
             Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
         }

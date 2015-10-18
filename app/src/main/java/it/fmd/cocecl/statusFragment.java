@@ -6,7 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class fielddata extends Fragment {
+public class statusFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -14,9 +14,8 @@ public class fielddata extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_fielddata, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+           View v = inflater.inflate(R.layout.fragment_status, container, false);
         return v;
     }
 }

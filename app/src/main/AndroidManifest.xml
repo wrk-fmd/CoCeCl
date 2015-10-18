@@ -26,9 +26,10 @@
         android:allowBackup="false"
         android:icon="@mipmap/cocecl"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.DeviceDefault" >
+        android:theme="@android:style/Theme.DeviceDefault"
+        android:logo="@mipmap/cocecl">
         <activity
-            android:name=".info"
+            android:name=".infoActivity"
             android:label="@string/app_name" >
             #android:screenOrientation="portrait">
         </activity>
@@ -41,16 +42,16 @@
         <!--
         not an activity -> is a Fragment
         <activity
-            android:name=".status"
+            android:name=".statusFragment"
             android:label="@string/statustab" >
         </activity>
         <activity
-            android:name=".fielddata"
+            android:name=".fielddataFragment"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name=".deliveryloc"
-            android:label="@string/deliveryloc">
+            android:name=".deliverylocFragment"
+            android:label="@string/deliverylocFragment">
         </activity>
         -->
 

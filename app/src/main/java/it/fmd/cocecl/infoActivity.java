@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 //START PAGE after LogIn//
-public class info extends MainActivity {
+public class infoActivity extends MainActivity {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

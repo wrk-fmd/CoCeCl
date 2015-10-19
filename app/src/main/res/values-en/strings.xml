@@ -8,12 +8,12 @@
     //Settins strings DE//
     <string name="full_screen">Fullscreen</string>
     <string name="gps">GPS</string>
-    <string name="radio">Funk</string>
+    <string name="radio">Radio</string>
 
     //Tab strings DE//
-    <string name="einsatztab">Einsatzdaten</string>
-    <string name="statustab">Statusfenster</string>
-    <string name="abgabetab">Abgabeort</string>
+    <string name="einsatztab">Fielddata</string>
+    <string name="statustab">Status</string>
+    <string name="abgabetab">Deliverylocation</string>
 
     //Status Button strings DE//
     <string name="stbutton1">1 EB Funk</string>
@@ -31,25 +31,25 @@
     <string name="stbutton13">anderes RM</string>
 
     //Einsatzdaten strings DE//
-    <string name="edat">Einsatzdaten</string>
+    <string name="edat">Fielddata</string>
     <string name="bo">Berufungsort</string>
     <string name="bg">Berufungsgrund</string>
-    <string name="brfr">Berufer</string>
+    <string name="brfr">Caller</string>
     <string name="info">Information</string>
-    <string name="eingeteiltefzg">Zugewiesene Einheiten</string>
+    <string name="eingeteiltefzg">Assigned Units</string>
     <string name="meldungen">Meldungen</string>
-    <string name="ssig">Sondersignal</string>
+    <string name="ssig">Emergency</string>
 
     //Abgabeort strings DE//
-    <string name="ao">Abgabeort</string>
+    <string name="ao">Deliverylocation</string>
     <string name="abt">Abteilung</string>
-    <string name="tcnr">Transport/Casus-Nummer</string>
+    <string name="tcnr">Transport/Casus-Number</string>
     <string name="title_activity_settings">SettingActivity</string>
 
     //Tel. Nr.//
     <string name="lsallg">+?</string>
     <string name="lsdispo">+?</string>
-    <string name="lsbv">+436604898783</string>
+    <string name="lsbv">+0000 000000</string>
 
     // Bettenvergabe //
     <string name="intern">Intern</string>
@@ -62,19 +62,19 @@
     <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
 
     //Connection//
-    <string name="con">Internet verbunden</string>
-    <string name="discon">Internet nicht verbunden</string>
-    <string name="mlscon">Mit MLS verbunden</string>
-    <string name="mlsdiscon">Nicht mit MLS verbunden</string>
+    <string name="con">Internet connected</string>
+    <string name="discon">Internet not connected</string>
+    <string name="mlscon">MLS connection established</string>
+    <string name="mlsdiscon">MLS connection not established</string>
 
     //String Array//
     <string-array name="Gender">
-        <item>männlich</item>
-        <item>weiblich</item>
+        <item>male</item>
+        <item>female</item>
     </string-array>
     <string-array name="Atemweg">
         <item>---</item>
-        <item>frei</item>
+        <item>free</item>
         <item>verengt</item>
         <item>teilverlegt</item>
         <item>verlegt</item>
@@ -169,6 +169,6 @@
         <item>blass</item>
     </string-array>
 
-    <string name="title_activity_patman">Patienten Manager</string>
+    <string name="title_activity_patman">Client Manager</string>
 
 </resources>

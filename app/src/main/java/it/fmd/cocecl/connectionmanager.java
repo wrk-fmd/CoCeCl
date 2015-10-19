@@ -76,7 +76,7 @@ public class connectionmanager extends loginactivity {
         }
     }
 
-    /**
+    /*
      public boolean isConnectedToServer() {
 
      TextView textView49 = (TextView)findViewById(R.id.textView13);
@@ -116,5 +116,5 @@ public class connectionmanager extends loginactivity {
      Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
      return false;
      }
-     **/
+     */
 }

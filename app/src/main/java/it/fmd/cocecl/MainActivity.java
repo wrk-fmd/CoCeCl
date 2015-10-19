@@ -184,7 +184,7 @@ public class MainActivity extends FragmentActivity {
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
                 mapFragment.class, null);
         // Funk Telefonbuch Einheiten//
-       /** mTabHost.addTab(
+       /* mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
                 communication.class, null);
         */
@@ -200,7 +200,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     // Actionbar custom view //
-/**
+/*
     {
         LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
                 .getSystemService(LAYOUT_INFLATER_SERVICE);
@@ -217,9 +217,9 @@ public class MainActivity extends FragmentActivity {
         actionBar.setDisplayShowCustomEnabled(true);
 
     }
-**/
+*/
     //action bar version2
-/**
+/*
     public void addTextToActionBar( String textToSet ) {
 
         mActionbar.setDisplayShowCustomEnabled( true );
@@ -269,7 +269,7 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-**/
+*/
     // PHONE CALL MANAGER //
     //monitor phone call activities
     private class PhoneCallListener extends PhoneStateListener {
@@ -303,7 +303,7 @@ public class MainActivity extends FragmentActivity {
                     Log.i(LOG_TAG, "restart app");
 
                     // restart app
-                    /**
+                    /*
                     Intent restartph = getBaseContext().getPackageManager()
                             .getLaunchIntentForPackage(
                                     getBaseContext().getPackageName());
@@ -338,7 +338,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     // Alert Push Notification Manager //
-/**
+/*
     public void onClick(View v) {
         String tittle=ed1.getText().toString().trim();
         String subject=ed2.getText().toString().trim();

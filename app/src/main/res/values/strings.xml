@@ -9,6 +9,9 @@
     <string name="amb">Ambulanz</string>
     <string name="dnr">Dienstnummer</string>
     <string name="einsatz">Einsatz</string>
+    <string name="newinc">Vorfall melden</string>
+    <string name="phonebk">Telefonbuch/Funkkennungen</string>
+    <string name="hospitallist">Krankenhausverzeichnis</string>
 
     //Settins strings//
     <string name="full_screen">Fullscreen</string>
@@ -20,6 +23,7 @@
     <string name="einsatztab">Einsatzdaten</string>
     <string name="statustab">Statusfenster</string>
     <string name="abgabetab">Abgabeort</string>
+    <string name="comm">Kommunikation</string>
 
     //Status Button strings//
     <string name="stbutton1">1 EB Funk</string>

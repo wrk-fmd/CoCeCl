@@ -230,6 +230,18 @@
             android:clickable="true"
             android:onClick="st12"/>
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:text="@string/newinc"
+        android:id="@+id/button42"
+        android:layout_gravity="left"
+        android:onClick="st14"
+        android:layout_above="@+id/textView8"
+        android:layout_alignRight="@+id/button16"
+        android:layout_alignEnd="@+id/button16"
+        android:drawableLeft="@drawable/ic_my_location_black_18dp"/>
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dip"

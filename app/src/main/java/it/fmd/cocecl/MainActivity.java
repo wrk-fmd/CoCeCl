@@ -27,6 +27,7 @@ import android.widget.Toast;
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
+import static android.graphics.Color.YELLOW;
 
 
 public class MainActivity extends FragmentActivity {
@@ -1491,6 +1492,38 @@ public class MainActivity extends FragmentActivity {
                     button7.setBackgroundResource(android.R.drawable.btn_default);
 
                     Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+        }
+    }
+
+    public void st14(View v){
+        if (v.getId() == R.id.button42) {
+
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+            dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
+            dlgBuilder.setCancelable(false);
+            dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Button button42 = (Button) findViewById(R.id.button);
+                    button42.setEnabled(false);
+                    button42.setClickable(false);
+                    button42.setBackgroundColor(YELLOW);
+
+                    Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
                 }
             });
 

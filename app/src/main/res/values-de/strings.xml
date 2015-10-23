@@ -170,5 +170,9 @@
     </string-array>
 
     <string name="title_activity_patman">Patienten Manager</string>
+    <string name="action_sign_in">Einloggen oder Registrieren</string>
+    <string name="action_sign_in_short">Einloggen</string>
+    <string name="amb">Ambulanz</string>
+    <string name="comm"></string>
 
 </resources>

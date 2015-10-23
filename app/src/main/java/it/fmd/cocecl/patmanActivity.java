@@ -39,13 +39,13 @@ public class patmanActivity extends FragmentActivity {
                 patmanFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("ABCDE", null),
-                abcde.class, null);
+                abcdeFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Trauma", null),
-                trauma.class, null);
+                traumaFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Anamnese&Diagnose", null),
-                anamnesis.class, null);
+                anamnesisFragment.class, null);
     }
 
     public void btnClick() {

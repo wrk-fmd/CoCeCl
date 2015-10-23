@@ -3,19 +3,25 @@
     <string name="app_name">CoCeCl</string>
     <string name="app_fullname">Communication Center Client</string>
     <string name="action_settings">Settings</string>
-    <string name="language">Language</string>
 
-    //Settins strings DE//
+    //Allgemein//
+    <string name="einheit">Einheit</string>
+    <string name="amb">Ambulanz</string>
+    <string name="dnr">Dienstnummer</string>
+    <string name="einsatz">Einsatz</string>
+
+    //Settins strings//
     <string name="full_screen">Fullscreen</string>
     <string name="gps">GPS</string>
     <string name="radio">Funk</string>
+    <string name="language">Sprache</string>
 
-    //Tab strings DE//
+    //Tab strings//
     <string name="einsatztab">Einsatzdaten</string>
     <string name="statustab">Statusfenster</string>
     <string name="abgabetab">Abgabeort</string>
 
-    //Status Button strings DE//
+    //Status Button strings//
     <string name="stbutton1">1 EB Funk</string>
     <string name="stbutton2">2 EB Station</string>
     <string name="stbutton3">3 ZBO</string>
@@ -30,7 +36,7 @@
     <string name="stbutton12">NOTRUF</string>
     <string name="stbutton13">anderes RM</string>
 
-    //Einsatzdaten strings DE//
+    //Einsatzdaten strings//
     <string name="edat">Einsatzdaten</string>
     <string name="bo">Berufungsort</string>
     <string name="bg">Berufungsgrund</string>
@@ -40,7 +46,7 @@
     <string name="meldungen">Meldungen</string>
     <string name="ssig">Sondersignal</string>
 
-    //Abgabeort strings DE//
+    //Abgabeort strings//
     <string name="ao">Abgabeort</string>
     <string name="abt">Abteilung</string>
     <string name="tcnr">Transport/Casus-Nummer</string>
@@ -49,9 +55,9 @@
     //Tel. Nr.//
     <string name="lsallg">+?</string>
     <string name="lsdispo">+?</string>
-    <string name="lsbv">+436604898783</string>
+    <string name="lsbv">+?</string>
 
-    // Bettenvergabe //
+    //Bettenvergabe//
     <string name="intern">Intern</string>
     <string name="unfall">Unfall</string>
     <string name="chir">Chirurgie</string>
@@ -68,7 +74,7 @@
     <string name="mlsdiscon">Nicht mit MLS verbunden</string>
 
     //String Array//
-    <string-array name="Gender">
+    <string-array name="Geschlecht">
         <item>männlich</item>
         <item>weiblich</item>
     </string-array>
@@ -171,4 +177,6 @@
 
     <string name="title_activity_patman">Patienten Manager</string>
 
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

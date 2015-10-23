@@ -88,4 +88,14 @@ public class gpsmanager extends MainActivity implements LocationListener {
     }
 }
 
+// Location Manager //
+/*
+        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
+        boolean enabled = service
+                .isProviderEnabled(LocationManager.GPS_PROVIDER);
 
+        if (!enabled) {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            startActivity(intent);
+        }
+        */

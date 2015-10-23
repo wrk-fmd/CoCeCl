@@ -6,7 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-public class abcde extends Fragment {
+
+public class traumaFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -16,7 +17,7 @@ public class abcde extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_abcde, container, false);
+        View v = inflater.inflate(R.layout.fragment_trauma, container, false);
         return v;
     }
 }

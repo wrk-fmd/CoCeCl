@@ -27,6 +27,14 @@
             android:layout_height="30dp"
             android:layout_gravity="center_horizontal"/>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#000000"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+        </View>
+
         <TextView
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -89,6 +97,14 @@
             android:gravity="center"
             android:background="@drawable/edit_text_style"/>
 
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#000000"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp">
+        </View>
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -98,13 +114,6 @@
             android:enabled="true"
             android:drawableLeft="@drawable/ic_navigation_black_18dp"
             android:onClick="navao" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#000000"
-            android:layout_marginTop="10dp">
-        </View>
 
         <Button
             android:layout_width="wrap_content"
@@ -118,23 +127,39 @@
             android:clickable="true"
             android:onClick="lscall" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Patient anlegen"
-            android:id="@+id/patmanbtn"
-            android:layout_alignParentRight="true"
-            android:drawableLeft="@drawable/ic_person_add_black_24dp"
-            android:onClick="patmanstart" />
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#000000"
+            android:layout_marginTop="10dp">
+        </View>
 
-        <Button
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="PatMan"
-            android:id="@+id/button21"
-            android:drawableLeft="@drawable/ic_person_black_24dp"
-            android:onClick="patmanstr"
-            android:enabled="false" />
+            android:layout_gravity="center_horizontal">
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Patient anlegen"
+                android:id="@+id/patmanbtn"
+                android:layout_alignParentRight="true"
+                android:drawableLeft="@drawable/ic_person_add_black_24dp"
+                android:onClick="patmanstart" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="PatMan"
+                android:id="@+id/button21"
+                android:drawableLeft="@drawable/ic_person_black_24dp"
+                android:onClick="patmanstr"
+                android:enabled="false" />
+        </LinearLayout>
+
+
 
     </LinearLayout>
     </ScrollView>

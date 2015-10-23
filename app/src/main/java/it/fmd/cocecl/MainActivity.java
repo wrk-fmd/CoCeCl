@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -33,12 +32,6 @@ import static android.graphics.Color.RED;
 public class MainActivity extends FragmentActivity {
 
     private FragmentTabHost mTabHost;
-
-    private WebView gisView;
-    private TextView latituteField;
-    private TextView longitudeField;
-    private LocationManager locationManager;
-    private String provider;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,81 +72,6 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 */
-        // GPS CONTROLLER //
-        // Location Manager //
-/*
-        LocationManager service = (LocationManager) getSystemService(LOCATION_SERVICE);
-        boolean enabled = service
-                .isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        if (!enabled) {
-            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-            startActivity(intent);
-        }
-
-        latituteField = (TextView) findViewById(R.id.TextView02);
-        longitudeField = (TextView) findViewById(R.id.TextView04);
-
-        // Get the location manager
-        locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        // Define the criteria how to select the locatioin provider -> use
-        // default
-        Criteria criteria = new Criteria();
-        provider = locationManager.getBestProvider(criteria, false);
-        Location location = locationManager.getLastKnownLocation(provider);
-
-        // Initialize the location fields
-        if (location != null) {
-            System.out.println("Provider " + provider + " has been selected.");
-            onLocationChanged(location);
-        } else {
-            latituteField.setText("Location not available");
-            longitudeField.setText("Location not available");
-        }
-
-
-    // Request updates at startup //
-    @Override
-    protected void onResume() {
-        super.onResume();
-        locationManager.requestLocationUpdates(provider, 400, 1, this);
-    }
-
-    // Remove the locationlistener updates when Activity is paused //
-    @Override
-    protected void onPause() {
-        super.onPause();
-        locationManager.removeUpdates(this);
-    }
-
-    @Override
-    public void onLocationChanged(Location location) {
-        int lat = (int) (location.getLatitude());
-        int lng = (int) (location.getLongitude());
-        latituteField.setText(String.valueOf(lat));
-        longitudeField.setText(String.valueOf(lng));
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int statusFragment, Bundle extras) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider) {
-        Toast.makeText(this, "Enabled new provider " + provider,
-                Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider) {
-        Toast.makeText(this, "Disabled provider " + provider,
-                Toast.LENGTH_SHORT).show();
-    }
-**/
-        // GPS END //
 
         // PHONE STATE MANAGER //
 
@@ -171,6 +89,15 @@ public class MainActivity extends FragmentActivity {
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
         mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
+        // TABS
+
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab1").setIndicator("Status", null),
+                mainstatusFragment.class, null);
+        mTabHost.addTab(
+                mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
+                incidentFragment.class, null);
+/*
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("Status", null),
                 statusFragment.class, null);
@@ -180,7 +107,7 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
                 deliverylocFragment.class, null);
-        mTabHost.addTab(
+        */mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
                 mapFragment.class, null);
         // Funk Telefonbuch Einheiten//
@@ -355,6 +282,179 @@ public class MainActivity extends FragmentActivity {
 */
 
     // Button state & color functions START //
+
+    // Status EB NEB AD mainstatusFragment //
+
+    public void ebst(View v) {
+        if (v.getId() == R.id.button38) {
+
+            Button button38 = (Button) findViewById(R.id.button38);
+            Button button39 = (Button) findViewById(R.id.button39);
+            Button button40 = (Button) findViewById(R.id.button40);
+
+            button38.setEnabled(true);
+            button38.setClickable(false);
+            button38.setBackgroundColor(GREEN);
+
+            button39.setEnabled(false);
+            button39.setClickable(false);
+            button39.setBackgroundResource(android.R.drawable.btn_default);
+
+            button40.setEnabled(false);
+            button40.setClickable(false);
+            button40.setBackgroundResource(android.R.drawable.btn_default);
+
+        }
+    }
+
+    public void nebst(View v) {
+        if (v.getId() == R.id.button39) {
+
+            Button button38 = (Button) findViewById(R.id.button38);
+            Button button39 = (Button) findViewById(R.id.button39);
+            Button button40 = (Button) findViewById(R.id.button40);
+
+            button38.setEnabled(false);
+            button38.setClickable(false);
+            button38.setBackgroundResource(android.R.drawable.btn_default);
+
+            button39.setEnabled(false);
+            button39.setClickable(false);
+            button39.setBackgroundColor(Color.parseColor("#9C27B0"));
+
+            button40.setEnabled(false);
+            button40.setClickable(false);
+            button40.setBackgroundResource(android.R.drawable.btn_default);
+
+        }
+    }
+
+    public void adst(View v) {
+        if (v.getId() == R.id.button40) {
+
+            Button button38 = (Button) findViewById(R.id.button38);
+            Button button39 = (Button) findViewById(R.id.button39);
+            Button button40 = (Button) findViewById(R.id.button40);
+
+            button38.setEnabled(false);
+            button38.setClickable(false);
+            button38.setBackgroundResource(android.R.drawable.btn_default);
+
+            button39.setEnabled(false);
+            button39.setClickable(false);
+            button39.setBackgroundResource(android.R.drawable.btn_default);
+
+            button40.setEnabled(false);
+            button40.setClickable(false);
+            button40.setBackgroundColor(Color.parseColor("#9C27B0"));
+
+        }
+    }
+
+    // Status weiterschalten incidentFragment //
+
+    Button button41;
+
+    public void btnClick() {
+        button41 = (Button) findViewById(R.id.button41);
+        button41.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg0) {
+
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText("0");
+            }
+        });
+    }
+/*
+    public void stweiter(View v) {
+        Button button41 = (Button) findViewById(R.id.button41);
+
+        if (v.getId() == R.id.button41) {
+            button41.setEnabled(true);
+            button41.setClickable(true);
+            button41.setBackgroundColor(GREEN);
+            button41.setText("0");
+
+            if (button41.getText().toString().equals("0")) {
+                button41.setText("1");
+            } else if (button41.getText().toString().equals("1")) {
+                button41.setText("x");
+            } else if (button41.getText().toString().equals("x")) {
+                button41.setText("2");
+            }
+        }
+    }
+/*
+    String QU,ZBO,ABO,ZAO,AAO;
+
+    public void stweiter(View arg0) {
+
+        Button button41 = (Button) findViewById(R.id.button41);
+        TextView textView83 = (TextView) findViewById(R.id.textView83);
+
+        if (arg0.getId() == R.id.button41) {
+            button41.setEnabled(true);
+            button41.setClickable(true);
+            button41.setBackgroundColor(GREEN);
+            button41.setText(R.string.stbutton1);
+
+            if (button41.getText().equals(R.string.stbutton1)) {
+
+                Toast.makeText(this, "QU", Toast.LENGTH_SHORT).show();
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText(R.string.stbutton1);
+
+                textView83.setText(R.string.stbutton1);
+
+            } else if (button41.getText().equals(R.string.stbutton1)) {
+
+                Toast.makeText(this, "ZBO", Toast.LENGTH_SHORT).show();
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText(R.string.stbutton2);
+
+                textView83.setText(R.string.stbutton2);
+
+            } else if (button41.getText().equals(R.string.stbutton2)) {
+
+                Toast.makeText(this, "ABO", Toast.LENGTH_SHORT).show();
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText(R.string.stbutton3);
+
+                textView83.setText(R.string.stbutton3);
+
+            } else if (button41.getText().equals(R.string.stbutton3)) {
+
+                Toast.makeText(this, "ZAO", Toast.LENGTH_SHORT).show();
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText(R.string.stbutton4);
+
+                textView83.setText(R.string.stbutton4);
+
+            } else if (button41.getText().equals(R.string.stbutton4)) {
+
+                button41.setEnabled(true);
+                button41.setClickable(true);
+                button41.setBackgroundColor(GREEN);
+                button41.setText(R.string.stbutton5);
+
+                textView83.setText(R.string.stbutton5);
+            }
+        }
+    }
+
+    */
+    // Status Tastenfeld //
 
     public void st1(View v) {
         if (v.getId() == R.id.button) {
@@ -1580,7 +1680,7 @@ public class MainActivity extends FragmentActivity {
             gisView.getSettings().getAllowFileAccessFromFileURLs();
             gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
-            gisView.loadUrl("file:///android_asset/viennagissite.html");
+            gisView.loadUrl("file:///android_asset/leaflet.html");
 
             Toast.makeText(MainActivity.this, "Stadtplan Wien GIS", Toast.LENGTH_SHORT).show();
         }

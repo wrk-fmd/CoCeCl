@@ -26,7 +26,7 @@
 
     <Space
         android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_height="40dp"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -38,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:hint="Ambulanzname"
+        android:hint="@string/amb"
         android:gravity="center"
         android:id="@+id/textView2"
         android:layout_below="@+id/space"
@@ -46,8 +46,8 @@
         android:layout_alignParentStart="true"
         android:background="@drawable/edit_text_style"
         android:textColorHint="@color/primary_dark_material_dark"
-        android:layout_toLeftOf="@+id/button15"
-        android:layout_toStartOf="@+id/button15" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
     <Space
         android:layout_width="20dp"
@@ -63,27 +63,31 @@
         android:layout_width="150dp"
         android:layout_height="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:hint="Einheit"
+        android:hint="@string/einheit"
         android:gravity="center"
         android:id="@+id/textView3"
         android:layout_below="@+id/space2"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:background="@drawable/edit_text_style"
-        android:textColorHint="@color/primary_dark_material_dark"/>
+        android:textColorHint="@color/primary_dark_material_dark"
+        android:layout_toStartOf="@+id/button15"
+        android:layout_toLeftOf="@+id/button15" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        android:hint="DNr _ _ _ _ _"
+        android:hint="@string/dnr"
         android:gravity="center"
         android:id="@+id/textView5"
         android:layout_alignTop="@+id/textView3"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:background="@drawable/edit_text_style"
-        android:textColorHint="@color/primary_dark_material_dark"/>
+        android:textColorHint="@color/primary_dark_material_dark"
+        android:layout_alignLeft="@+id/button15"
+        android:layout_alignStart="@+id/button15" />
 
     <View
         android:layout_width="fill_parent"
@@ -100,7 +104,9 @@
         android:layout_below="@+id/textView3"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/view3">
     </View>
 
     <Button
@@ -108,12 +114,9 @@
         android:layout_height="wrap_content"
         android:text="START"
         android:id="@+id/button14"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="61dp"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_above="@+id/button15"
+        android:layout_toLeftOf="@+id/button15"
+        android:layout_toStartOf="@+id/button15" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -121,9 +124,11 @@
         android:layout_height="wrap_content"
         android:text="@string/action_settings"
         android:id="@+id/button15"
-        android:layout_below="@+id/button14"
-        android:layout_alignRight="@+id/button14"
-        android:layout_alignEnd="@+id/button14"/>
+        android:layout_above="@+id/button20"
+        android:layout_alignRight="@+id/button20"
+        android:layout_alignEnd="@+id/button20"
+        android:layout_alignLeft="@+id/button20"
+        android:layout_alignStart="@+id/button20" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -146,5 +151,23 @@
         android:clickable="true"
         android:enabled="true"
         android:onClick="exitbtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/einsatz"
+        android:id="@+id/button42"
+        android:layout_below="@+id/view3"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/einheit"
+        android:id="@+id/button43"
+        android:layout_below="@+id/button42"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

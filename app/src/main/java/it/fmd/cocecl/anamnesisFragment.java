@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
-public class trauma extends Fragment {
+public class anamnesisFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class trauma extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_trauma, container, false);
+        View v = inflater.inflate(R.layout.fragment_anamnesis, container, false);
         return v;
     }
 }

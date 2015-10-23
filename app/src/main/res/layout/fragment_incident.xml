@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.fmd.cocecl.incident">
 
@@ -29,7 +28,7 @@
             android:id="@+id/textView7"
             android:background="@drawable/edit_text_style"
             android:layout_gravity="left"
-            android:layout_marginRight="50dp"/>
+            android:layout_marginRight="10dp"/>
 
         <CheckBox
             android:layout_width="wrap_content"
@@ -39,7 +38,8 @@
             android:checked="false"
             android:clickable="false"
             android:enabled="true"
-            android:layout_gravity="right"/>
+            android:layout_gravity="right"
+            android:gravity="center"/>
 
     </LinearLayout>
 
@@ -94,8 +94,16 @@
         android:background="#000000"
         android:layout_below="@+id/textView83"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/view7">
     </View>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/scrollView2"
+        android:layout_below="@+id/view7">
+
 
     <LinearLayout
         android:orientation="vertical"
@@ -166,7 +174,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="70dp"
-            android:text="NAVIGATE"
+            android:text="@string/nav"
             android:id="@+id/button18"
             android:clickable="true"
             android:enabled="true"
@@ -227,5 +235,5 @@
         </LinearLayout>
 
     </LinearLayout>
-
+    </ScrollView>
 </RelativeLayout>

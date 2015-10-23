@@ -97,8 +97,7 @@ public class MainActivity extends FragmentActivity {
                 mainstatusFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                incidentFragment.class, null);
-/*
+                incidentFragment.class, null); /*
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("Status", null),
                 statusFragment.class, null);
@@ -107,15 +106,14 @@ public class MainActivity extends FragmentActivity {
                 fielddataFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
-                deliverylocFragment.class, null);
-        */mTabHost.addTab(
+                deliverylocFragment.class, null); */
+        mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
                 mapFragment.class, null);
-        // Funk Telefonbuch Einheiten//
-       /* mTabHost.addTab(
+        mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
-                communication.class, null);
-        */
+                communicationFragment.class, null);
+
 
     }
 

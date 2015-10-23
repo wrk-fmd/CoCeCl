@@ -174,5 +174,12 @@
     <string name="action_sign_in_short">Einloggen</string>
     <string name="amb">Ambulanz</string>
     <string name="comm"></string>
+    <string name="newinc">Vorfall melden</string>
+    <string name="nav">Navigieren</string>
+    <string name="phone">Anrufen</string>
+    <string name="phonebk">Telefonbuch/Funkkennungen</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password </string>
+    <string name="hospitallist">Krankenhausverzeichnis</string>
 
 </resources>

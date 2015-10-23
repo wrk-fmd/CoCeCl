@@ -26,23 +26,22 @@
     <string name="stbutton8">8 AAO</string>
     <string name="stbutton9">9 AD</string>
     <string name="stbutton10">Int Unt</string>
-    <string name="stbutton11">Bel/Verweigert</string>
-    <string name="stbutton12">NOTRUF</string>
-    <string name="stbutton13">anderes RM</string>
+    <string name="stbutton11">leaving/deny</string>
+    <string name="stbutton12">EMERGENCY</string>
+    <string name="stbutton13">other RescueUnit</string>
 
     //Einsatzdaten strings DE//
     <string name="edat">Fielddata</string>
-    <string name="bo">Berufungsort</string>
-    <string name="bg">Berufungsgrund</string>
+    <string name="bo">location of calling</string>
     <string name="brfr">Caller</string>
     <string name="info">Information</string>
     <string name="eingeteiltefzg">Assigned Units</string>
-    <string name="meldungen">Meldungen</string>
+    <string name="meldungen">Notifications</string>
     <string name="ssig">Emergency</string>
 
     //Abgabeort strings DE//
     <string name="ao">Deliverylocation</string>
-    <string name="abt">Abteilung</string>
+    <string name="abt">Department</string>
     <string name="tcnr">Transport/Casus-Number</string>
     <string name="title_activity_settings">SettingActivity</string>
 
@@ -58,14 +57,14 @@
     <string name="hno">HNO</string>
     <string name="derma">Dermatologie</string>
     <string name="spezbett">Spezialbett</string>
-    <string name="andbett">Andere Abteilung</string>
-    <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
+    <string name="andbett">other Department</string>
+    <string name="lsbvanrufen">call control station</string>
 
     //Connection//
     <string name="con">Internet connected</string>
     <string name="discon">Internet not connected</string>
-    <string name="mlscon">MLS connection established</string>
-    <string name="mlsdiscon">MLS connection not established</string>
+    <string name="mlscon">CS connection established</string>
+    <string name="mlsdiscon">CS connection not established</string>
 
     //String Array//
     <string-array name="Gender">
@@ -170,5 +169,8 @@
     </string-array>
 
     <string name="title_activity_patman">Client Manager</string>
+    <string name="bg">ground for calling</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password </string>
 
 </resources>

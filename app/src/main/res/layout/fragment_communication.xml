@@ -137,7 +137,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Anrufen"
+        android:text="@string/phone"
         android:id="@+id/button43"
         android:layout_alignBottom="@+id/editText14"
         android:layout_toRightOf="@+id/editText14"
@@ -147,7 +147,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Navigieren"
+        android:text="@string/nav"
         android:id="@+id/button45"
         android:layout_alignBottom="@+id/editText15"
         android:layout_alignLeft="@+id/button43"

@@ -114,10 +114,9 @@
         android:layout_height="wrap_content"
         android:text="START"
         android:id="@+id/button14"
+        android:layout_marginTop="22dp"
         android:layout_below="@+id/view3"
-        android:layout_alignRight="@+id/textView3"
-        android:layout_alignEnd="@+id/textView3"
-        android:layout_marginTop="23dp" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
@@ -129,7 +128,8 @@
         android:layout_alignRight="@+id/button20"
         android:layout_alignEnd="@+id/button20"
         android:layout_alignLeft="@+id/button20"
-        android:layout_alignStart="@+id/button20" />
+        android:layout_alignStart="@+id/button20"
+        android:drawableLeft="@drawable/ic_settings_black_24dp"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -151,6 +151,7 @@
         android:layout_alignParentEnd="true"
         android:clickable="true"
         android:enabled="true"
-        android:onClick="exitbtn" />
+        android:onClick="exitbtn"
+        android:drawableLeft="@drawable/ic_power_settings_new_black_24dp"/>
 
 </RelativeLayout>

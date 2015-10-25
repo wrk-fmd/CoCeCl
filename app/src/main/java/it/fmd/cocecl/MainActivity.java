@@ -113,9 +113,8 @@ public class MainActivity extends FragmentActivity {
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab5").setIndicator("Kommunikation", null),
                 communicationFragment.class, null);
-
-
     }
+
 
     // Menu on the right of ActionBar/TitleBar //
     @Override
@@ -352,107 +351,164 @@ public class MainActivity extends FragmentActivity {
 
     // Status weiterschalten incidentFragment //
 
-    Button button41;
+    public void stbtnClick(View v) {
 
-    public void btnClick() {
-        button41 = (Button) findViewById(R.id.button41);
-        button41.setOnClickListener(new View.OnClickListener() {
+        TextView txtview;
+        txtview = (TextView)findViewById(R.id.button41);
+
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+        dlgBuilder.setTitle("STATUS weiterschalten?");
+        dlgBuilder.setMessage(txtview.getText().toString());
+        dlgBuilder.setCancelable(false);
+        dlgBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+
+            final Button button41 = (Button) findViewById(R.id.button41);
+            final TextView textView83 = (TextView) findViewById(R.id.textView83);
+            final TextView aofield = (TextView) findViewById(R.id.aofield);
+
             @Override
-            public void onClick(View arg0) {
+            public void onClick(DialogInterface dialog, int which) {
 
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText("0");
+                if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(false);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText(R.string.zbo);
+                    textView83.setText("QU");
+
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 3000);
+
+                } else if (textView83.getText().equals("QU")) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(true);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText(R.string.abo);
+                    textView83.setText("ZBO");
+
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 10000);
+
+                } else if (textView83.getText().equals("ZBO")) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(true);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText(R.string.zao);
+                    textView83.setText("ABO");
+/*
+                    mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(2));
+
+                    mTabHost.addTab(
+                            mTabHost.newTabSpec("tab4").setIndicator("Abgabeort", null),
+                            deliverylocFragment.class, null);
+*/
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 10000);
+
+                } else if (textView83.getText().equals("ABO") /*&& (aofield.getText() != (""))*/) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(true);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText(R.string.aao);
+                    textView83.setText("ZAO");
+/*
+                    mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(1));
+*/
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 10000);
+
+                } else if (textView83.getText().equals("ZAO")) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(true);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText(R.string.eb);
+                    textView83.setText("AAO");
+
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 10000);
+
+                } else if (textView83.getText().equals("AAO")) {
+
+                    button41.setEnabled(true);
+                    button41.setClickable(true);
+                    button41.setBackgroundColor(YELLOW);
+                    button41.setText("QU");
+                    textView83.setText("EB");
+/*
+                    mTabHost.removeAllViews();
+
+                    mTabHost.addTab(
+                            mTabHost.newTabSpec("tab1").setIndicator("Status", null),
+                            mainstatusFragment.class, null);
+                    mTabHost.addTab(
+                            mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
+                            incidentFragment.class, null);
+*/
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            button41.setEnabled(true);
+                            button41.setClickable(true);
+                            button41.setBackgroundResource(android.R.drawable.btn_default);
+                        }
+                    }, 10000);
+
+                }
             }
         });
-    }
-/*
-    public void stweiter(View v) {
-        Button button41 = (Button) findViewById(R.id.button41);
 
-        if (v.getId() == R.id.button41) {
-            button41.setEnabled(true);
-            button41.setClickable(true);
-            button41.setBackgroundColor(GREEN);
-            button41.setText("0");
+        dlgBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
 
-            if (button41.getText().toString().equals("0")) {
-                button41.setText("1");
-            } else if (button41.getText().toString().equals("1")) {
-                button41.setText("x");
-            } else if (button41.getText().toString().equals("x")) {
-                button41.setText("2");
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
             }
-        }
-    }
-/*
-    String QU,ZBO,ABO,ZAO,AAO;
+        });
 
-    public void stweiter(View arg0) {
-
-        Button button41 = (Button) findViewById(R.id.button41);
-        TextView textView83 = (TextView) findViewById(R.id.textView83);
-
-        if (arg0.getId() == R.id.button41) {
-            button41.setEnabled(true);
-            button41.setClickable(true);
-            button41.setBackgroundColor(GREEN);
-            button41.setText(R.string.stbutton1);
-
-            if (button41.getText().equals(R.string.stbutton1)) {
-
-                Toast.makeText(this, "QU", Toast.LENGTH_SHORT).show();
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText(R.string.stbutton1);
-
-                textView83.setText(R.string.stbutton1);
-
-            } else if (button41.getText().equals(R.string.stbutton1)) {
-
-                Toast.makeText(this, "ZBO", Toast.LENGTH_SHORT).show();
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText(R.string.stbutton2);
-
-                textView83.setText(R.string.stbutton2);
-
-            } else if (button41.getText().equals(R.string.stbutton2)) {
-
-                Toast.makeText(this, "ABO", Toast.LENGTH_SHORT).show();
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText(R.string.stbutton3);
-
-                textView83.setText(R.string.stbutton3);
-
-            } else if (button41.getText().equals(R.string.stbutton3)) {
-
-                Toast.makeText(this, "ZAO", Toast.LENGTH_SHORT).show();
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText(R.string.stbutton4);
-
-                textView83.setText(R.string.stbutton4);
-
-            } else if (button41.getText().equals(R.string.stbutton4)) {
-
-                button41.setEnabled(true);
-                button41.setClickable(true);
-                button41.setBackgroundColor(GREEN);
-                button41.setText(R.string.stbutton5);
-
-                textView83.setText(R.string.stbutton5);
-            }
-        }
+        AlertDialog alert = dlgBuilder.create();
+        alert.show();
     }
 
-    */
     // Status Tastenfeld //
 
     public void st1(View v) {

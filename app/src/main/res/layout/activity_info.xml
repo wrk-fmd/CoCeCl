@@ -144,7 +144,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="STOP/EXIT App"
+        android:text="@string/end"
         android:id="@+id/button20"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"

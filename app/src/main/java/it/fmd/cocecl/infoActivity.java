@@ -28,10 +28,10 @@ public class infoActivity extends MainActivity {
         versionText.setText("Version: " + version);
 
         //redirects to START page btn14 & SETTINGS page btn15//
-        btnClick();
+        acbtnClick();
     }
 
-    public void btnClick() {
+    public void acbtnClick() {
 
         Button button14 = (Button) findViewById(R.id.button14);
         button14.setOnClickListener(new View.OnClickListener() {

@@ -1,4 +1,16 @@
 <resources>
+
+    // loginactivity //
+    <string name="title_activity_login">CoCeCl LogIn</string>
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
     //App strings//
     <string name="app_name">CoCeCl</string>
     <string name="app_fullname">Communication Center Client</string>
@@ -13,15 +25,17 @@
     <string name="newinc">Vorfall melden</string>
     <string name="phonebk">Telefonbuch/Funkkennungen</string>
     <string name="hospitallist">Krankenhausverzeichnis</string>
-
     <string name="nav">Navigieren</string>
     <string name="phone">Anrufen</string>
+    <string name="yes">JA</string>
+    <string name="no">NEIN</string>
 
     //Settins strings//
     <string name="full_screen">Fullscreen</string>
     <string name="gps">GPS</string>
     <string name="radio">Funk</string>
     <string name="language">Sprache</string>
+    <string name="end">App Beenden</string>
 
     //Tab strings//
     <string name="einsatztab">Einsatzdaten</string>
@@ -43,6 +57,15 @@
     <string name="stbutton11">Bel/Verweigert</string>
     <string name="stbutton12">NOTRUF</string>
     <string name="stbutton13">anderes RM</string>
+
+    <string name="qu">Einsatz übernommen</string>
+    <string name="zbo">Zum Berufungsort</string>
+    <string name="abo">Am Berufungsort</string>
+    <string name="zao">Zum Abgabeort</string>
+    <string name="aao">Am Abgabeort</string>
+    <string name="eb">Einsatzbereit</string>
+    <string name="neb">Nicht einsatzbereit</string>
+    <string name="ad">Ausser Dienst</string>
 
     //Einsatzdaten strings//
     <string name="edat">Einsatzdaten</string>

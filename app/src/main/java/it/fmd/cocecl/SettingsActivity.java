@@ -50,7 +50,7 @@ public class SettingsActivity extends MainActivity {
             }
 
         });
-        }
+    }
 
 
     public void changelang(View v) {
@@ -103,46 +103,10 @@ public class SettingsActivity extends MainActivity {
 
         }
     }
-/*
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.en:
-                Locale locale = new Locale("en");
-                Locale.setDefault(locale);
-                Configuration config = new Configuration();
-                config.locale = locale;
-                getBaseContext().getResources().updateConfiguration(config, getBaseContext().getResources().getDisplayMetrics());
-                Toast.makeText(this, "Locale in English !", Toast.LENGTH_LONG).show();
-                break;
 
-            case R.id.pt:
-                Locale locale2 = new Locale("pt");
-                Locale.setDefault(locale2);
-                Configuration config2 = new Configuration();
-                config2.locale = locale2;
-                getBaseContext().getResources().updateConfiguration(config2, getBaseContext().getResources().getDisplayMetrics());
-
-                Toast.makeText(this, "Locale in Portugal !", Toast.LENGTH_LONG).show();
-                break;
-
-            case R.id.es:
-                Locale locale3 = new Locale("es");
-                Locale.setDefault(locale3);
-                Configuration config3 = new Configuration();
-                config3.locale = locale3;
-                getBaseContext().getResources().updateConfiguration(config3, getBaseContext().getResources().getDisplayMetrics());
-
-                Toast.makeText(this, "Locale in Spain !", Toast.LENGTH_LONG).show();
-                break;
-
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-*/
     protected void onStop(Bundle savedInstanceState) {
         super.onStop();
 
     }
-    }
+}
 

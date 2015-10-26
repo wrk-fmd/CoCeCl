@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
-import android.util.Log;
-
+/*
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -69,4 +68,4 @@ public class JsonParser {
         // return JSON String
         return jObj;
     }
-}
+}*/

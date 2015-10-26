@@ -46,7 +46,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="STATUS"
+        android:text="@string/status"
         android:id="@+id/textView82"
         android:layout_below="@+id/button44"
         android:layout_centerHorizontal="true" />
@@ -63,7 +63,12 @@
         android:layout_toStartOf="@+id/textView82"
         android:hint="aktueller status"
         android:layout_alignBottom="@+id/button41"
-        android:gravity="center"/>
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:background="@drawable/edit_text_style"
+        android:textColor="@color/primary_dark_material_dark"
+        android:textColorHint="@color/primary_dark_material_dark"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -75,7 +80,8 @@
         android:layout_alignParentEnd="true"
         android:hint="status weiterschalten"
         android:enabled="true"
-        android:clickable="true" />
+        android:clickable="true"
+        android:onClick="stbtnClick" />
 
     <View
         android:layout_width="fill_parent"

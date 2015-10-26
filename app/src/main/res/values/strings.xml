@@ -29,6 +29,7 @@
     <string name="phone">Anrufen</string>
     <string name="yes">JA</string>
     <string name="no">NEIN</string>
+    <string name="status">STATUS</string>
 
     //Settins strings//
     <string name="full_screen">Fullscreen</string>
@@ -66,6 +67,8 @@
     <string name="eb">Einsatzbereit</string>
     <string name="neb">Nicht einsatzbereit</string>
     <string name="ad">Ausser Dienst</string>
+
+    <string name="stwe">Status weiterschalten?</string>
 
     //Einsatzdaten strings//
     <string name="edat">Einsatzdaten</string>

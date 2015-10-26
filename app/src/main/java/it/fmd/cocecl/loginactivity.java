@@ -18,8 +18,8 @@ import java.net.URLConnection;
 
 
 public class loginactivity extends MainActivity {
-   // private connectionmanager connman = new connectionmanager();
 
+   //private connectionmanager connman = new connectionmanager();
 
 
     public boolean isOnline() {
@@ -36,7 +36,7 @@ public class loginactivity extends MainActivity {
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
 
-            imageView2.setImageResource(R.drawable.connected64);
+            imageView2.setImageResource(R.drawable.ic_network_cell_black_24dp);
             textView13.setText(R.string.con);
             Toast.makeText(this, R.string.con, Toast.LENGTH_LONG).show();
             return true;
@@ -45,7 +45,7 @@ public class loginactivity extends MainActivity {
                 cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
                         cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
 
-            imageView2.setImageResource(R.drawable.disconnected64);
+            imageView2.setImageResource(R.drawable.ic_signal_cellular_off_black_24dp);
             textView13.setText(R.string.discon);
             Toast.makeText(this, R.string.discon, Toast.LENGTH_LONG).show();
             return false;
@@ -67,8 +67,8 @@ public class loginactivity extends MainActivity {
             connection.setConnectTimeout(10 * 1000);
             connection.connect();
 
-            imageView3.setImageResource(R.drawable.connected64);
-            //imageView4.setImageResource(R.drawable.connected64);
+            imageView3.setImageResource(R.drawable.ic_network_cell_black_24dp);
+            //imageView4.setImageResource(R.drawable.ic_network_cell_black_24dp);
             textView49.setText(R.string.mlscon);
             Toast.makeText(this, R.string.mlscon, Toast.LENGTH_LONG).show();
             Log.wtf("Connection to MLS established", "Success!");
@@ -76,14 +76,13 @@ public class loginactivity extends MainActivity {
 
         } catch (Exception e) {
 
-            imageView3.setImageResource(R.drawable.disconnected64);
-            //imageView4.setImageResource(R.drawable.disconnected64);
+            imageView3.setImageResource(R.drawable.ic_signal_cellular_off_black_24dp);
+            //imageView4.setImageResource(R.drawable.ic_signal_cellular_off_black_24dp);
             textView49.setText(R.string.mlsdiscon);
             Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
             return false;
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,10 +91,10 @@ public class loginactivity extends MainActivity {
 
         isOnline();
         isConnectedToServer();
-        /*
-        connman.isOnline();
-        connman.isConnectedToServer();
-*/
+
+       // connman.isOnline();
+       // connman.isConnectedToServer();
+
     // LogIn form //
     final int counter = 3;
     final Button dnr_sign_in_button = (Button) findViewById(R.id.dnr_sign_in_button);
@@ -128,5 +127,18 @@ public class loginactivity extends MainActivity {
     }
 
     );
-}
+       /* {
+            //Displaying TextInputLayout Error
+            TextInputLayout lNameLayout = (TextInputLayout) findViewById(R.id.dnrlog);
+            lNameLayout.setErrorEnabled(true);
+            lNameLayout.setError("Min 2 chars required");
+
+            //Displaying both TextInputLayout and EditText Errors
+            TextInputLayout phoneLayout = (TextInputLayout) findViewById(R.id.phoneLayout);
+            phoneLayout.setErrorEnabled(true);
+            phoneLayout.setError("Please enter a phone number");
+            EditText phone = (EditText) findViewById(R.id.phone);
+            phone.setError("Required");
+        }*/
+    }
 }

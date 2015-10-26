@@ -57,7 +57,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="STATUS"
+        android:text="@string/status"
         android:id="@+id/textView82"
         android:layout_below="@+id/linearLayout6"
         android:layout_centerHorizontal="true" />
@@ -242,4 +242,21 @@
 
     </LinearLayout>
     </ScrollView>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="Small Text"
+        android:id="@+id/textView85"
+        android:gravity="center"
+        android:layout_alignBottom="@+id/textView82"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout6"
+        android:layout_alignRight="@+id/textView83"
+        android:layout_alignEnd="@+id/textView83"
+        android:editable="false"
+        android:inputType="time"/>
+
 </RelativeLayout>

@@ -15,17 +15,15 @@ public class statusFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-           View v = inflater.inflate(R.layout.fragment_status, container, false);
+        View v = inflater.inflate(R.layout.fragment_status, container, false);
         return v;
     }
-    
-    /*
-        TODO: import button functions from mainactivity
-     */
-/*
+
     // Button state & color functions START //
 
-    public void st1(View v) {
+    // Status Tastenfeld //
+/*
+        public void st1 (View v){
         if (v.getId() == R.id.button) {
             Button button = (Button) findViewById(R.id.button);
             button.setEnabled(true);
@@ -1074,6 +1072,38 @@ public class statusFragment extends Fragment {
             alert.show();
         }
     }
-    // Button state & color functions END //
+
+    public void st14(View v) {
+        if (v.getId() == R.id.button42) {
+
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+            dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
+            dlgBuilder.setCancelable(false);
+            dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    Button button42 = (Button) findViewById(R.id.button);
+                    button42.setEnabled(false);
+                    button42.setClickable(false);
+                    button42.setBackgroundColor(YELLOW);
+
+                    Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+        }
+    }
+    // Button state & color functions END
     */
 }

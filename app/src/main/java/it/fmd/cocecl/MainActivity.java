@@ -1,20 +1,15 @@
 package it.fmd.cocecl;
 
-import android.Manifest;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Color;
+import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTabHost;
-import android.telephony.PhoneStateListener;
-import android.telephony.TelephonyManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -43,6 +38,7 @@ public class MainActivity extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 /*
         {
             // FRAGMENT MANAGER //
@@ -79,17 +75,6 @@ public class MainActivity extends FragmentActivity {
     }
 */
 
-        // PHONE STATE MANAGER //
-
-        {
-            //PhoneStateListener//
-            PhoneCallListener phoneListener = new PhoneCallListener();
-            TelephonyManager telephonyManager = (TelephonyManager) this
-                    .getSystemService(Context.TELEPHONY_SERVICE);
-            telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-        }
-
-
         // TABHOST CONTROLLER //
 
         mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
@@ -114,7 +99,7 @@ public class MainActivity extends FragmentActivity {
                 deliverylocFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
-                anamnesisFragment.class, null);
+                mapFragment.class, null);
     }
 
 
@@ -197,55 +182,10 @@ public class MainActivity extends FragmentActivity {
     }
 
 */
-    // PHONE CALL MANAGER //
-    //monitor phone call activities
-    private class PhoneCallListener extends PhoneStateListener {
-
-        private boolean isPhoneCalling = false;
-
-        String LOG_TAG = "LOGGING 123";
-
-        @Override
-        public void onCallStateChanged(int state, String incomingNumber) {
-
-            if (TelephonyManager.CALL_STATE_RINGING == state) {
-                // phone ringing
-                Log.i(LOG_TAG, "RINGING, number: " + incomingNumber);
-            }
-
-            if (TelephonyManager.CALL_STATE_OFFHOOK == state) {
-                // active
-                Log.i(LOG_TAG, "OFFHOOK");
-
-                isPhoneCalling = true;
-            }
-
-            if (TelephonyManager.CALL_STATE_IDLE == state) {
-                // run when class initial and phone call ended,
-                // need detect flag from CALL_STATE_OFFHOOK
-                Log.i(LOG_TAG, "IDLE");
-
-                if (isPhoneCalling) {
-
-                    Log.i(LOG_TAG, "restart app");
-
-                    // restart app
-                    /*
-                    Intent restartph = getBaseContext().getPackageManager()
-                            .getLaunchIntentForPackage(
-                                    getBaseContext().getPackageName());
-                    restartph.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(restartph);
-*/
-                    isPhoneCalling = false;
-                }
-            }
-        }
-    }
-
     //Call LS Button on deliverylocFragment//
 
     public void lscall(View v) {
+
         if (v.getId() == R.id.button17) {
 
             Button button17 = (Button) findViewById(R.id.button17);
@@ -255,15 +195,16 @@ public class MainActivity extends FragmentActivity {
                 public void onClick(View view) {
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
-                    callIntent.setData(Uri.parse("tel:"));
-
+                    callIntent.setData(Uri.parse("tel:"+R.string.lsbv));
+                    startActivity(callIntent);
+                    /*
                     PackageManager pm = getPackageManager();
                     if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-                        startActivity(callIntent);
+
                     } else {
 
                     }
-
+*/
                 }
             });
 
@@ -288,6 +229,7 @@ public class MainActivity extends FragmentActivity {
 */
 
     // Button state & color functions START //
+
 /*
     public static void main(String[] args) {
         statusFragment stFr = new statusFragment();
@@ -393,6 +335,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setText(R.string.zbo);
                     textView83.setText("QU");
                     textView85.setText(sdf.format(cal.getTime()) );
+                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
@@ -412,6 +355,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setText(R.string.abo);
                     textView83.setText("ZBO");
                     textView85.setText(sdf.format(cal.getTime()) );
+                    button41.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_skip_next_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
@@ -431,6 +375,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setText(R.string.zao);
                     textView83.setText("ABO");
                     textView85.setText(sdf.format(cal.getTime()) );
+                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_call_made_black_18dp, 0, 0, 0);
 /*
                     mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(2));
 
@@ -456,6 +401,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setText(R.string.aao);
                     textView83.setText("ZAO");
                     textView85.setText(sdf.format(cal.getTime()) );
+                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_hospital_black_18dp, 0, 0, 0);
 /*
                     mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(1));
 */
@@ -477,6 +423,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setText(R.string.eb);
                     textView83.setText("AAO");
                     textView85.setText(sdf.format(cal.getTime()) );
+                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
@@ -495,7 +442,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setBackgroundColor(YELLOW);
                     button41.setText("QU");
                     textView83.setText("EB");
-                    textView85.setText(sdf.format(cal.getTime()) );
+                    textView85.setText(sdf.format(cal.getTime()));
 /*
                     mTabHost.removeAllViews();
 
@@ -538,11 +485,12 @@ public class MainActivity extends FragmentActivity {
 
     // Patienten Management dialog builder //
 
-    public void patmanstart(View v) {
-        if (v.getId() == R.id.patmanbtn) {
+    public void createpat(View v) {
+        if (v.getId() == R.id.button46) {
 
             AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
             dlgBuilder.setMessage("Patient anlegen");
+            dlgBuilder.setTitle("PATADMIN");
 
             LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
 
@@ -560,6 +508,59 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+
+
+/*
+        Button button46 = (Button) findViewById(R.id.button46);
+        button46.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View arg3) {
+
+                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                dlgBuilder.setMessage("Patient anlegen");
+
+                LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
+
+                dlgBuilder.setView(inflater.inflate(R.layout.patman, null))
+
+                        .setPositiveButton("zurück", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                AlertDialog alert = dlgBuilder.create();
+                alert.show();
+
+            }
+        });
+
+        Button createpatbtn = (Button) findViewById(R.id.createpatbtn);
+        createpatbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View arg4) {
+
+                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                dlgBuilder.setMessage("Patient anlegen");
+
+                LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
+
+                dlgBuilder.setView(inflater.inflate(R.layout.patman, null))
+
+                        .setPositiveButton("zurück", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        });
+
+                AlertDialog alert = dlgBuilder.create();
+                alert.show();
+
+            }
+        });
+    }
+*/
     // Bett abbuchen btn //
 
     public void bettbuchen(View v) {
@@ -646,7 +647,7 @@ public class MainActivity extends FragmentActivity {
 
     // PatMan start btn //
 
-    public void patmanstr (View v) {
+    public void patmanstart (View v) {
         if (v.getId() == R.id.button21) {
 
             Button button21 = (Button) findViewById(R.id.button21);
@@ -710,10 +711,57 @@ public class MainActivity extends FragmentActivity {
             gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
 
             gisView.loadUrl("file:///android_asset/leaflet.html");
-
-            Toast.makeText(MainActivity.this, "Stadtplan Wien GIS", Toast.LENGTH_SHORT).show();
         }
     }
+
+    public void st14 (View v) {
+        if (v.getId() == R.id.button42) {
+
+            TextView textView86 = (TextView) findViewById(R.id.textView86);
+
+            gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult(){
+                @Override
+                public void gotLocation(Location location){
+                    //Got the location!
+
+                }
+            };
+            gpsmanager myLocation = new gpsmanager();
+            myLocation.getLocation(this, locationResult);
+
+            textView86.setText(String.valueOf(locationResult));
+        }
+    }
+/*
+    private String GetAddress(Double lat, Double lon) {
+        Geocoder geocoder = new Geocoder(context, Locale.ENGLISH);
+        String ret = "";
+        List<Address> addresses = null;
+        try {
+            addresses = geocoder.getFromLocation(lat, lon, 1);
+            if (!addresses.equals(null)) {
+                Address returnedAddress = addresses.get(0);
+                StringBuilder strReturnedAddress = new StringBuilder("\n");
+                for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
+                    strReturnedAddress
+                            .append(returnedAddress.getAddressLine(i)).append(
+                            "\n");
+                }
+                ret = "Around: " + strReturnedAddress.toString();
+            } else {
+                ret = "No Address returned!";
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            ret = "Location: https://maps.google.co.in/maps?hl=en&q=" + lat
+                    + "," + lon;
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+            ret = lat + "," + lon;
+        }
+        return ret;
+    }
+    */
 }
 
 

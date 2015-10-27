@@ -13,29 +13,39 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:weightSum="1">
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#000000">
+            android:background="#000000"
+            android:layout_marginBottom="10dp">
         </View>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:id="@+id/textView79"
             android:layout_gravity="center_horizontal"
-            android:hint="Ambulanzname" />
+            android:hint="@string/amb"
+            android:background="@drawable/edit_text_style"
+            android:textColorHint="@color/primary_dark_material_dark"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"/>
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:layout_height="30dp"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:id="@+id/textView80"
             android:layout_gravity="center_horizontal"
-            android:hint="Einheit" />
+            android:hint="@string/unit"
+            android:background="@drawable/edit_text_style"
+            android:textColorHint="@color/primary_dark_material_dark"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"/>
 
         <View
             android:layout_width="fill_parent"
@@ -47,37 +57,41 @@
             android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:weightSum="3">
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="EB"
                 android:id="@+id/button38"
                 android:layout_gravity="left"
                 android:onClick="ebst"
                 android:clickable="false"
-                android:drawableTop="@drawable/ic_play_arrow_black_18dp"/>
+                android:drawableTop="@drawable/ic_play_arrow_black_18dp"
+                android:layout_weight="1"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="NEB"
                 android:id="@+id/button39"
                 android:layout_gravity="center_vertical"
                 android:onClick="nebst"
                 android:clickable="false"
-                android:drawableTop="@drawable/ic_pause_black_18dp"/>
+                android:drawableTop="@drawable/ic_pause_black_18dp"
+                android:layout_weight="1"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:text="AD"
                 android:id="@+id/button40"
                 android:layout_gravity="right"
                 android:onClick="adst"
                 android:clickable="false"
-                android:drawableTop="@drawable/ic_stop_black_18dp"/>
+                android:drawableTop="@drawable/ic_stop_black_18dp"
+                android:layout_weight="1"/>
 
         </LinearLayout>
 
@@ -104,7 +118,6 @@
                 android:layout_width="150dp"
                 android:layout_height="70dp"
                 android:text="@string/stbutton12"
-                android:textSize="12dp"
                 android:id="@+id/button12"
                 android:drawableLeft="@drawable/ic_warning_black_18dp"
                 android:clickable="true"
@@ -115,7 +128,6 @@
                 android:layout_width="150dp"
                 android:layout_height="70dp"
                 android:text="@string/stbutton5"
-                android:textSize="12dp"
                 android:id="@+id/button5"
                 android:clickable="true"
                 android:enabled="true"
@@ -134,6 +146,14 @@
             <Button
                 android:layout_width="150dp"
                 android:layout_height="70dp"
+                android:text="@string/lsgeneral"
+                android:id="@+id/button47"
+                android:layout_gravity="right"
+                android:drawableLeft="@drawable/ic_call_black_18dp"/>
+
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="70dp"
                 android:text="@string/newinc"
                 android:id="@+id/button42"
                 android:layout_gravity="left"
@@ -142,6 +162,15 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="220dp"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="GPS nearest Address"
+            android:id="@+id/textView86"
+            android:layout_gravity="center_horizontal"
+            android:layout_weight="0.96"
+            android:maxLines="15" />
 
 
     </LinearLayout>

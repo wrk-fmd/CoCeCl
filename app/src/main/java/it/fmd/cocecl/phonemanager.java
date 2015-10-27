@@ -8,19 +8,9 @@ import android.util.Log;
 public class phonemanager extends MainActivity {
 
 
-// PHONE STATE MANAGER //
-
-    {
-        //PhoneStateListener//
-        PhoneCallListener phoneListener = new PhoneCallListener();
-        TelephonyManager telephonyManager = (TelephonyManager) this
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-    }
-
     // PHONE CALL MANAGER //
     //monitor phone call activities
-    private class PhoneCallListener extends PhoneStateListener {
+    public class PhoneCallListener extends PhoneStateListener {
 
         private boolean isPhoneCalling = false;
 
@@ -62,5 +52,15 @@ public class phonemanager extends MainActivity {
                 }
             }
         }
+    }
+
+    // PHONE STATE MANAGER //
+
+    {
+        //PhoneStateListener//
+        PhoneCallListener phoneListener = new PhoneCallListener();
+        TelephonyManager telephonyManager = (TelephonyManager) this
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
 }

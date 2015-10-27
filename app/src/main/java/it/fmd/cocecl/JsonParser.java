@@ -1,6 +1,8 @@
 package it.fmd.cocecl;
 
 /*
+import android.util.Log;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.ClientProtocolException;
@@ -15,7 +17,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 
-public class JsonParser {
+public class JsonParser extends MainActivity {
 
     final String TAG = "JsonParser.java";
 

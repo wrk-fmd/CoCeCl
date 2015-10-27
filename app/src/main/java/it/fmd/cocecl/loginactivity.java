@@ -121,6 +121,7 @@ public class loginactivity extends MainActivity {
 
             if (counter == 0) {
                 dnr_sign_in_button.setEnabled(false);
+                dnr_sign_in_button.setClickable(false);
             }
         }
     }

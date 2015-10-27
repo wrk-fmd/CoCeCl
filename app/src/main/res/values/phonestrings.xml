@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    // Phone numbers //
+
+    // LS //
+    <string name="lsbv">+43 000 00 00 000</string>
+    <string name="lsallg">+43 000 00 00 000</string>
+    <string name="lsdispo">+43 000 00 00 000</string>
+
+    // other //
+    <string name="hio">+43 000 00 00 000</string>
+
+</resources>

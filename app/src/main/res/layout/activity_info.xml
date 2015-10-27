@@ -63,7 +63,7 @@
         android:layout_width="150dp"
         android:layout_height="30dp"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:hint="@string/einheit"
+        android:hint="@string/unit"
         android:gravity="center"
         android:id="@+id/textView3"
         android:layout_below="@+id/space2"
@@ -116,7 +116,8 @@
         android:id="@+id/button14"
         android:layout_marginTop="22dp"
         android:layout_below="@+id/view3"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:drawableLeft="@drawable/ic_send_black_24dp"/>
 
     <Button
         style="?android:attr/buttonStyleSmall"

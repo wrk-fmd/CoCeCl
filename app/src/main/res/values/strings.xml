@@ -18,18 +18,20 @@
     <string name="title_activity_patman">Patienten Manager</string>
 
     //Allgemein//
-    <string name="einheit">Einheit</string>
+    <string name="unit">Einheit</string>
     <string name="amb">Ambulanz</string>
     <string name="dnr">Dienstnummer</string>
     <string name="einsatz">Einsatz</string>
     <string name="newinc">Vorfall melden</string>
     <string name="phonebk">Telefonbuch/Funkkennungen</string>
     <string name="hospitallist">Krankenhausverzeichnis</string>
-    <string name="nav">Navigieren</string>
+    <string name="nav">Navigation</string>
     <string name="phone">Anrufen</string>
     <string name="yes">JA</string>
     <string name="no">NEIN</string>
     <string name="status">STATUS</string>
+    <string name="lsgeneral">Leitstelle Allgemein</string>
+    <string name="lsbed">Leitstelle Bettenvergabe</string>
 
     //Settins strings//
     <string name="full_screen">Fullscreen</string>
@@ -85,11 +87,6 @@
     <string name="abt">Abteilung</string>
     <string name="tcnr">Transport/Casus-Nummer</string>
     <string name="title_activity_settings">SettingActivity</string>
-
-    //Tel. Nr.//
-    <string name="lsallg">+?</string>
-    <string name="lsdispo">+?</string>
-    <string name="lsbv">+?</string>
 
     //Bettenvergabe//
     <string name="intern">Intern</string>

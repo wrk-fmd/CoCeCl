@@ -69,7 +69,7 @@
                 android:clickable="true"
                 android:enabled="true"
                 android:drawableTop="@drawable/ic_navigation_black_18dp"
-                android:onClick="navao" />
+                android:onClick="navigate" />
         </LinearLayout>
 
 

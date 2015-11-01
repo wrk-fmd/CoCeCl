@@ -5,20 +5,18 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
-import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
-import static android.graphics.Color.YELLOW;
 import static android.graphics.Color.RED;
+import static android.graphics.Color.YELLOW;
 
 public class statusFragment extends MainActivity {
-/* extends MainActivity instead of Fragment */
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +32,7 @@ public class statusFragment extends MainActivity {
 
     // Status Tastenfeld //
 
-        public void st1 (View v){
+    public void st1(View v) {
         if (v.getId() == R.id.button) {
             Button button = (Button) findViewById(R.id.button);
             button.setEnabled(true);

@@ -28,26 +28,26 @@
         android:layout_height="match_parent"
         android:layout_weight="1">
     </FrameLayout>
-<!--
-    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.statusFragment"
-        tools:layout="@layout/fragment_status">
-    </fragment>
+    <!--
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:name="it.fmd.cocecl.statusFragment"
+            tools:layout="@layout/fragment_status">
+        </fragment>
 
-    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.fielddataFragment"
-        tools:layout="@layout/fragment_fielddata">
-    </fragment>
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:name="it.fmd.cocecl.fielddataFragment"
+            tools:layout="@layout/fragment_fielddata">
+        </fragment>
 
-    <fragment
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.mapFragment"
-        tools:layout="@layout/fragment_map">
-    </fragment>
--->
+        <fragment
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:name="it.fmd.cocecl.mapFragment"
+            tools:layout="@layout/fragment_map">
+        </fragment>
+    -->
 </LinearLayout>

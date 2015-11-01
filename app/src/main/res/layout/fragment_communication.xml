@@ -107,9 +107,10 @@
         android:layout_width="fill_parent"
         android:layout_height="2dip"
         android:background="#000000"
-        android:layout_above="@+id/button43"
+        android:layout_below="@+id/spinner18"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:id="@+id/view9">
     </View>
 
     <EditText
@@ -118,10 +119,10 @@
         android:inputType="phone"
         android:ems="10"
         android:id="@+id/editText14"
-        android:layout_below="@+id/spinner18"
+        android:hint="Telephonnummer"
+        android:layout_alignBottom="@+id/button43"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="Telephonnummer" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -139,20 +140,28 @@
         android:layout_height="wrap_content"
         android:text="@string/phone"
         android:id="@+id/button43"
-        android:layout_alignBottom="@+id/editText14"
-        android:layout_toRightOf="@+id/editText14"
+        android:layout_below="@+id/view9"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/button45"
+        android:layout_alignStart="@+id/button45" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/nav"
         android:id="@+id/button45"
-        android:layout_alignBottom="@+id/editText15"
-        android:layout_alignLeft="@+id/button43"
-        android:layout_alignStart="@+id/button43"
+        android:layout_below="@+id/button43"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PTT"
+        android:id="@+id/button61"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="ptt" />
 
 </RelativeLayout>

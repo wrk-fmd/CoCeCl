@@ -14,7 +14,7 @@ public class phonemanager extends MainActivity {
 
         private boolean isPhoneCalling = false;
 
-        String LOG_TAG = "LOGGING 123";
+        String LOG_TAG = "LOGGING";
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {

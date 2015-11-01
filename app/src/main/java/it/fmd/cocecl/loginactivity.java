@@ -19,9 +19,9 @@ import java.net.URLConnection;
 
 public class loginactivity extends MainActivity {
 
-   //private connectionmanager connman = new connectionmanager();
+    //private connectionmanager connman = new connectionmanager();
 
-
+    //TODO: use methods from connectionmanager class, at the moment it creates a loop followed by appcrash
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
@@ -92,54 +92,41 @@ public class loginactivity extends MainActivity {
         isOnline();
         isConnectedToServer();
 
-       // connman.isOnline();
-       // connman.isConnectedToServer();
+        // connman.isOnline();
+        // connman.isConnectedToServer();
 
-    // LogIn form //
-    final int counter = 3;
-    final Button dnr_sign_in_button = (Button) findViewById(R.id.dnr_sign_in_button);
+        // LogIn form //
+        final int counter = 3;
+        final Button dnr_sign_in_button = (Button) findViewById(R.id.dnr_sign_in_button);
 
-    final EditText dnrlogin = (EditText) findViewById(R.id.dnrlogin);
-    final EditText password = (EditText) findViewById(R.id.password);
+        final EditText dnrlogin = (EditText) findViewById(R.id.dnrlogin);
+        final EditText password = (EditText) findViewById(R.id.password);
 
-    dnr_sign_in_button.setOnClickListener(new View.OnClickListener()
+        dnr_sign_in_button.setOnClickListener(new View.OnClickListener()
 
-    {
-        @Override
-        public void onClick (View v){
-        if (dnrlogin.getText().toString().equals("0000") && password.getText().toString().equals("admin")) {
+                                              {
+                                                  @Override
+                                                  public void onClick(View v) {
+                                                      if (dnrlogin.getText().toString().equals("0000") && password.getText().toString().equals("admin")) {
 
-            //starts infoActivity activity//
-            Intent iinfoact = new Intent(getApplicationContext(), infoActivity.class);
-            startActivity(iinfoact);
+                                                          //starts infoActivity activity//
+                                                          Intent iinfoact = new Intent(getApplicationContext(), infoActivity.class);
+                                                          startActivity(iinfoact);
 
-            Toast.makeText(getApplicationContext(), "Starting Application", Toast.LENGTH_SHORT).show();
-        } else {
+                                                          Toast.makeText(getApplicationContext(), "Starting Application", Toast.LENGTH_SHORT).show();
 
-            Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
+                                                      } else {
+
+                                                          Toast.makeText(getApplicationContext(), "Wrong Credentials", Toast.LENGTH_SHORT).show();
 
 
-            if (counter == 0) {
-                dnr_sign_in_button.setEnabled(false);
-                dnr_sign_in_button.setClickable(false);
-            }
-        }
-    }
-    }
-
-    );
-       /* {
-            //Displaying TextInputLayout Error
-            TextInputLayout lNameLayout = (TextInputLayout) findViewById(R.id.dnrlog);
-            lNameLayout.setErrorEnabled(true);
-            lNameLayout.setError("Min 2 chars required");
-
-            //Displaying both TextInputLayout and EditText Errors
-            TextInputLayout phoneLayout = (TextInputLayout) findViewById(R.id.phoneLayout);
-            phoneLayout.setErrorEnabled(true);
-            phoneLayout.setError("Please enter a phone number");
-            EditText phone = (EditText) findViewById(R.id.phone);
-            phone.setError("Required");
-        }*/
+                                                          if (counter == 0) {
+                                                              dnr_sign_in_button.setEnabled(false);
+                                                              dnr_sign_in_button.setClickable(false);
+                                                          }
+                                                      }
+                                                  }
+                                              }
+        );
     }
 }

@@ -76,7 +76,6 @@
         android:hint="aktueller status"
         android:gravity="center"
         android:textStyle="bold"
-
         android:background="@drawable/edit_text_style"
         android:textColor="@color/primary_dark_material_dark"
         android:textColorHint="@color/primary_dark_material_dark"
@@ -112,7 +111,6 @@
         android:id="@+id/scrollView2"
         android:layout_below="@+id/view7">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
@@ -145,7 +143,7 @@
                 android:layout_alignParentEnd="true"
                 android:background="@drawable/edit_text_style"
                 android:editable="false"
-                android:layout_weight="100"/>
+                android:layout_weight="100" />
 
             <Button
                 android:layout_width="70dp"
@@ -155,7 +153,7 @@
                 android:clickable="true"
                 android:enabled="true"
                 android:drawableTop="@drawable/ic_navigation_black_18dp"
-                android:onClick="navbo"/>
+                android:onClick="navigate"/>
         </LinearLayout>
 
         <TextView
@@ -175,7 +173,7 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
             android:background="@drawable/edit_text_style"
-            android:layout_marginTop="10dp"/>
+            android:layout_marginTop="10dp" />
 
         <TextView
             android:layout_width="match_parent"
@@ -224,7 +222,10 @@
                     android:drawableTop="@drawable/ic_person_add_black_18dp"
                     android:layout_weight="1"
                     android:textSize="12dp"
-                    android:onClick="createpat" />
+                    android:onClick="createpat"
+                    android:clickable="false"
+                    android:enabled="false" />
+
             </TableRow>
 
             <TableRow
@@ -239,11 +240,12 @@
                     android:text="@string/stbutton10"
                     android:textSize="12dp"
                     android:id="@+id/button10"
-                    android:clickable="true"
+                    android:clickable="false"
                     android:onClick="st10"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_call_missed_black_18dp"
-                    android:layout_column="0"/>
+                    android:layout_column="0"
+                    android:enabled="false" />
 
                 <Button
                     android:layout_width="0dp"
@@ -251,11 +253,12 @@
                     android:text="@string/stbutton13"
                     android:textSize="12dp"
                     android:id="@+id/button13"
-                    android:clickable="true"
+                    android:clickable="false"
                     android:onClick="st13"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_repeat_black_18dp"
-                    android:layout_column="1"/>
+                    android:layout_column="1"
+                    android:enabled="false" />
 
                 <Button
                     android:layout_width="0dp"
@@ -263,13 +266,35 @@
                     android:text="@string/stbutton11"
                     android:textSize="12dp"
                     android:id="@+id/button11"
-                    android:clickable="true"
+                    android:clickable="false"
                     android:onClick="st11"
                     android:layout_weight="1"
                     android:drawableTop="@drawable/ic_directions_run_black_18dp"
-                    android:layout_column="2" />
+                    android:layout_column="2"
+                    android:enabled="false" />
             </TableRow>
         </TableLayout>
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#000000">
+        </View>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Zugewiesene Einheiten"
+            android:id="@+id/textView10" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+
+        </LinearLayout>
 
     </LinearLayout>
     </ScrollView>

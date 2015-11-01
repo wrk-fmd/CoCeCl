@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="it.fmd.cocecl.loginactivity">
+    tools:context="it.fmd.cocecl.loginactivity"
+    android:background="#757575">
 
     <!-- Login progress -->
     <ProgressBar android:id="@+id/login_progress" style="?android:attr/progressBarStyleLarge"
@@ -21,10 +22,10 @@
         android:inputType="number" android:maxLines="1"
         android:singleLine="true"
         android:gravity="center"
-        android:layout_below="@+id/textView49"
+        android:layout_below="@+id/view8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="10dp"/>
 
     <EditText android:id="@+id/password" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:hint="@string/prompt_password"
@@ -44,7 +45,8 @@
         android:onClick="signin"
         android:layout_below="@+id/password"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="10dp"/>
 
     <ImageView
         android:layout_width="wrap_content"
@@ -86,9 +88,11 @@
         android:layout_width="fill_parent"
         android:layout_height="2dip"
         android:background="#000000"
-        android:layout_alignTop="@+id/dnrlogin"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true">
+        android:id="@+id/view8"
+        android:layout_below="@+id/textView49"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="30dp">
     </View>
 
     <View

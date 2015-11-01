@@ -149,7 +149,8 @@
                 android:text="@string/lsgeneral"
                 android:id="@+id/button47"
                 android:layout_gravity="right"
-                android:drawableLeft="@drawable/ic_call_black_18dp"/>
+                android:drawableLeft="@drawable/ic_call_black_18dp"
+                android:onClick="lscall" />
 
             <Button
                 android:layout_width="150dp"
@@ -162,15 +163,46 @@
 
         </LinearLayout>
 
-        <TextView
-            android:layout_width="220dp"
+        <Button
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="GPS nearest Address"
-            android:id="@+id/textView86"
+            android:text="TEST Button"
+            android:id="@+id/button22"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="0.96"
-            android:maxLines="15" />
+            android:onClick="alertbtn" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dip"
+            android:background="#000000">
+        </View>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:weightSum="2">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="derzeitiger Auftrag"
+                android:id="@+id/textView92"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_gravity="center"/>
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Auftrag \nwechseln"
+                android:id="@+id/button62"
+                android:layout_weight="1"/>
+        </LinearLayout>
+
+
 
 
     </LinearLayout>

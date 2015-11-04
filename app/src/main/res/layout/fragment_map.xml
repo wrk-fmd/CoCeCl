@@ -16,7 +16,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Stadtplan anzeigen"
+        android:text="leaflet"
         android:id="@+id/button30"
         android:onClick="showmap"
         android:layout_alignParentTop="true"
@@ -30,5 +30,8 @@
         android:id="@+id/button31"
         android:layout_above="@+id/gisView"
         android:layout_toRightOf="@+id/button30"
-        android:layout_toEndOf="@+id/button30" />
+        android:layout_toEndOf="@+id/button30"
+        android:onClick="json" />
+
+
 </RelativeLayout>

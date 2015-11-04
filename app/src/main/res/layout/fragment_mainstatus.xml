@@ -163,14 +163,6 @@
 
         </LinearLayout>
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TEST Button"
-            android:id="@+id/button22"
-            android:layout_gravity="center_horizontal"
-            android:onClick="alertbtn" />
-
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
@@ -179,7 +171,7 @@
 
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:weightSum="2">
@@ -199,11 +191,10 @@
                 android:layout_height="wrap_content"
                 android:text="Auftrag \nwechseln"
                 android:id="@+id/button62"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:drawableLeft="@drawable/double_arrow_left"
+                android:drawableRight="@drawable/double_arrow_right"/>
         </LinearLayout>
-
-
-
 
     </LinearLayout>
 

@@ -1,10 +1,12 @@
 package it.fmd.cocecl;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -18,12 +20,12 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,10 +35,21 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.w3c.dom.Text;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -60,16 +73,72 @@ public class MainActivity extends FragmentActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
+    // json object response url
+    private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
+
+    // json array response url
+    private String urlJsonArry = "http://api.androidhive.info/volley/person_array.json";
+
+    private static String TAG = MainActivity.class.getSimpleName();
+    private Button btnMakeObjectRequest, btnMakeArrayRequest;
+
+    // Progress dialog
+    private ProgressDialog pDialog;
+
+    private TextView txtResponse;
+
+    // temporary string to show the parsed response
+    private String jsonResponse;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        if( savedInstanceState != null ) {
-            Toast.makeText(this, savedInstanceState .getString("message"), Toast.LENGTH_LONG).show();
+        // Actionbar custom view //
+
+        {
+            ActionBar mActionBar = getActionBar();
+            //mActionBar.setDisplayShowHomeEnabled(false);
+            //mActionBar.setDisplayShowTitleEnabled(false);
+            LayoutInflater mInflater = LayoutInflater.from(this);
+
+            View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+
+            ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.imageButton);
+            imageButton.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(getApplicationContext(), "Refresh Clicked!",
+                            Toast.LENGTH_SHORT).show();
+                }
+            });
+
+            assert mActionBar != null;
+            mActionBar.setCustomView(mCustomView);
+            mActionBar.setDisplayShowCustomEnabled(true);
         }
 
-        // GPS Coordinates // send continuous updates //TODO: app crash after timer on gpsmanager runs out
+        // GPS Coordinates // send continuous updates //
+
+        //new
+
+        gpsmanager gps = new gpsmanager(MainActivity.this);
+        double latitude = gps.getLatitude();
+        double longitude = gps.getLongitude();
+
+        Handler h = new Handler();
+        h.postDelayed(new
+
+                              Runnable() {
+                                  @Override
+                                  public void run() {
+                                      //send coordinates every 10 sec
+                                  }
+                              }
+
+                , 10000);
 /*
         gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult(){
             @Override
@@ -83,38 +152,15 @@ public class MainActivity extends FragmentActivity {
         gpsmanager mylocation = new gpsmanager();
         mylocation.getLocation(MainActivity.this, locationResult);
 
-        // Translate coordinates into address
+        */
 
-        Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-        try {
-            List<Address> listAddresses = geocoder.getFromLocation(latitude, longitude, 1);
-            if (null != listAddresses && listAddresses.size() > 0) {
-                String LocationAdd = listAddresses.get(0).getAddressLine(0);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-/*
-        Handler h = new Handler();
-        h.postDelayed(new
-
-                              Runnable() {
-                                  @Override
-                                  public void run() {
-                                      //send coordinates every 10 sec
-                                  }
-                              }
-
-                , 10000);
-*/
-        {
             // FRAGMENT MANAGER //
-//TODO: Fragmentmanager doesnt crash anymore; tablet mode still doesnt work
+        {
+            //TODO: Fragmentmanager does not crash anymore; tablet mode still does not work
             if ((getResources().getConfiguration().screenLayout &
                     Configuration.SCREENLAYOUT_SIZE_MASK) ==
                     Configuration.SCREENLAYOUT_SIZE_LARGE) {
                 // on a large screen device ...
-
 /*
                 Fragment mainstatusfrag = new mainstatusFragment();
                 Fragment incidentFrag = new incidentFragment();
@@ -146,6 +192,7 @@ public class MainActivity extends FragmentActivity {
                 ft.commit();
             }
         }
+
         // OPTIONS MENU //
 /*
     @Override
@@ -191,43 +238,232 @@ public class MainActivity extends FragmentActivity {
                     communicationFragment.class, null);
         }
     }
-/*
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        System.out.println("TAG, onSaveInstanceState");
 
-        outState.putString("message", "This is my message to be reloaded");
 
-        final TextView textView83 = (TextView)findViewById(R.id.textView83);
-        final Button button41 = (Button)findViewById(R.id.button41);
+/* TODO: Nullpointer Exception - android.app.Activity.getLayoutInflater
+        final LayoutInflater factory = getLayoutInflater();
 
-        CharSequence button41text = button41.getText();
-        CharSequence stateText = textView83.getText();
-        outState.putCharSequence("savedbuttonText", button41text);
-        outState.putCharSequence("savedstateText", stateText);
-    }
+        final View cusactbar = factory.inflate(R.layout.custom_actionbar, null);
 
-    protected void onRestoreInstanceState(Bundle savedState) {
-        System.out.println("TAG, onRestoreInstanceState");
+        // Action bar connection state icon //
+        ImageView netcon = (ImageView) cusactbar.findViewById(R.id.imageView_con);
+        ImageView mlscon = (ImageView) cusactbar.findViewById(R.id.imageView_mlscon);
+        {
+            // check if you are connected or not
+            connectionmanager conman = new connectionmanager();
 
-        final TextView textView83 = (TextView)findViewById(R.id.textView83);
-        final Button button41 = (Button) findViewById(R.id.button41);
+            if (conman.isOnline()) {
+                netcon.setBackgroundColor(0xFF00CC00);
+                mlscon.setBackgroundColor(0xFF00CC00);
 
-        CharSequence button41text = savedState.getCharSequence("savedbuttonText");
-        CharSequence stateText = savedState.getCharSequence("savedstateText");
-        button41.setText(button41text);
-        textView83.setText(stateText);
-    }
+            } else {
+
+                netcon.setBackgroundColor(0xFFFFCC00);
+                mlscon.setBackgroundColor(0xFFFFCC00);
+            }
+        }
 */
+
+    // JSON //
+
+    public void json(View v) {
+        if (v.getId() == R.id.button31) {
+
+            { // TODO: set new button and textview
+                btnMakeObjectRequest = (Button) findViewById(R.id.button);
+                btnMakeArrayRequest = (Button) findViewById(R.id.button);
+                txtResponse = (TextView) findViewById(R.id.textView);
+
+                pDialog = new ProgressDialog(this);
+                pDialog.setMessage("Please wait...");
+                pDialog.setCancelable(false);
+
+                btnMakeObjectRequest.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // making json object request
+                        makeJsonObjectRequest();
+                    }
+                });
+
+                btnMakeArrayRequest.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View v) {
+                        // making json array request
+                        makeJsonArrayRequest();
+                    }
+                });
+            }
+        }
+    }
+
+    /**
+     * Method to make json object request where json response starts wtih {
+     * */
+    private void makeJsonObjectRequest() {
+
+        showpDialog();
+
+        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
+                urlJsonObj, null, new Response.Listener<JSONObject>() {
+
+            @Override
+            public void onResponse(JSONObject response) {
+                Log.d(TAG, response.toString());
+
+                try {
+                    // Parsing json object response
+                    // response will be a json object
+                    String name = response.getString("name");
+                    String email = response.getString("email");
+                    JSONObject phone = response.getJSONObject("phone");
+                    String home = phone.getString("home");
+                    String mobile = phone.getString("mobile");
+
+                    jsonResponse = "";
+                    jsonResponse += "Name: " + name + "\n\n";
+                    jsonResponse += "Email: " + email + "\n\n";
+                    jsonResponse += "Home: " + home + "\n\n";
+                    jsonResponse += "Mobile: " + mobile + "\n\n";
+
+                    txtResponse.setText(jsonResponse);
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    Toast.makeText(getApplicationContext(),
+                            "Error: " + e.getMessage(),
+                            Toast.LENGTH_LONG).show();
+                }
+                hidepDialog();
+            }
+        }, new Response.ErrorListener() {
+
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                // hide the progress dialog
+                hidepDialog();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(jsonObjReq);
+    }
+
+    /**
+     * Method to make json array request where response starts with [
+     * */
+    private void makeJsonArrayRequest() {
+
+        showpDialog();
+
+        JsonArrayRequest req = new JsonArrayRequest(urlJsonArry,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        Log.d(TAG, response.toString());
+
+                        try {
+                            // Parsing json array response
+                            // loop through each json object
+                            jsonResponse = "";
+                            for (int i = 0; i < response.length(); i++) {
+
+                                JSONObject person = (JSONObject) response
+                                        .get(i);
+
+                                String name = person.getString("name");
+                                String email = person.getString("email");
+                                JSONObject phone = person
+                                        .getJSONObject("phone");
+                                String home = phone.getString("home");
+                                String mobile = phone.getString("mobile");
+
+                                jsonResponse += "Name: " + name + "\n\n";
+                                jsonResponse += "Email: " + email + "\n\n";
+                                jsonResponse += "Home: " + home + "\n\n";
+                                jsonResponse += "Mobile: " + mobile + "\n\n\n";
+
+                            }
+
+                            txtResponse.setText(jsonResponse);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(getApplicationContext(),
+                                    "Error: " + e.getMessage(),
+                                    Toast.LENGTH_LONG).show();
+                        }
+
+                        hidepDialog();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                VolleyLog.d(TAG, "Error: " + error.getMessage());
+                Toast.makeText(getApplicationContext(),
+                        error.getMessage(), Toast.LENGTH_SHORT).show();
+                hidepDialog();
+            }
+        });
+
+        // Adding request to request queue
+        AppController.getInstance().addToRequestQueue(req);
+    }
+
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
+    }
+
+    //TODO: create method to save app/fragment state
+    /*
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            System.out.println("TAG, onSaveInstanceState");
+
+            outState.putString("message", "This is my message to be reloaded");
+
+            final TextView textView83 = (TextView)findViewById(R.id.textView83);
+            final Button button41 = (Button)findViewById(R.id.button41);
+
+            CharSequence button41text = button41.getText();
+            CharSequence stateText = textView83.getText();
+            outState.putCharSequence("savedbuttonText", button41text);
+            outState.putCharSequence("savedstateText", stateText);
+        }
+
+        protected void onRestoreInstanceState(Bundle savedState) {
+            System.out.println("TAG, onRestoreInstanceState");
+
+            final TextView textView83 = (TextView)findViewById(R.id.textView83);
+            final Button button41 = (Button) findViewById(R.id.button41);
+
+            CharSequence button41text = savedState.getCharSequence("savedbuttonText");
+            CharSequence stateText = savedState.getCharSequence("savedstateText");
+            button41.setText(button41text);
+            textView83.setText(stateText);
+        }
+    */
+    //TODO: create app life cycle
     @Override
-    public void onResume(){
+    public void onResume() {
         super.onResume();
 
     }
 
     @Override
-    public void onPause(){
+    public void onPause() {
         super.onPause();
         /*gpsmanager mylocation = new gpsmanager();
         mylocation.cancelTimer();*/
@@ -235,14 +471,14 @@ public class MainActivity extends FragmentActivity {
     }
 
     @Override
-    public void onStop(){
+    public void onStop() {
         super.onStop();
 
 
     }
 
     @Override
-    public void onDestroy(){
+    public void onDestroy() {
         super.onDestroy();
 
 
@@ -257,38 +493,20 @@ public class MainActivity extends FragmentActivity {
     }
 
 
-    // Actionbar custom view //
-/*
-    {
-        LayoutInflater inflater = (LayoutInflater) getActionBar().getThemedContext()
-                .getSystemService(LAYOUT_INFLATER_SERVICE);
+    // Buttons //
 
-        final View customActionBarView = inflater.inflate(
-                R.layout.actionbar_layout, null);
-
-        // Show the custom action bar view and hide the normal Home icon and title
-        final ActionBar actionBar = getActionBar();
-        actionBar.setHomeButtonEnabled(true);
-        actionBar.setDisplayHomeAsUpEnabled(false);
-        actionBar.setDisplayShowTitleEnabled(true);
-        actionBar.setCustomView(customActionBarView);
-        actionBar.setDisplayShowCustomEnabled(true);
-
-    }
-*/
-
-    public void ptt (View v) {
+    public void ptt(View v) {
         if (v.getId() == R.id.button61) {
             AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-            dlgBuilder.setMessage("implement manet ptt source code");
-            dlgBuilder.setTitle("MANET PTT App");
+            dlgBuilder.setMessage("ptt app");
+            dlgBuilder.setTitle("PTT App");
 
-                    dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
 
-                        }
-                    });
+                }
+            });
 
             AlertDialog alert = dlgBuilder.create();
             alert.show();
@@ -347,29 +565,34 @@ public class MainActivity extends FragmentActivity {
     }
 
     // Alert Push Notification Manager //
-    //TODO: later function for new incident alert !!! check again
+    //TODO: later: function for new incident alert !!! check again
     public void alertbtn(View v) {
 
-        if (v.getId() == R.id.button22) {
+        final LayoutInflater factory = getLayoutInflater();
 
-            Button b22 = (Button) findViewById(R.id.button22);
+        final View incidentView = factory.inflate(R.layout.fragment_incident, null);
+        //TODO: remove button
+        if (v.getId() == R.id.button) {
+
+            Button b22 = (Button) findViewById(R.id.button);
             b22.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg5) {
 
-                    final TextView bofield = (TextView) findViewById(R.id.bofield);
-                    final TextView brfrfield = (TextView) findViewById(R.id.brfrfield);
-                    final TextView infofield = (TextView) findViewById(R.id.infofield);
+                    final TextView bofield = (TextView) incidentView.findViewById(R.id.bofield);
+                    final TextView brfrfield = (TextView) incidentView.findViewById(R.id.brfrfield);
+                    final TextView infofield = (TextView) incidentView.findViewById(R.id.infofield);
 
-                    final Button button41 = (Button) findViewById(R.id.button41);
-                    final TextView textView83 = (TextView) findViewById(R.id.textView83);
-                    final TextView textView85 = (TextView) findViewById(R.id.textView85);
+                    final Button button41 = (Button) incidentView.findViewById(R.id.button41);
+                    final TextView textView83 = (TextView) incidentView.findViewById(R.id.textView83);
+                    final TextView textView85 = (TextView) incidentView.findViewById(R.id.textView85);
 
                     final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
                     final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
 
                     AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                    dlgBuilder.setCancelable(false);
                     dlgBuilder.setTitle("EINSATZ");
                     dlgBuilder.setMessage("Addresse & Berufungsgrund");
 
@@ -379,7 +602,7 @@ public class MainActivity extends FragmentActivity {
 
                             button41.setText(R.string.zbo);
                             textView83.setText("QU");
-                            textView85.setText(sdf.format(cal.getTime()) );
+                            textView85.setText(sdf.format(cal.getTime()));
                             button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
 
                             Toast.makeText(MainActivity.this, "Einsatz übernommen", Toast.LENGTH_SHORT).show();
@@ -410,7 +633,7 @@ public class MainActivity extends FragmentActivity {
                             .setDefaults(Notification.DEFAULT_ALL)
                             .setWhen(System.currentTimeMillis())
                             .setSmallIcon(R.drawable.ic_warning_black_18dp)
-                            .setTicker("Alert")
+                            .setTicker("Alert new Incident")
                             .setContentTitle("Alert + Code")
                             .setContentText("AddressStreet")
                             .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
@@ -418,7 +641,7 @@ public class MainActivity extends FragmentActivity {
                             .setContentInfo("Detail Code");
 
                     // AlertSound
-                    mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION));
+                    mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
 
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(1, mBuilder.build());
@@ -438,7 +661,6 @@ public class MainActivity extends FragmentActivity {
         });
 
         */
-
 
 
     // Button state & color functions START //
@@ -512,6 +734,7 @@ public class MainActivity extends FragmentActivity {
     }
 
     // Status weiterschalten incidentFragment //
+    //TODO: set fragments on status change
 
     public void stbtnClick(View v) {
 
@@ -541,12 +764,12 @@ public class MainActivity extends FragmentActivity {
 
                 if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
 
-                    button41.setEnabled(true);
+                    button41.setEnabled(false);
                     button41.setClickable(false);
                     button41.setBackgroundColor(YELLOW);
                     button41.setText(R.string.zbo);
                     textView83.setText("QU");
-                    textView85.setText(sdf.format(cal.getTime()) );
+                    textView85.setText(sdf.format(cal.getTime()));
                     button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
@@ -561,13 +784,13 @@ public class MainActivity extends FragmentActivity {
 
                 } else if (textView83.getText().equals("QU")) {
 
-                    button41.setEnabled(true);
-                    button41.setClickable(true);
+                    button41.setEnabled(false);
+                    button41.setClickable(false);
                     button41.setBackgroundColor(YELLOW);
                     button41.setText(R.string.abo);
                     textView83.setText("ZBO");
-                    textView85.setText(sdf.format(cal.getTime()) );
-                    button41.setCompoundDrawablesWithIntrinsicBounds( R.drawable.ic_skip_next_black_18dp, 0, 0, 0);
+                    textView85.setText(sdf.format(cal.getTime()));
+                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_skip_next_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
@@ -581,8 +804,8 @@ public class MainActivity extends FragmentActivity {
 
                 } else if (textView83.getText().equals("ZBO")) {
 
-                    button41.setEnabled(true);
-                    button41.setClickable(true);
+                    button41.setEnabled(false);
+                    button41.setClickable(false);
                     button41.setBackgroundColor(YELLOW);
                     button41.setText(R.string.zao);
                     textView83.setText("ABO");
@@ -621,7 +844,7 @@ public class MainActivity extends FragmentActivity {
                     button41.setBackgroundColor(YELLOW);
                     button41.setText(R.string.aao);
                     textView83.setText("ZAO");
-                    textView85.setText(sdf.format(cal.getTime()) );
+                    textView85.setText(sdf.format(cal.getTime()));
                     button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_hospital_black_18dp, 0, 0, 0);
 
                     button10.setEnabled(false);
@@ -647,12 +870,12 @@ public class MainActivity extends FragmentActivity {
 
                 } else if (textView83.getText().equals("ZAO")) {
 
-                    button41.setEnabled(true);
-                    button41.setClickable(true);
+                    button41.setEnabled(false);
+                    button41.setClickable(false);
                     button41.setBackgroundColor(YELLOW);
                     button41.setText(R.string.eb);
                     textView83.setText("AAO");
-                    textView85.setText(sdf.format(cal.getTime()) );
+                    textView85.setText(sdf.format(cal.getTime()));
                     button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
 
                     Handler h = new Handler();
@@ -667,8 +890,8 @@ public class MainActivity extends FragmentActivity {
 
                 } else if (textView83.getText().equals("AAO")) {
 
-                    button41.setEnabled(true);
-                    button41.setClickable(true);
+                    button41.setEnabled(false);
+                    button41.setClickable(false);
                     button41.setBackgroundColor(YELLOW);
                     button41.setText("QU");
                     textView83.setText("EB");
@@ -708,56 +931,139 @@ public class MainActivity extends FragmentActivity {
         alert.show();
     }
 
+    // Emergency light yes/no //
+    public void checkBox(View v) {
+        if (v.getId() == R.id.checkBox) {
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+            checkBox.setEnabled(true);
+            checkBox.setClickable(false);
+            checkBox.setHintTextColor(BLUE);
+        }
+    }
+
     // Button state & color functions END
 
     // Patienten Management dialog builder //
 
     public void createpat(View v) {
+
+        final RelativeLayout patmanlayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.patman, null);
+        final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
+        final TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
+
         if (v.getId() == R.id.button46) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-            //dlgBuilder.setMessage("Patient anlegen");
-            dlgBuilder.setTitle("PATADMIN");
+            Button button46 = (Button) findViewById(R.id.button46);
+            button46.setOnClickListener(new View.OnClickListener() {
 
-            LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
+                @Override
+                public void onClick(View view) {
 
-            dlgBuilder.setView(inflater.inflate(R.layout.patman, null))
+                    AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                    //dlgBuilder.setMessage("Patient anlegen");
+                    dlgBuilder.setTitle("PATADMIN");
 
-                    .setPositiveButton("Senden", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                    //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
 
-                                //remove layout
-                                View viewToRemove= findViewById(R.id.patmanrelayout);
-                                if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                    ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                    dlgBuilder.setView(patmanlayout)
 
-                                //send data
+                            .setPositiveButton("Senden", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
 
-                                Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
+                                    //remove layout
+                                    View viewToRemove = findViewById(R.id.patmanrelayout);
+                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
-                        }
-                    });
+                                    //send data
 
-            dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
+                                    Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
 
-                    {
+                                }
+                            });
 
+                    dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
+
+                            {
+
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    //remove layout
+                                    View viewToRemove = findViewById(R.id.patmanrelayout);
+                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                                }
+                            }
+
+                    );
+
+                    AlertDialog alert = dlgBuilder.create();
+                    alert.show();
+
+                }
+            });
+        }
+
+        if (v.getId() == R.id.changepatbtn) {
+
+            Button createpatbtn = (Button) findViewById(R.id.changepatbtn);
+
+            createpatbtn.setOnClickListener(new View.OnClickListener() {
+
+                @Override
+                public void onClick(View view) {
+
+                    AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                    //dlgBuilder.setMessage("Patient anlegen");
+                    dlgBuilder.setTitle("PATADMIN");
+
+                    //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
+
+                    dlgBuilder.setView(patmanlayout);
+                    //bettbtn.setEnabled(false);
+                    //bettbtn.setClickable(false);
+                    bettbtn.setVisibility(View.GONE);
+                    textView11.setVisibility(View.GONE);
+
+                    dlgBuilder.setPositiveButton("Senden", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
                             //remove layout
-                            View viewToRemove= findViewById(R.id.patmanrelayout);
+                            View viewToRemove = findViewById(R.id.patmanrelayout);
                             if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
+                            //send data
+
+                            //Toast.makeText(MainActivity.this, "Pat. Daten geändert", Toast.LENGTH_SHORT).show();
+
                         }
-                    }
+                    });
 
-            );
+                    dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
 
-            AlertDialog alert = dlgBuilder.create();
-            alert.show();
+                            {
 
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    //remove layout
+                                    View viewToRemove = findViewById(R.id.patmanrelayout);
+                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                                }
+                            }
+
+                    );
+
+                    AlertDialog alert = dlgBuilder.create();
+                    alert.show();
+
+                }
+            });
         }
     }
 
@@ -765,10 +1071,12 @@ public class MainActivity extends FragmentActivity {
 
     public void bettbuchen(View v) {
 
+        final RelativeLayout patmanlayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.patman, null);
+        /*
         LayoutInflater inflater = getLayoutInflater();
         getWindow().addContentView(inflater.inflate(R.layout.patman, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
-
+*/
         if (v.getId() == R.id.bettbtn) {
 
             AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(MainActivity.this);
@@ -780,7 +1088,7 @@ public class MainActivity extends FragmentActivity {
 
                         public void onClick(DialogInterface dialog, int which) {
 
-                            TextView abtedit = (TextView) findViewById(R.id.textView11);
+                            TextView abtedit = (TextView) patmanlayout.findViewById(R.id.textView11);
 
                             switch (which) {
 
@@ -831,7 +1139,7 @@ public class MainActivity extends FragmentActivity {
 
     // PatMan start btn //
 
-    public void patmanstart (View v) {
+    public void patmanstart(View v) {
         if (v.getId() == R.id.button21) {
 
             Button button21 = (Button) findViewById(R.id.button21);
@@ -847,179 +1155,219 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    // Emergency light yes/no //
-    public void checkBox(View v) {
-        if (v.getId() == R.id.checkBox) {
-            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
-            checkBox.setEnabled(true);
-            checkBox.setClickable(false);
-            checkBox.setHintTextColor(BLUE);
-        }
-    }
-
     public void navigate(View v) {
 
         if (v.getId() == R.id.button18) {
-
+            final TextView text = (TextView) findViewById(R.id.bofield);
             Button button18 = (Button) findViewById(R.id.button18);
             button18.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
 
-                    TextView text = (TextView)findViewById(R.id.bofield);
-                    String navadress = "google.navigation:" + text.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
+                    if(text != null) {
+
+                        String navadress = "google.navigation:" + text.getText().toString();
+                        Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+                        nav.setData(Uri.parse(navadress));
+                        startActivity(nav);
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
 
         if (v.getId() == R.id.button19) {
 
+            final TextView text = (TextView) findViewById(R.id.aofield);
             Button button19 = (Button) findViewById(R.id.button19);
             button19.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View view) {
 
-                    TextView text = (TextView) findViewById(R.id.aofield);
-                    String navadress = "google.navigation:" + text.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
+                    if (text != null) {
+
+                        String navadress = "google.navigation:" + text.getText().toString();
+                        Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+                        nav.setData(Uri.parse(navadress));
+                        startActivity(nav);
+
+                    } else {
+                        Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
+                    }
                 }
             });
         }
-
     }
 
-    public void showmap (View v) {
-        if (v.getId() == R.id.button30) {
+        public void showmap(View v) {
+            if (v.getId() == R.id.button30) {
 
-            WebView gisView = (WebView) findViewById(R.id.gisView);
+                WebView gisView = (WebView) findViewById(R.id.gisView);
 
-            gisView.getSettings().setJavaScriptEnabled(true);
-            gisView.getSettings().getAllowFileAccessFromFileURLs();
-            gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+                gisView.getSettings().setJavaScriptEnabled(true);
+                gisView.getSettings().getAllowFileAccessFromFileURLs();
+                gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+                gisView.getSettings().setGeolocationEnabled(true);
 
-            gisView.loadUrl("file:///android_asset/leaflet.html");
-        }
-    }
+                gisView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+                gisView.getSettings().setBuiltInZoomControls(true);
 
-    public void st14(View v) {
+                gisView.setWebViewClient(new GeoWebViewActivity.GeoWebViewClient());
+                gisView.setWebChromeClient(new GeoWebViewActivity.GeoWebChromeClient());
 
-        LayoutInflater inflater = getLayoutInflater();
-        getWindow().addContentView(inflater.inflate(R.layout.reportincident, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-
-        if (v.getId() == R.id.button42) {
-
-            final EditText editText24 = (EditText) findViewById(R.id.editText24);
-            final TextView textView86 = (TextView) findViewById(R.id.textView86);
-            final TextView textView93 = (TextView) findViewById(R.id.textView93);
-            final Button button42 = (Button) findViewById(R.id.button42);
-
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-            dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
-            dlgBuilder.setCancelable(false);
-
-            dlgBuilder.setView(inflater.inflate(R.layout.reportincident, null));
-//TODO: GPS Coordinates working but not shown in custom layout. Geocoder not working??
-            gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult(){
-                @Override
-                public void gotLocation(Location location){
-                    loc = location;
-                    latitude = loc.getLatitude();
-                    longitude = loc.getLongitude();
-                }
-            };
-
-            gpsmanager mylocation = new gpsmanager();
-            mylocation.getLocation(MainActivity.this, locationResult);
-
-            Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-            String result = null;
-            try {
-                List<Address> addressList = geocoder.getFromLocation(
-                        latitude, longitude, 1);
-                if (addressList != null && addressList.size() > 0) {
-                    Address address = addressList.get(0);
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                        sb.append(address.getAddressLine(i)).append("\n");
-                    }
-                    sb.append(address.getLocality()).append("\n");
-                    sb.append(address.getPostalCode()).append("\n");
-                    sb.append(address.getCountryName());
-                    result = sb.toString();
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
+                gisView.loadUrl("file:///android_asset/leaflet.html");
             }
+        }
 
-            editText24.setText(result);
-            textView86.setText("" + latitude);
-            textView93.setText("" + longitude);
+        public void st14(View v) {
 
-            dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+        RelativeLayout reportincident = (RelativeLayout)getLayoutInflater().inflate(R.layout.reportincident, null);
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+            if (v.getId() == R.id.button42) {
 
-                            button42.setEnabled(false);
-                            button42.setClickable(false);
-                            button42.setBackgroundColor(YELLOW);
+                final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
+                final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
+                final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
+                final Button button42 = (Button) findViewById(R.id.button42);
 
-                            Handler h = new Handler();
-                            h.postDelayed(new
+                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
+                dlgBuilder.setCancelable(false);
 
-                                                  Runnable() {
-                                                      @Override
-                                                      public void run() {
-                                                          button42.setEnabled(true);
-                                                          button42.setClickable(true);
-                                                          button42.setBackgroundResource(android.R.drawable.btn_default);
-                                                          editText24.setText("");
-                                                          textView86.setText("");
-                                                          textView93.setText("");
+                dlgBuilder.setView(reportincident);
+
+                /*
+                gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult() {
+                    @Override
+                    public void gotLocation(Location location) {
+                        loc = location;
+                        latitude = loc.getLatitude();
+                        longitude = loc.getLongitude();
+                    }
+                };
+
+                gpsmanager mylocation = new gpsmanager();
+                mylocation.getLocation(MainActivity.this, locationResult);
+*/
+                gpsmanager gps = new gpsmanager(MainActivity.this);
+                double latitude = gps.getLatitude();
+                double longitude = gps.getLongitude();
+
+                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+
+                try {
+                    List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+
+                    if(addresses != null && addresses.size() > 0) {
+                        Address returnedAddress = addresses.get(0);
+                        StringBuilder strReturnedAddress = new StringBuilder();
+                        for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
+                            strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
+                        }
+                        strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
+                        strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
+                        strReturnedAddress.append(returnedAddress.getCountryName());
+                        editText24.setText(strReturnedAddress.toString());
+
+                    } else {
+
+                        editText24.setText("No Address found!");
+                    }
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                    editText24.setText("Cannot get Address!");
+                }
+
+
+
+/*
+                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
+                String result = null;
+                try {
+                    List<Address> addressList = geocoder.getFromLocation(
+                            latitude, longitude, 1);
+                    if (addressList != null && addressList.size() > 0) {
+                        Address address = addressList.get(0);
+                        StringBuilder sb = new StringBuilder();
+                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
+                            sb.append(address.getAddressLine(i)).append("\n");
+                        }
+                        sb.append(address.getLocality()).append("\n");
+                        sb.append(address.getPostalCode()).append("\n");
+                        sb.append(address.getCountryName());
+                        result = sb.toString();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+*/
+
+                    //editText24.setText(locationAddress);
+                    textView86.setText("lat: " + latitude);
+                    textView93.setText("lon: " + longitude);
+
+                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                button42.setEnabled(false);
+                                button42.setClickable(false);
+                                button42.setBackgroundColor(YELLOW);
+
+                                Handler h = new Handler();
+                                h.postDelayed(new
+
+                                                      Runnable() {
+                                                          @Override
+                                                          public void run() {
+                                                              button42.setEnabled(true);
+                                                              button42.setClickable(true);
+                                                              button42.setBackgroundResource(android.R.drawable.btn_default);
+                                                              editText24.setText("");
+                                                              textView86.setText("");
+                                                              textView93.setText("");
+                                                          }
                                                       }
-                                                  }
 
-                                    , 30000);
+                                        , 30000);
 
-                            Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).
+                                Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).
 
-                                    show();
+                                        show();
+                            }
                         }
-                    }
 
-            );
+                );
 
-            dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener()
+                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener()
 
-                    {
+                        {
 
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
                         }
-                    }
 
-            );
+                );
 
-            AlertDialog alert = dlgBuilder.create();
-            alert.show();
+                AlertDialog alert = dlgBuilder.create();
+                alert.show();
 
-            // remove layout
-            View viewToRemove = findViewById(R.id.reportincidentrelayout);
-            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                // remove layout
+                View viewToRemove = findViewById(R.id.reportincidentrelayout);
+                if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                    ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
 
+            }
         }
     }
-}
 
 
 

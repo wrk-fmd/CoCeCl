@@ -155,8 +155,8 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Patient anlegen"
-                android:id="@+id/createpatbtn"
+                android:text="Pat. Daten ändern"
+                android:id="@+id/changepatbtn"
                 android:layout_alignParentRight="true"
                 android:drawableLeft="@drawable/ic_person_add_black_24dp"
                 android:onClick="createpat" />

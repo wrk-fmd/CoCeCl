@@ -1,21 +1,17 @@
 package it.fmd.cocecl;
 
-/*
+
 import android.util.Log;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class JsonParser extends MainActivity {
 
@@ -25,9 +21,44 @@ public class JsonParser extends MainActivity {
     static JSONObject jObj = null;
     static String json = "";
 
+    //URL url;
+
     public JSONObject getJSONFromUrl(String url) {
 
         // make HTTP request
+        // new
+
+        HttpsURLConnection urlConnection = null;
+
+        try {
+            URL urlmls = new URL("https://mls.wrk.com");
+            //url = new String("https://mls.wrk.com");
+
+            urlConnection = (HttpsURLConnection) urlmls.openConnection();
+
+            InputStream in = urlConnection.getInputStream();
+
+            InputStreamReader isw = new InputStreamReader(in);
+
+            int data = isw.read();
+            while (data != -1) {
+                char current = (char) data;
+                data = isw.read();
+                System.out.print(current);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                urlConnection.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace(); //If you want further info on failure...
+            }
+        }
+        // new end
+
+        //deprecated//
+        /*
         try {
 
             DefaultHttpClient httpClient = new DefaultHttpClient();
@@ -44,7 +75,7 @@ public class JsonParser extends MainActivity {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
+*/
         try {
 
             BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
@@ -70,4 +101,4 @@ public class JsonParser extends MainActivity {
         // return JSON String
         return jObj;
     }
-}*/
+}

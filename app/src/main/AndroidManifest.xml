@@ -21,6 +21,13 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
+
+    <uses-permission android:name="it.fmd.cocecl.permission.C2D_MESSAGE" />
+    <permission
+        android:name="it.fmd.cocecl.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
 
     <supports-screens
         android:smallScreens="true"
@@ -32,19 +39,18 @@
         android:allowBackup="false"
         android:icon="@mipmap/cocecl"
         android:label="@string/app_name"
-        android:theme="@android:style/Theme.DeviceDefault"
+        android:theme="@style/AppTheme"
         android:logo="@mipmap/cocecl"
-        android:name="it.fmd.cocecl.AppController">
+        android:name="it.fmd.cocecl.helper.AppController">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="YOUR_API_KEY"/>
 
         <activity
-            android:name=".infoActivity"
+            android:name=".InfoActivity"
             android:label="@string/app_name" >
             #android:screenOrientation="portrait">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"
@@ -69,11 +75,15 @@
         -->
 
         <activity
-            android:name=".loginactivity"
+            android:name=".LoginActivity"
             android:label="@string/app_name"
             android:windowSoftInputMode="adjustResize|stateVisible" >
             #android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".SettingsActivity"
@@ -81,16 +91,30 @@
             #android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".patmanActivity"
+            android:name=".PatmanActivity"
             android:label="@string/title_activity_patman"
             android:screenOrientation="landscape">
         </activity>
 
-        <receiver android:name=".smsbroadcastreceiver" android:exported="true" >
+        <receiver android:name=".utilclass.SMSBroadcastReceiver" android:exported="true" >
             <intent-filter android:priority="999" >
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
+
+        <receiver
+            android:name="it.fmd.cocecl.gcm.GCMBroadcastReceiver"
+            android:permission="it.fmd.cocecl.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <action android:name="it.fmd.cocecl.c2dm.intent.RECEIVE" />
+                <action android:name="it.fmd.cocecl.c2dm.intent.REGISTRATION" />
+
+                <category android:name="it.fmd.cocecl" />
+            </intent-filter>
+        </receiver>
+
+        <service android:name="it.fmd.cocecl.gcm.GCMNotificationIntentService" />
 
     </application>
 

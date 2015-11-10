@@ -32,21 +32,21 @@
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.statusFragment"
+        android:name="it.fmd.cocecl.fragments.statusFragment"
         tools:layout="@layout/fragment_status">
     </fragment>
 
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.fielddataFragment"
+        android:name="it.fmd.cocecl.fragments.fielddataFragment"
         tools:layout="@layout/fragment_fielddata">
     </fragment>
 
     <fragment
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:name="it.fmd.cocecl.mapFragment"
+        android:name="it.fmd.cocecl.fragments.mapFragment"
         tools:layout="@layout/fragment_map">
     </fragment>
 -->

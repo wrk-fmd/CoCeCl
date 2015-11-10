@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +9,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -20,6 +20,8 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
@@ -35,8 +37,8 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -46,6 +48,13 @@ import com.android.volley.VolleyError;
 import com.android.volley.VolleyLog;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -58,6 +67,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import it.fmd.cocecl.fragments.communicationFragment;
+import it.fmd.cocecl.fragments.deliverylocFragment;
+import it.fmd.cocecl.fragments.incidentFragment;
+import it.fmd.cocecl.fragments.mainstatusFragment;
+import it.fmd.cocecl.fragments.mapFragment;
+import it.fmd.cocecl.helper.AppController;
+import it.fmd.cocecl.utilclass.GPSManager;
+import it.fmd.cocecl.utilclass.GeoWebViewActivity;
+
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.YELLOW;
@@ -65,66 +83,102 @@ import static android.graphics.Color.YELLOW;
 
 public class MainActivity extends FragmentActivity {
 
+    TextView SMSm;
+    static String phoneNumber1;
+    static String SMSBody1;
+
+    public static void getSmsDetails(String phoneNumber, String SMSBody) {
+        phoneNumber1 = phoneNumber;
+        SMSBody1 = SMSBody;
+    }
+
+    // Google Map
+    private GoogleMap googleMap;
+
     private FragmentTabHost mTabHost;
 
+    private CoordinatorLayout coordinatorLayout;
+
+    // Location
     public static Location loc;
     private static double longitude;
     private static double latitude;
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
+    // JSON
     // json object response url
     private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
-
     // json array response url
     private String urlJsonArry = "http://api.androidhive.info/volley/person_array.json";
-
-    private static String TAG = MainActivity.class.getSimpleName();
+    public static String TAG = MainActivity.class.getSimpleName();
     private Button btnMakeObjectRequest, btnMakeArrayRequest;
-
     // Progress dialog
     private ProgressDialog pDialog;
-
     private TextView txtResponse;
-
     // temporary string to show the parsed response
     private String jsonResponse;
 
+    //Shared Preferences
+    SharedPreferences spref;
+    String patfirstname,patlastname,patdatebirth,patsvnr,patplsnr,patgender,patward;
+    String getpatfirstname,getpatlastname,getpatdatebirth,getpatsvnr,getpatplsnr,getpatgender,getpatward;
+
+
+    // OnCreate Method // ------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Shared Prefs
+        spref = getSharedPreferences("PatData", MODE_PRIVATE);
+
+
         // Actionbar custom view //
-
+/*
         {
-            ActionBar mActionBar = getActionBar();
-            //mActionBar.setDisplayShowHomeEnabled(false);
-            //mActionBar.setDisplayShowTitleEnabled(false);
-            LayoutInflater mInflater = LayoutInflater.from(this);
 
-            View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
 
-            ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.imageButton);
-            imageButton.setOnClickListener(new View.OnClickListener() {
+                ActionBar mActionBar = getActionBar();
+                //mActionBar.setDisplayShowHomeEnabled(false);
+                //mActionBar.setDisplayShowTitleEnabled(false);
+                LayoutInflater mInflater = LayoutInflater.from(this);
 
-                @Override
-                public void onClick(View view) {
-                    Toast.makeText(getApplicationContext(), "Refresh Clicked!",
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+                View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
 
-            assert mActionBar != null;
-            mActionBar.setCustomView(mCustomView);
-            mActionBar.setDisplayShowCustomEnabled(true);
+                ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.imageButton);
+                imageButton.setOnClickListener(new View.OnClickListener() {
+
+                    @Override
+                    public void onClick(View view) {
+                        Toast.makeText(getApplicationContext(), "Refresh Clicked!",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                assert mActionBar != null;
+                mActionBar.setCustomView(mCustomView);
+                mActionBar.setDisplayShowCustomEnabled(true);
+            }
         }
+        // TODO: set icons in ActionBar depending on connection state
+/*
+        ConnectionManager conman = new ConnectionManager();
+        if (conman.isOnline());
 
+        if(isValid()) {
+            // something
+        } else {
+            //something else
+        }
+*/
         // GPS Coordinates // send continuous updates //
 
         //new
 
-        gpsmanager gps = new gpsmanager(MainActivity.this);
+        GPSManager gps = new GPSManager(MainActivity.this);
         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
 
@@ -134,13 +188,13 @@ public class MainActivity extends FragmentActivity {
                               Runnable() {
                                   @Override
                                   public void run() {
-                                      //send coordinates every 10 sec
+                                      //TODO: send coordinates every 10 sec
                                   }
                               }
 
                 , 10000);
 /*
-        gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult(){
+        GPSManager.LocationResult locationResult = new GPSManager.LocationResult(){
             @Override
             public void gotLocation(Location location){
                 loc = location;
@@ -149,7 +203,7 @@ public class MainActivity extends FragmentActivity {
             }
         };
 
-        gpsmanager mylocation = new gpsmanager();
+        GPSManager mylocation = new GPSManager();
         mylocation.getLocation(MainActivity.this, locationResult);
 
         */
@@ -239,6 +293,11 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    public void setSMS() {
+        //SMS Alert// write content to incident fields
+        SMSm = (TextView) findViewById(R.id.bofield);
+        SMSm.setText("Phone Number: " + phoneNumber1 + " " + "SMS: " + SMSBody1);
+    }
 
 /* TODO: Nullpointer Exception - android.app.Activity.getLayoutInflater
         final LayoutInflater factory = getLayoutInflater();
@@ -250,7 +309,7 @@ public class MainActivity extends FragmentActivity {
         ImageView mlscon = (ImageView) cusactbar.findViewById(R.id.imageView_mlscon);
         {
             // check if you are connected or not
-            connectionmanager conman = new connectionmanager();
+            ConnectionManager conman = new ConnectionManager();
 
             if (conman.isOnline()) {
                 netcon.setBackgroundColor(0xFF00CC00);
@@ -263,6 +322,69 @@ public class MainActivity extends FragmentActivity {
             }
         }
 */
+
+    public void startmaps (View v) {
+        if (v.getId() == R.id.button31) {
+            try {
+                // Loading map
+                initilizeMap();
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private void initilizeMap() {
+        if (googleMap == null) {
+            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
+                    R.id.map)).getMap();
+
+            // check if map is created successfully or not
+            if (googleMap == null) {
+                Toast.makeText(getApplicationContext(),
+                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
+                        .show();
+            }
+        }
+    }
+
+    public void initializeMapLocationSettings() {
+        googleMap.setMyLocationEnabled(true);
+    }
+
+    public void initializeMapTraffic() {
+        googleMap.setTrafficEnabled(true);
+    }
+
+    public void initializeMapType() {
+        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+    }
+
+/*
+    // create marker
+    MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("");
+    // adding marker
+    googleMap.addMarker(marker);
+*/
+    public void setmapmarker() {
+        Marker nodo = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(48.1907634, 16.411198))
+                .title("NODO"));
+
+        Marker kss = googleMap.addMarker(new MarkerOptions()
+                .position(new LatLng(48.2671734, 16.4019968))
+                .title("KSS"));
+        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic)));
+    }
+
+    public void mapcamera () {
+        //unit position
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(
+                new LatLng(latitude, longitude)).zoom(12).build();
+
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+    }
 
     // JSON //
 
@@ -425,6 +547,7 @@ public class MainActivity extends FragmentActivity {
             pDialog.dismiss();
     }
 
+
     //TODO: create method to save app/fragment state
     /*
         @Override
@@ -459,13 +582,15 @@ public class MainActivity extends FragmentActivity {
     @Override
     public void onResume() {
         super.onResume();
+        //initilizeMap();
+        //checkPlayServices();
 
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        /*gpsmanager mylocation = new gpsmanager();
+        /*GPSManager mylocation = new GPSManager();
         mylocation.cancelTimer();*/
 
     }
@@ -492,7 +617,6 @@ public class MainActivity extends FragmentActivity {
         return true;
     }
 
-
     // Buttons //
 
     public void ptt(View v) {
@@ -514,17 +638,49 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-    //Call LS Button on deliverylocFragment//
+    //Call LS Buttons//
 
+    public void lscall(View view) {
+        Intent callIntent = new Intent(Intent.ACTION_CALL);
+        PackageManager pm = getPackageManager();
+        switch(view.getId()) {
+
+            case R.id.button17:
+
+                callIntent.setData(Uri.parse("tel:" + R.string.lsbv));
+                startActivity(callIntent);
+
+                if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+
+                }
+                break;
+
+            case R.id.button47:
+                callIntent.setData(Uri.parse("tel:" + R.string.lsallg));
+                startActivity(callIntent);
+
+                if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+
+                } else {
+
+                }
+                break;
+
+        }
+    }
+/*
     public void lscall(View v) {
 
-        if (v.getId() == R.id.button17) {
+        //Button button17 = (Button) findViewById(R.id.button17);
+        //Button button47 = (Button) findViewById(R.id.button47);
 
-            Button button17 = (Button) findViewById(R.id.button17);
+
             button17.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + R.string.lsbv));
@@ -538,15 +694,11 @@ public class MainActivity extends FragmentActivity {
                     }
                 }
             });
-        }
 
-        if (v.getId() == R.id.button47) {
-
-            Button button47 = (Button) findViewById(R.id.button47);
             button47.setOnClickListener(new View.OnClickListener() {
 
                 @Override
-                public void onClick(View view) {
+                public void onClick(View v) {
 
                     Intent callIntent = new Intent(Intent.ACTION_CALL);
                     callIntent.setData(Uri.parse("tel:" + R.string.lsallg));
@@ -562,20 +714,20 @@ public class MainActivity extends FragmentActivity {
                 }
             });
         }
-    }
+*/
 
     // Alert Push Notification Manager //
     //TODO: later: function for new incident alert !!! check again
     public void alertbtn(View v) {
 
-        final LayoutInflater factory = getLayoutInflater();
+        final LayoutInflater inci = getLayoutInflater();
 
-        final View incidentView = factory.inflate(R.layout.fragment_incident, null);
+        final View incidentView = inci.inflate(R.layout.fragment_incident, null);
         //TODO: remove button
         if (v.getId() == R.id.button) {
 
-            Button b22 = (Button) findViewById(R.id.button);
-            b22.setOnClickListener(new View.OnClickListener() {
+            Button alertbtntest = (Button) findViewById(R.id.button);
+            alertbtntest.setOnClickListener(new View.OnClickListener() {
 
                 @Override
                 public void onClick(View arg5) {
@@ -650,21 +802,17 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
-/* outdated version
-                NotificationManager notif = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                Notification notify = new Notification(R.drawable.ic_warning_black_18dp, title, System.currentTimeMillis());
-                PendingIntent pending = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(), 0);
+    // SnackBar // for incident update notification
+    public void onIncidentUpdate() {
 
-                notify.setLatestEventInfo(getApplicationContext(), subject, body, pending);
-                notif.notify(0, notify);
-            }
-        });
+        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+        Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.inciupdate, Snackbar.LENGTH_INDEFINITE);
 
-        */
+        snackbar.show();
+    }
 
 
     // Button state & color functions START //
-
     // Status EB NEB AD mainstatusFragment //
 
     public void ebst(View v) {
@@ -951,6 +1099,14 @@ public class MainActivity extends FragmentActivity {
         final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
         final TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
 
+        final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
+        final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
+        final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
+        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById();
+        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
+        final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
+        final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
+
         if (v.getId() == R.id.button46) {
 
             Button button46 = (Button) findViewById(R.id.button46);
@@ -962,14 +1118,33 @@ public class MainActivity extends FragmentActivity {
                     AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
                     //dlgBuilder.setMessage("Patient anlegen");
                     dlgBuilder.setTitle("PATADMIN");
-
                     //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
 
-                    dlgBuilder.setView(patmanlayout)
-
-                            .setPositiveButton("Senden", new DialogInterface.OnClickListener() {
+                    dlgBuilder.setView(patmanlayout).setPositiveButton("Senden", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
+
+                                    // Store in sharedprefs
+                                    patfirstname = addpatfirstname.getText().toString();
+                                    patlastname = addpatlastname.getText().toString();
+                                    patdatebirth = addpatdatebirth.getText().toString();
+                                    //patsvnr = addactoradd.getText().toString();
+                                    patplsnr = addpatplsnr.getText().toString();
+                                    //patgender = addpatgender.getText().toString();
+                                    patward = addpatward.getText().toString();
+
+
+                                    SharedPreferences.Editor patedit = spref.edit();
+
+                                    patedit.putString("patfirstname", patfirstname);
+                                    patedit.putString("patlastname", patlastname);
+                                    patedit.putString("patdatebirth", patdatebirth);
+                                    //patedit.putString("patsvnr", patsvnr);
+                                    patedit.putString("patplsnr", patplsnr);
+                                    //patedit.putString("patgender", patgender);
+                                    patedit.putString("patward", patward);
+
+                                    patedit.commit();
 
                                     //remove layout
                                     View viewToRemove = findViewById(R.id.patmanrelayout);
@@ -990,6 +1165,28 @@ public class MainActivity extends FragmentActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
+                                    // Store in sharedprefs
+                                    patfirstname = addpatfirstname.getText().toString();
+                                    patlastname = addpatlastname.getText().toString();
+                                    patdatebirth = addpatdatebirth.getText().toString();
+                                    //patsvnr = addactoradd.getText().toString();
+                                    patplsnr = addpatplsnr.getText().toString();
+                                    //patgender = addpatgender.getText().toString();
+                                    patward = addpatward.getText().toString();
+
+
+                                    SharedPreferences.Editor patedit = spref.edit();
+
+                                    patedit.putString("patfirstname", patfirstname);
+                                    patedit.putString("patlastname", patlastname);
+                                    patedit.putString("patdatebirth", patdatebirth);
+                                    //patedit.putString("patsvnr", patsvnr);
+                                    patedit.putString("patplsnr", patplsnr);
+                                    //patedit.putString("patgender", patgender);
+                                    patedit.putString("patward", patward);
+
+                                    patedit.commit();
+
                                     //remove layout
                                     View viewToRemove = findViewById(R.id.patmanrelayout);
                                     if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
@@ -1008,6 +1205,7 @@ public class MainActivity extends FragmentActivity {
 
         if (v.getId() == R.id.changepatbtn) {
 
+
             Button createpatbtn = (Button) findViewById(R.id.changepatbtn);
 
             createpatbtn.setOnClickListener(new View.OnClickListener() {
@@ -1015,7 +1213,7 @@ public class MainActivity extends FragmentActivity {
                 @Override
                 public void onClick(View view) {
 
-                    AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                    final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
                     //dlgBuilder.setMessage("Patient anlegen");
                     dlgBuilder.setTitle("PATADMIN");
 
@@ -1027,6 +1225,25 @@ public class MainActivity extends FragmentActivity {
                     bettbtn.setVisibility(View.GONE);
                     textView11.setVisibility(View.GONE);
 
+                    //Getting Stored data from SharedPreferences
+                    getpatfirstname = spref.getString("patfirstname", "");
+                    getpatlastname = spref.getString("patlastname", "");
+                    getpatdatebirth = spref.getString("patdatebirth", "");
+                    //getpatsvnr = spref.getString("patsvnr", "");
+                    getpatplsnr = spref.getString("patplsnr", "");
+                    //getpatgender = spref.getString("patgender", "");
+                    getpatward = spref.getString("patward", "");
+
+                    //write to textview
+                    addpatfirstname.setText("" + getpatfirstname);
+                    addpatlastname.setText("" + getpatlastname);
+                    addpatdatebirth.setText("" + getpatdatebirth);
+                    //addpatsvnr.setText(""+getpatsvnr);
+                    addpatplsnr.setText("" + getpatplsnr);
+                    addpatward.setText("" + getpatgender);
+                    //addpatgender.setText(""+getpatward);
+
+
                     dlgBuilder.setPositiveButton("Senden", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -1036,7 +1253,7 @@ public class MainActivity extends FragmentActivity {
                             if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
-                            //send data
+                            //TODO: send pat data
 
                             //Toast.makeText(MainActivity.this, "Pat. Daten geändert", Toast.LENGTH_SHORT).show();
 
@@ -1147,7 +1364,7 @@ public class MainActivity extends FragmentActivity {
 
                 @Override
                 public void onClick(View arg0) {
-                    Intent ipatman = new Intent(getApplicationContext(), patmanActivity.class);
+                    Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
                     startActivity(ipatman);
                 }
             });
@@ -1155,6 +1372,61 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    // Store Pat Data // with shared prefs
+
+    // Store Pat Data end //
+
+    // Navigate to provided address //
+    // TODO: choose between built-in maps api and own navigation app
+    public void navigate(View view) {
+
+        final TextView botext = (TextView) findViewById(R.id.bofield);
+        final TextView aotext = (TextView) findViewById(R.id.aofield);
+        final TextView custom = (TextView) findViewById(R.id.commaddress);
+
+        switch(view.getId())
+        {
+            case R.id.button18:
+                if(botext.getText() != null) {
+
+                    String navadress = "google.navigation:" + botext.getText().toString();
+                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+                    nav.setData(Uri.parse(navadress));
+                    startActivity(nav);
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case R.id.button19:
+                if (aotext.getText() != null) {
+
+                    String navadress = "google.navigation:" + aotext.getText().toString();
+                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+                    nav.setData(Uri.parse(navadress));
+                    startActivity(nav);
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
+                }
+                break;
+
+            case R.id.button45: //commfragment, custom navigation
+                if (custom.getText() != null) {
+
+                    String navadress = "google.navigation:" + custom.getText().toString();
+                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
+                    nav.setData(Uri.parse(navadress));
+                    startActivity(nav);
+
+                } else {
+                    Toast.makeText(MainActivity.this, "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
+                }
+                break;
+        }
+    }
+    /*
     public void navigate(View v) {
 
         if (v.getId() == R.id.button18) {
@@ -1202,7 +1474,7 @@ public class MainActivity extends FragmentActivity {
             });
         }
     }
-
+*/
         public void showmap(View v) {
             if (v.getId() == R.id.button30) {
 
@@ -1241,7 +1513,7 @@ public class MainActivity extends FragmentActivity {
                 dlgBuilder.setView(reportincident);
 
                 /*
-                gpsmanager.LocationResult locationResult = new gpsmanager.LocationResult() {
+                GPSManager.LocationResult locationResult = new GPSManager.LocationResult() {
                     @Override
                     public void gotLocation(Location location) {
                         loc = location;
@@ -1250,10 +1522,10 @@ public class MainActivity extends FragmentActivity {
                     }
                 };
 
-                gpsmanager mylocation = new gpsmanager();
+                GPSManager mylocation = new GPSManager();
                 mylocation.getLocation(MainActivity.this, locationResult);
 */
-                gpsmanager gps = new gpsmanager(MainActivity.this);
+                GPSManager gps = new GPSManager(MainActivity.this);
                 double latitude = gps.getLatitude();
                 double longitude = gps.getLongitude();
 
@@ -1282,8 +1554,6 @@ public class MainActivity extends FragmentActivity {
                     e.printStackTrace();
                     editText24.setText("Cannot get Address!");
                 }
-
-
 
 /*
                 Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());

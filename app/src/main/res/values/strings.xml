@@ -43,6 +43,31 @@
     <string name="reloadconf">config neu laden</string>
     <string name="chooseserver">Server auswählen</string>
 
+    //GCM//
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+    <string name="welcome_txt">GCM App</string>
+    <string name="email">Email Address</string>
+    <string name="login">Register Me</string>
+    <string name="defaultmsg">Message sent by server will appear here.</string>
+    <string name="msg_title">Message</string>
+    <string name="user_title">Hello User</string>
+
     //Tab strings//
     <string name="einsatztab">Einsatzdaten</string>
     <string name="statustab">Statusfenster</string>
@@ -72,6 +97,7 @@
     <string name="eb">Einsatzbereit</string>
     <string name="neb">Nicht einsatzbereit</string>
     <string name="ad">Ausser Dienst</string>
+    <string name="inciupdate">Achtung Einsatz Update!</string>
 
     <string name="stwe">Status weiterschalten?</string>
 

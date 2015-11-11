@@ -22,7 +22,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
-            android:hint="Name"
+            android:hint="name"
             android:padding="10dp"
             android:singleLine="true"
             android:inputType="textCapWords" />
@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/dnr"
             android:layout_gravity="center_horizontal"
-            android:hint="Dienstnummer"
+            android:hint="dienstnummer"
             android:layout_marginBottom="10dp"
             android:padding="10dp"
             android:singleLine="true"

@@ -6,96 +6,131 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
 
-import javax.net.ssl.HttpsURLConnection;
+public class JSONParser {
 
-import it.fmd.cocecl.MainActivity;
+    String charset = "UTF-8";
+    HttpURLConnection conn;
+    DataOutputStream wr;
+    StringBuilder result = new StringBuilder();
+    URL urlObj;
+    JSONObject jObj = null;
+    StringBuilder sbParams;
+    String paramsString;
 
-public class JSONParser extends MainActivity {
+    public JSONObject makeHttpRequest(String url, String method,
+                                      HashMap<String, String> params) {
 
-    final String TAG = "JSONParser.java";
-
-    static InputStream is = null;
-    static JSONObject jObj = null;
-    static String json = "";
-
-    //URL url;
-
-    public JSONObject getJSONFromUrl(String url) {
-
-        // make HTTP request
-
-        HttpsURLConnection urlConnection = null;
-
-        try {
-            URL urlmls = new URL("https://mls.wrk.com");
-            //url = new String("https://mls.wrk.com");
-            urlConnection = (HttpsURLConnection) urlmls.openConnection();
-            InputStream in = urlConnection.getInputStream();
-            InputStreamReader isw = new InputStreamReader(in);
-
-            int data = isw.read();
-            while (data != -1) {
-                char current = (char) data;
-                data = isw.read();
-                System.out.print(current);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
+        sbParams = new StringBuilder();
+        int i = 0;
+        for (String key : params.keySet()) {
             try {
-                urlConnection.disconnect();
-            } catch (Exception e) {
-                e.printStackTrace(); //If you want further info on failure...
+                if (i != 0){
+                    sbParams.append("&");
+                }
+                sbParams.append(key).append("=")
+                        .append(URLEncoder.encode(params.get(key), charset));
+
+            } catch (UnsupportedEncodingException e) {
+                e.printStackTrace();
             }
+            i++;
         }
 
-        //deprecated//
-        /*
+        if (method.equals("POST")) {
+            // request method is POST
+            try {
+                urlObj = new URL(url);
+
+                conn = (HttpURLConnection) urlObj.openConnection();
+
+                conn.setDoOutput(true);
+
+                conn.setRequestMethod("POST");
+
+                conn.setRequestProperty("Accept-Charset", charset);
+
+                conn.setReadTimeout(10000);
+                conn.setConnectTimeout(15000);
+
+                conn.connect();
+
+                paramsString = sbParams.toString();
+
+                wr = new DataOutputStream(conn.getOutputStream());
+                wr.writeBytes(paramsString);
+                wr.flush();
+                wr.close();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else if(method.equals("GET")){
+            // request method is GET
+
+            if (sbParams.length() != 0) {
+                url += "?" + sbParams.toString();
+            }
+
+            try {
+                urlObj = new URL(url);
+
+                conn = (HttpURLConnection) urlObj.openConnection();
+
+                conn.setDoOutput(false);
+
+                conn.setRequestMethod("GET");
+
+                conn.setRequestProperty("Accept-Charset", charset);
+
+                conn.setConnectTimeout(15000);
+
+                conn.connect();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+        }
+
         try {
+            //Receive the response from the server
+            InputStream in = new BufferedInputStream(conn.getInputStream());
+            BufferedReader reader = new BufferedReader(new InputStreamReader(in));
 
-            DefaultHttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(url);
+            String line;
+            while ((line = reader.readLine()) != null) {
+                result.append(line);
+            }
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
-            HttpEntity httpEntity = httpResponse.getEntity();
-            is = httpEntity.getContent();
+            Log.d("JSON Parser", "result: " + result.toString());
 
-        } catch (UnsupportedEncodingException e) {
-            e.printStackTrace();
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-*/
-        try {
 
-            BufferedReader reader = new BufferedReader(new InputStreamReader(is, "iso-8859-1"), 8);
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = reader.readLine()) != null) {
-                sb.append(line + "\n");
-            }
-            is.close();
-            json = sb.toString();
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error converting result " + e.toString());
-        }
+        conn.disconnect();
 
         // try parse the string to a JSON object
         try {
-            jObj = new JSONObject(json);
+            jObj = new JSONObject(result.toString());
         } catch (JSONException e) {
-            Log.e(TAG, "Error parsing data " + e.toString());
+            Log.e("JSON Parser", "Error parsing data " + e.toString());
         }
 
-        // return JSON String
+        // return JSON Object
         return jObj;
     }
 }

@@ -65,4 +65,8 @@ public class PhoneManager extends MainActivity {
                 .getSystemService(Context.TELEPHONY_SERVICE);
         telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
     }
+
+    //get phonenumber
+    TelephonyManager tMgr = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
+    String mPhoneNumber = tMgr.getLine1Number();
 }

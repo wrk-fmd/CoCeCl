@@ -8,6 +8,10 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.AlertDialog;
+import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -42,9 +46,13 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
+import android.text.TextWatcher;
+
 public class LoginActivity extends MainActivity {
 
     private static final String TAG = LoginActivity.class.getSimpleName();
+
+    // DB Login //
     private Button btnLogin;
     private Button btnLinkToRegister;
     private EditText inputEmail;
@@ -56,6 +64,10 @@ public class LoginActivity extends MainActivity {
 
     private TextView errormsgtxt;
 
+    // Floating Labels
+    private Toolbar toolbar;
+    private TextInputLayout inputLayoutDnr, inputLayoutEmail, inputLayoutPassword;
+
 
     //GCM
     ProgressDialog prgDialog;
@@ -66,12 +78,13 @@ public class LoginActivity extends MainActivity {
 
     //private ConnectionManager connman = new ConnectionManager();
 
+    // OnCreate Method // -------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //GCM//
+        //GCM//TODO: gcm only in LoginActivity active?!?
 
             applicationContext = getApplicationContext();
             emailET = (EditText) findViewById(R.id.email);
@@ -94,8 +107,18 @@ public class LoginActivity extends MainActivity {
                 finish();
             }
 
-
-        // LogIn //
+        //Floating Labels//
+        inputLayoutDnr = (TextInputLayout) findViewById(R.id.input_layout_dnr);
+        inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
+        inputEmail = (EditText) findViewById(R.id.dnrlogin);
+        inputPassword = (EditText) findViewById(R.id.password);
+/*
+        inputDNr.addTextChangedListener(new MyTextWatcher(inputDNr));
+        inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
+        inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
+*/
+        // LogIn to Server//
+        // TODO: combine login with gcm login
         inputEmail = (EditText) findViewById(R.id.dnrlogin);
         //inputDNr = (EditText) findViewById(R.id.dnrlogin);
         inputPassword = (EditText) findViewById(R.id.password);
@@ -145,6 +168,7 @@ public class LoginActivity extends MainActivity {
         });
 
         // Link to Register Screen
+        // Dialog for user registering
         btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
@@ -156,7 +180,7 @@ public class LoginActivity extends MainActivity {
                 inputEmail = (EditText) registeruserlayout.findViewById(R.id.email);
                 inputPassword = (EditText) registeruserlayout.findViewById(R.id.password);
                 btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
-                btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
+                //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
 /*
                 dlgBuilder.setView(registeruserlayout).setPositiveButton("Senden", new DialogInterface.OnClickListener() {
                     @Override
@@ -196,6 +220,33 @@ public class LoginActivity extends MainActivity {
             }
         });
     }
+/*
+    private class MyTextWatcher implements TextWatcher {
+
+        private View view;
+
+        private MyTextWatcher(View view) {
+            this.view = view;
+        }
+
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+        }
+
+        public void afterTextChanged(Editable editable) {
+            switch (view.getId()) {
+                case R.id.dnrlogin:
+                    validateName();
+                    break;
+                case R.id.password:
+                    validatePassword();
+                    break;
+            }
+        }
+    }
+*/
     //TODO: remove when login finished
     public void bypasslogin(View v) {
         if (v.getId() == R.id.button22) {
@@ -205,8 +256,6 @@ public class LoginActivity extends MainActivity {
             finish();
         }
     }
-
-
 
     /**
      * function to verify login details in mysql db
@@ -653,10 +702,12 @@ public class LoginActivity extends MainActivity {
             }
             return false;
         } else {
+            /*
             Toast.makeText(
                     applicationContext,
                     "This device supports Play services, App will work normally",
-                    Toast.LENGTH_LONG).show();
+                    Toast.LENGTH_SHORT).show();
+                    */
         }
         return true;
     }

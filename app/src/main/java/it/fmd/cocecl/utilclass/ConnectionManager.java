@@ -1,5 +1,6 @@
 package it.fmd.cocecl.utilclass;
 
+import android.app.Application;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
@@ -12,14 +13,14 @@ import java.net.URLConnection;
 
 import it.fmd.cocecl.LoginActivity;
 
-public class ConnectionManager extends LoginActivity {
+public class ConnectionManager extends Application {
 
+    //TODO: update connection Manager
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
 
-        // connection symbol //
         if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
 
                 cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||

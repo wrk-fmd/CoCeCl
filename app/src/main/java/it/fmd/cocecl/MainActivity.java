@@ -38,11 +38,15 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.RotateAnimation;
 import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -65,6 +69,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -80,6 +85,7 @@ import it.fmd.cocecl.fragments.incidentFragment;
 import it.fmd.cocecl.fragments.mainstatusFragment;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.helper.AppController;
+import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.GeoWebViewActivity;
 import it.fmd.cocecl.utilclass.JSONParser;
@@ -97,6 +103,7 @@ import android.support.v7.app.AppCompatActivity;
 
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
 import static android.graphics.Color.YELLOW;
 
 
@@ -399,6 +406,88 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    //Animated sync symbol in toolbar//
+    //rotate imageview animation
+
+    public void onSyncIconStart() {
+        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+
+        RotateAnimation r = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        r.setDuration((long) 2*1000);
+        r.setRepeatCount(Animation.INFINITE);
+        syncicon.startAnimation(r);
+    }
+
+    public void onSyncIconStop() {
+        ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
+        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
+
+        RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        r.setDuration((long) 2*3000);
+        r.setRepeatCount(Animation.INFINITE);
+        syncicon.startAnimation(r);
+
+        serveranswer.setText("Empfangen");
+        serveranswer.setTextColor(GREEN);
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                serveranswer.setText("");
+
+            }
+        }, 5000);
+    }
+
+    public void onSyncError() {
+        final ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
+        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
+
+        RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
+
+        r.setDuration((long) 2*3000);
+        r.setRepeatCount(Animation.INFINITE);
+        syncicon.startAnimation(r);
+
+        syncicon.setBackgroundColor(RED);
+        serveranswer.setText("Error");
+        serveranswer.setTextColor(RED);
+
+        Handler h = new Handler();
+        h.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                serveranswer.setText("");
+                syncicon.setBackgroundColor(View.GONE);
+
+            }
+        }, 5000);
+    }
+
+    //animated menu icon method
+    /*
+    public void refresh() {
+     /* Attach a rotating ImageView to the refresh item as an ActionView
+        //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        ImageView iv = (ImageView) findViewById(R.id.imageView2);
+
+        Animation rotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.sync_anim);
+        rotation.setRepeatCount(Animation.INFINITE);
+        iv.startAnimation(rotation);
+
+        refreshItem.setActionView(iv);
+
+        //TODO trigger loading
+    }
+
+    public void completeRefresh() {
+        refreshItem.getActionView().clearAnimation();
+        refreshItem.setActionView(null);
+    }
+*/
 
     // SMS Alert //
     // TODO: on incoming sms from specific number, set data to incident fields
@@ -408,30 +497,27 @@ public class MainActivity extends AppCompatActivity {
         SMSm.setText("Phone Number: " + phoneNumber1 + " " + "SMS: " + SMSBody1);
     }
 
-    // ActionBar status icons // ver21-16
-/* TODO: Nullpointer Exception - android.app.Activity.getLayoutInflater
-        final LayoutInflater factory = getLayoutInflater();
+    // ToolBar status icons //
+    //TODO: write new conman
+    public void checkMLSConnection(View v) {
+            // ToolBar connection state icon //
+            //ImageView netcon = (ImageView) cusactbar.findViewById(R.id.imageView_con);
+            ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
+            {
+                // check if you are connected or not
+                ConnectionManager conman = new ConnectionManager();
 
-        final View cusactbar = factory.inflate(R.layout.custom_actionbar, null);
+                if (conman.isOnline()) {
+                    //netcon.setBackgroundColor(0xFF00CC00);
+                    mlscon.setImageResource(R.drawable.connected64);
 
-        // Action bar connection state icon //
-        ImageView netcon = (ImageView) cusactbar.findViewById(R.id.imageView_con);
-        ImageView mlscon = (ImageView) cusactbar.findViewById(R.id.imageView_mlscon);
-        {
-            // check if you are connected or not
-            ConnectionManager conman = new ConnectionManager();
+                } else {
 
-            if (conman.isOnline()) {
-                netcon.setBackgroundColor(0xFF00CC00);
-                mlscon.setBackgroundColor(0xFF00CC00);
-
-            } else {
-
-                netcon.setBackgroundColor(0xFFFFCC00);
-                mlscon.setBackgroundColor(0xFFFFCC00);
+                    //netcon.setBackgroundColor(0xFFFFCC00);
+                    mlscon.setImageResource(R.drawable.disconnected64);
+                }
             }
         }
-*/
 
     private void showpDialog() {
         if (!pDialog.isShowing())
@@ -745,11 +831,245 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Status Buttons//TODO: move methods to IncidentAction
+    //Radio
+    public void radiostatusbtn(View view) {
+        final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+        switch(view.getId()) {
+            case R.id.button5://SelectivRuf
+
+                final Button button5 = (Button) findViewById(R.id.button5);
+                button5.setEnabled(true);
+                button5.setClickable(false);
+                button5.setBackgroundColor(Color.YELLOW);
+                Toast.makeText(getApplicationContext(), "SelectivRuf", Toast.LENGTH_SHORT).show();
+
+                Handler h = new Handler();
+                h.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        button5.setEnabled(true);
+                        button5.setClickable(true);
+                        button5.setBackgroundResource(android.R.drawable.btn_default);
+                    }
+                }, 30000);
+                break;
+
+            case R.id.button12://NOTRUF
+                dlgBuilder.setMessage("NOTRUF senden?");
+                dlgBuilder.setCancelable(false);
+                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        final Button button12 = (Button) findViewById(R.id.button12);
+                        button12.setEnabled(true);
+                        button12.setClickable(false);
+                        button12.setBackgroundColor(RED);
+                        Toast.makeText(getApplicationContext(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
+
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                button12.setEnabled(true);
+                                button12.setClickable(true);
+                                button12.setBackgroundResource(android.R.drawable.btn_default);
+                            }
+                        }, 45000);
+                    }
+                });
+
+                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                dlgBuilder.create().show();
+                break;
+        }
+    }
+
+    //PatStatus am BO
+    public void patstatusbtns(View view) {
+        final Button button41 = (Button)findViewById(R.id.button41);
+        final TextView textView83 = (TextView) findViewById(R.id.textView83);
+        final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+        switch(view.getId()) {
+
+            case R.id.button10://INTUNT
+                dlgBuilder.setMessage("Intervention unterblieben?");
+                dlgBuilder.setCancelable(false);
+                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Button button10 = (Button) findViewById(R.id.button10);
+                        button10.setEnabled(true);
+                        button10.setClickable(false);
+                        button10.setBackgroundColor(GREEN);
+
+                        Button button11 = (Button) findViewById(R.id.button11);
+                        button11.setEnabled(false);
+                        button11.setClickable(false);
+                        button11.setBackgroundResource(android.R.drawable.btn_default);
+
+                        Button button13 = (Button) findViewById(R.id.button13);
+                        button13.setEnabled(false);
+                        button13.setClickable(false);
+                        button13.setBackgroundResource(android.R.drawable.btn_default);
+
+                        button41.setEnabled(true);
+                        button41.setClickable(true);
+                        button41.setBackgroundResource(android.R.drawable.btn_default);
+                        button41.setText(R.string.eb);
+                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
+                        textView83.setText("EB");
+
+                        Toast.makeText(MainActivity.this, "keine Intervention", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                AlertDialog alert = dlgBuilder.create();
+                alert.show();
+                break;
+
+            case R.id.button11://BEL/VER
+                dlgBuilder.setTitle("Patient belassen/verweigert?");
+                dlgBuilder.setItems(new CharSequence[]
+                                {"Patient belassen", "Patient verweigert", "Nein"},
+
+                        new DialogInterface.OnClickListener() {
+
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                switch (which) {
+
+                                    case 0:
+
+                                        Button button11 = (Button) findViewById(R.id.button11);
+                                        button11.setEnabled(true);
+                                        button11.setClickable(false);
+                                        button11.setBackgroundColor(GREEN);
+
+                                        Button button10 = (Button) findViewById(R.id.button10);
+                                        button10.setEnabled(false);
+                                        button10.setClickable(false);
+                                        button10.setBackgroundResource(android.R.drawable.btn_default);
+
+                                        Button button13 = (Button) findViewById(R.id.button13);
+                                        button13.setEnabled(false);
+                                        button13.setClickable(false);
+                                        button13.setBackgroundResource(android.R.drawable.btn_default);
+
+                                        button41.setEnabled(true);
+                                        button41.setClickable(true);
+                                        button41.setBackgroundResource(android.R.drawable.btn_default);
+                                        button41.setText(R.string.eb);
+                                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
+                                        textView83.setText("EB");
+
+                                        Toast.makeText(MainActivity.this, "Belassung", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 1:
+
+                                        button11 = (Button) findViewById(R.id.button11);
+                                        button11.setEnabled(true);
+                                        button11.setClickable(false);
+                                        button11.setBackgroundColor(GREEN);
+
+                                        button10 = (Button) findViewById(R.id.button10);
+                                        button10.setEnabled(false);
+                                        button10.setClickable(false);
+                                        button10.setBackgroundResource(android.R.drawable.btn_default);
+
+                                        button13 = (Button) findViewById(R.id.button13);
+                                        button13.setEnabled(false);
+                                        button13.setClickable(false);
+                                        button13.setBackgroundResource(android.R.drawable.btn_default);
+
+                                        button41.setEnabled(true);
+                                        button41.setClickable(true);
+                                        button41.setBackgroundResource(android.R.drawable.btn_default);
+                                        button41.setText(R.string.eb);
+                                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
+                                        textView83.setText("EB");
+
+                                        Toast.makeText(MainActivity.this, "Patient verweigert", Toast.LENGTH_SHORT).show();
+                                        break;
+                                    case 2:
+                                        break;
+                                }
+                            }
+                        });
+
+                dlgBuilder.create().show();
+                break;
+
+            case R.id.button13://Anderes RM
+                dlgBuilder.setMessage("Patient an anderes Rettungsmittel übergeben?");
+                dlgBuilder.setCancelable(false);
+                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        Button button13 = (Button) findViewById(R.id.button13);
+                        button13.setEnabled(true);
+                        button13.setClickable(false);
+                        button13.setBackgroundColor(GREEN);
+
+                        Button button10 = (Button) findViewById(R.id.button10);
+                        button10.setEnabled(false);
+                        button10.setClickable(false);
+                        button10.setBackgroundResource(android.R.drawable.btn_default);
+
+                        Button button11 = (Button) findViewById(R.id.button11);
+                        button11.setEnabled(false);
+                        button11.setClickable(false);
+                        button11.setBackgroundResource(android.R.drawable.btn_default);
+
+                        button41.setEnabled(true);
+                        button41.setClickable(true);
+                        button41.setBackgroundResource(android.R.drawable.btn_default);
+                        button41.setText(R.string.abo);
+                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
+                        textView83.setText("EB");
+
+                        Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                dlgBuilder.create().show();
+                break;
+        }
+    }
+
     // Status Button incidentFragment //
     // change unit status
     //TODO: set fragments on status change?? / sync with server
 
     public void stbtnClick(View v) {
+
+        final RelativeLayout deliveryloclayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -765,7 +1085,7 @@ public class MainActivity extends AppCompatActivity {
             final Button button41 = (Button) findViewById(R.id.button41);
             final TextView textView83 = (TextView) findViewById(R.id.textView83);
             final TextView textView85 = (TextView) findViewById(R.id.textView85);
-            final TextView aofield = (TextView) findViewById(R.id.aofield);
+            final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
 
             Button button10 = (Button) findViewById(R.id.button10);
             Button button11 = (Button) findViewById(R.id.button11);
@@ -850,24 +1170,30 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 10000);
 
-                } else if (textView83.getText().equals("ABO") && (aofield.getText().toString().trim().length() > 0)) {
+                } else if ((textView83.getText().equals("ABO")) && (aofield.getText().toString().trim().length() > 0)) {
+                    //TODO: redundante funktion
+                    if (aofield.getText().toString().trim().length() > 0) {
+                        button41.setEnabled(true);
+                        button41.setClickable(true);
+                        button41.setBackgroundColor(YELLOW);
+                        button41.setText(R.string.aao);
+                        textView83.setText("ZAO");
+                        textView85.setText(sdf.format(cal.getTime()));
+                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_hospital_black_18dp, 0, 0, 0);
 
-                    button41.setEnabled(true);
-                    button41.setClickable(true);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText(R.string.aao);
-                    textView83.setText("ZAO");
-                    textView85.setText(sdf.format(cal.getTime()));
-                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_hospital_black_18dp, 0, 0, 0);
-
-                    button10.setEnabled(false);
-                    button10.setClickable(false);
-                    button11.setEnabled(false);
-                    button11.setClickable(false);
-                    button13.setEnabled(false);
-                    button13.setClickable(false);
-                    button46.setEnabled(false);
-                    button46.setClickable(false);
+                        button10.setEnabled(false);
+                        button10.setClickable(false);
+                        button11.setEnabled(false);
+                        button11.setClickable(false);
+                        button13.setEnabled(false);
+                        button13.setClickable(false);
+                        button46.setEnabled(false);
+                        button46.setClickable(false);
+                    } else {
+                        button41.setEnabled(false);
+                        button41.setClickable(false);
+                        Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen", Toast.LENGTH_LONG).show();
+                    }
 /*
                     mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(1));
 */
@@ -973,13 +1299,9 @@ public class MainActivity extends AppCompatActivity {
         final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
         final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
 
-        if (v.getId() == R.id.button46) {
+        switch(v.getId()) {
 
-            Button button46 = (Button) findViewById(R.id.button46);
-            button46.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
+            case R.id.button46:
 
                     AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
                     //dlgBuilder.setMessage("Patient anlegen");
@@ -1011,11 +1333,6 @@ public class MainActivity extends AppCompatActivity {
                                     patedit.putString("patward", patward);
 
                                     patedit.commit();
-
-                                    //remove layout
-                                    View viewToRemove = findViewById(R.id.patmanrelayout);
-                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
                                     //TODO: send data
 
@@ -1053,10 +1370,7 @@ public class MainActivity extends AppCompatActivity {
 
                                     patedit.commit();
 
-                                    //remove layout
-                                    View viewToRemove = findViewById(R.id.patmanrelayout);
-                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
                                 }
                             }
 
@@ -1064,22 +1378,11 @@ public class MainActivity extends AppCompatActivity {
 
                     AlertDialog alert = dlgBuilder.create();
                     alert.show();
+                break;
 
-                }
-            });
-        }
+            case R.id.changepatbtn:
 
-        if (v.getId() == R.id.changepatbtn) {
-
-
-            Button createpatbtn = (Button) findViewById(R.id.changepatbtn);
-
-            createpatbtn.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View view) {
-
-                    final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                    dlgBuilder = new AlertDialog.Builder(MainActivity.this);
                     //dlgBuilder.setMessage("Patient anlegen");
                     dlgBuilder.setTitle("PATADMIN");
 
@@ -1133,21 +1436,21 @@ public class MainActivity extends AppCompatActivity {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
 
-                                    //remove layout
-                                    View viewToRemove = findViewById(R.id.patmanrelayout);
-                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
                                 }
                             }
 
                     );
 
-                    AlertDialog alert = dlgBuilder.create();
+                    alert = dlgBuilder.create();
                     alert.show();
 
                 }
-            });
-        }
+
+        //remove layout after dialog creation
+        View viewToRemove = findViewById(R.id.patmanrelayout);
+        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
     }
 
     // Bett abbuchen btn //
@@ -1384,7 +1687,7 @@ public class MainActivity extends AppCompatActivity {
 
     // Report incident method on mainstatus fragment //
     // Get coordinates, and nearest address
-        public void st14(View v) {
+        public void reportincident(View v) {
 
         RelativeLayout reportincident = (RelativeLayout)getLayoutInflater().inflate(R.layout.reportincident, null);
 
@@ -1430,8 +1733,9 @@ public class MainActivity extends AppCompatActivity {
                             strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                         }
                         strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
-                        strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
-                        strReturnedAddress.append(returnedAddress.getCountryName());
+                        //strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
+                        //strReturnedAddress.append(returnedAddress.getCountryName());
+
                         editText24.setText(strReturnedAddress.toString());
 
                     } else {

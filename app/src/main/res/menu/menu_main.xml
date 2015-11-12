@@ -13,4 +13,10 @@
         android:title="User"
         android:icon="@drawable/ic_person_white_24dp"
         app:showAsAction="ifRoom" />
+<!--
+    <item
+        android:id="@+id/action_refresh"
+        android:title="Refresh"
+        android:src="@android:drawable/ic_popup_sync"/>
+        -->
 </menu>

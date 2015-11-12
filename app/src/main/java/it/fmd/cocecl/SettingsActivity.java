@@ -57,7 +57,6 @@ public class SettingsActivity extends MainActivity {
 
         if (v.getId() == R.id.button37) {
 
-
             AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(SettingsActivity.this);
             dlgbuilder.setTitle("change language");
             dlgbuilder.setItems(new CharSequence[]

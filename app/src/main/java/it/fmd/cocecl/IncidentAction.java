@@ -1,6 +1,6 @@
 package it.fmd.cocecl;
 
-public class IncidentAction {
+public class IncidentAction extends MainActivity {
 
     // Alerts/server sync on new incident
     // set tabhost open new fragment

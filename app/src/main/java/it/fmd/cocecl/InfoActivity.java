@@ -22,6 +22,11 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 //START PAGE after LogIn//
 public class InfoActivity extends MainActivity {
 
+    private TextView ambname;
+    private TextView unitname;
+    private Button start;
+
+
     private TextView txtName;
     private TextView txtEmail;
     //private Button btnLogout;
@@ -33,6 +38,10 @@ public class InfoActivity extends MainActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
+        ambname = (TextView)findViewById(R.id.textView2);
+        unitname = (TextView)findViewById(R.id.textView3);
+        start = (Button)findViewById(R.id.button14);
 
         txtName = (TextView) findViewById(R.id.textView95);
         txtEmail = (TextView) findViewById(R.id.textView96);
@@ -83,29 +92,6 @@ public class InfoActivity extends MainActivity {
         finish();
     }
 */
-        // custom action bar //
-
-        ActionBar mActionBar = getActionBar();
-        //mActionBar.setDisplayShowHomeEnabled(false);
-        //mActionBar.setDisplayShowTitleEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(this);
-
-        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-
-        ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.imageButton);
-        imageButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(getApplicationContext(), "Refresh Clicked!",
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
-/*
-        assert mActionBar != null;
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);
-*/
         //shows version//
         PackageInfo pInfo = null;
         try {
@@ -119,41 +105,17 @@ public class InfoActivity extends MainActivity {
 
         //redirects to START page btn14 & SETTINGS page btn15//
         acbtnClick();
-    }
 
 
-    public void onViewCreated(View v, Bundle savedInstanceState) {
+        if ((ambname.getText().toString().trim().length() > 0) || (unitname.getText().toString().trim().length() > 0)) {
 
-        // get connection state / write into action bar / class ConnectionManager
-        ConnectionManager conman = new ConnectionManager();
-
-        ImageView imageView_con = (ImageView) findViewById(R.id.imageView_con);
-
-        if (conman.isOnline()) {
-
-            imageView_con.setImageResource(R.drawable.connected64);
-            Toast.makeText(this, R.string.con, Toast.LENGTH_LONG).show();
+            start.setEnabled(true);
+            start.setClickable(true);
 
         } else {
-
-            imageView_con.setImageResource(R.drawable.disconnected64);
-            Toast.makeText(this, R.string.discon, Toast.LENGTH_LONG).show();
-        }
-
-        // get connection to server state
-
-        ImageView imageView_mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
-
-        if (conman.isConnectedToServer()) {
-
-            imageView_mlscon.setImageResource(R.drawable.connected64);
-            Toast.makeText(this, R.string.mlscon, Toast.LENGTH_LONG).show();
-
-        } else {
-
-            imageView_mlscon.setImageResource(R.drawable.disconnected64);
-            Toast.makeText(this, R.string.mlsdiscon, Toast.LENGTH_LONG).show();
-
+            //TODO: remove // when app finished
+            //start.setEnabled(false);
+            //start.setClickable(false);
         }
     }
 

@@ -169,32 +169,60 @@
             android:background="#000000">
         </View>
 
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:weightSum="2">
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/scrollView3"
+            android:layout_gravity="center_horizontal" >
 
-            <TextView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_horizontal">
+
+            <LinearLayout
+                android:orientation="horizontal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:text="derzeitiger Auftrag"
-                android:id="@+id/textView92"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:layout_gravity="center"/>
+                android:layout_gravity="center_horizontal"
+                android:weightSum="2"
+                android:id="@+id/linearLayout11"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true">
 
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Auftrag \nwechseln"
-                android:id="@+id/button62"
-                android:layout_weight="1"
-                android:drawableLeft="@drawable/double_arrow_left"
-                android:drawableRight="@drawable/double_arrow_right" />
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="derzeitiger Auftrag"
+                    android:id="@+id/textView92"
+                    android:gravity="center" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Auftrag \nwechseln"
+                    android:id="@+id/button62"
+                    android:drawableLeft="@drawable/double_arrow_left"
+                    android:drawableRight="@drawable/double_arrow_right" />
+            </LinearLayout>
+
+                <ListView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/listView2"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_below="@+id/linearLayout11"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true" />
+
+            </RelativeLayout>
+        </ScrollView>
+
+
+
 
     </LinearLayout>
 

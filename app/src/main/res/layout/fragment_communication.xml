@@ -171,6 +171,7 @@
         android:id="@+id/button61"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:onClick="ptt" />
+        android:onClick="ptt"
+        android:visibility="gone"/>
 
 </RelativeLayout>

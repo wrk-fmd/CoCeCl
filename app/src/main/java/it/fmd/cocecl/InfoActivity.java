@@ -1,23 +1,12 @@
 package it.fmd.cocecl;
 
-import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.HashMap;
-
-import it.fmd.cocecl.helper.SQLiteHandler;
-import it.fmd.cocecl.helper.SessionManager;
-import it.fmd.cocecl.utilclass.ConnectionManager;
 
 //START PAGE after LogIn//
 public class InfoActivity extends MainActivity {
@@ -30,9 +19,6 @@ public class InfoActivity extends MainActivity {
     private TextView txtName;
     private TextView txtEmail;
     //private Button btnLogout;
-
-    private SQLiteHandler db;
-    private SessionManager session;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -47,51 +33,10 @@ public class InfoActivity extends MainActivity {
         txtEmail = (TextView) findViewById(R.id.textView96);
         //btnLogout = (Button) findViewById(R.id.btnLogout);
 
-        // SqLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
-        // session manager
-        session = new SessionManager(getApplicationContext());
-/*
-        if (!session.isLoggedIn()) {
-            logoutUser();
-        }
-*/
-        // Fetching user details from sqlite
-        HashMap<String, String> user = db.getUserDetails();
-
-        String name = user.get("name");
-        String email = user.get("email");
-
         // Displaying the user details on the screen
-        txtName.setText(name);
-        txtEmail.setText(email);
-/*
-        // Logout button click event
-        btnLogout.setOnClickListener(new View.OnClickListener() {
+        //txtName.setText(name);
+        //txtEmail.setText(email);
 
-            @Override
-            public void onClick(View v) {
-                logoutUser();
-            }
-        });
-*/
-/*
-    /**
-     * Logging out the user. Will set isLoggedIn flag to false in shared
-     * preferences Clears the user data from sqlite users table
-     **
-    private void logoutUser() {
-        session.setLogin(false);
-
-        db.deleteUsers();
-
-        // Launching the login activity
-        Intent intent = new Intent(MainActivity.this, LoginActivity.class);
-        startActivity(intent);
-        finish();
-    }
-*/
         //shows version//
         PackageInfo pInfo = null;
         try {

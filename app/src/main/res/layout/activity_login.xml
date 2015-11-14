@@ -22,7 +22,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 
-    <EditText android:id="@+id/dnrlogin" android:layout_width="match_parent"
+    <EditText android:id="@+id/logindnr" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:hint="Dienstnummer"
         android:inputType="textEmailAddress" android:maxLines="1"
         android:singleLine="true"
@@ -32,13 +32,13 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"/>
 
-    <EditText android:id="@+id/password" android:layout_width="match_parent"
+    <EditText android:id="@+id/loginpassword" android:layout_width="match_parent"
         android:layout_height="wrap_content" android:hint="@string/prompt_password"
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/action_sign_in_short"
         android:imeOptions="actionUnspecified" android:inputType="textPassword"
         android:maxLines="1" android:singleLine="true"
-        android:layout_below="@+id/dnrlogin"
+        android:layout_below="@+id/logindnr"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:gravity="center"/>
@@ -48,7 +48,7 @@
         android:text="Sign In"
         android:textStyle="bold"
         android:onClick="signin"
-        android:layout_below="@+id/password"
+        android:layout_below="@+id/loginpassword"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginBottom="10dp"/>

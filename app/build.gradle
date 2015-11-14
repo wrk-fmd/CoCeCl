@@ -27,6 +27,5 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.1.0'
     compile 'com.android.support:support-v13:23.1.0'
     compile 'com.google.android.gms:play-services-gcm:8.1.0'
-    compile 'com.mcxiaoke.volley:library-aar:1.0.1'
     compile files('libs/android-async-http-1.4.4.jar')
 }

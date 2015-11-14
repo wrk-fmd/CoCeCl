@@ -18,7 +18,7 @@
         android:layout_weight="0.41">
 
         <EditText
-            android:id="@+id/name"
+            android:id="@+id/registername"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -30,7 +30,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/dnr"
+            android:id="@+id/registerdnr"
             android:layout_gravity="center_horizontal"
             android:hint="dienstnummer"
             android:layout_marginBottom="10dp"
@@ -39,7 +39,7 @@
             android:inputType="number" />
 
         <EditText
-            android:id="@+id/email"
+            android:id="@+id/registeremail"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
@@ -49,7 +49,7 @@
             android:singleLine="true" />
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/registerpassword"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"

@@ -9,9 +9,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.AlertDialog;
 import android.support.design.widget.TextInputLayout;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -22,22 +20,14 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.Map;
 
 import it.fmd.cocecl.gcm.Utility;
-import it.fmd.cocecl.helper.AppController;
-import it.fmd.cocecl.helper.SQLiteHandler;
-import it.fmd.cocecl.helper.SessionManager;
+import it.fmd.cocecl.utilclass.JSONParser;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -46,28 +36,26 @@ import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
-import android.text.TextWatcher;
-
 public class LoginActivity extends MainActivity {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
+    // Login Layout
+    private Button signinbtn;
+    private Button gotoregisterbtn;
+    private EditText logindnr;
+    private EditText loginpassword;
 
-    // DB Login //
-    private Button btnLogin;
-    private Button btnLinkToRegister;
-    private EditText inputEmail;
-    private EditText inputDNr;
-    private EditText inputPassword;
-    private ProgressDialog pDialog;
-    private SessionManager session;
-    private SQLiteHandler db;
+    // RegisterLayout
+    private EditText registername;
+    private EditText registerdnr;
+    private EditText registeremail;
+    private EditText registerpassword;
+    private Button btnRegister;
 
     private TextView errormsgtxt;
 
     // Floating Labels
     private Toolbar toolbar;
     private TextInputLayout inputLayoutDnr, inputLayoutEmail, inputLayoutPassword;
-
 
     //GCM
     ProgressDialog prgDialog;
@@ -76,7 +64,7 @@ public class LoginActivity extends MainActivity {
     Context applicationContext;
     String regId = "";
 
-    //private ConnectionManager connman = new ConnectionManager();
+
 
     // OnCreate Method // -------------------------------------- //
     @Override
@@ -87,7 +75,7 @@ public class LoginActivity extends MainActivity {
         //GCM//TODO: gcm only in LoginActivity active?!?
 
             applicationContext = getApplicationContext();
-            emailET = (EditText) findViewById(R.id.email);
+            emailET = (EditText) findViewById(R.id.registeremail);
 
             prgDialog = new ProgressDialog(this);
             // Set Progress Dialog Text
@@ -110,52 +98,190 @@ public class LoginActivity extends MainActivity {
         //Floating Labels//
         inputLayoutDnr = (TextInputLayout) findViewById(R.id.input_layout_dnr);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
-        inputEmail = (EditText) findViewById(R.id.dnrlogin);
-        inputPassword = (EditText) findViewById(R.id.password);
+        logindnr = (EditText) findViewById(R.id.logindnr);
+        loginpassword = (EditText) findViewById(R.id.loginpassword);
 /*
         inputDNr.addTextChangedListener(new MyTextWatcher(inputDNr));
         inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
         inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
 */
         // LogIn to Server//
+        //POST and GET
+        class PostAsync extends AsyncTask<String, String, JSONObject> {
+            JSONParser jsonParser = new JSONParser();
+
+            private ProgressDialog pDialog;
+
+            private static final String LOGIN_URL = "http://www.example.com/testPost.php";
+
+            private static final String TAG_SUCCESS = "success";
+            private static final String TAG_MESSAGE = "message";
+
+
+            @Override
+            protected void onPreExecute() {
+                pDialog = new ProgressDialog(LoginActivity.this);
+                pDialog.setMessage("Attempting login...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(true);
+                pDialog.show();
+            }
+
+            @Override
+            protected JSONObject doInBackground(String... args) {
+
+                try {
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("name", args[0]);
+                    params.put("password", args[1]);
+
+                    Log.d("request", "starting");
+
+                    JSONObject json = jsonParser.makeHttpRequest(
+                            LOGIN_URL, "POST", params);
+
+                    if (json != null) {
+                        Log.d("JSON result", json.toString());
+
+                        return json;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            protected void onPostExecute(JSONObject json) {
+
+                int success = 0;
+                String message = "";
+
+                if (pDialog != null && pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+
+                if (json != null) {
+                    Toast.makeText(LoginActivity.this, json.toString(),
+                            Toast.LENGTH_LONG).show();
+
+                    try {
+                        success = json.getInt(TAG_SUCCESS);
+                        message = json.getString(TAG_MESSAGE);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (success == 1) {
+                    Log.d("Success!", message);
+                }else{
+                    Log.d("Failure", message);
+                }
+            }
+
+        }
+
+
+        class GetAsync extends AsyncTask<String, String, JSONObject> {
+
+            JSONParser jsonParser = new JSONParser();
+
+            private ProgressDialog pDialog;
+
+            private static final String LOGIN_URL = "http://www.example.com/testGet.php";
+
+            private static final String TAG_SUCCESS = "success";
+            private static final String TAG_MESSAGE = "message";
+
+            @Override
+            protected void onPreExecute() {
+                pDialog = new ProgressDialog(LoginActivity.this);
+                pDialog.setMessage("Attempting login...");
+                pDialog.setIndeterminate(false);
+                pDialog.setCancelable(true);
+                pDialog.show();
+            }
+
+            @Override
+            protected JSONObject doInBackground(String... args) {
+
+                try {
+
+                    HashMap<String, String> params = new HashMap<>();
+                    params.put("name", args[0]);
+                    params.put("password", args[1]);
+
+                    Log.d("request", "starting");
+
+                    JSONObject json = jsonParser.makeHttpRequest(
+                            LOGIN_URL, "GET", params);
+
+                    if (json != null) {
+                        Log.d("JSON result", json.toString());
+
+                        return json;
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            protected void onPostExecute(JSONObject json) {
+
+                int success = 0;
+                String message = "";
+
+                if (pDialog != null && pDialog.isShowing()) {
+                    pDialog.dismiss();
+                }
+
+                if (json != null) {
+                    Toast.makeText(LoginActivity.this, json.toString(),
+                            Toast.LENGTH_LONG).show();
+
+                    try {
+                        success = json.getInt(TAG_SUCCESS);
+                        message = json.getString(TAG_MESSAGE);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+
+                if (success == 1) {
+                    Log.d("Success!", message);
+                }else{
+                    Log.d("Failure", message);
+                }
+            }
+
+        }
+
         // TODO: combine login with gcm login
-        inputEmail = (EditText) findViewById(R.id.dnrlogin);
-        //inputDNr = (EditText) findViewById(R.id.dnrlogin);
-        inputPassword = (EditText) findViewById(R.id.password);
-        btnLogin = (Button) findViewById(R.id.signinbtn);
-        btnLinkToRegister = (Button) findViewById(R.id.gotoregisterbtn);
+        //inputEmail = (EditText) findViewById(R.id.loginemail);
+        logindnr = (EditText) findViewById(R.id.logindnr);
+        loginpassword = (EditText) findViewById(R.id.loginpassword);
+        signinbtn = (Button) findViewById(R.id.signinbtn);
+        gotoregisterbtn = (Button) findViewById(R.id.gotoregisterbtn);
 
         errormsgtxt = (TextView)findViewById(R.id.textView94);
 
-        // Progress dialog
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-
-        // SQLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
-        // Session manager
-        session = new SessionManager(getApplicationContext());
-
-        // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-
         // Login button Click Event
-        btnLogin.setOnClickListener(new View.OnClickListener() {
+        signinbtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
+                String dnr = registerdnr.getText().toString().trim();
+                String password = registerpassword.getText().toString().trim();
 
                 // Check for empty data in the form
-                if (!email.isEmpty() && !password.isEmpty()) {
+                if (!dnr.isEmpty() && !password.isEmpty()) {
                     // login user
-                    checkLogin(email, password);
+
                 } else {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
@@ -169,16 +295,16 @@ public class LoginActivity extends MainActivity {
 
         // Link to Register Screen
         // Dialog for user registering
-        btnLinkToRegister.setOnClickListener(new View.OnClickListener() {
+        gotoregisterbtn.setOnClickListener(new View.OnClickListener() {
 
             public void onClick(View view) {
                 final LinearLayout registeruserlayout = (LinearLayout)getLayoutInflater().inflate(R.layout.register_user_layout, null);
                 AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
                 dlgBuilder.setTitle("Register User");
 
-                inputFullName = (EditText) registeruserlayout.findViewById(R.id.name);
-                inputEmail = (EditText) registeruserlayout.findViewById(R.id.email);
-                inputPassword = (EditText) registeruserlayout.findViewById(R.id.password);
+                registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+                registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+                registerpassword = (EditText) registeruserlayout.findViewById(R.id.loginpassword);
                 btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
                 //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
 /*
@@ -257,147 +383,17 @@ public class LoginActivity extends MainActivity {
         }
     }
 
-    /**
-     * function to verify login details in mysql db
-     * */
-    private void checkLogin(final String email, final String password) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_login";
-
-        pDialog.setMessage("Logging in ...");
-        showDialog();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                APPConstants.URL_LOGIN, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Login Response: " + response.toString());
-                hideDialog();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-
-                    // Check for error node in json
-                    if (!error) {
-                        // user successfully logged in
-                        // Create login session
-                        session.setLogin(true);
-
-                        // Now store the user in SQLite
-                        String uid = jObj.getString("uid");
-
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
-
-                        // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
-
-                        // Launch main activity
-                        Intent intent = new Intent(LoginActivity.this,
-                                MainActivity.class);
-                        startActivity(intent);
-                        finish();
-                    } else {
-                        // Error in login. Get the error message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                    }
-                } catch (JSONException e) {
-                    // JSON error
-                    e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Login Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialog();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting parameters to login url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("email", email);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
-
-    private void showDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
-
     //// REGISTER CLASS HERE ////
 
-    //private static final String TAG = loginActivity.class.getSimpleName();
-    private Button btnRegister;
-    private Button btnLinkToLogin;
-    private EditText inputFullName;
-    //private EditText inputEmail;
-    //private EditText inputPassword;
-    //private ProgressDialog pDialog;
-    //private SessionManager session;
-    //private SQLiteHandler db;
-    /*
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.register_user_layout);
-     {
 
-        // Progress dialog
-        pDialog = new ProgressDialog(this);
-        pDialog.setCancelable(false);
-
-        // Session manager
-        session = new SessionManager(getApplicationContext());
-
-        // SQLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
-        // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
-            // User is already logged in. Take him to main activity
-            Intent intent = new Intent(LoginActivity.this,
-                    MainActivity.class);
-            startActivity(intent);
-            finish();
-        }
-    }
-*/
     public void register(View v) {
         if (v.getId() == R.id.btnRegister) {
-            String name = inputFullName.getText().toString().trim();
-            String email = inputEmail.getText().toString().trim();
-            String password = inputPassword.getText().toString().trim();
+            String name = registername.getText().toString().trim();
+            String email = registeremail.getText().toString().trim();
+            String password = registerpassword.getText().toString().trim();
 
-            if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                registerUser(name, email, password);
+            if (!name.isEmpty() && /*!dnr.isEmpty() && */!email.isEmpty() && !password.isEmpty()) {
+                //register user
             } else {
                 Toast.makeText(getApplicationContext(),
                         "Please enter your details!", Toast.LENGTH_LONG)
@@ -405,135 +401,7 @@ public class LoginActivity extends MainActivity {
             }
         }
     }
-/*
-        // Register Button Click event
-        btnRegister.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                String name = inputFullName.getText().toString().trim();
-                String email = inputEmail.getText().toString().trim();
-                String password = inputPassword.getText().toString().trim();
 
-                if (!name.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
-                    registerUser(name, email, password);
-                } else {
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
-                            .show();
-                }
-            }
-        });
-        */
-/*
-        // Link to Login Screen
-        btnLinkToLogin.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                Intent i = new Intent(getApplicationContext(),
-                        LoginActivity.class);
-                startActivity(i);
-                finish();
-            }
-        });
-*/
-
-
-    /**
-     * Function to store user in MySQL database will post params(tag, name,
-     * email, password) to register url
-     * */
-    private void registerUser(final String name, final String email,
-                              final String password) {
-        // Tag used to cancel the request
-        String tag_string_req = "req_register";
-
-        pDialog.setMessage("Registering ...");
-        showDialogre();
-
-        StringRequest strReq = new StringRequest(Request.Method.POST,
-                APPConstants.URL_REGISTER, new Response.Listener<String>() {
-
-            @Override
-            public void onResponse(String response) {
-                Log.d(TAG, "Register Response: " + response.toString());
-                hideDialogre();
-
-                try {
-                    JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
-                        // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        String uid = jObj.getString("uid");
-
-                        JSONObject user = jObj.getJSONObject("user");
-                        String name = user.getString("name");
-                        String email = user.getString("email");
-                        String created_at = user
-                                .getString("created_at");
-
-                        // Inserting row in users table
-                        db.addUser(name, email, uid, created_at);
-
-                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
-/*
-                        // Launch login activity
-                        Intent intent = new Intent(
-                                LoginActivity.this,
-                                InfoActivity.class);
-                        startActivity(intent);
-                        finish();
-                        */
-                    } else {
-
-                        // Error occurred in registration. Get the error
-                        // message
-                        String errorMsg = jObj.getString("error_msg");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
-                        errormsgtxt.setText(errorMsg);
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }, new Response.ErrorListener() {
-
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Log.e(TAG, "Registration Error: " + error.getMessage());
-                Toast.makeText(getApplicationContext(),
-                        error.getMessage(), Toast.LENGTH_LONG).show();
-                hideDialogre();
-            }
-        }) {
-
-            @Override
-            protected Map<String, String> getParams() {
-                // Posting params to register url
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("name", name);
-                params.put("email", email);
-                params.put("password", password);
-
-                return params;
-            }
-
-        };
-
-        // Adding request to request queue
-        AppController.getInstance().addToRequestQueue(strReq, tag_string_req);
-    }
-
-    private void showDialogre() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hideDialogre() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
 
     // GCM Login //
     // --------------------------------------------------------------- //

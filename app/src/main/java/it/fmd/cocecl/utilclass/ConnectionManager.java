@@ -11,6 +11,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 
+import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.LoginActivity;
 
 public class ConnectionManager extends Application {
@@ -44,9 +45,8 @@ public class ConnectionManager extends Application {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
 
         if (netInfo != null && netInfo.isConnected()) {
-            // URL MLS Server
             try {
-                URL myUrl = new URL("https://www.google.com");
+                URL myUrl = new URL(APPConstants.MLS_DOMAIN);
                 URLConnection connection = myUrl.openConnection();
                 connection.setConnectTimeout(10 * 1000);
                 connection.connect();

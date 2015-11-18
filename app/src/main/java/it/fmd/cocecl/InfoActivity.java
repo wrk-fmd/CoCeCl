@@ -1,11 +1,14 @@
 package it.fmd.cocecl;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 //START PAGE after LogIn//
@@ -33,7 +36,7 @@ public class InfoActivity extends MainActivity {
         txtEmail = (TextView) findViewById(R.id.textView96);
         //btnLogout = (Button) findViewById(R.id.btnLogout);
 
-        // Displaying the user details on the screen
+        // Displaying the user details from login on the screen
         //txtName.setText(name);
         //txtEmail.setText(email);
 
@@ -98,6 +101,31 @@ public class InfoActivity extends MainActivity {
                     finish(); System.exit(0);
                 }
             });
+        }
+    }
+
+    public void unitinfo(View v) {
+        if (v.getId()==R.id.button63) {
+
+            // Create custom dialog object
+            final Dialog dialog = new Dialog(InfoActivity.this);
+            // Include dialog.xml file
+            dialog.setContentView(R.layout.unit_info_layout);
+            // Set dialog title
+            dialog.setTitle("Einheit - Information");
+
+
+            dialog.show();
+/*
+            Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
+            // if decline button is clicked, close the custom dialog
+            declineButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    // Close dialog
+                    dialog.dismiss();
+                }
+            });*/
         }
     }
 }

@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -17,19 +16,18 @@ import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.media.RingtoneManager;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,15 +37,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.RotateAnimation;
 import android.webkit.WebView;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -62,14 +56,11 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -86,17 +77,6 @@ import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.GeoWebViewActivity;
 import it.fmd.cocecl.utilclass.JSONParser;
 
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
-
-
-import android.support.v7.app.AppCompatActivity;
-
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
@@ -104,6 +84,8 @@ import static android.graphics.Color.YELLOW;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    ConnectionManager conman = new ConnectionManager();
 
     TextView SMSm;
     static String phoneNumber1;
@@ -129,10 +111,6 @@ public class MainActivity extends AppCompatActivity {
     private static String latString = String.valueOf(latitude);
 
     // JSON TODO: remove after test
-    // json object response url
-    private String urlJsonObj = "http://api.androidhive.info/volley/person_object.json";
-    // json array response url
-    private String urlJsonArry = "http://api.androidhive.info/volley/person_array.json";
     public static String TAG = MainActivity.class.getSimpleName();
     private Button btnMakeObjectRequest, btnMakeArrayRequest;
     // Progress dialog
@@ -196,47 +174,6 @@ public class MainActivity extends AppCompatActivity {
             //setTitle(R.string.app_name);
         }
 
-        // Actionbar custom view //
-        // Action bar, used below ver21 / 21-16
-/*
-        {
-
-            if (android.os.Build.VERSION.SDK_INT <= Build.VERSION_CODES.LOLLIPOP) {
-
-                ActionBar mActionBar = getActionBar();
-                //mActionBar.setDisplayShowHomeEnabled(false);
-                //mActionBar.setDisplayShowTitleEnabled(false);
-                LayoutInflater mInflater = LayoutInflater.from(this);
-                View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-
-
-                assert mActionBar != null;
-                mActionBar.setCustomView(mCustomView);
-                mActionBar.setDisplayShowCustomEnabled(true);
-
-                ImageButton imageButton = (ImageButton) mCustomView.findViewById(R.id.imageButton);
-                imageButton.setOnClickListener(new View.OnClickListener() {
-
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getApplicationContext(), "Refresh Clicked!",
-                                Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
-        }
-        */
-        // TODO: set icons in ToolBar depending on connection state
-/*
-        ConnectionManager conman = new ConnectionManager();
-        if (conman.isOnline());
-
-        if(isValid()) {
-            // something
-        } else {
-            //something else
-        }
-*/
         // GPS Coordinates // send continuous updates //
 
         //new
@@ -256,20 +193,6 @@ public class MainActivity extends AppCompatActivity {
                               }
 
                 , 10000);
-/*
-        GPSManager.LocationResult locationResult = new GPSManager.LocationResult(){
-            @Override
-            public void gotLocation(Location location){
-                loc = location;
-                latitude = loc.getLatitude();
-                longitude = loc.getLongitude();
-            }
-        };
-
-        GPSManager mylocation = new GPSManager();
-        mylocation.getLocation(MainActivity.this, locationResult);
-
-        */
 
             // FRAGMENT MANAGER //
         {
@@ -321,7 +244,7 @@ public class MainActivity extends AppCompatActivity {
             mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
 
             // TABS
-
+            //TODO: set Tabs depending on unit status
             mTabHost.addTab(
                     mTabHost.newTabSpec("tab1").setIndicator("Status", null),
                     mainstatusFragment.class, null);
@@ -345,6 +268,8 @@ public class MainActivity extends AppCompatActivity {
                     communicationFragment.class, null);
         }
     }
+
+
 
     // TabHost Methods //
     private void addMethod() {
@@ -466,53 +391,36 @@ public class MainActivity extends AppCompatActivity {
         }, 5000);
     }
 
-    //animated menu icon method
-    /*
-    public void refresh() {
-     /* Attach a rotating ImageView to the refresh item as an ActionView
-        //LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        ImageView iv = (ImageView) findViewById(R.id.imageView2);
-
-        Animation rotation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.sync_anim);
-        rotation.setRepeatCount(Animation.INFINITE);
-        iv.startAnimation(rotation);
-
-        refreshItem.setActionView(iv);
-
-        //TODO trigger loading
-    }
-
-    public void completeRefresh() {
-        refreshItem.getActionView().clearAnimation();
-        refreshItem.setActionView(null);
-    }
-*/
-
     // SMS Alert //
-    // TODO: on incoming sms from specific number, set data to incident fields
+    // sets SMS content from specific alert number to bofield
     public void setSMS() {
         //SMS Alert// write content to incident fields
-        SMSm = (TextView) findViewById(R.id.bofield);
-        SMSm.setText("Phone Number: " + phoneNumber1 + " " + "SMS: " + SMSBody1);
+
+        if(phoneNumber1 == "+144") {
+            SMSm = (TextView) findViewById(R.id.bofield);
+
+            SMSm.setText(SMSBody1);
+
+            Snackbar snackbar = Snackbar
+                    .make(coordinatorLayout, SMSBody1, Snackbar.LENGTH_LONG);
+
+            snackbar.show();
+        }
     }
 
     // ToolBar status icons //
-    //TODO: write new conman
-    public void checkMLSConnection(View v) {
-            // ToolBar connection state icon //
-            //ImageView netcon = (ImageView) cusactbar.findViewById(R.id.imageView_con);
+    public void checkMLSConnection() {
+            // ToolBar mls connection state icon //
             ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
             {
                 // check if you are connected or not
-                ConnectionManager conman = new ConnectionManager();
 
-                if (conman.isOnline()) {
-                    //netcon.setBackgroundColor(0xFF00CC00);
+                if (conman.isConnectedToServer()) {
+
                     mlscon.setImageResource(R.drawable.connected64);
 
                 } else {
 
-                    //netcon.setBackgroundColor(0xFFFFCC00);
                     mlscon.setImageResource(R.drawable.disconnected64);
                 }
             }
@@ -560,12 +468,19 @@ public class MainActivity extends AppCompatActivity {
         }
     */
     //TODO: create app life cycle
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        setSMS();
+        //checkMLSConnection();
+    }
     @Override
     public void onResume() {
         super.onResume();
         //initilizeMap();
         //checkPlayServices();
-
+        //checkMLSConnection();
     }
 
     @Override
@@ -646,7 +561,7 @@ public class MainActivity extends AppCompatActivity {
 
                 if(commphone.getText().toString().trim().length() > 0) {
 
-                    callIntent.setData(Uri.parse(listnumber));
+                    callIntent.setData(Uri.parse("tel:" + listnumber));
                     startActivity(callIntent);
 
                     if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
@@ -665,11 +580,11 @@ public class MainActivity extends AppCompatActivity {
     // Alert Push Notification Manager //
     // alerts on incoming incident, gcm server!!
     //TODO: later: function for new incident alert !!! check again
-    public void alertbtn(View v) {
+    public void taskalert(View v) {
 
         final LayoutInflater inci = getLayoutInflater();
-
         final View incidentView = inci.inflate(R.layout.fragment_incident, null);
+        final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.alert_newemergency);
         //TODO: remove button
         if (v.getId() == R.id.button) {
 
@@ -692,8 +607,10 @@ public class MainActivity extends AppCompatActivity {
 
                     AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
                     dlgBuilder.setCancelable(false);
-                    dlgBuilder.setTitle("EINSATZ");
-                    dlgBuilder.setMessage("Addresse & Berufungsgrund");
+                    dlgBuilder.setTitle("EINSATZ/AUFTRAG");
+                    dlgBuilder.setMessage("Addresse\nBerufungsgrund");
+
+                    //dlgBuilder.setView(R.id.alertbox_layout);
 
                     dlgBuilder.setPositiveButton("Einsatz übernehmen", new DialogInterface.OnClickListener() {
                         @Override
@@ -703,9 +620,9 @@ public class MainActivity extends AppCompatActivity {
                             textView83.setText("QU");
                             textView85.setText(sdf.format(cal.getTime()));
                             button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
+                            mp.stop();
 
                             Toast.makeText(MainActivity.this, "Einsatz übernommen", Toast.LENGTH_SHORT).show();
-
                         }
                     });
 
@@ -740,7 +657,10 @@ public class MainActivity extends AppCompatActivity {
                             .setContentInfo("Detail Code");
 
                     // AlertSound
-                    mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
+                    //mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
+
+                    mp.setLooping(true);
+                    mp.start();
 
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(1, mBuilder.build());
@@ -1270,7 +1190,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Emergency light yes/no //
-    public void checkBox(View v) {
+    public void setEmergency(View v) {
         if (v.getId() == R.id.checkBox) {
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
             checkBox.setEnabled(true);
@@ -1839,8 +1759,6 @@ public class MainActivity extends AppCompatActivity {
 
         private ProgressDialog pDialog;
 
-        private static final String LOGIN_URL = "http://www.example.com/testPost.php";
-
         private static final String TAG_SUCCESS = "success";
         private static final String TAG_MESSAGE = "message";
 
@@ -1866,7 +1784,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("request", "starting");
 
                 JSONObject json = jsonParser.makeHttpRequest(
-                        LOGIN_URL, "POST", params);
+                        APPConstants.URL_LOGIN, "POST", params);
 
                 if (json != null) {
                     Log.d("JSON result", json.toString());
@@ -1918,8 +1836,6 @@ public class MainActivity extends AppCompatActivity {
 
         private ProgressDialog pDialog;
 
-        private static final String LOGIN_URL = "http://www.example.com/testGet.php";
-
         private static final String TAG_SUCCESS = "success";
         private static final String TAG_MESSAGE = "message";
 
@@ -1944,7 +1860,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("request", "starting");
 
                 JSONObject json = jsonParser.makeHttpRequest(
-                        LOGIN_URL, "GET", params);
+                        APPConstants.URL_LOGIN, "GET", params);
 
                 if (json != null) {
                     Log.d("JSON result", json.toString());

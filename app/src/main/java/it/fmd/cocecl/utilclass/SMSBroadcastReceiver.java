@@ -35,7 +35,7 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 MainActivity.getSmsDetails(address, smsBody);
             }
 
-            Toast.makeText(context, smsMessageStr, Toast.LENGTH_LONG).show();
+            //Toast.makeText(context, smsMessageStr, Toast.LENGTH_LONG).show();
 /*
             //this will update the UI with message
             SmsActivity inst = SmsActivity.instance();

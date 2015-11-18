@@ -40,8 +40,7 @@
         android:icon="@mipmap/cocecl"
         android:label="@string/app_name"
         android:theme="@style/AppTheme"
-        android:logo="@mipmap/cocecl"
-        android:name="it.fmd.cocecl.helper.AppController">
+        android:logo="@mipmap/cocecl">
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"

@@ -137,11 +137,11 @@
         android:ems="10"
         android:id="@+id/versionText"
         android:hint="version"
-        android:layout_above="@+id/button15"
-        android:layout_alignRight="@+id/button15"
-        android:layout_alignEnd="@+id/button15"
-        android:layout_toRightOf="@+id/textView95"
-        android:layout_toEndOf="@+id/textView95" />
+        android:layout_above="@+id/view11"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toRightOf="@+id/button14"
+        android:layout_toEndOf="@+id/button14" />
 
     <Button
         android:layout_width="wrap_content"
@@ -175,5 +175,40 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:hint="email" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        android:layout_alignBottom="@+id/button14"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true">
+    </View>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Unit Info"
+        android:id="@+id/button63"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignTop="@+id/button14"
+        android:layout_toLeftOf="@+id/button14"
+        android:layout_toStartOf="@+id/button14"
+        android:drawableTop="@drawable/ic_local_taxi_black_18dp"
+        android:onClick="unitinfo" />
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:background="#000000"
+        android:id="@+id/view11"
+        android:layout_alignTop="@+id/button14"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    </View>
 
 </RelativeLayout>

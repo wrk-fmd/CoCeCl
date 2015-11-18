@@ -5,6 +5,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.AssetManager;
+import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.AlertDialog;
@@ -24,7 +26,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
+import java.util.Properties;
 
 import it.fmd.cocecl.gcm.Utility;
 import it.fmd.cocecl.utilclass.JSONParser;
@@ -44,14 +48,14 @@ public class LoginActivity extends MainActivity {
     private EditText logindnr;
     private EditText loginpassword;
 
+    private TextView errormsgtxt;
+
     // RegisterLayout
     private EditText registername;
     private EditText registerdnr;
     private EditText registeremail;
     private EditText registerpassword;
     private Button btnRegister;
-
-    private TextView errormsgtxt;
 
     // Floating Labels
     private Toolbar toolbar;
@@ -105,14 +109,48 @@ public class LoginActivity extends MainActivity {
         inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
         inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
 */
+/*
+        // GET config file from server //
+        // load file
+        //TODO: get file from server
+
+        // either from assets or raw
+        Resources resources = this.getResources();
+        AssetManager assetManager = resources.getAssets();
+
+        // Read from the /assets directory
+        try {
+            InputStream inputStream = assetManager.open("cocecl.properties");
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            System.out.println("The properties are now loaded");
+            System.out.println("properties: " + properties);
+        } catch (IOException e) {
+            System.err.println("Failed to open property file");
+            e.printStackTrace();
+        }
+        // Read from the /res/raw directory
+        try {
+            InputStream rawResource = resources.openRawResource(R.raw.cocecl_config);
+            Properties properties = new Properties();
+            properties.load(rawResource);
+            System.out.println("The properties are now loaded");
+            System.out.println("properties: " + properties);
+        } catch (Resources.NotFoundException e) {
+            System.err.println("Did not find raw resource: "+e);
+        } catch (IOException e) {
+            System.err.println("Failed to open property file");
+        }
+        // write properties from file to setting
+        //TODO: config
+*/
+
         // LogIn to Server//
         //POST and GET
         class PostAsync extends AsyncTask<String, String, JSONObject> {
             JSONParser jsonParser = new JSONParser();
 
             private ProgressDialog pDialog;
-
-            private static final String LOGIN_URL = "http://www.example.com/testPost.php";
 
             private static final String TAG_SUCCESS = "success";
             private static final String TAG_MESSAGE = "message";
@@ -139,7 +177,7 @@ public class LoginActivity extends MainActivity {
                     Log.d("request", "starting");
 
                     JSONObject json = jsonParser.makeHttpRequest(
-                            LOGIN_URL, "POST", params);
+                            APPConstants.URL_LOGIN, "POST", params);
 
                     if (json != null) {
                         Log.d("JSON result", json.toString());
@@ -191,8 +229,6 @@ public class LoginActivity extends MainActivity {
 
             private ProgressDialog pDialog;
 
-            private static final String LOGIN_URL = "http://www.example.com/testGet.php";
-
             private static final String TAG_SUCCESS = "success";
             private static final String TAG_MESSAGE = "message";
 
@@ -217,7 +253,7 @@ public class LoginActivity extends MainActivity {
                     Log.d("request", "starting");
 
                     JSONObject json = jsonParser.makeHttpRequest(
-                            LOGIN_URL, "GET", params);
+                            APPConstants.URL_LOGIN, "GET", params);
 
                     if (json != null) {
                         Log.d("JSON result", json.toString());

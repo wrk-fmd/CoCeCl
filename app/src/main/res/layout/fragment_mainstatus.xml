@@ -209,7 +209,7 @@
                 <ListView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/listView2"
+                    android:id="@+id/tasksLView"
                     android:layout_gravity="center_horizontal"
                     android:layout_below="@+id/linearLayout11"
                     android:layout_alignParentLeft="true"

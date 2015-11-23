@@ -1,6 +1,7 @@
 package it.fmd.cocecl;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -10,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.Color;
@@ -23,10 +25,13 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -56,6 +61,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,6 +69,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
@@ -76,6 +83,7 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.GeoWebViewActivity;
 import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
 import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
@@ -84,6 +92,11 @@ import static android.graphics.Color.YELLOW;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    private ViewPager viewPager;
+    private TabPagerAdapter tabPagerAdapter;
+    private String[] tabNames = { "First", "Second", "Third" };
+    private ActionBar actionBar;
 
     ConnectionManager conman = new ConnectionManager();
 
@@ -110,16 +123,8 @@ public class MainActivity extends AppCompatActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
-    // JSON TODO: remove after test
-    public static String TAG = MainActivity.class.getSimpleName();
-    private Button btnMakeObjectRequest, btnMakeArrayRequest;
-    // Progress dialog
-    private ProgressDialog pDialog;
-    private TextView txtResponse;
-    // temporary string to show the parsed response
-    private String jsonResponse;
-
-
+    // JSON //
+    JSONArray incident;
 
     //Shared Preferences
     SharedPreferences spref;
@@ -201,6 +206,7 @@ public class MainActivity extends AppCompatActivity {
                     Configuration.SCREENLAYOUT_SIZE_MASK) ==
                     Configuration.SCREENLAYOUT_SIZE_LARGE) {
                 // on a large screen device ...
+                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 /*
                 Fragment mainstatusfrag = new mainstatusFragment();
                 Fragment incidentFrag = new incidentFragment();
@@ -233,8 +239,48 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-        // TABHOST CONTROLLER //
+        //VIEWPAGER //
 
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+            // on a normal screen device ...
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            tabLayout.addTab(tabLayout.newTab().setText("Main"));
+            tabLayout.addTab(tabLayout.newTab().setText("Status"));
+            tabLayout.addTab(tabLayout.newTab().setText("AO"));
+            //tabLayout.addTab(tabLayout.newTab().setText("Map"));
+            tabLayout.addTab(tabLayout.newTab().setText("Comm"));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            //TODO: on incident emergency set tablayout_color to blue #1565C0
+            //tabLayout.setBackgroundColor(BLUE);
+
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+            final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+        }
+        // TABHOST //
+/*
         if ((getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) ==
                 Configuration.SCREENLAYOUT_SIZE_NORMAL) {
@@ -250,13 +296,7 @@ public class MainActivity extends AppCompatActivity {
                     mainstatusFragment.class, null);
             mTabHost.addTab(
                     mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                    incidentFragment.class, null); /*
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab1").setIndicator("Status", null),
-                    statusFragment.class, null);
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                    fielddataFragment.class, null); */
+                    incidentFragment.class, null);
             mTabHost.addTab(
                     mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
                     deliverylocFragment.class, null);
@@ -266,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
             mTabHost.addTab(
                     mTabHost.newTabSpec("tab5").setIndicator("Komm", null),
                     communicationFragment.class, null);
-        }
+        }*/
     }
 
 
@@ -425,16 +465,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
-    private void showpDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
-    private void hidepDialog() {
-        if (pDialog.isShowing())
-            pDialog.dismiss();
-    }
 
 
     //TODO: create method to save app/fragment state
@@ -599,7 +629,7 @@ public class MainActivity extends AppCompatActivity {
                     final TextView infofield = (TextView) incidentView.findViewById(R.id.infofield);
 
                     final Button button41 = (Button) incidentView.findViewById(R.id.button41);
-                    final TextView textView83 = (TextView) incidentView.findViewById(R.id.textView83);
+                    final TextView textView83 = (TextView) incidentView.findViewById(R.id.statusView);
                     final TextView textView85 = (TextView) incidentView.findViewById(R.id.textView85);
 
                     final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
@@ -815,7 +845,7 @@ public class MainActivity extends AppCompatActivity {
     //PatStatus am BO
     public void patstatusbtns(View view) {
         final Button button41 = (Button)findViewById(R.id.button41);
-        final TextView textView83 = (TextView) findViewById(R.id.textView83);
+        final TextView textView83 = (TextView) findViewById(R.id.statusView);
         final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
         switch(view.getId()) {
 
@@ -1002,7 +1032,7 @@ public class MainActivity extends AppCompatActivity {
         dlgBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
 
             final Button button41 = (Button) findViewById(R.id.button41);
-            final TextView textView83 = (TextView) findViewById(R.id.textView83);
+            final TextView textView83 = (TextView) findViewById(R.id.statusView);
             final TextView textView85 = (TextView) findViewById(R.id.textView85);
             final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
 
@@ -1753,6 +1783,7 @@ public class MainActivity extends AppCompatActivity {
     //JSON GET and POST method//
     // Async Task
 
+    //POST
     class PostAsync extends AsyncTask<String, String, JSONObject> {
 
         JSONParser jsonParser = new JSONParser();
@@ -1829,7 +1860,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    //GET
     class GetAsync extends AsyncTask<String, String, JSONObject> {
 
         JSONParser jsonParser = new JSONParser();
@@ -1902,6 +1933,7 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("Failure", message);
             }
         }
+
     }
 /*
     //Spinner on commFragment

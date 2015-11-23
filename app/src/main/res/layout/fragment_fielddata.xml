@@ -16,7 +16,7 @@
         android:textColorHint="@color/primary_dark_material_dark"
         android:hint="Einsatzart"
         android:gravity="center"
-        android:id="@+id/textView7"
+        android:id="@+id/tasktype"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
@@ -38,7 +38,7 @@
         android:layout_width="match_parent"
         android:layout_height="10dp"
         android:id="@+id/space3"
-        android:layout_below="@+id/textView7"
+        android:layout_below="@+id/tasktype"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
 <ScrollView
@@ -65,7 +65,7 @@
         android:textColorHint="@color/primary_dark_material_dark"
             android:gravity="center"
         android:hint="@string/bo"
-            android:layout_below="@+id/textView7"
+            android:layout_below="@+id/tasktype"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"

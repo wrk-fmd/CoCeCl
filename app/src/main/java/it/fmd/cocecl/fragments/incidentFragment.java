@@ -11,8 +11,6 @@ import it.fmd.cocecl.R;
 
 public class incidentFragment extends Fragment {
 
-    MainActivity MA = new MainActivity();
-
     @Override
     public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
 

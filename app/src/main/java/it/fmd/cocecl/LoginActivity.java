@@ -76,7 +76,7 @@ public class LoginActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //GCM//TODO: gcm only in LoginActivity active?!?
+        //GCM//
 
             applicationContext = getApplicationContext();
             emailET = (EditText) findViewById(R.id.registeremail);
@@ -298,7 +298,6 @@ public class LoginActivity extends MainActivity {
 
         }
 
-        // TODO: combine login with gcm login
         //inputEmail = (EditText) findViewById(R.id.loginemail);
         logindnr = (EditText) findViewById(R.id.logindnr);
         loginpassword = (EditText) findViewById(R.id.loginpassword);

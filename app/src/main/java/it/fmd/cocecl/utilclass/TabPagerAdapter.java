@@ -32,8 +32,11 @@ public class TabPagerAdapter extends FragmentStatePagerAdapter {
                 deliverylocFragment tab3 = new deliverylocFragment();
                 return tab3;
             case 3:
-                communicationFragment tab4 = new communicationFragment();
+                mapFragment tab4 = new mapFragment();
                 return tab4;
+            case 4:
+                communicationFragment tab5 = new communicationFragment();
+                return tab5;
             default:
                 return null;
         }

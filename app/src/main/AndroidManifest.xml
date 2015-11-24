@@ -29,6 +29,12 @@
         android:name="it.fmd.cocecl.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
 
+    <uses-permission android:name="it.fmd.cocecl.permission.MAPS_RECEIVE" />
+    <permission
+        android:name="it.fmd.cocecl.permission.MAPS_RECEIVE"
+        android:protectionLevel="signature" />
+
+
     <supports-screens
         android:smallScreens="true"
         android:normalScreens="true"
@@ -44,7 +50,11 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="YOUR_API_KEY"/>
+            android:value=" AIzaSyCw8U7Tz-uWzO98KXKbgaHh0yYRmsGAyPg "/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".InfoActivity"

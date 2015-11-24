@@ -12,7 +12,16 @@
         android:orderInCategory="300"
         android:title="User"
         android:icon="@drawable/ic_person_white_24dp"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="ifRoom">
+
+        <menu>
+            <item android:id="@+id/showuser"
+                android:title="Account" />
+            <item android:id="@+id/logoutuser"
+                android:title="LogOut" />
+        </menu>
+
+    </item>
 <!--
     <item
         android:id="@+id/action_refresh"

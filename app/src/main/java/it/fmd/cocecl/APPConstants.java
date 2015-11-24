@@ -48,4 +48,12 @@ public class APPConstants {
     //Configuration file link
     public static final String cocecl_config = "";
 
+    // Phone numbers
+    //MLS
+    public static final String mlsmain = "+ 43 660 123 456 78";
+    public static final String mlsbv = "+ 43 660 123 456 78";
+    public static final String mlsdispo = "+ 43 660 123 456 78";
+    //EL
+    public static final String hio = "+ 43 660 123 456 78";
+
     }

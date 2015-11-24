@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
 import android.Manifest;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
@@ -43,7 +42,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
-import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -55,7 +53,6 @@ import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -69,19 +66,15 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import it.fmd.cocecl.fragments.communicationFragment;
-import it.fmd.cocecl.fragments.deliverylocFragment;
 import it.fmd.cocecl.fragments.incidentFragment;
 import it.fmd.cocecl.fragments.mainstatusFragment;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
-import it.fmd.cocecl.utilclass.GeoWebViewActivity;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
@@ -95,9 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ViewPager viewPager;
     private TabPagerAdapter tabPagerAdapter;
-    private String[] tabNames = { "First", "Second", "Third" };
-    private ActionBar actionBar;
 
+    public static FragmentManager fragmentManager;
     ConnectionManager conman = new ConnectionManager();
 
     TextView SMSm;
@@ -137,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        fragmentManager = getSupportFragmentManager();
 
     {
         //Shared Prefs// Create Patient
@@ -251,8 +245,8 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.addTab(tabLayout.newTab().setText("Main"));
             tabLayout.addTab(tabLayout.newTab().setText("Status"));
             tabLayout.addTab(tabLayout.newTab().setText("AO"));
-            //tabLayout.addTab(tabLayout.newTab().setText("Map"));
-            tabLayout.addTab(tabLayout.newTab().setText("Comm"));
+            tabLayout.addTab(tabLayout.newTab().setText("Map"));
+            //tabLayout.addTab(tabLayout.newTab().setText("Comm"));
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             //TODO: on incident emergency set tablayout_color to blue #1565C0
@@ -367,6 +361,10 @@ public class MainActivity extends AppCompatActivity {
             return true;
         }
 
+        if (id == R.id.action_user) {
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -412,11 +410,11 @@ public class MainActivity extends AppCompatActivity {
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        r.setDuration((long) 2*3000);
+        r.setDuration((long) 2 * 3000);
         r.setRepeatCount(Animation.INFINITE);
         syncicon.startAnimation(r);
 
-        syncicon.setBackgroundColor(RED);
+        //syncicon.setBackgroundColor(RED);
         serveranswer.setText("Error");
         serveranswer.setTextColor(RED);
 
@@ -425,7 +423,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 serveranswer.setText("");
-                syncicon.setBackgroundColor(View.GONE);
+                //syncicon.setBackgroundColor(View.GONE);
 
             }
         }, 5000);
@@ -564,7 +562,7 @@ public class MainActivity extends AppCompatActivity {
 
             case R.id.button17:
 
-                callIntent.setData(Uri.parse("tel:" + R.string.lsbv));
+                callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
                 startActivity(callIntent);
 
                 if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
@@ -575,7 +573,7 @@ public class MainActivity extends AppCompatActivity {
                 break;
 
             case R.id.button47:
-                callIntent.setData(Uri.parse("tel:" + R.string.lsallg));
+                callIntent.setData(Uri.parse("tel:" + APPConstants.mlsmain));
                 startActivity(callIntent);
 
                 if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
@@ -709,99 +707,46 @@ public class MainActivity extends AppCompatActivity {
         snackbar.show();
     }
 
-
-    // Button state & color functions START //
-    // Status EB NEB AD mainstatusFragment //
-    // TODO: set by server
-
-    public void ebst(View v) {
-        if (v.getId() == R.id.button38) {
-
-            Button button38 = (Button) findViewById(R.id.button38);
-            Button button39 = (Button) findViewById(R.id.button39);
-            Button button40 = (Button) findViewById(R.id.button40);
-
-            button38.setEnabled(true);
-            button38.setClickable(false);
-            button38.setBackgroundColor(GREEN);
-
-            button39.setEnabled(false);
-            button39.setClickable(false);
-            button39.setBackgroundResource(android.R.drawable.btn_default);
-
-            button40.setEnabled(false);
-            button40.setClickable(false);
-            button40.setBackgroundResource(android.R.drawable.btn_default);
-
-        }
-    }
-
-    public void nebst(View v) {
-        if (v.getId() == R.id.button39) {
-
-            Button button38 = (Button) findViewById(R.id.button38);
-            Button button39 = (Button) findViewById(R.id.button39);
-            Button button40 = (Button) findViewById(R.id.button40);
-
-            button38.setEnabled(false);
-            button38.setClickable(false);
-            button38.setBackgroundResource(android.R.drawable.btn_default);
-
-            button39.setEnabled(false);
-            button39.setClickable(false);
-            button39.setBackgroundColor(Color.parseColor("#9C27B0"));
-
-            button40.setEnabled(false);
-            button40.setClickable(false);
-            button40.setBackgroundResource(android.R.drawable.btn_default);
-
-        }
-    }
-
-    public void adst(View v) {
-        if (v.getId() == R.id.button40) {
-
-            Button button38 = (Button) findViewById(R.id.button38);
-            Button button39 = (Button) findViewById(R.id.button39);
-            Button button40 = (Button) findViewById(R.id.button40);
-
-            button38.setEnabled(false);
-            button38.setClickable(false);
-            button38.setBackgroundResource(android.R.drawable.btn_default);
-
-            button39.setEnabled(false);
-            button39.setClickable(false);
-            button39.setBackgroundResource(android.R.drawable.btn_default);
-
-            button40.setEnabled(false);
-            button40.setClickable(false);
-            button40.setBackgroundColor(Color.parseColor("#9C27B0"));
-
-        }
-    }
-
     //Status Buttons//TODO: move methods to IncidentAction
     //Radio
     public void radiostatusbtn(View view) {
         final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-        switch(view.getId()) {
+        switch (view.getId()) {
             case R.id.button5://SelectivRuf
 
-                final Button button5 = (Button) findViewById(R.id.button5);
-                button5.setEnabled(true);
-                button5.setClickable(false);
-                button5.setBackgroundColor(Color.YELLOW);
-                Toast.makeText(getApplicationContext(), "SelectivRuf", Toast.LENGTH_SHORT).show();
+                dlgBuilder.setMessage("Selectiv senden?");
+                dlgBuilder.setCancelable(false);
+                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
-                Handler h = new Handler();
-                h.postDelayed(new Runnable() {
                     @Override
-                    public void run() {
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        final Button button5 = (Button) findViewById(R.id.button5);
                         button5.setEnabled(true);
-                        button5.setClickable(true);
-                        button5.setBackgroundResource(android.R.drawable.btn_default);
+                        button5.setClickable(false);
+                        button5.setBackgroundColor(Color.YELLOW);
+                        Toast.makeText(getApplicationContext(), "SelectivRuf", Toast.LENGTH_SHORT).show();
+
+                        Handler h = new Handler();
+                        h.postDelayed(new Runnable() {
+                            @Override
+                            public void run() {
+                                button5.setEnabled(true);
+                                button5.setClickable(true);
+                                button5.setBackgroundResource(android.R.drawable.btn_default);
+                            }
+                        }, 30000);
                     }
-                }, 30000);
+                });
+                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                });
+
+                dlgBuilder.create().show();
                 break;
 
             case R.id.button12://NOTRUF
@@ -1546,13 +1491,53 @@ public class MainActivity extends AppCompatActivity {
                 break;
         }
     }
-
+/*
     // Map Fragment //
     // user can choose between leaflet(webview) and google maps(fragment api)
         public void showmap(View v) {
             if (v.getId() == R.id.button30) {
 
+                AlertDialog.Builder alert = new AlertDialog.Builder(this);
+                alert.setTitle("Stadtplan");
+
+                WebView gisView = new WebView(this);
+                gisView.getSettings().setJavaScriptEnabled(true);
+                gisView.getSettings().getAllowFileAccessFromFileURLs();
+                gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+                gisView.getSettings().setGeolocationEnabled(true);
+
+                gisView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+                gisView.getSettings().setBuiltInZoomControls(true);
+
+                gisView.setWebViewClient(new GeoWebViewActivity.GeoWebViewClient());
+                gisView.setWebChromeClient(new GeoWebViewActivity.GeoWebChromeClient());
+
+                gisView.loadUrl("file:///android_asset/leaflet.html");
+                gisView.setWebViewClient(new WebViewClient() {
+                    @Override
+                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                        view.loadUrl(url);
+
+                        return true;
+                    }
+                });
+
+                alert.setView(gisView);
+                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.dismiss();
+                    }
+                });
+                alert.show();
+            }
+        }
+/*
                 WebView gisView = (WebView) findViewById(R.id.gisView);
+
+                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+                dlgBuilder.setTitle("Stadtplan");
+                dlgBuilder.setView(gisView);
 
                 gisView.getSettings().setJavaScriptEnabled(true);
                 gisView.getSettings().getAllowFileAccessFromFileURLs();
@@ -1566,14 +1551,44 @@ public class MainActivity extends AppCompatActivity {
                 gisView.setWebChromeClient(new GeoWebViewActivity.GeoWebChromeClient());
 
                 gisView.loadUrl("file:///android_asset/leaflet.html");
+
+                dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+/*
+                MapFragment mapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map);
+                if (mapFragment != null)
+                    this.getFragmentManager().beginTransaction().remove(mapFragment).commit();
+*//*
+                    }
+                });
+                dlgBuilder.create().show();
             }
         }
+
+    public void removeWebView() {
+
+        WebView gisView = (WebView) findViewById(R.id.gisView);
+        gisView.removeAllViews();
+
+        if(gisView != null) {
+            gisView.clearHistory();
+            gisView.clearCache(true);
+            gisView.loadUrl("about:blank");
+            gisView.freeMemory();
+            gisView.pauseTimers();
+            gisView = null;
+        }
+
+    }
 
     public void startmaps (View v) {
         if (v.getId() == R.id.button31) {
             try {
                 // Loading map
                 initilizeMap();
+                //removeWebView();
 
             } catch (Exception e) {
                 e.printStackTrace();

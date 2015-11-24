@@ -1,8 +1,10 @@
 package it.fmd.cocecl.utilclass;
 
+import android.Manifest;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -43,7 +45,8 @@ public class GPSManager extends Service implements LocationListener {
     }
 
     public Location getLocation() {
-        try {
+        //if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+            try {
             locationManager = (LocationManager) mContext
                     .getSystemService(LOCATION_SERVICE);
 
@@ -65,6 +68,7 @@ public class GPSManager extends Service implements LocationListener {
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+
                     Log.d("Network", "Network");
                     if (locationManager != null) {
                         location = locationManager
@@ -106,11 +110,14 @@ public class GPSManager extends Service implements LocationListener {
      * Stop using GPS listener
      * Calling this function will stop using GPS in your app
      * */
-    public void stopUsingGPS(){
-        if(locationManager != null){
-            locationManager.removeUpdates(GPSManager.this);
+    public void stopUsingGPS() {
+        if (locationManager != null) {
+            //if (checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || checkSelfPermission(Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                locationManager.removeUpdates(GPSManager.this);
+            }
         }
-    }
+    //}
+
 
     /**
      * Function to get latitude

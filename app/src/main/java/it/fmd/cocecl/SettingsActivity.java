@@ -103,6 +103,38 @@ public class SettingsActivity extends MainActivity {
         }
     }
 
+    public void mapsswitch() {
+        Switch mapsw = (Switch) getWindow().findViewById(R.id.switch5);
+
+        mapsw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // enable maps fragment
+                } else {
+                    // disable maps fragment
+                }
+            }
+
+        });
+    }
+
+    public void soundsw() {
+        Switch sndsw = (Switch) getWindow().findViewById(R.id.switch4);
+
+        sndsw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    // enable app sounds
+                } else {
+                    // disable app sounds
+                }
+            }
+
+        });
+    }
+
     protected void onStop(Bundle savedInstanceState) {
         super.onStop();
 

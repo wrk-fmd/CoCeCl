@@ -1,10 +1,12 @@
 package it.fmd.cocecl.gcm;
 
+import android.app.AlertDialog;
 import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -14,10 +16,17 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.APPConstants;
 
+/**
+ * This class post GCM messages as Notification and AlertDialog
+ */
+//TODO: Snackbar
+
 public class GCMNotificationIntentService extends IntentService {
     // Sets an ID for the notification, so it can be updated
     public static final int notifyID = 9001;
     NotificationCompat.Builder builder;
+
+    //TODO: while app sleeps new incidents as notification (onPause); when app comes online, new incidents as additionally as alertdialog; incident updates on snackbar
 
     public GCMNotificationIntentService() {
         super("GcmIntentService");
@@ -78,5 +87,30 @@ public class GCMNotificationIntentService extends IntentService {
         mNotifyBuilder.setAutoCancel(true);
         // Post a notification
         mNotificationManager.notify(notifyID, mNotifyBuilder.build());
+    }
+
+    // AlertDialog GCM Message
+    public void showAlertDialog(Context context, String title, String message,
+                                Boolean status) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+
+        if(status != null)
+            // Setting alert dialog icon
+            //alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
+
+            // Setting OK Button
+            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+
+        // Showing Alert Message
+        alertDialog.show();
     }
 }

@@ -19,6 +19,8 @@
                 android:title="Account" />
             <item android:id="@+id/logoutuser"
                 android:title="LogOut" />
+            <item android:id="@+id/unitinfo"
+                android:title="UnitInfo" />
         </menu>
 
     </item>

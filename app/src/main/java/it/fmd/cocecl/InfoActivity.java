@@ -104,8 +104,13 @@ public class InfoActivity extends MainActivity {
         }
     }
 
-    public void unitinfo(View v) {
+    public void btnunitinfo(View v) {
         if (v.getId()==R.id.button63) {
+            unitinfo();
+        }
+    }
+
+    public void unitinfo() {
 
             // Create custom dialog object
             final Dialog dialog = new Dialog(InfoActivity.this);
@@ -128,4 +133,3 @@ public class InfoActivity extends MainActivity {
             });*/
         }
     }
-}

@@ -1,7 +1,10 @@
 package it.fmd.cocecl.utilclass;
 
 import android.app.Application;
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
@@ -16,10 +19,32 @@ import it.fmd.cocecl.LoginActivity;
 
 public class ConnectionManager extends Application {
 
-    //TODO: update connection Manager
+    //registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+    //public class ConnectivityBroadcast extends BroadcastReceiver {
+    public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            if (activeNetwork != null) { // connected to the internet
+                if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                    // connected to wifi
+                    //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
+                } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                    // connected to the mobile provider's data plan
+                    //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
+                }
+            } else {
+                // not connected to the internet
+            }
+        }
+    };
+
     public boolean isOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
 
         if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
@@ -42,9 +67,9 @@ public class ConnectionManager extends Application {
     public boolean isConnectedToServer() {
 
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
-        if (netInfo != null && netInfo.isConnected()) {
+        if (activeNetwork != null && activeNetwork.isConnected()) {
             try {
                 URL myUrl = new URL(APPConstants.MLS_DOMAIN);
                 URLConnection connection = myUrl.openConnection();

@@ -105,6 +105,19 @@ public class mapFragment extends Fragment {
         googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
     }
 
+    public void initializeMapViewSettings() {
+        googleMap.setIndoorEnabled(true);
+        googleMap.setBuildingsEnabled(false);
+    }
+
+    public void initializeUiSettings() {
+        googleMap.getUiSettings().setCompassEnabled(true);
+        googleMap.getUiSettings().setRotateGesturesEnabled(false);
+        googleMap.getUiSettings().setTiltGesturesEnabled(true);
+        googleMap.getUiSettings().setZoomControlsEnabled(true);
+        googleMap.getUiSettings().setMyLocationButtonEnabled(true);
+    }
+
     public void autoNavigate() {
 
         TextView bo = (TextView) getActivity().findViewById(R.id.bofield);

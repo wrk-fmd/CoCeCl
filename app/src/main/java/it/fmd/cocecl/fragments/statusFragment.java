@@ -282,7 +282,7 @@ public class statusFragment extends Fragment {
             button5.setEnabled(true);
             button5.setClickable(false);
             button5.setBackgroundColor(Color.YELLOW);
-            Toast.makeText(getContext(), "SelectivRuf", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), "SelectivRuf", Toast.LENGTH_SHORT).show();
 
             Handler h = new Handler();
             h.postDelayed(new Runnable() {
@@ -299,7 +299,7 @@ public class statusFragment extends Fragment {
     public void st6(View v) {
         if (v.getId() == R.id.button6) {
 
-            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(getActivity());
             dlgbuilder.setTitle("Einheit nicht einsatzbereit melden?");
             dlgbuilder.setItems(new CharSequence[]
                             {"NEB (andere Grund)", "Tanken", "Material nachfassen", "Bereitschaft", "Nein"},
@@ -418,7 +418,7 @@ public class statusFragment extends Fragment {
                                     button13.setClickable(false);
                                     button13.setBackgroundResource(android.R.drawable.btn_default);
 
-                                    Toast.makeText(getContext(), "Tanken", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Tanken", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 2:
                                     button.setEnabled(true);
@@ -473,7 +473,7 @@ public class statusFragment extends Fragment {
                                     button13.setClickable(false);
                                     button13.setBackgroundResource(android.R.drawable.btn_default);
 
-                                    Toast.makeText(getContext(), "Mat. nachfassen", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Mat. nachfassen", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 3:
                                     button.setEnabled(true);
@@ -528,10 +528,10 @@ public class statusFragment extends Fragment {
                                     button13.setClickable(false);
                                     button13.setBackgroundResource(android.R.drawable.btn_default);
 
-                                    Toast.makeText(getContext(), "Bereitschaft", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Bereitschaft", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 4:
-                                    Toast.makeText(getContext(), "weiter EB", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "weiter EB", Toast.LENGTH_SHORT).show();
                                     break;
                             }
                         }
@@ -657,7 +657,7 @@ public class statusFragment extends Fragment {
     public void st9(View v) {
         if (v.getId() == R.id.button9) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getActivity());
             dlgBuilder.setMessage("Einheit ausser Dienst stellen?");
             dlgBuilder.setCancelable(false);
             dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -717,7 +717,7 @@ public class statusFragment extends Fragment {
                     button13.setClickable(false);
                     button13.setBackgroundResource(android.R.drawable.btn_default);
 
-                    Toast.makeText(getContext(), "Ausser Dienst", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Ausser Dienst", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -736,7 +736,7 @@ public class statusFragment extends Fragment {
     public void st10(View v) {
         if (v.getId() == R.id.button10) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getActivity());
             dlgBuilder.setMessage("Intervention unterblieben?");
             dlgBuilder.setCancelable(false);
             dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -764,7 +764,7 @@ public class statusFragment extends Fragment {
                     button7.setClickable(false);
                     button7.setBackgroundResource(android.R.drawable.btn_default);
 
-                    Toast.makeText(getContext(), "keine Intervention", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "keine Intervention", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -783,7 +783,7 @@ public class statusFragment extends Fragment {
     public void st11(View v) {
         if (v.getId() == R.id.button11) {
 
-            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(getActivity());
             dlgbuilder.setTitle("Patient belassen/verweigert?");
             dlgbuilder.setItems(new CharSequence[]
                             {"Patient belassen", "Patient verweigert", "Nein"},
@@ -814,7 +814,7 @@ public class statusFragment extends Fragment {
                                     button7.setEnabled(false);
                                     button7.setClickable(false);
                                     button7.setBackgroundResource(android.R.drawable.btn_default);
-                                    Toast.makeText(getContext(), "Belassung", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Belassung", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 1:
                                     button.setEnabled(true);
@@ -836,7 +836,7 @@ public class statusFragment extends Fragment {
                                     button7.setEnabled(false);
                                     button7.setClickable(false);
                                     button7.setBackgroundResource(android.R.drawable.btn_default);
-                                    Toast.makeText(getContext(), "Patient verweigert", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(getActivity(), "Patient verweigert", Toast.LENGTH_SHORT).show();
                                     break;
                                 case 2:
                                     break;
@@ -852,7 +852,7 @@ public class statusFragment extends Fragment {
     public void st12(View v) {
         if (v.getId() == R.id.button12) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getActivity());
             dlgBuilder.setMessage("NOTRUF senden?");
             dlgBuilder.setCancelable(false);
             dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -863,7 +863,7 @@ public class statusFragment extends Fragment {
                     button12.setEnabled(true);
                     button12.setClickable(false);
                     button12.setBackgroundColor(RED);
-                    Toast.makeText(getContext(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getActivity(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
 
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
@@ -894,7 +894,7 @@ public class statusFragment extends Fragment {
     public void st13(View v) {
         if (v.getId() == R.id.button13) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getActivity());
             dlgBuilder.setMessage("Patient an anderes Rettungsmittel übergeben?");
             dlgBuilder.setCancelable(false);
             dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -922,7 +922,7 @@ public class statusFragment extends Fragment {
                     button7.setClickable(false);
                     button7.setBackgroundResource(android.R.drawable.btn_default);
 
-                    Toast.makeText(getContext(), "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
                 }
             });
 
@@ -941,7 +941,7 @@ public class statusFragment extends Fragment {
     public void st14(View v) {
         if (v.getId() == R.id.button42) {
 
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getActivity());
             dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
             dlgBuilder.setCancelable(false);
             dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
@@ -953,7 +953,7 @@ public class statusFragment extends Fragment {
                     button42.setClickable(false);
                     button42.setBackgroundColor(YELLOW);
 
-                    Toast.makeText(getContext(), "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
                 }
             });
 

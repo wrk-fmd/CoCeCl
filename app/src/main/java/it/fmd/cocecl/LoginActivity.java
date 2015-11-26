@@ -381,6 +381,46 @@ public class LoginActivity extends MainActivity {
             }
         });
     }
+
+    @Override
+    public void onStart(){
+        super.onStart();
+        //checkMLSConnection();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkPlayServices();
+        //checkMLSConnection();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+    }
+
+    @Override
+    public void onDestroy() {
+/*
+        try{
+            if(mReceiver!=null)
+                unregisterReceiver(mReceiver);
+        }catch(Exception e)
+        {
+
+        }
+        */
+        super.onDestroy();
+
+
+    }
 /*
     private class MyTextWatcher implements TextWatcher {
 
@@ -408,7 +448,7 @@ public class LoginActivity extends MainActivity {
         }
     }
 */
-    //TODO: remove when login finished
+    //TODO: remove when AppLogin finished
     public void bypasslogin(View v) {
         if (v.getId() == R.id.button22) {
             Intent i = new Intent(getApplicationContext(),
@@ -419,6 +459,7 @@ public class LoginActivity extends MainActivity {
     }
 
     //// REGISTER CLASS HERE ////
+    // TODO: Register in App(those who aren´t from beginning(over MLS database)) and GCM
 
 
     public void register(View v) {
@@ -438,11 +479,13 @@ public class LoginActivity extends MainActivity {
     }
 
 
-    // GCM Login //
+    // GCM Login/Registration //
     // --------------------------------------------------------------- //
     //
     //
     //
+    //TODO: unregister on logout
+
     private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     AsyncTask<Void, Void, String> createRegIdTask;
@@ -499,15 +542,16 @@ public class LoginActivity extends MainActivity {
                 if (!TextUtils.isEmpty(regId)) {
                     // Store RegId created by GCM Server in SharedPref
                     storeRegIdinSharedPref(applicationContext, regId, emailID);
-                    Toast.makeText(
-                            applicationContext,
-                            "Registered with GCM Server successfully.nn"
-                                    + msg, Toast.LENGTH_SHORT).show();
+
+                    //Toast.makeText(applicationContext, "Registered with GCM Server successfully.nn" + msg, Toast.LENGTH_SHORT).show();
+
                 } else {
+                    /*
                     Toast.makeText(
                             applicationContext,
                             "Reg ID Creation Failed.nnEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."
                                     + msg, Toast.LENGTH_LONG).show();
+                                    */
                 }
             }
         }.execute(null, null, null);
@@ -542,16 +586,16 @@ public class LoginActivity extends MainActivity {
                         if (prgDialog != null) {
                             prgDialog.dismiss();
                         }
-                        Toast.makeText(applicationContext,
-                                "Reg Id shared successfully with Web App ",
-                                Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(applicationContext,
-                                MainActivity.class);
+
+                        /*
+                        Toast.makeText(applicationContext, "Reg Id shared successfully with Web App ", Toast.LENGTH_LONG).show();
+                        Intent i = new Intent(applicationContext, MainActivity.class);
                         i.putExtra("regId", regId);
                         startActivity(i);
                         finish();
+                        */
                     }
-
+                    //TODO: log errors
                     // When the response returned by REST has Http
                     // response code other than '200' such as '404',
                     // '500' or '403' etc
@@ -564,23 +608,30 @@ public class LoginActivity extends MainActivity {
                         }
                         // When Http response code is '404'
                         if (statusCode == 404) {
+                            /*
                             Toast.makeText(applicationContext,
                                     "Requested resource not found",
                                     Toast.LENGTH_LONG).show();
+                                    */
                         }
                         // When Http response code is '500'
                         else if (statusCode == 500) {
+                            /*
                             Toast.makeText(applicationContext,
                                     "Something went wrong at server end",
                                     Toast.LENGTH_LONG).show();
+                                    */
                         }
                         // When Http response code other than 404, 500
                         else {
+
+                            /*
                             Toast.makeText(
                                     applicationContext,
                                     "Unexpected Error occcured! [Most common Error: Device might "
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
                                     Toast.LENGTH_LONG).show();
+                                    */
                         }
                     }
                 });
@@ -613,14 +664,5 @@ public class LoginActivity extends MainActivity {
                     */
         }
         return true;
-    }
-
-    // When Application is resumed, check for Play services support to make sure app will be running normally
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        checkPlayServices();
-
     }
 }

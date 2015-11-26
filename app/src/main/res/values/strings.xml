@@ -135,6 +135,8 @@
     <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
 
     //Connection//
+    <string name="mlsserver">MLS Server</string>
+    <string name="connection">Verbindung</string>
     <string name="con">Internet verbunden</string>
     <string name="discon">Internet nicht verbunden</string>
     <string name="mlscon">Mit MLS verbunden</string>

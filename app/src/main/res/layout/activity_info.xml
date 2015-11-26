@@ -199,7 +199,7 @@
         android:layout_toLeftOf="@+id/button14"
         android:layout_toStartOf="@+id/button14"
         android:drawableTop="@drawable/ic_local_taxi_black_18dp"
-        android:onClick="unitinfo" />
+        android:onClick="btnunitinfo" />
 
     <View
         android:layout_width="fill_parent"

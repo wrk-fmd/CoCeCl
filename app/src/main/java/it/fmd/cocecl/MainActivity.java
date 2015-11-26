@@ -2,13 +2,16 @@ package it.fmd.cocecl;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
@@ -18,6 +21,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.media.MediaPlayer;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -40,6 +45,8 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
@@ -51,6 +58,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.CameraPosition;
@@ -76,6 +85,7 @@ import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
 import static android.graphics.Color.BLUE;
@@ -85,9 +95,6 @@ import static android.graphics.Color.YELLOW;
 
 
 public class MainActivity extends AppCompatActivity {
-
-    private ViewPager viewPager;
-    private TabPagerAdapter tabPagerAdapter;
 
     public static FragmentManager fragmentManager;
     ConnectionManager conman = new ConnectionManager();
@@ -116,7 +123,8 @@ public class MainActivity extends AppCompatActivity {
     private static String latString = String.valueOf(latitude);
 
     // JSON //
-    JSONArray incident;
+
+
 
     //Shared Preferences
     SharedPreferences spref;
@@ -241,6 +249,7 @@ public class MainActivity extends AppCompatActivity {
             // on a normal screen device ...
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+            //TODO: set tabs depending on unit status
             TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
             tabLayout.addTab(tabLayout.newTab().setText("Main"));
             tabLayout.addTab(tabLayout.newTab().setText("Status"));
@@ -301,6 +310,7 @@ public class MainActivity extends AppCompatActivity {
                     mTabHost.newTabSpec("tab5").setIndicator("Komm", null),
                     communicationFragment.class, null);
         }*/
+        inetcon();
     }
 
 
@@ -358,14 +368,48 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent isett = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(isett);
             return true;
         }
 
         if (id == R.id.action_user) {
             return true;
         }
+        SessionManagement SM = new SessionManagement(getApplicationContext());
+        switch (item.getItemId()) {
+            case R.id.logoutuser:
+                SM.logoutUser();
+                break;
+            case R.id.showuser:
+                showuserdialog();
+                break;
+            case R.id.unitinfo:
+                //TODO: get unitinfo dialog from infoactivity
+                InfoActivity IA = new InfoActivity();
+                IA.unitinfo();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void showuserdialog() {
+        //TODO: get user info
+        SessionManagement SM = new SessionManagement(getApplicationContext());
+        String user = SM.getUserDetails().values().toString();
+
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+        dlgBuilder.setCancelable(false);
+        dlgBuilder.setTitle("Benutzer");
+        dlgBuilder.setMessage(user);
+
+        dlgBuilder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+            }
+        });
+        AlertDialog alert = dlgBuilder.create();
+        alert.show();
     }
 
     //Animated sync symbol in toolbar//
@@ -376,7 +420,7 @@ public class MainActivity extends AppCompatActivity {
 
         RotateAnimation r = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        r.setDuration((long) 2*1000);
+        r.setDuration((long) 2 * 1000);
         r.setRepeatCount(Animation.INFINITE);
         syncicon.startAnimation(r);
     }
@@ -406,6 +450,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void onSyncError() {
         final ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
+        final ImageView erroricon = (ImageView)findViewById(R.id.erroriconView);
         final TextView serveranswer = (TextView)findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
@@ -417,6 +462,8 @@ public class MainActivity extends AppCompatActivity {
         //syncicon.setBackgroundColor(RED);
         serveranswer.setText("Error");
         serveranswer.setTextColor(RED);
+        erroricon.setImageResource(R.drawable.ic_warning_black_18dp);
+        erroricon.setBackgroundColor(RED);
 
         Handler h = new Handler();
         h.postDelayed(new Runnable() {
@@ -424,6 +471,8 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 serveranswer.setText("");
                 //syncicon.setBackgroundColor(View.GONE);
+                erroricon.setBackgroundColor(View.GONE);
+                erroricon.setImageResource(android.R.color.transparent);
 
             }
         }, 5000);
@@ -445,10 +494,41 @@ public class MainActivity extends AppCompatActivity {
             snackbar.show();
         }
     }
+/*
+    public void setConnectionIcons() {
+    //TODO: if on fullscreen set connection icons on toolbar visible, else invisible
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        TextView wifitext = (TextView)findViewById(R.id.textView7);
+        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+
+        Window window = this.getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if () {
+
+            wifitext.setVisibility(View.VISIBLE);
+            mobiletext.setVisibility(View.VISIBLE);
+
+        }else{
+
+            wifitext.setVisibility(View.INVISIBLE);
+            mobiletext.setVisibility(View.INVISIBLE);
+
+        }
+    }
+*/
+    // ConnectionManager //
+    //TODO: use broadcast receiver from connectionmanager class
+    private void registerReceivers() {
+        //conman.registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    }
 
     // ToolBar status icons //
     public void checkMLSConnection() {
-            // ToolBar mls connection state icon //
+
+            // ToolBar mls connection state icon
             ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
             {
                 // check if you are connected or not
@@ -463,6 +543,47 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+
+    public void inetcon() {
+        //TODO: use from Connection manager class
+        TextView wifitext = (TextView)findViewById(R.id.textView7);
+        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        if (activeNetwork != null) { // connected to the internet
+            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+                // connected to wifi
+                wifitext.setBackgroundColor(GREEN);
+                //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
+            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+                // connected to the mobile provider's data plan
+                mobiletext.setBackgroundColor(GREEN);
+                //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            // not connected to the internet
+            wifitext.setBackgroundColor(RED);
+            mobiletext.setBackgroundColor(RED);
+        }
+    }
+    public void checkInetConnection() {
+
+        // TextView in ToolBar
+        TextView wifitext = (TextView)findViewById(R.id.textView7);
+        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+
+        if (conman.isOnline()) {
+
+            wifitext.setBackgroundColor(GREEN);
+            mobiletext.setBackgroundColor(GREEN);
+
+        } else {
+
+            wifitext.setBackgroundColor(RED);
+            mobiletext.setBackgroundColor(RED);
+
+        }
+    }
 
 
     //TODO: create method to save app/fragment state
@@ -507,7 +628,7 @@ public class MainActivity extends AppCompatActivity {
     public void onResume() {
         super.onResume();
         //initilizeMap();
-        //checkPlayServices();
+        checkPlayServices();
         //checkMLSConnection();
     }
 
@@ -607,20 +728,13 @@ public class MainActivity extends AppCompatActivity {
 
     // Alert Push Notification Manager //
     // alerts on incoming incident, gcm server!!
-    //TODO: later: function for new incident alert !!! check again
-    public void taskalert(View v) {
+    //
+    //TODO: later: function for new incident alert !!! check again, move method to IncidentAction class
+    public void taskalert() {
 
         final LayoutInflater inci = getLayoutInflater();
         final View incidentView = inci.inflate(R.layout.fragment_incident, null);
         final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.alert_newemergency);
-        //TODO: remove button
-        if (v.getId() == R.id.button) {
-
-            Button alertbtntest = (Button) findViewById(R.id.button);
-            alertbtntest.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg5) {
 
                     final TextView bofield = (TextView) incidentView.findViewById(R.id.bofield);
                     final TextView brfrfield = (TextView) incidentView.findViewById(R.id.brfrfield);
@@ -693,12 +807,12 @@ public class MainActivity extends AppCompatActivity {
                     NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                     notificationManager.notify(1, mBuilder.build());
                 }
-            });
-        }
-    }
 
-    // SnackBar // for incident update notification // on sdk23 only
+
+
+    // SnackBar // for incident update notification //
     // show updates on incident in snackbar
+    //TODO: redundant method in incodentAction class
     public void onIncidentUpdate() {
 
         coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
@@ -714,19 +828,18 @@ public class MainActivity extends AppCompatActivity {
         switch (view.getId()) {
             case R.id.button5://SelectivRuf
 
-                dlgBuilder.setMessage("Selectiv senden?");
+                dlgBuilder.setMessage("Selektivruf senden?");
                 dlgBuilder.setCancelable(false);
                 dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-
                         final Button button5 = (Button) findViewById(R.id.button5);
                         button5.setEnabled(true);
                         button5.setClickable(false);
                         button5.setBackgroundColor(Color.YELLOW);
-                        Toast.makeText(getApplicationContext(), "SelectivRuf", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), "Selektivruf gesendet", Toast.LENGTH_SHORT).show();
 
                         Handler h = new Handler();
                         h.postDelayed(new Runnable() {
@@ -820,7 +933,7 @@ public class MainActivity extends AppCompatActivity {
                         button41.setEnabled(true);
                         button41.setClickable(true);
                         button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText(R.string.eb);
+                        button41.setText("QU");
                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                         textView83.setText("EB");
 
@@ -870,7 +983,7 @@ public class MainActivity extends AppCompatActivity {
                                         button41.setEnabled(true);
                                         button41.setClickable(true);
                                         button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText(R.string.eb);
+                                        button41.setText("QU");
                                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                                         textView83.setText("EB");
 
@@ -896,7 +1009,7 @@ public class MainActivity extends AppCompatActivity {
                                         button41.setEnabled(true);
                                         button41.setClickable(true);
                                         button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText(R.string.eb);
+                                        button41.setText("QU");
                                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                                         textView83.setText("EB");
 
@@ -937,7 +1050,7 @@ public class MainActivity extends AppCompatActivity {
                         button41.setEnabled(true);
                         button41.setClickable(true);
                         button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText(R.string.abo);
+                        button41.setText("QU");
                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                         textView83.setText("EB");
 
@@ -1305,7 +1418,6 @@ public class MainActivity extends AppCompatActivity {
                     addpatplsnr.setText("" + getpatplsnr);
                     addpatward.setText("" + getpatgender);
                     //addpatgender.setText(""+getpatward);
-
 
                     dlgBuilder.setPositiveButton("Senden", new DialogInterface.OnClickListener() {
                         @Override
@@ -1795,7 +1907,70 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-    //JSON GET and POST method//
+    // GCM Message/Notification/Snackbar update --------------------------
+    //
+    //
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+
+    public void gmcmessage() {
+        // Intent Message sent from Broadcast Receiver
+        String str = getIntent().getStringExtra("msg");
+
+        // Get Email ID from Shared preferences
+        SharedPreferences prefs = getSharedPreferences("UserDetails",
+                Context.MODE_PRIVATE);
+        String eMailId = prefs.getString("eMailId", "");
+        // Set Title
+        //usertitleET = (TextView) findViewById(R.id.usertitle);
+
+        // Check if Google Play Service is installed in Device
+        // Play services is needed to handle GCM stuffs
+        if (!checkPlayServices()) {
+            Toast.makeText(
+                    getApplicationContext(),
+                    "This device doesn't support Play services, App will not work normally",
+                    Toast.LENGTH_LONG).show();
+        }
+
+        //usertitleET.setText("Hello " + eMailId + " !");
+        // When Message sent from Broadcase Receiver is not empty
+        if (str != null) {
+            // Set the message
+            //msgET = (TextView) findViewById(R.id.message);
+            //msgET.setText(str);
+        }
+    }
+
+        // Check if Google Playservices is installed in Device or not
+
+    private boolean checkPlayServices() {
+        int resultCode = GooglePlayServicesUtil
+                .isGooglePlayServicesAvailable(this);
+        // When Play services not found in device
+        if (resultCode != ConnectionResult.SUCCESS) {
+            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
+                // Show Error dialog to install Play services
+                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
+                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
+            } else {
+                Toast.makeText(
+                        getApplicationContext(),
+                        "This device doesn't support Play services, App will not work normally",
+                        Toast.LENGTH_LONG).show();
+                finish();
+            }
+            return false;
+        } else {
+            /*Toast.makeText(
+                    getApplicationContext(),
+                    "This device supports Play services, App will work normally",
+                    Toast.LENGTH_LONG).show();*/
+        }
+        return true;
+    }
+
+
+    //JSON GET and POST method// ----------------------------------------------------
     // Async Task
 
     //POST

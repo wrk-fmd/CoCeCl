@@ -207,7 +207,7 @@ public class GPSManager extends Service implements LocationListener {
 
 }
 
-/* //old code but good except timer
+/* //old code, good except timer(crash)
 public class GPSManager extends Application {
 
     private TextView latituteField;

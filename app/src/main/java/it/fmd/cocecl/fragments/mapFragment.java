@@ -13,6 +13,7 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
 import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
@@ -34,7 +35,7 @@ public class mapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // inflat and return the layout
+        // inflate and return the layout
         View v = inflater.inflate(R.layout.fragment_map, container, false);
         mMapView = (MapView) v.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
@@ -48,22 +49,26 @@ public class mapFragment extends Fragment {
         }
 
         googleMap = mMapView.getMap();
-/*
+
+        //UI Settings
+        initializeMapLocationSettings();
+        initializeMapTraffic();
+        initializeMapType();
+        initializeUiSettings();
+        initializeMapViewSettings();
+
         // create marker
-        MarkerOptions marker = new MarkerOptions().position(
-                new LatLng(latitude, longitude)).title("Hello Maps");
-
-        // Changing marker icon
-        marker.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE));
-
+        MarkerOptions nodo = new MarkerOptions().position(new LatLng(48.1907634, 16.411198)).title("NODO");
+        MarkerOptions kss = new MarkerOptions().position(new LatLng(48.2671734, 16.4019968)).title("KSS");
+        //Marker icon
+        nodo.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
         // adding marker
-        googleMap.addMarker(marker);
-        CameraPosition cameraPosition = new CameraPosition.Builder()
-                .target(new LatLng(17.385044, 78.486671)).zoom(12).build();
-        googleMap.animateCamera(CameraUpdateFactory
-                .newCameraPosition(cameraPosition));
+        googleMap.addMarker(nodo);
+        googleMap.addMarker(kss);
 
-        // Perform any camera updates here*/
+        // MapCamera to unit position
+        mapcamera();
+
         return v;
     }
 
@@ -86,10 +91,8 @@ public class mapFragment extends Fragment {
     }
 
     public void mapcamera () {
-        //unit position
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                new LatLng(latitude, longitude)).zoom(12).build();
-
+        //unit position from gps
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
     }
 
@@ -125,18 +128,17 @@ public class mapFragment extends Fragment {
 
         if ((bo.getText().toString().trim().length() > 0) && (ao.getText().toString().trim().length() == 0)) {
 
-            Uri gmmIntentUribo = Uri.parse("google.navigation:q="+bo+"&mode=b");
+            Uri gmmIntentUribo = Uri.parse("google.navigation:q="+bo+"&mode=d");
             Intent mapIntentbo = new Intent(Intent.ACTION_VIEW, gmmIntentUribo);
             mapIntentbo.setPackage("com.google.android.apps.maps");
             startActivity(mapIntentbo);
 
             if ((bo.getText().toString().trim().length() > 0) && (ao.getText().toString().trim().length() > 0)) {
 
-                Uri gmmIntentUriao = Uri.parse("google.navigation:q="+ao+"&mode=b");
+                Uri gmmIntentUriao = Uri.parse("google.navigation:q=" + ao + "&mode=d");
                 Intent mapIntentao = new Intent(Intent.ACTION_VIEW, gmmIntentUriao);
                 mapIntentao.setPackage("com.google.android.apps.maps");
                 startActivity(mapIntentao);
-
             }
         }
     }

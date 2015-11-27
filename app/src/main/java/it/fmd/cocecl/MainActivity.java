@@ -30,6 +30,7 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
@@ -52,6 +53,7 @@ import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
@@ -79,6 +81,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import it.fmd.cocecl.fragments.deliverylocFragment;
 import it.fmd.cocecl.fragments.incidentFragment;
 import it.fmd.cocecl.fragments.mainstatusFragment;
 import it.fmd.cocecl.fragments.mapFragment;
@@ -96,7 +99,8 @@ import static android.graphics.Color.YELLOW;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static FragmentManager fragmentManager;
+    View.OnClickListener mOnClickListener;
+
     ConnectionManager conman = new ConnectionManager();
 
     TextView SMSm;
@@ -138,8 +142,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        fragmentManager = getSupportFragmentManager();
-
     {
         //Shared Prefs// Create Patient
         spref = getSharedPreferences("PatData", MODE_PRIVATE);
@@ -156,23 +158,6 @@ public class MainActivity extends AppCompatActivity {
 
             snackbar.show();
 
-            // No Inet connection - show in snackbar
-            Snackbar.make(coordinatorLayout, "No internet connection!", Snackbar.LENGTH_LONG)
-                    .setAction("RETRY", new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                        }
-                    });
-
-            // Changing message text color
-            snackbar.setActionTextColor(Color.RED);
-
-            // Changing action button text color
-            View sbView = snackbar.getView();
-            TextView textView = (TextView) sbView.findViewById(android.support.design.R.id.snackbar_text);
-            textView.setTextColor(Color.YELLOW);
-
-            snackbar.show();
         }
 
         {
@@ -181,9 +166,7 @@ public class MainActivity extends AppCompatActivity {
             //setTitle(R.string.app_name);
         }
 
-        // GPS Coordinates // send continuous updates //
-
-        //new
+        // GPS Coordinates //
 
         GPSManager gps = new GPSManager(MainActivity.this);
         double latitude = gps.getLatitude();
@@ -201,50 +184,10 @@ public class MainActivity extends AppCompatActivity {
 
                 , 10000);
 
-            // FRAGMENT MANAGER //
-        {
-            //TODO: Fragmentmanager does not crash anymore; tablet mode still does not work
-            if ((getResources().getConfiguration().screenLayout &
-                    Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                    Configuration.SCREENLAYOUT_SIZE_LARGE) {
-                // on a large screen device ...
-                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-/*
-                Fragment mainstatusfrag = new mainstatusFragment();
-                Fragment incidentFrag = new incidentFragment();
-                Fragment fielddataFrag = new fielddataFragment();
-                Fragment mapFrag = new mapFragment();
-*/
-                FragmentManager fm = getSupportFragmentManager();
-
-                //getSupportFragmentManager().findFragmentById(R.id.fragment_status);
-
-
-                // Transaction start
-                FragmentTransaction ft = fm.beginTransaction();
-
-                ft.add(R.id.framelayout_1, new mainstatusFragment());
-
-                if (findViewById(R.id.framelayout_2) != null) {
-
-                    ft.add(R.id.framelayout_2, new incidentFragment());
-                }
-
-                if (findViewById(R.id.framelayout_3) != null) {
-
-                    ft.add(R.id.framelayout_3, new mapFragment());
-                }
-
-                ft.addToBackStack(null);
-                // Transaction commit
-                ft.commit();
-            }
-        }
-
-        //VIEWPAGER //
+        // VIEWPAGER //
 
         if ((getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) ==
+                Configuration.SCREENLAYOUT_SIZE_MASK) <=
                 Configuration.SCREENLAYOUT_SIZE_NORMAL) {
             // on a normal screen device ...
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
@@ -312,8 +255,6 @@ public class MainActivity extends AppCompatActivity {
         }*/
         inetcon();
     }
-
-
 
     // TabHost Methods //
     private void addMethod() {
@@ -630,6 +571,40 @@ public class MainActivity extends AppCompatActivity {
         //initilizeMap();
         checkPlayServices();
         //checkMLSConnection();
+
+        // FRAGMENT MANAGER //
+        //TODO: Design on Tablet needs to be changed
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            // on a large screen device ...
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+
+            // FM support manager
+            FragmentManager fm = getSupportFragmentManager();
+            // Transaction start
+            FragmentTransaction ft = fm.beginTransaction();
+
+            // Begin the transaction
+            if (findViewById(R.id.framelayout_1) != null) {
+
+                ft.add(R.id.framelayout_1, new mainstatusFragment());
+            }
+
+            if (findViewById(R.id.framelayout_2) != null) {
+
+                ft.add(R.id.framelayout_2, new incidentFragment());
+            }
+
+            if (findViewById(R.id.framelayout_3) != null) {
+
+                ft.add(R.id.framelayout_3, new mapFragment());
+            }
+
+            ft.addToBackStack(null);
+            // Transaction commit
+            ft.commit();
+        }
     }
 
     @Override

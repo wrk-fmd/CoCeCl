@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    tools:context="it.fmd.cocecl.mainstatus"
+    android:id="@+id/relochomefraglayout"
+    android:background="#bdbdbd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardElevation="4dp"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardBackgroundColor="#ffffff">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:gravity="center"
+                        android:id="@+id/tasktype"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="10dp"
+                        android:text="Auftragsbeschreibung"
+                        android:textColor="#00b0ff" />
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:text="Auftragsart"
+                            android:id="@+id/textView127"
+                            android:textColor="#ff9800"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/ssig"
+                            android:id="@+id/emergencyBox"
+                            android:checked="false"
+                            android:clickable="false"
+                            android:enabled="true"
+                            android:layout_gravity="right"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:visibility="invisible"
+                            android:layout_weight="0"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                android:id="@+id/cardviewst">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Auftrags Status"
+                        android:id="@+id/textView82"
+                        android:textColor="#00b0ff" />
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/statusView"
+                        android:hint="aktueller status"
+                        android:gravity="left"
+                        android:textStyle="bold"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:textColor="#ff9800"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/textView85"
+                        android:gravity="left"
+                        android:editable="false"
+                        android:inputType="time"
+                        android:hint="time statuschange"
+                        android:textColor="#000000" />
+
+                    <Button
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:id="@+id/button41"
+                        android:hint="status weiterschalten"
+                        android:enabled="true"
+                        android:clickable="true"
+                        android:onClick="stbtnClick"
+                        style="@style/IncidentTabButtonStyle"
+                        android:layout_gravity="center"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_dark"
+                            android:textColorHint="@color/primary_dark_material_dark"
+                            android:hint="@string/ao"
+                            android:id="@+id/aofield"
+                            android:editable="false"
+                            android:enabled="false"
+                            android:inputType="textPostalAddress"
+                            android:clickable="true"
+                            android:gravity="center"
+                            android:background="@drawable/edittext_style_3"
+                            android:layout_weight="100"/>
+
+                        <Button
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="NAVI"
+                            android:id="@+id/button19"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:drawableTop="@drawable/ic_navigation_black_18dp"
+                            android:onClick="navigate"
+                            style="@style/IncidentTabButtonStyle"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    tools:context="it.fmd.cocecl.mainstatus"
+    android:id="@+id/mainstatusfraglayout"
+    android:background="#bdbdbd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        cardview:cardElevation="4dp"
+        cardview:cardCornerRadius="5dp"
+        cardview:cardBackgroundColor="#ffffff">
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="3dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Einsatzgebiet"
+                android:id="@+id/textView115"
+                android:textColor="#00b0ff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Typ"
+                android:id="@+id/textView130"
+                android:textColor="#ff9800" />
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:id="@+id/textView79"
+                android:layout_gravity="center_horizontal"
+                android:hint="Vorfall Nr&amp;Name"
+                android:textColorHint="@color/primary_dark_material_dark"
+                android:layout_marginBottom="5dp"
+                android:gravity="center"/>
+
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="20dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView80"
+                android:layout_gravity="center_horizontal"
+                android:hint="@string/unit"
+                android:textColorHint="@color/primary_dark_material_dark"
+                android:gravity="center"
+                android:layout_marginBottom="5dp"/>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        cardview:cardCornerRadius="5dp"
+        cardview:cardElevation="4dp"
+        android:layout_marginTop="10dp"
+        cardview:cardBackgroundColor="#ffffff"
+        android:id="@+id/cardviewst">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Einheit Status"
+                android:id="@+id/textView109"
+                android:textColor="#00b0ff"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="kein Status"
+                android:id="@+id/textView111"
+                android:textColor="#ff9800"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:weightSum="3"
+                android:id="@+id/statusbtnlinlay">
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="EB"
+                    android:id="@+id/button38"
+                    android:drawableTop="@drawable/ic_play_arrow_black_18dp"
+                    style="@style/MainStatusButtonStyle"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="NEB"
+                    android:id="@+id/button39"
+                    android:drawableTop="@drawable/ic_pause_black_18dp"
+                    android:layout_weight="1"
+                    style="@style/MainStatusButtonStyle"
+                    android:clickable="true" />
+
+                <Button
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:text="AD"
+                    android:id="@+id/button40"
+                    android:drawableTop="@drawable/ic_stop_black_18dp"
+                    android:layout_weight="1"
+                    style="@style/MainStatusButtonStyle"
+                    android:clickable="true" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        cardview:cardCornerRadius="5dp"
+        cardview:cardElevation="4dp"
+        android:layout_marginTop="10dp"
+        cardview:cardBackgroundColor="#ffffff">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Meldungen"
+                android:id="@+id/textView81"
+                android:textColor="#00b0ff" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="keine Meldung"
+                android:id="@+id/textView112"
+                android:textColor="#ff9800"
+                android:visibility="gone"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="@string/stbutton12"
+                    android:id="@+id/button12"
+                    android:drawableLeft="@drawable/ic_warning_black_18dp"
+                    android:clickable="true"
+                    android:onClick="radiostatusbtn"
+                    android:layout_gravity="left"
+                    style="@style/MainStatusButtonStyle"/>
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="Selektivruf"
+                    android:id="@+id/button5"
+                    android:clickable="true"
+                    android:enabled="true"
+                    android:onClick="radiostatusbtn"
+                    android:drawableLeft="@drawable/ic_phone_forwarded_black_18dp"
+                    android:layout_gravity="right"
+                    style="@style/MainStatusButtonStyle"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="@string/lsgeneral"
+                    android:id="@+id/button47"
+                    android:layout_gravity="right"
+                    android:drawableLeft="@drawable/ic_call_black_18dp"
+                    android:onClick="lscall"
+                    style="@style/MainStatusButtonStyle"/>
+
+                <Button
+                    android:layout_width="150dp"
+                    android:layout_height="70dp"
+                    android:text="@string/newinc"
+                    android:id="@+id/button42"
+                    android:layout_gravity="left"
+                    android:onClick="reportincident"
+                    android:drawableLeft="@drawable/ic_my_location_black_18dp"
+                    style="@style/MainStatusButtonStyle"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        cardview:cardElevation="4dp"
+        cardview:cardCornerRadius="5dp"
+        android:layout_marginTop="10dp"
+        cardview:cardBackgroundColor="#ffffff">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="8dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Einsätze/Aufträge"
+                android:id="@+id/textView110"
+                android:textColor="#00b0ff"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Anzahl"
+                    android:id="@+id/textView113"
+                    android:textColor="#ff9800"
+                    android:layout_marginRight="10dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Aktueller Einsatz"
+                    android:id="@+id/textView114"
+                    android:textColor="#ff9800"/>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/incidentrv" />
+
+        </LinearLayout>
+    </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

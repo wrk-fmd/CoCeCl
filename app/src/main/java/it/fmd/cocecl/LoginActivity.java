@@ -19,6 +19,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -104,6 +105,26 @@ public class LoginActivity extends MainActivity {
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
         logindnr = (EditText) findViewById(R.id.logindnr);
         loginpassword = (EditText) findViewById(R.id.loginpassword);
+
+        final LinearLayout registeruserlayout = (LinearLayout)getLayoutInflater().inflate(R.layout.register_user_layout, null);
+
+            //Displaying TextInputLayout Error
+            TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
+            registernameLayout.setErrorEnabled(true);
+            registernameLayout.setError("Min 2 chars required");
+
+            //Displaying EditText Error
+            EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
+            name.setError("Required");
+
+            //Displaying both TextInputLayout and EditText Errors
+            TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
+            emailLayout.setErrorEnabled(true);
+            emailLayout.setError("Please enter a phone number");
+
+            EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+            email.setError("Required");
+
 /*
         inputDNr.addTextChangedListener(new MyTextWatcher(inputDNr));
         inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));

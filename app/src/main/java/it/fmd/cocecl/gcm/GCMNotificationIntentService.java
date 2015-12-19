@@ -18,8 +18,12 @@ import it.fmd.cocecl.APPConstants;
 
 /**
  * This class post GCM messages as Notification and AlertDialog
+ *
+ * GCM used to send custom Messages and WAKE Device, Incident info comes via JSON
+ *
  */
-//TODO: Snackbar
+
+//TODO: Snackbar in NewIncident class
 
 public class GCMNotificationIntentService extends IntentService {
     // Sets an ID for the notification, so it can be updated

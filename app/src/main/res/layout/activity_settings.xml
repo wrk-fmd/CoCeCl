@@ -125,6 +125,14 @@
             android:layout_gravity="left"
             android:drawableLeft="@drawable/ic_map_black_18dp"
             android:layout_marginTop="10dp"/>
+
+        <Switch
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hell/Dunkel"
+            android:id="@+id/switch6"
+            android:layout_marginTop="10dp"/>
+
     </LinearLayout>
 
 </RelativeLayout>

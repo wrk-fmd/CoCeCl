@@ -11,6 +11,8 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import it.fmd.cocecl.utilclass.SessionManagement;
+
 //START PAGE after LogIn//
 public class InfoActivity extends MainActivity {
 
@@ -93,14 +95,20 @@ public class InfoActivity extends MainActivity {
     // stop/exit button //
 
     public void exitbtn(View v) {
+        final SessionManagement SM = new SessionManagement(getApplicationContext());
+
         if (v.getId() == R.id.button20) {
             Button button20 = (Button) findViewById(R.id.button20);
             button20.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish(); System.exit(0);
+
+                    SM.logoutUser();
+                    finish();
+                    System.exit(0);
                 }
             });
+
         }
     }
 

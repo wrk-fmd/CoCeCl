@@ -58,7 +58,7 @@
                 android:layout_alignParentEnd="true"
                 android:clickable="true"
                 android:gravity="center"
-                android:background="@drawable/edit_text_style"
+                android:background="@drawable/edittext_style_1"
                 android:layout_weight="100"/>
 
             <Button
@@ -93,7 +93,7 @@
         android:inputType="text"
         android:enabled="false"
             android:gravity="center"
-            android:background="@drawable/edit_text_style"/>
+            android:background="@drawable/edittext_style_1"/>
 
         <Space
             android:layout_width="match_parent"
@@ -114,7 +114,7 @@
         android:inputType="number"
         android:enabled="false"
             android:gravity="center"
-            android:background="@drawable/edit_text_style"/>
+            android:background="@drawable/edittext_style_1"/>
 
         <View
             android:layout_width="fill_parent"

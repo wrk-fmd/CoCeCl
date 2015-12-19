@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--TextBox surrounding-->
+
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:thickness="0dp"
+    android:shape="rectangle">
+
+    <stroke android:width="0dp"
+        android:color="#0D47A1"/>
+
+    <corners android:radius="5dp" />
+
+    <gradient
+        android:startColor="#f0f4c3"
+        android:endColor="#F5F5F5"
+        android:type="linear"
+        android:angle="270"/>
+</shape>

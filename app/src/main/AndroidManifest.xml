@@ -50,7 +50,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDMVTAsaCudDTPkuLKlzlygYLAsth_bzAk"/>
+            android:value="myapikey"/>
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -124,13 +124,13 @@
         </receiver>
 
         <service android:name="it.fmd.cocecl.gcm.GCMNotificationIntentService" />
-
+<!--
         <receiver android:name="it.fmd.cocecl.utilclass.ConnectionManager$ConnectivityBroadcast" android:enabled="true">
             <intent-filter>
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
             </intent-filter>
         </receiver>
-
+-->
     </application>
 
 </manifest>

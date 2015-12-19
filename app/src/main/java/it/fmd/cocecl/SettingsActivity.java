@@ -4,6 +4,10 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.preference.PreferenceActivity;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -20,7 +24,6 @@ public class SettingsActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
-
 
         // (Toggle) Fullscreen START
         mDecorView = getWindow().getDecorView();
@@ -50,8 +53,18 @@ public class SettingsActivity extends MainActivity {
             }
 
         });
+
+        primarylang();
     }
 
+    public void primarylang() {
+
+        Locale locale_de = new Locale("de");
+        Locale.setDefault(locale_de);
+        Configuration config_de = new Configuration();
+        config_de.locale = locale_de;
+        getBaseContext().getResources().updateConfiguration(config_de, getBaseContext().getResources().getDisplayMetrics());
+    }
 
     public void changelang(View v) {
 
@@ -104,7 +117,11 @@ public class SettingsActivity extends MainActivity {
     }
 
     public void mapsswitch() {
+
         Switch mapsw = (Switch) getWindow().findViewById(R.id.switch5);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
+            //tabLayout.removeTab(tabLayout.removeTab();
 
         mapsw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

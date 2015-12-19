@@ -1,21 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    // loginactivity //
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Password</string>
+    <string name="action_sign_in">Sign in or register</string>
+    <string name="action_sign_in_short">Sign in</string>
+    <string name="error_invalid_email">This email address is invalid</string>
+    <string name="error_invalid_password">This password is too short</string>
+    <string name="error_incorrect_password">This password is incorrect</string>
+    <string name="error_field_required">This field is required</string>
+
+    <string name="hint_name">Full Name</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Password</string>
+    <string name="btn_sign_up">Sign Up</string>
+    <string name="err_msg_name">Enter your full name</string>
+    <string name="err_msg_email">Enter valid email address</string>
+    <string name="err_msg_password">Enter the password</string>
+
     //App strings//
     <string name="app_name">CoCeCl</string>
     <string name="app_fullname">Communication Center Client</string>
     <string name="action_settings">Settings</string>
-    <string name="language">Sprache</string>
+    <string name="title_activity_patman">Patienten Manager</string>
+    <string name="title_activity_login">CoCeCl LogIn</string>
+    <string name="title_activity_settings">Settings</string>
 
-    //Settins strings DE//
+    //Allgemein//
+    <string name="unit">Einheit</string>
+    <string name="amb">Ambulanz</string>
+    <string name="dnr">Dienstnummer</string>
+    <string name="einsatz">Einsatz</string>
+    <string name="newinc">Vorfall melden</string>
+    <string name="phonebk">Telefonbuch/Funkkennungen</string>
+    <string name="hospitallist">Krankenhausverzeichnis</string>
+    <string name="nav">Navigation</string>
+    <string name="phone">Anrufen</string>
+    <string name="yes">JA</string>
+    <string name="no">NEIN</string>
+    <string name="status">STATUS</string>
+    <string name="lsgeneral">Leitstelle Allgemein</string>
+    <string name="lsbed">Leitstelle Bettenvergabe</string>
+
+    //Settins strings//
     <string name="full_screen">Fullscreen</string>
     <string name="gps">GPS</string>
     <string name="radio">Funk</string>
+    <string name="language">Sprache</string>
+    <string name="end">App Beenden</string>
+    <string name="reloadconf">config neu laden</string>
+    <string name="chooseserver">Server auswählen</string>
 
-    //Tab strings DE//
+    // NAV DRAWER //
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Settings</item>
+        <item >Kommunikation</item>
+        <item >AmulanzInfo</item>
+        <item >User</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/home_24</item>
+        <item>@drawable/support_24</item>
+        <item>@drawable/news_24</item>
+        <item>@drawable/plus_24</item>
+        <item>@drawable/contacts_24</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
+
+    //GCM//
+    <string name="error_config">Please set the %1$s constant and recompile the app.</string>
+    <string name="already_registered">Device is already registered on server.</string>
+    <string name="gcm_registered">From GCM: device successfully registered!</string>
+    <string name="gcm_unregistered">From GCM: device successfully unregistered!</string>
+    <string name="gcm_message">From GCM: you got message!</string>
+    <string name="gcm_error">From GCM: error (%1$s).</string>
+    <string name="gcm_recoverable_error">From GCM: recoverable error (%1$s).</string>
+    <string name="gcm_deleted">From GCM: server deleted %1$d pending messages!</string>
+    <string name="server_registering">Trying (attempt %1$d/%2$d) to register device on Demo Server.</string>
+    <string name="server_registered">From Demo Server: successfully added device!</string>
+    <string name="server_unregistered">From Demo Server: successfully removed device!</string>
+    <string name="server_register_error">Could not register device on Demo Server after %1$d attempts.</string>
+    <string name="server_unregister_error">Could not unregister device on Demo Server (%1$s).</string>
+    <string name="options_register">Register</string>
+    <string name="options_unregister">Unregister</string>
+    <string name="options_clear">Clear</string>
+    <string name="options_exit">Exit</string>
+    <string name="welcome_txt">GCM App</string>
+    <string name="email">Email Address</string>
+    <string name="login">Register Me</string>
+    <string name="defaultmsg">Message sent by server will appear here.</string>
+    <string name="msg_title">Message</string>
+    <string name="user_title">Hello User</string>
+
+    //Tab strings//
     <string name="einsatztab">Einsatzdaten</string>
     <string name="statustab">Statusfenster</string>
     <string name="abgabetab">Abgabeort</string>
+    <string name="comm">Kommunikation</string>
 
-    //Status Button strings DE//
+    //Status Button strings//
     <string name="stbutton1">1 EB Funk</string>
     <string name="stbutton2">2 EB Station</string>
     <string name="stbutton3">3 ZBO</string>
@@ -30,7 +124,23 @@
     <string name="stbutton12">NOTRUF</string>
     <string name="stbutton13">anderes RM</string>
 
-    //Einsatzdaten strings DE//
+    <string name="qu">Einsatz übernommen</string>
+    <string name="zbo">Zum Berufungsort</string>
+    <string name="abo">Am Berufungsort</string>
+    <string name="zao">Zum Abgabeort</string>
+    <string name="aao">Am Abgabeort</string>
+    <string name="eb">Einsatzbereit</string>
+    <string name="neb">Nicht einsatzbereit</string>
+    <string name="ad">Ausser Dienst</string>
+    <string name="inciupdate">Achtung Einsatz Update!</string>
+
+    <string name="stwe">Status weiterschalten?</string>
+
+    <string name="refuel">Tanken</string>
+    <string name="pause">Bereitschaft</string>
+    <string name="getmaterial">Mat. nachfassen</string>
+
+    //Einsatzdaten strings//
     <string name="edat">Einsatzdaten</string>
     <string name="bo">Berufungsort</string>
     <string name="bg">Berufungsgrund</string>
@@ -40,18 +150,12 @@
     <string name="meldungen">Meldungen</string>
     <string name="ssig">Sondersignal</string>
 
-    //Abgabeort strings DE//
+    //Abgabeort strings//
     <string name="ao">Abgabeort</string>
     <string name="abt">Abteilung</string>
     <string name="tcnr">Transport/Casus-Nummer</string>
-    <string name="title_activity_settings">SettingActivity</string>
 
-    //Tel. Nr.//
-    <string name="lsallg">+?</string>
-    <string name="lsdispo">+?</string>
-    <string name="lsbv">+?</string>
-
-    // Bettenvergabe //
+    //Bettenvergabe//
     <string name="intern">Intern</string>
     <string name="unfall">Unfall</string>
     <string name="chir">Chirurgie</string>
@@ -62,13 +166,15 @@
     <string name="lsbvanrufen">Leitstelle BV anrufen!</string>
 
     //Connection//
+    <string name="mlsserver">MLS Server</string>
+    <string name="connection">Verbindung</string>
     <string name="con">Internet verbunden</string>
     <string name="discon">Internet nicht verbunden</string>
     <string name="mlscon">Mit MLS verbunden</string>
     <string name="mlsdiscon">Nicht mit MLS verbunden</string>
 
     //String Array//
-    <string-array name="Gender">
+    <string-array name="Geschlecht">
         <item>männlich</item>
         <item>weiblich</item>
     </string-array>
@@ -168,18 +274,5 @@
         <item>rosig</item>
         <item>blass</item>
     </string-array>
-
-    <string name="title_activity_patman">Patienten Manager</string>
-    <string name="action_sign_in">Einloggen oder Registrieren</string>
-    <string name="action_sign_in_short">Einloggen</string>
-    <string name="amb">Ambulanz</string>
-    <string name="comm"></string>
-    <string name="newinc">Vorfall melden</string>
-    <string name="nav">Navigieren</string>
-    <string name="phone">Anrufen</string>
-    <string name="phonebk">Telefonbuch/Funkkennungen</string>
-    <string name="prompt_email">Email</string>
-    <string name="prompt_password">Password </string>
-    <string name="hospitallist">Krankenhausverzeichnis</string>
 
 </resources>

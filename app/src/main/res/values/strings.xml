@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     // loginactivity //
@@ -50,6 +51,32 @@
     <string name="end">App Beenden</string>
     <string name="reloadconf">config neu laden</string>
     <string name="chooseserver">Server auswählen</string>
+
+    // NAV DRAWER //
+    <string name="drawer_open">Slider Menu Opened</string>
+    <string name="drawer_close">Slider Menu Closed</string>
+
+    <!-- Nav Drawer Menu Items -->
+    <string-array name="nav_drawer_items">
+        <item >Home</item>
+        <item >Settings</item>
+        <item >Kommunikation</item>
+        <item >AmulanzInfo</item>
+        <item >User</item>
+    </string-array>
+
+    <!-- Nav Drawer List Item Icons -->
+    <!-- Keep them in order as the titles are in -->
+    <array name="nav_drawer_icons">
+        <item>@drawable/home_24</item>
+        <item>@drawable/support_24</item>
+        <item>@drawable/news_24</item>
+        <item>@drawable/plus_24</item>
+        <item>@drawable/contacts_24</item>
+    </array>
+
+    <!-- Content Description -->
+    <string name="desc_list_item_icon">Item Icon</string>
 
     //GCM//
     <string name="error_config">Please set the %1$s constant and recompile the app.</string>
@@ -108,6 +135,10 @@
     <string name="inciupdate">Achtung Einsatz Update!</string>
 
     <string name="stwe">Status weiterschalten?</string>
+
+    <string name="refuel">Tanken</string>
+    <string name="pause">Bereitschaft</string>
+    <string name="getmaterial">Mat. nachfassen</string>
 
     //Einsatzdaten strings//
     <string name="edat">Einsatzdaten</string>

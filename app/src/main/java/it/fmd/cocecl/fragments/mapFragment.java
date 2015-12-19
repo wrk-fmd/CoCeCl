@@ -35,12 +35,13 @@ public class mapFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
         // inflate and return the layout
         View v = inflater.inflate(R.layout.fragment_map, container, false);
         mMapView = (MapView) v.findViewById(R.id.map);
         mMapView.onCreate(savedInstanceState);
 
-        mMapView.onResume();// needed to get the map to display immediately
+        mMapView.onResume(); // needed to get the map to display immediately
 
         try {
             MapsInitializer.initialize(getActivity().getApplicationContext());
@@ -56,7 +57,7 @@ public class mapFragment extends Fragment {
         initializeMapType();
         initializeUiSettings();
         initializeMapViewSettings();
-
+/*
         // create marker
         MarkerOptions nodo = new MarkerOptions().position(new LatLng(48.1907634, 16.411198)).title("NODO");
         MarkerOptions kss = new MarkerOptions().position(new LatLng(48.2671734, 16.4019968)).title("KSS");
@@ -65,7 +66,7 @@ public class mapFragment extends Fragment {
         // adding marker
         googleMap.addMarker(nodo);
         googleMap.addMarker(kss);
-
+*/
         // MapCamera to unit position
         mapcamera();
 

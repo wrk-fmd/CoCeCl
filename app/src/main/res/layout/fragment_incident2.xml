@@ -1,0 +1,399 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    android:id="@+id/incidentfraglayout"
+    android:background="#bdbdbd">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardElevation="4dp"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardBackgroundColor="#ffffff">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="3dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:gravity="center"
+                        android:id="@+id/tasktype"
+                        android:layout_gravity="left"
+                        android:layout_marginRight="10dp"
+                        android:text="Einsatzbeschreibung"
+                        android:textColor="#00b0ff" />
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Einsatzart"
+                        android:id="@+id/textView127"
+                        android:textColor="#ff9800"
+                        android:layout_marginRight="10dp"
+                        android:layout_weight="1"/>
+
+                        <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="match_parent"
+                            android:text="@string/ssig"
+                            android:id="@+id/emergencyBox"
+                            android:checked="false"
+                            android:clickable="false"
+                            android:enabled="true"
+                            android:layout_gravity="right"
+                            android:gravity="center"
+                            android:textColor="#000000"
+                            android:visibility="invisible"
+                            android:layout_weight="0"/>
+
+                </LinearLayout>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Einsatztyp"
+                        android:id="@+id/textView128"
+                        android:textColor="#ff9800"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                android:id="@+id/estatcard">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Einsatz Status"
+                        android:id="@+id/textView82"
+                        android:textColor="#00b0ff" />
+
+
+                    <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:id="@+id/statusView"
+                            android:hint="aktueller status"
+                            android:gravity="left"
+                            android:textStyle="bold"
+                            android:textColorHint="@color/primary_dark_material_dark"
+                            android:textColor="#ff9800"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:id="@+id/textView85"
+                        android:gravity="left"
+                        android:editable="false"
+                        android:inputType="time"
+                        android:hint="time statuschange"
+                        android:textColor="#000000" />
+
+                    <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/button41"
+                            android:hint="status weiterschalten"
+                            android:enabled="true"
+                            android:clickable="true"
+                            android:onClick="stbtnClick"
+                            style="@style/IncidentTabButtonStyle"
+                        android:layout_gravity="center"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textView129"
+                        android:hint="error"
+                        android:textColor="#ff9800"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Einsatzdaten"
+                        android:id="@+id/textView81"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="25dp"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:gravity="center"
+                        android:hint="@string/bg"
+                        android:id="@+id/bgfield"
+                        android:inputType="text"
+                        android:enabled="false"
+                        android:visibility="gone"
+                        android:textColor="#ff9800"/>
+
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp">
+
+                        <TextView
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:id="@+id/bofield"
+                            android:enabled="true"
+                            android:clickable="false"
+                            android:textColor="@color/primary_dark_material_dark"
+                            android:textColorHint="@color/primary_dark_material_dark"
+                            android:gravity="center"
+                            android:hint="@string/bo"
+                            android:editable="false"
+                            android:layout_weight="100"
+                            android:background="@drawable/edittext_style_3"/>
+
+                        <Button
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:text="NAVI"
+                            android:id="@+id/button18"
+                            android:clickable="true"
+                            android:enabled="true"
+                            android:drawableTop="@drawable/ic_navigation_black_18dp"
+                            android:onClick="navigate"
+                            style="@style/IncidentTabButtonStyle"/>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:gravity="center"
+                        android:hint="@string/info"
+                        android:id="@+id/infofield"
+                        android:inputType="text"
+                        android:enabled="false"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_style_3"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:gravity="center"
+                        android:hint="@string/brfr"
+                        android:id="@+id/brfrfield"
+                        android:inputType="phone"
+                        android:layout_marginTop="10dp"
+                        android:phoneNumber="true"
+                        android:background="@drawable/edittext_style_3"/>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardElevation="4dp"
+                cardview:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Patienten Management"
+                        android:id="@+id/textView110"
+                        android:textColor="#00b0ff"/>
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Pat. Aktion"
+                        android:id="@+id/textView116"
+                        android:textColor="#ff9800"
+                        android:visibility="gone"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="70dp"
+                            android:text="Pat anlegen"
+                            android:id="@+id/button46"
+                            android:drawableTop="@drawable/ic_person_add_black_18dp"
+                            android:onClick="createpat"
+                            android:clickable="false"
+                            android:enabled="false"
+                            android:layout_gravity="left"
+                            style="@style/IncidentTabButtonStyle"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="70dp"
+                            android:text="@string/stbutton10"
+                            android:id="@+id/button10"
+                            android:clickable="false"
+                            android:onClick="patstatusbtns"
+                            android:drawableTop="@drawable/ic_call_missed_black_18dp"
+                            android:enabled="false"
+                            android:layout_gravity="right"
+                            style="@style/IncidentTabButtonStyle"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="horizontal"
+                        android:weightSum="2"
+                        android:visibility="gone"
+                        android:id="@+id/patmanbtnlinlay">
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="70dp"
+                            android:text="@string/stbutton13"
+                            android:id="@+id/button13"
+                            android:clickable="false"
+                            android:onClick="patstatusbtns"
+                            android:drawableTop="@drawable/ic_repeat_black_18dp"
+                            android:enabled="false"
+                            android:layout_gravity="left"
+                            style="@style/IncidentTabButtonStyle"
+                            android:layout_weight="1"/>
+
+                        <Button
+                            android:layout_width="150dp"
+                            android:layout_height="70dp"
+                            android:text="@string/stbutton11"
+                            android:id="@+id/button11"
+                            android:clickable="false"
+                            android:onClick="patstatusbtns"
+                            android:drawableTop="@drawable/ic_directions_run_black_18dp"
+                            android:enabled="false"
+                            android:layout_gravity="right"
+                            style="@style/IncidentTabButtonStyle"
+                            android:layout_weight="1"/>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff">
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:text="Zugewiesene Einheiten"
+                        android:id="@+id/textView10"
+                        android:textColor="#00b0ff"/>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:id="@+id/unitrv" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

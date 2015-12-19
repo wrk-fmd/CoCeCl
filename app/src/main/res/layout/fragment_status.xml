@@ -260,7 +260,7 @@
         android:id="@+id/textView8"
         android:gravity="center"
         android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
-        android:background="@drawable/edit_text_style"
+        android:background="@drawable/edittext_style_1"
         android:textColorHint="@color/primary_dark_material_dark"
         android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"

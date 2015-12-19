@@ -8,6 +8,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 import android.widget.Toast;
 
+import it.fmd.cocecl.IncidentAction.SMS_Alert;
 import it.fmd.cocecl.MainActivity;
 
 public class SMSBroadcastReceiver extends BroadcastReceiver {
@@ -32,7 +33,7 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 smsMessageStr += "SMS From: " + address + "\n";
                 smsMessageStr += smsBody + "\n";
 
-                MainActivity.getSmsDetails(address, smsBody);
+                SMS_Alert.getSmsDetails(address, smsBody);
             }
 
             //Toast.makeText(context, smsMessageStr, Toast.LENGTH_LONG).show();

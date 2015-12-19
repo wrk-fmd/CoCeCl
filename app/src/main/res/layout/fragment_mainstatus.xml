@@ -1,224 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainstatusfraglayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="it.fmd.cocecl.mainstatus"
-    android:id="@+id/mainstatusfraglayout">
+    tools:context="it.fmd.cocecl.mainstatus">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:orientation="vertical"
         android:weightSum="1">
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#000000"
-            android:layout_marginBottom="10dp">
-        </View>
+            android:layout_marginBottom="10dp"
+            android:background="#000000"></View>
 
         <TextView
+            android:id="@+id/textView79"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:id="@+id/textView79"
             android:layout_gravity="center_horizontal"
-            android:hint="@string/amb"
-            android:background="@drawable/edit_text_style"
-            android:textColorHint="@color/primary_dark_material_dark"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:background="@drawable/edittext_style_1"
+            android:gravity="center"
+            android:hint="@string/amb"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColorHint="@color/primary_dark_material_dark" />
 
         <TextView
+            android:id="@+id/textView80"
             android:layout_width="fill_parent"
             android:layout_height="30dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:id="@+id/textView80"
             android:layout_gravity="center_horizontal"
-            android:hint="@string/unit"
-            android:background="@drawable/edit_text_style"
-            android:textColorHint="@color/primary_dark_material_dark"
             android:layout_marginBottom="10dp"
-            android:gravity="center"/>
+            android:background="@drawable/edittext_style_1"
+            android:gravity="center"
+            android:hint="@string/unit"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textColorHint="@color/primary_dark_material_dark" />
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#000000">
-        </View>
+            android:background="#000000"></View>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
+            android:orientation="horizontal"
             android:weightSum="3">
 
             <Button
+                android:id="@+id/button38"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="EB"
-                android:id="@+id/button38"
                 android:layout_gravity="left"
+                android:layout_weight="1"
                 android:clickable="false"
                 android:drawableTop="@drawable/ic_play_arrow_black_18dp"
-                android:layout_weight="1"/>
+                android:text="EB" />
 
             <Button
+                android:id="@+id/button39"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="NEB"
-                android:id="@+id/button39"
                 android:layout_gravity="center_vertical"
+                android:layout_weight="1"
                 android:clickable="false"
                 android:drawableTop="@drawable/ic_pause_black_18dp"
-                android:layout_weight="1"/>
+                android:text="NEB" />
 
             <Button
+                android:id="@+id/button40"
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
-                android:text="AD"
-                android:id="@+id/button40"
                 android:layout_gravity="right"
+                android:layout_weight="1"
                 android:clickable="false"
                 android:drawableTop="@drawable/ic_stop_black_18dp"
-                android:layout_weight="1"/>
+                android:text="AD" />
 
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#000000">
-        </View>
+            android:background="#000000"></View>
 
         <TextView
+            android:id="@+id/textView81"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Meldungen"
-            android:id="@+id/textView81" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <Button
-                android:layout_width="150dp"
-                android:layout_height="70dp"
-                android:text="@string/stbutton12"
                 android:id="@+id/button12"
-                android:drawableLeft="@drawable/ic_warning_black_18dp"
-                android:clickable="true"
-                android:onClick="radiostatusbtn"
-                android:layout_gravity="left"/>
-
-            <Button
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:text="@string/stbutton5"
-                android:id="@+id/button5"
+                android:layout_gravity="left"
                 android:clickable="true"
+                android:drawableLeft="@drawable/ic_warning_black_18dp"
+                android:onClick="radiostatusbtn"
+                android:text="@string/stbutton12" />
+
+            <Button
+                android:id="@+id/button5"
+                android:layout_width="150dp"
+                android:layout_height="70dp"
+                android:layout_gravity="right"
+                android:clickable="true"
+                android:drawableLeft="@drawable/ic_phone_forwarded_black_18dp"
                 android:enabled="true"
                 android:onClick="radiostatusbtn"
-                android:drawableLeft="@drawable/ic_phone_forwarded_black_18dp"
-                android:layout_gravity="right"/>
+                android:text="@string/stbutton5" />
 
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            android:layout_gravity="center_horizontal"
+            android:orientation="horizontal">
 
             <Button
+                android:id="@+id/button47"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:text="@string/lsgeneral"
-                android:id="@+id/button47"
                 android:layout_gravity="right"
                 android:drawableLeft="@drawable/ic_call_black_18dp"
-                android:onClick="lscall" />
+                android:onClick="lscall"
+                android:text="@string/lsgeneral" />
 
             <Button
+                android:id="@+id/button42"
                 android:layout_width="150dp"
                 android:layout_height="70dp"
-                android:text="@string/newinc"
-                android:id="@+id/button42"
                 android:layout_gravity="left"
+                android:drawableLeft="@drawable/ic_my_location_black_18dp"
                 android:onClick="reportincident"
-                android:drawableLeft="@drawable/ic_my_location_black_18dp"/>
+                android:text="@string/newinc" />
 
         </LinearLayout>
 
         <View
             android:layout_width="fill_parent"
             android:layout_height="2dip"
-            android:background="#000000">
-        </View>
+            android:background="#000000"></View>
 
         <ScrollView
+            android:id="@+id/scrollView3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/scrollView3"
-            android:layout_gravity="center_horizontal" >
+            android:layout_gravity="center_horizontal">
 
             <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal">
 
-            <LinearLayout
-                android:orientation="horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:id="@+id/linearLayout11"
-                android:layout_alignParentTop="true"
-                android:layout_centerHorizontal="true">
-
-                <TextView
+                <LinearLayout
+                    android:id="@+id/linearLayout11"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="derzeitiger Auftrag"
-                    android:id="@+id/textView92"
-                    android:gravity="center" />
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:text="Auftrag \nwechseln"
-                    android:id="@+id/button62"
-                    android:drawableLeft="@drawable/double_arrow_left"
-                    android:drawableRight="@drawable/double_arrow_right" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView92"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
+                        android:text="derzeitiger Auftrag"
+                        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                    <Button
+                        android:id="@+id/button62"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:drawableLeft="@drawable/double_arrow_left"
+                        android:drawableRight="@drawable/double_arrow_right"
+                        android:text="Auftrag \nwechseln" />
+                </LinearLayout>
 
                 <ListView
+                    android:id="@+id/tasksLView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tasksLView"
-                    android:layout_gravity="center_horizontal"
-                    android:layout_below="@+id/linearLayout11"
                     android:layout_alignParentLeft="true"
-                    android:layout_alignParentStart="true" />
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/linearLayout11"
+                    android:layout_gravity="center_horizontal" />
 
             </RelativeLayout>
         </ScrollView>
-
-
-
-
     </LinearLayout>
-
 </RelativeLayout>

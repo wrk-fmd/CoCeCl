@@ -2,25 +2,20 @@ package it.fmd.cocecl;
 
 import android.Manifest;
 import android.app.AlertDialog;
-import android.app.Dialog;
-import android.app.Notification;
-import android.app.NotificationManager;
-import android.app.PendingIntent;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
-import android.media.MediaPlayer;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -34,27 +29,26 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.app.NotificationCompat;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -62,26 +56,21 @@ import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.CameraPosition;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 
-import it.fmd.cocecl.fragments.deliverylocFragment;
+import it.fmd.cocecl.contentviews.NavDrawerItem;
+import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.fragments.incidentFragment;
 import it.fmd.cocecl.fragments.mainstatusFragment;
 import it.fmd.cocecl.fragments.mapFragment;
@@ -101,19 +90,37 @@ public class MainActivity extends AppCompatActivity {
 
     View.OnClickListener mOnClickListener;
 
+    //NAV DRAWER//
+    String[] menu;
+    DrawerLayout dLayout;
+    ListView dList;
+    //ArrayAdapter<String> adapter;
+/*
+    private ListView mDrawerList;
+    private DrawerLayout mDrawerLayout;
+    private ArrayAdapter<String> mAdapter;
+    private ActionBarDrawerToggle mDrawerToggle;
+    private String mActivityTitle;
+*/
+    private DrawerLayout mDrawerLayout;
+    private ListView mDrawerList;
+    private ActionBarDrawerToggle mDrawerToggle;
+
+    // nav drawer title
+    private CharSequence mDrawerTitle;
+
+    // used to store app title
+    private CharSequence mTitle;
+
+    // slide menu items
+    private String[] navMenuTitles;
+    private TypedArray navMenuIcons;
+
+    private ArrayList<NavDrawerItem> navDrawerItems;
+    private NavDrawerListAdapter adapter;
+
+
     ConnectionManager conman = new ConnectionManager();
-
-    TextView SMSm;
-    static String phoneNumber1;
-    static String SMSBody1;
-
-    public static void getSmsDetails(String phoneNumber, String SMSBody) {
-        phoneNumber1 = phoneNumber;
-        SMSBody1 = SMSBody;
-    }
-
-    // Google Map
-    private GoogleMap googleMap;
 
     private FragmentTabHost mTabHost;
 
@@ -125,10 +132,6 @@ public class MainActivity extends AppCompatActivity {
     private static double latitude;
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
-
-    // JSON //
-
-
 
     //Shared Preferences
     SharedPreferences spref;
@@ -142,11 +145,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-    {
-        //Shared Prefs// Create Patient
-        spref = getSharedPreferences("PatData", MODE_PRIVATE);
+        {
+            //Shared Prefs// Create Patient
+            spref = getSharedPreferences("PatData", MODE_PRIVATE);
 
-    }
+        }
 
         {
             //Coordinator Layout for SnackBar//
@@ -201,6 +204,8 @@ public class MainActivity extends AppCompatActivity {
             //tabLayout.addTab(tabLayout.newTab().setText("Comm"));
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
+            //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
             //TODO: on incident emergency set tablayout_color to blue #1565C0
             //tabLayout.setBackgroundColor(BLUE);
 
@@ -225,69 +230,287 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
         }
-        // TABHOST //
+
+        // NAVIGATION DRAWER //
 /*
-        if ((getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) ==
-                Configuration.SCREENLAYOUT_SIZE_NORMAL) {
-            // on a normal screen device ...
+        {
+            mDrawerList = (ListView) findViewById(R.id.left_drawer);
+            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+            mActivityTitle = getTitle().toString();
 
-            mTabHost = (FragmentTabHost) findViewById(android.R.id.tabhost);
-            mTabHost.setup(this, getSupportFragmentManager(), android.R.id.tabcontent);
+            addDrawerItems();
+            setupDrawer();
 
-            // TABS
-            //TODO: set Tabs depending on unit status
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab1").setIndicator("Status", null),
-                    mainstatusFragment.class, null);
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                    incidentFragment.class, null);
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab3").setIndicator("Abgabeort", null),
-                    deliverylocFragment.class, null);
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab4").setIndicator("Karte", null),
-                    mapFragment.class, null);
-            mTabHost.addTab(
-                    mTabHost.newTabSpec("tab5").setIndicator("Komm", null),
-                    communicationFragment.class, null);
-        }*/
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeButtonEnabled(true);
+        }
+*//*
+        {
+
+        menu = new String[]{"Home", "Settings", "Kommunikation", "AmbulanzInfo"};
+        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        dList = (ListView) findViewById(R.id.left_drawer);
+
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
+
+        dList.setAdapter(adapter);
+        dList.setSelector(android.R.color.holo_blue_dark);
+
+        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
+
+                dLayout.closeDrawers();
+                Bundle args = new Bundle();
+                args.putString("Menu", menu[position]);
+                //Fragment detail = new DetailFragment();
+                //detail.setArguments(args);
+                //FragmentManager fragmentManager = getFragmentManager();
+                //fragmentManager.beginTransaction().replace(R.id.content_frame, detail).commit();
+
+            }
+
+        });
+    }
+
+    */
         inetcon();
-    }
+        checkGPS();
 
-    // TabHost Methods //
-    private void addMethod() {
+        // NAVIGATION DRAWER //
 
-        //mTabHost.addTab(mtabHost.newTabSpec(webSiteName + Integer.toString(z)).setIndicator(webSiteName).setContent(openBrowser));
+        mTitle = mDrawerTitle = getTitle();
 
-    }
+        // load slide menu items
+        navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
-    private void removeMethod() {
+        // nav drawer icons from resources
+        navMenuIcons = getResources()
+                .obtainTypedArray(R.array.nav_drawer_icons);
 
-        // method 1
-        mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(1));
-        //or
-        mTabHost.removeAllViews();
-        // method 2
-        int position = mTabHost.getCurrentTab();
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
 
-        if (position != 0 ) {
+        navDrawerItems = new ArrayList<NavDrawerItem>();
 
-            mTabHost.getCurrentTabView().setVisibility(View.GONE);
-            mTabHost.setCurrentTab(0);
+        // adding nav drawer items to array
+        // Home
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        // Settings
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
+        // Kommunikation
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "22"));
+        // AmbulanzInfo
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
+        // User
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        // What's hot, We  will add a counter here
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+
+
+        // Recycle the typed array
+        navMenuIcons.recycle();
+
+        mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
+
+        // setting the nav drawer list adapter
+        adapter = new NavDrawerListAdapter(getApplicationContext(),
+                navDrawerItems);
+        mDrawerList.setAdapter(adapter);
+
+        // enabling action bar app icon and behaving it as toggle button
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                //R.drawable.menu_24, //nav menu toggle icon
+                R.string.app_name, // nav drawer open - description for accessibility
+                R.string.app_name // nav drawer close - description for accessibility
+        ) {
+            public void onDrawerClosed(View view) {
+                getSupportActionBar().setTitle(mTitle);
+                // calling onPrepareOptionsMenu() to show action bar icons
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View drawerView) {
+                getSupportActionBar().setTitle(mDrawerTitle);
+                // calling onPrepareOptionsMenu() to hide action bar icons
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+
+        if (savedInstanceState == null) {
+            // on first time display view for first nav item
+            //displayView(0);
         }
     }
-    /*
-    public void clearAllTabs() {
-        mTabWidget.removeAllViews();
-        initTabHost();
-        mTabContent.removeAllViews();
-        mTabSpecs.clear();
-        requestLayout();
-        invalidate();
+
+    // Recycler View Incident list //
+/*
+    {
+
+        RecyclerView rv = (RecyclerView) findViewById(R.id.incidentrv);
+
+        //rv.setHasFixedSize(true);
+
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        rv.setLayoutManager(llm);
+
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+
+        //IncidentAdapter mAdapter = new IncidentAdapter(myDataset);
+        //rv.setAdapter(mAdapter);
+
+        //TODO: publish incident list (if more then one)
     }
 */
+
+    //NAV DRAWER METHODS//
+
+    /**
+     * Slide menu item click listener
+     * */
+    private class SlideMenuClickListener implements
+            ListView.OnItemClickListener {
+        @Override
+        public void onItemClick(AdapterView<?> parent, View view, int position,
+                                long id) {
+            // display view for selected nav drawer item
+            // displayView(position);
+        }
+    }
+
+    /***
+     * Called when invalidateOptionsMenu() is triggered
+     */
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        // if nav drawer is opened, hide the action items
+        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        //menu.findItem(R.id.action_settings).setVisible(!drawerOpen);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    /**
+     * Diplaying fragment view for selected nav drawer list item
+     * */
+    /*
+    private void displayView(int position) {
+        // update the main content by replacing fragments
+        Fragment fragment = null;
+        switch (position) {
+            case 0:
+                fragment = new HomeFragment();
+                break;
+            case 1:
+                fragment = new FindPeopleFragment();
+                break;
+            case 2:
+                fragment = new PhotosFragment();
+                break;
+            case 3:
+                fragment = new CommunityFragment();
+                break;
+            case 4:
+                fragment = new PagesFragment();
+                break;
+            case 5:
+                fragment = new WhatsHotFragment();
+                break;
+
+            default:
+                break;
+        }
+
+        if (fragment != null) {
+            FragmentManager fragmentManager = getFragmentManager();
+            fragmentManager.beginTransaction()
+                    .replace(R.id.frame_container, fragment).commit();
+
+            // update selected item and title, then close the drawer
+            mDrawerList.setItemChecked(position, true);
+            mDrawerList.setSelection(position);
+            setTitle(navMenuTitles[position]);
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            // error in creating fragment
+            Log.e("MainActivity", "Error in creating fragment");
+        }
+    }
+*/
+    @Override
+    public void setTitle(CharSequence title) {
+        mTitle = title;
+        getSupportActionBar().setTitle(mTitle);
+    }
+
+
+    //NAV DRAWER old working//
+    /*
+    private void addDrawerItems() {
+        String[] itemArray = { "Home", "Settings", "Kommunikation", "AmbulanzInfo"};
+
+        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemArray);
+        //Layout for TextColor
+
+        mAdapter = new ArrayAdapter<String>(this, R.layout.navdrawer_layout, itemArray);
+        mDrawerList.setAdapter(mAdapter);
+
+        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(MainActivity.this, "Go to Fragment", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private void setupDrawer() {
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
+
+            // Called when a drawer has settled in a completely open state.
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                getSupportActionBar().setTitle("Navigation");
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            // Called when a drawer has settled in a completely closed state.
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                getSupportActionBar().setTitle(mActivityTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        mDrawerToggle.setDrawerIndicatorEnabled(true);
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+    }
+*/
+
+
+    /**
+     * When using the ActionBarDrawerToggle, you must call it during
+     * onPostCreate() and onConfigurationChanged()...
+     */
+
+    @Override
+    protected void onPostCreate(Bundle savedInstanceState) {
+        super.onPostCreate(savedInstanceState);
+        // Sync the toggle state after onRestoreInstanceState has occurred.
+        mDrawerToggle.syncState();
+    }
+
+    @Override
+    public void onConfigurationChanged(Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+
+    //NAV DRAWER METHODS END//
+
 
     // OPTIONS MENU //
 
@@ -306,6 +529,11 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
+        // toggle nav drawer on selecting action bar app icon/title
+        if (mDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
@@ -353,88 +581,7 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    //Animated sync symbol in toolbar//
-    //rotate imageview animation
 
-    public void onSyncIconStart() {
-        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
-
-        RotateAnimation r = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-        r.setDuration((long) 2 * 1000);
-        r.setRepeatCount(Animation.INFINITE);
-        syncicon.startAnimation(r);
-    }
-
-    public void onSyncIconStop() {
-        ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
-        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
-
-        RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-        r.setDuration((long) 2*3000);
-        r.setRepeatCount(Animation.INFINITE);
-        syncicon.startAnimation(r);
-
-        serveranswer.setText("Empfangen");
-        serveranswer.setTextColor(GREEN);
-
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                serveranswer.setText("");
-
-            }
-        }, 5000);
-    }
-
-    public void onSyncError() {
-        final ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
-        final ImageView erroricon = (ImageView)findViewById(R.id.erroriconView);
-        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
-
-        RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
-
-        r.setDuration((long) 2 * 3000);
-        r.setRepeatCount(Animation.INFINITE);
-        syncicon.startAnimation(r);
-
-        //syncicon.setBackgroundColor(RED);
-        serveranswer.setText("Error");
-        serveranswer.setTextColor(RED);
-        erroricon.setImageResource(R.drawable.ic_warning_black_18dp);
-        erroricon.setBackgroundColor(RED);
-
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                serveranswer.setText("");
-                //syncicon.setBackgroundColor(View.GONE);
-                erroricon.setBackgroundColor(View.GONE);
-                erroricon.setImageResource(android.R.color.transparent);
-
-            }
-        }, 5000);
-    }
-
-    // SMS Alert //
-    // sets SMS content from specific alert number to bofield
-    public void setSMS() {
-        //SMS Alert// write content to incident fields
-
-        if(phoneNumber1 == "+144") {
-            SMSm = (TextView) findViewById(R.id.bofield);
-
-            SMSm.setText(SMSBody1);
-
-            Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, SMSBody1, Snackbar.LENGTH_LONG);
-
-            snackbar.show();
-        }
-    }
 /*
     public void setConnectionIcons() {
     //TODO: if on fullscreen set connection icons on toolbar visible, else invisible
@@ -526,6 +673,37 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    // Check if GPS enabled / show icon in appbar
+
+    public void checkGPS() {
+
+        TextView gpstext = (TextView) findViewById(R.id.textView108);
+
+        LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        } catch (Exception ex) {}
+
+        if (!gps_enabled) {
+            gpstext.setBackgroundColor(RED);
+        }
+
+        if (gps_enabled) {
+            gpstext.setBackgroundColor(GREEN);
+        }
+    }
+
+/*
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+            gpstext.setBackgroundColor(GREEN);
+        }else{
+            gpstext.setBackgroundColor(RED);
+        }
+    }
+*/
 
     //TODO: create method to save app/fragment state
     /*
@@ -562,7 +740,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart(){
         super.onStart();
-        setSMS();
+        //setSMS();
         //checkMLSConnection();
     }
     @Override
@@ -628,27 +806,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Buttons //
-    // TODO: implementing second app / not needed in first testversion
-    public void ptt(View v) {
-        if (v.getId() == R.id.button61) {
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-            dlgBuilder.setMessage("ptt app");
-            dlgBuilder.setTitle("PTT App");
 
-            dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-
-                }
-            });
-
-            AlertDialog alert = dlgBuilder.create();
-            alert.show();
-
-        }
-    }
-
-    //Call LS Buttons//
+    // Call LS Buttons //
     // start direct call
 
     public void lscall(View view) {
@@ -701,105 +860,13 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    // Alert Push Notification Manager //
-    // alerts on incoming incident, gcm server!!
-    //
-    //TODO: later: function for new incident alert !!! check again, move method to IncidentAction class
-    public void taskalert() {
-
-        final LayoutInflater inci = getLayoutInflater();
-        final View incidentView = inci.inflate(R.layout.fragment_incident, null);
-        final MediaPlayer mp = MediaPlayer.create(MainActivity.this, R.raw.alert_newemergency);
-
-                    final TextView bofield = (TextView) incidentView.findViewById(R.id.bofield);
-                    final TextView brfrfield = (TextView) incidentView.findViewById(R.id.brfrfield);
-                    final TextView infofield = (TextView) incidentView.findViewById(R.id.infofield);
-
-                    final Button button41 = (Button) incidentView.findViewById(R.id.button41);
-                    final TextView textView83 = (TextView) incidentView.findViewById(R.id.statusView);
-                    final TextView textView85 = (TextView) incidentView.findViewById(R.id.textView85);
-
-                    final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-                    final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-                    AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-                    dlgBuilder.setCancelable(false);
-                    dlgBuilder.setTitle("EINSATZ/AUFTRAG");
-                    dlgBuilder.setMessage("Addresse\nBerufungsgrund");
-
-                    //dlgBuilder.setView(R.id.alertbox_layout);
-
-                    dlgBuilder.setPositiveButton("Einsatz übernehmen", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            button41.setText(R.string.zbo);
-                            textView83.setText("QU");
-                            textView85.setText(sdf.format(cal.getTime()));
-                            button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
-                            mp.stop();
-
-                            Toast.makeText(MainActivity.this, "Einsatz übernommen", Toast.LENGTH_SHORT).show();
-                        }
-                    });
-
-                    AlertDialog alert = dlgBuilder.create();
-                    alert.show();
-
-/*
-                String title = bgfield.getText().toString().trim();
-                String subject = bofield.getText().toString().trim();
-                String body = infofield.getText().toString().trim();
-*/
-                    Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                    PendingIntent contentIntent = PendingIntent.getActivity(MainActivity.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-
-                    NotificationCompat.Builder mBuilder =
-                            new NotificationCompat.Builder(MainActivity.this);
-                                /*
-                                .setSmallIcon(R.drawable.ic_warning_black_18dp)
-                                .setContentTitle(infofield.getText().toString())
-                                .setContentText(brfrfield.getText().toString());
-                                //.setContentIntent(pendingIntent); // below Gingerbread
-*/
-                    mBuilder.setAutoCancel(true)
-                            .setDefaults(Notification.DEFAULT_ALL)
-                            .setWhen(System.currentTimeMillis())
-                            .setSmallIcon(R.drawable.ic_warning_black_18dp)
-                            .setTicker("Alert new Incident")
-                            .setContentTitle("Alert + Code")
-                            .setContentText("AddressStreet")
-                            .setDefaults(Notification.DEFAULT_LIGHTS | Notification.DEFAULT_SOUND)
-                            .setContentIntent(contentIntent)
-                            .setContentInfo("Detail Code");
-
-                    // AlertSound
-                    //mBuilder.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM));
-
-                    mp.setLooping(true);
-                    mp.start();
-
-                    NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                    notificationManager.notify(1, mBuilder.build());
-                }
-
-
-
-    // SnackBar // for incident update notification //
-    // show updates on incident in snackbar
-    //TODO: redundant method in incodentAction class
-    public void onIncidentUpdate() {
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.inciupdate, Snackbar.LENGTH_INDEFINITE);
-
-        snackbar.show();
-    }
-
-    //Status Buttons//TODO: move methods to IncidentAction
+    //Status Buttons//TODO: move methods to mainstatusFragment
     //Radio
     public void radiostatusbtn(View view) {
+
         final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+        final TextView textView112 = (TextView) findViewById(R.id.textView112);
+
         switch (view.getId()) {
             case R.id.button5://SelectivRuf
 
@@ -815,6 +882,8 @@ public class MainActivity extends AppCompatActivity {
                         button5.setClickable(false);
                         button5.setBackgroundColor(Color.YELLOW);
                         Toast.makeText(getApplicationContext(), "Selektivruf gesendet", Toast.LENGTH_SHORT).show();
+                        textView112.setVisibility(View.VISIBLE);
+                        textView112.setText("Selektivruf gesendet");
 
                         Handler h = new Handler();
                         h.postDelayed(new Runnable() {
@@ -822,7 +891,10 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 button5.setEnabled(true);
                                 button5.setClickable(true);
-                                button5.setBackgroundResource(android.R.drawable.btn_default);
+                                button5.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                //button5.setBackgroundResource(android.R.drawable.btn_default);
+                                textView112.setText("");
+                                textView112.setVisibility(View.GONE);
                             }
                         }, 30000);
                     }
@@ -850,6 +922,8 @@ public class MainActivity extends AppCompatActivity {
                         button12.setClickable(false);
                         button12.setBackgroundColor(RED);
                         Toast.makeText(getApplicationContext(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
+                        textView112.setVisibility(View.VISIBLE);
+                        textView112.setText("NOTRUF gesendet");
 
                         Handler h = new Handler();
                         h.postDelayed(new Runnable() {
@@ -857,7 +931,10 @@ public class MainActivity extends AppCompatActivity {
                             public void run() {
                                 button12.setEnabled(true);
                                 button12.setClickable(true);
-                                button12.setBackgroundResource(android.R.drawable.btn_default);
+                                button12.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                //button12.setBackgroundResource(android.R.drawable.btn_default);
+                                textView112.setText("");
+                                textView112.setVisibility(View.GONE);
                             }
                         }, 45000);
                     }
@@ -878,7 +955,10 @@ public class MainActivity extends AppCompatActivity {
     //PatStatus am BO
     public void patstatusbtns(View view) {
         final Button button41 = (Button)findViewById(R.id.button41);
-        final TextView textView83 = (TextView) findViewById(R.id.statusView);
+        final TextView textView83 = (TextView)findViewById(R.id.statusView);
+
+        final TextView patstattv = (TextView)findViewById(R.id.textView116);
+
         final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
         switch(view.getId()) {
 
@@ -898,21 +978,26 @@ public class MainActivity extends AppCompatActivity {
                         Button button11 = (Button) findViewById(R.id.button11);
                         button11.setEnabled(false);
                         button11.setClickable(false);
-                        button11.setBackgroundResource(android.R.drawable.btn_default);
+                        button11.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button11.setBackgroundResource(android.R.drawable.btn_default);
 
                         Button button13 = (Button) findViewById(R.id.button13);
                         button13.setEnabled(false);
                         button13.setClickable(false);
-                        button13.setBackgroundResource(android.R.drawable.btn_default);
+                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button13.setBackgroundResource(android.R.drawable.btn_default);
 
                         button41.setEnabled(true);
                         button41.setClickable(true);
-                        button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText("QU");
+                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button41.setBackgroundResource(android.R.drawable.btn_default);
+                        button41.setText("Einsatz abschliessen");
                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                         textView83.setText("EB");
 
-                        Toast.makeText(MainActivity.this, "keine Intervention", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "keine Intervention", Toast.LENGTH_SHORT).show();
+                        patstattv.setVisibility(View.VISIBLE);
+                        patstattv.setText("Intervention unterblieben");
                     }
                 });
 
@@ -948,21 +1033,26 @@ public class MainActivity extends AppCompatActivity {
                                         Button button10 = (Button) findViewById(R.id.button10);
                                         button10.setEnabled(false);
                                         button10.setClickable(false);
-                                        button10.setBackgroundResource(android.R.drawable.btn_default);
+                                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button10.setBackgroundResource(android.R.drawable.btn_default);
 
                                         Button button13 = (Button) findViewById(R.id.button13);
                                         button13.setEnabled(false);
                                         button13.setClickable(false);
-                                        button13.setBackgroundResource(android.R.drawable.btn_default);
+                                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button13.setBackgroundResource(android.R.drawable.btn_default);
 
                                         button41.setEnabled(true);
                                         button41.setClickable(true);
-                                        button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText("QU");
+                                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button41.setBackgroundResource(android.R.drawable.btn_default);
+                                        button41.setText("Einsatz abschliessen");
                                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                                         textView83.setText("EB");
 
-                                        Toast.makeText(MainActivity.this, "Belassung", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "Belassung", Toast.LENGTH_SHORT).show();
+                                        patstattv.setVisibility(View.VISIBLE);
+                                        patstattv.setText("Belassung");
                                         break;
                                     case 1:
 
@@ -974,21 +1064,26 @@ public class MainActivity extends AppCompatActivity {
                                         button10 = (Button) findViewById(R.id.button10);
                                         button10.setEnabled(false);
                                         button10.setClickable(false);
-                                        button10.setBackgroundResource(android.R.drawable.btn_default);
+                                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button10.setBackgroundResource(android.R.drawable.btn_default);
 
                                         button13 = (Button) findViewById(R.id.button13);
                                         button13.setEnabled(false);
                                         button13.setClickable(false);
-                                        button13.setBackgroundResource(android.R.drawable.btn_default);
+                                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button13.setBackgroundResource(android.R.drawable.btn_default);
 
                                         button41.setEnabled(true);
                                         button41.setClickable(true);
-                                        button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText("QU");
+                                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                        //button41.setBackgroundResource(android.R.drawable.btn_default);
+                                        button41.setText("Einsatz abschliessen");
                                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                                         textView83.setText("EB");
 
-                                        Toast.makeText(MainActivity.this, "Patient verweigert", Toast.LENGTH_SHORT).show();
+                                        //Toast.makeText(MainActivity.this, "Patient verweigert", Toast.LENGTH_SHORT).show();
+                                        patstattv.setVisibility(View.VISIBLE);
+                                        patstattv.setText("Patient verweigert");
                                         break;
                                     case 2:
                                         break;
@@ -1015,21 +1110,26 @@ public class MainActivity extends AppCompatActivity {
                         Button button10 = (Button) findViewById(R.id.button10);
                         button10.setEnabled(false);
                         button10.setClickable(false);
-                        button10.setBackgroundResource(android.R.drawable.btn_default);
+                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button10.setBackgroundResource(android.R.drawable.btn_default);
 
                         Button button11 = (Button) findViewById(R.id.button11);
                         button11.setEnabled(false);
                         button11.setClickable(false);
-                        button11.setBackgroundResource(android.R.drawable.btn_default);
+                        button11.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button11.setBackgroundResource(android.R.drawable.btn_default);
 
                         button41.setEnabled(true);
                         button41.setClickable(true);
-                        button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText("QU");
+                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                        //button41.setBackgroundResource(android.R.drawable.btn_default);
+                        button41.setText("Einsatz abschliessen");
                         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
                         textView83.setText("EB");
 
-                        Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
+                        patstattv.setVisibility(View.VISIBLE);
+                        patstattv.setText("Übergabe an anderes Rettungsmittel");
                     }
                 });
 
@@ -1068,6 +1168,8 @@ public class MainActivity extends AppCompatActivity {
             final TextView textView83 = (TextView) findViewById(R.id.statusView);
             final TextView textView85 = (TextView) findViewById(R.id.textView85);
             final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
+
+            final TextView statuserror = (TextView)findViewById(R.id.textView129);
 
             Button button10 = (Button) findViewById(R.id.button10);
             Button button11 = (Button) findViewById(R.id.button11);
@@ -1135,13 +1237,7 @@ public class MainActivity extends AppCompatActivity {
                     button13.setClickable(true);
                     button46.setEnabled(true);
                     button46.setClickable(true);
-/*
-                    mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(2));
 
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("tab4").setIndicator("Abgabeort", null),
-                            deliverylocFragment.class, null);
-*/
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
                         @Override
@@ -1152,7 +1248,7 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 10000);
 
-                } else if ((textView83.getText().equals("ABO")) && (aofield.getText().toString().trim().length() > 0)) {
+                } else if ((textView83.getText().equals("ABO")) /*&& (aofield.getText().toString().trim().length() > 0)*/) {
                     //TODO: redundante funktion
                     if (aofield.getText().toString().trim().length() > 0) {
                         button41.setEnabled(true);
@@ -1174,11 +1270,11 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         button41.setEnabled(false);
                         button41.setClickable(false);
-                        Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen", Toast.LENGTH_LONG).show();
+                        //Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen", Toast.LENGTH_LONG).show();
+                        statuserror.setText("Kein Abgabeort eingetragen");
+                        statuserror.setVisibility(View.VISIBLE);
                     }
-/*
-                    mTabHost.getTabWidget().removeView(mTabHost.getTabWidget().getChildTabViewAt(1));
-*/
+
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
                         @Override
@@ -1186,6 +1282,8 @@ public class MainActivity extends AppCompatActivity {
                             button41.setEnabled(true);
                             button41.setClickable(true);
                             button41.setBackgroundResource(android.R.drawable.btn_default);
+                            statuserror.setText("");
+                            statuserror.setVisibility(View.GONE);
                         }
                     }, 10000);
 
@@ -1217,16 +1315,7 @@ public class MainActivity extends AppCompatActivity {
                     button41.setText("QU");
                     textView83.setText("EB");
                     textView85.setText(sdf.format(cal.getTime()));
-/*
-                    mTabHost.removeAllViews();
 
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("tab1").setIndicator("Status", null),
-                            mainstatusFragment.class, null);
-                    mTabHost.addTab(
-                            mTabHost.newTabSpec("tab2").setIndicator("Einsatzdaten", null),
-                            incidentFragment.class, null);
-*/
                     Handler h = new Handler();
                     h.postDelayed(new Runnable() {
                         @Override
@@ -1237,6 +1326,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }, 10000);
 
+                } else if (button41.getText().equals("Einsatzbereit")) {
+
+                    endIncident();
                 }
             }
         });
@@ -1252,9 +1344,19 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
+    // Remove Incident Tab, when Incident accomplished
+    public void endIncident() {
+
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.incidentfraglayout);
+        if(fragment != null)
+            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
+
+    }
+
     // Emergency light yes/no //
     public void setEmergency(View v) {
         if (v.getId() == R.id.checkBox) {
+
             CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
             checkBox.setEnabled(true);
             checkBox.setClickable(false);
@@ -1272,6 +1374,8 @@ public class MainActivity extends AppCompatActivity {
         final RelativeLayout patmanlayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.patman, null);
         final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
         final TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
+
+        final LinearLayout patmanbtnlinlay = (LinearLayout)findViewById(R.id.patmanbtnlinlay);
 
         final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
         final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
@@ -1319,6 +1423,10 @@ public class MainActivity extends AppCompatActivity {
                                     //TODO: send data
 
                                     Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
+
+                                    // Set Pat. Management Buttons visible
+                                    patmanbtnlinlay.setVisibility(View.VISIBLE);
+
 
                                 }
                             });
@@ -1579,7 +1687,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 /*
-    // Map Fragment //
+    // City Map View //
     // user can choose between leaflet(webview) and google maps(fragment api)
         public void showmap(View v) {
             if (v.getId() == R.id.button30) {
@@ -1670,83 +1778,20 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void startmaps (View v) {
-        if (v.getId() == R.id.button31) {
-            try {
-                // Loading map
-                initilizeMap();
-                //removeWebView();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    private void initilizeMap() {
-        if (googleMap == null) {
-            googleMap = ((MapFragment) getFragmentManager().findFragmentById(
-                    R.id.map)).getMap();
-
-            // check if map is created successfully or not
-            if (googleMap == null) {
-                Toast.makeText(getApplicationContext(),
-                        "Sorry! unable to create maps", Toast.LENGTH_SHORT)
-                        .show();
-            }
-        }
-    }
-
-    public void initializeMapLocationSettings() {
-        googleMap.setMyLocationEnabled(true);
-    }
-
-    public void initializeMapTraffic() {
-        googleMap.setTrafficEnabled(true);
-    }
-
-    public void initializeMapType() {
-        googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
-    }
-
-    /*
-        // create marker
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(latitude, longitude)).title("");
-        // adding marker
-        googleMap.addMarker(marker);
     */
-    public void setmapmarker() {
-        Marker nodo = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(48.1907634, 16.411198))
-                .title("NODO"));
-
-        Marker kss = googleMap.addMarker(new MarkerOptions()
-                .position(new LatLng(48.2671734, 16.4019968))
-                .title("KSS"));
-        //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic)));
-    }
-
-    public void mapcamera () {
-        //unit position
-        CameraPosition cameraPosition = new CameraPosition.Builder().target(
-                new LatLng(latitude, longitude)).zoom(12).build();
-
-        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
-    }
-
-    // MAP fragment END //
 
     // Report incident method on mainstatus fragment //
     // Get coordinates, and nearest address
         public void reportincident(View v) {
 
-        RelativeLayout reportincident = (RelativeLayout)getLayoutInflater().inflate(R.layout.reportincident, null);
+            RelativeLayout reportincident = (RelativeLayout)getLayoutInflater().inflate(R.layout.reportincident, null);
 
             if (v.getId() == R.id.button42) {
 
                 final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
                 final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
                 final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
+                final TextView textView112 = (TextView) findViewById(R.id.textView112);
                 final Button button42 = (Button) findViewById(R.id.button42);
 
                 AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
@@ -1842,18 +1887,20 @@ public class MainActivity extends AppCompatActivity {
                                                           public void run() {
                                                               button42.setEnabled(true);
                                                               button42.setClickable(true);
-                                                              button42.setBackgroundResource(android.R.drawable.btn_default);
+                                                              button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
                                                               editText24.setText("");
                                                               textView86.setText("");
                                                               textView93.setText("");
+                                                              textView112.setText("");
+                                                              textView112.setVisibility(View.GONE);
                                                           }
                                                       }
 
                                         , 30000);
 
-                                Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).
-
-                                        show();
+                                Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
+                                textView112.setVisibility(View.VISIBLE);
+                                textView112.setText("Einsatz gemeldet");
                             }
                         }
 

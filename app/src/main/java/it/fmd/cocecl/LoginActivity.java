@@ -92,7 +92,7 @@ public class LoginActivity extends MainActivity {
                     Context.MODE_PRIVATE);
             String registrationId = prefs.getString(REG_ID, "");
 
-            //When Email ID is set in Sharedpref, User will be taken to HomeActivity
+            //When Email ID is set in Sharedpref, Incidents will be taken to HomeActivity
             if (!TextUtils.isEmpty(registrationId)) {
                 Intent i = new Intent(applicationContext, InfoActivity.class);
                 i.putExtra("regId", registrationId);
@@ -356,7 +356,7 @@ public class LoginActivity extends MainActivity {
             public void onClick(View view) {
                 final LinearLayout registeruserlayout = (LinearLayout)getLayoutInflater().inflate(R.layout.register_user_layout, null);
                 AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
-                dlgBuilder.setTitle("Register User");
+                dlgBuilder.setTitle("Register Incidents");
 
                 registername = (EditText) registeruserlayout.findViewById(R.id.registername);
                 registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
@@ -578,7 +578,7 @@ public class LoginActivity extends MainActivity {
         }.execute(null, null, null);
     }
 
-    // Store  RegId and Email entered by User in SharedPref
+    // Store  RegId and Email entered by Incidents in SharedPref
     private void storeRegIdinSharedPref(Context context, String regId,
                                         String emailID) {
         SharedPreferences prefs = getSharedPreferences("UserDetails",

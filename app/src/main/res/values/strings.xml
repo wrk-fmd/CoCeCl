@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+    <string-array name="country_names">
+        <item>Bhutan</item>
+        <item>Colombia</item>
+        <item>Italy</item>
+    </string-array>
+    <array name="country_icons">
+        <item>@drawable/home_24</item>
+        <item>@drawable/info_24</item>
+        <item>@drawable/about_24</item>
+    </array>
+
+
     // loginactivity //
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
@@ -58,11 +71,14 @@
 
     <!-- Nav Drawer Menu Items -->
     <string-array name="nav_drawer_items">
-        <item >Home</item>
-        <item >Settings</item>
-        <item >Kommunikation</item>
-        <item >AmulanzInfo</item>
-        <item >User</item>
+        <item>Home</item>
+        <item>Settings</item>
+        <item>Kommunikation</item>
+        <item>AmulanzInfo</item>
+        <item>User</item>
+        <item>PATMAN</item>
+        <item>ICD-10 2015</item>
+        <item>PTCA Bereitschaft</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -73,6 +89,9 @@
         <item>@drawable/news_24</item>
         <item>@drawable/plus_24</item>
         <item>@drawable/contacts_24</item>
+        <item>@drawable/briefcase_24</item>
+        <item>@drawable/plus_24</item>
+        <item>@drawable/about_24</item>
     </array>
 
     <!-- Content Description -->

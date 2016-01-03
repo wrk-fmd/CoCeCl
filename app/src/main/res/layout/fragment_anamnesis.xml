@@ -1,8 +1,64 @@
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="it.fmd.cocecl.fragments.anamnesisFragment">
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    tools:context="it.fmd.cocecl.fragments.anamnesisFragment"
 
-</FrameLayout>
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    android:id="@+id/anamnesisfraglayout"
+    android:background="#bdbdbd">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.CardView
+            android:layout_width="600dp"
+            android:layout_height="wrap_content"
+            cardview:cardElevation="4dp"
+            cardview:cardCornerRadius="5dp"
+            cardview:cardBackgroundColor="#424242"
+            android:id="@+id/view13">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:text="Anamese"
+                    android:id="@+id/textView174"
+                    android:textColor="@color/headline"/>
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText30"
+                    android:hint="anamnese" />
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textMultiLine"
+                    android:ems="10"
+                    android:id="@+id/editText31"
+                    android:hint="bemerkung" />
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+</RelativeLayout>

@@ -34,6 +34,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -42,7 +43,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -71,8 +71,6 @@ import java.util.TimeZone;
 
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
-import it.fmd.cocecl.fragments.incidentFragment;
-import it.fmd.cocecl.fragments.mainstatusFragment;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
@@ -91,17 +89,7 @@ public class MainActivity extends AppCompatActivity {
     View.OnClickListener mOnClickListener;
 
     //NAV DRAWER//
-    String[] menu;
-    DrawerLayout dLayout;
-    ListView dList;
-    //ArrayAdapter<String> adapter;
-/*
-    private ListView mDrawerList;
-    private DrawerLayout mDrawerLayout;
-    private ArrayAdapter<String> mAdapter;
-    private ActionBarDrawerToggle mDrawerToggle;
-    private String mActivityTitle;
-*/
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -118,6 +106,11 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    //Recycler View
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
 
     ConnectionManager conman = new ConnectionManager();
@@ -188,20 +181,34 @@ public class MainActivity extends AppCompatActivity {
                 , 10000);
 
         // VIEWPAGER //
+        {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
         if ((getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) <=
-                Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+
             // on a normal screen device ...
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
             //TODO: set tabs depending on unit status
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+
             tabLayout.addTab(tabLayout.newTab().setText("Main"));
             tabLayout.addTab(tabLayout.newTab().setText("Status"));
             tabLayout.addTab(tabLayout.newTab().setText("AO"));
-            tabLayout.addTab(tabLayout.newTab().setText("Map"));
-            //tabLayout.addTab(tabLayout.newTab().setText("Comm"));
+        }
+
+            if ((getResources().getConfiguration().screenLayout &
+                    Configuration.SCREENLAYOUT_SIZE_MASK) <=
+                    Configuration.SCREENLAYOUT_SIZE_NORMAL) {
+
+                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+                tabLayout.addTab(tabLayout.newTab().setText("Main"));
+                tabLayout.addTab(tabLayout.newTab().setText("Status"));
+                tabLayout.addTab(tabLayout.newTab().setText("AO"));
+                tabLayout.addTab(tabLayout.newTab().setText("Map"));
+            }
+            //tabLayout.addTab(tabLayout.newTab().setText("Com"));
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
@@ -232,53 +239,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // NAVIGATION DRAWER //
-/*
-        {
-            mDrawerList = (ListView) findViewById(R.id.left_drawer);
-            mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-            mActivityTitle = getTitle().toString();
-
-            addDrawerItems();
-            setupDrawer();
-
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeButtonEnabled(true);
-        }
-*//*
-        {
-
-        menu = new String[]{"Home", "Settings", "Kommunikation", "AmbulanzInfo"};
-        dLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        dList = (ListView) findViewById(R.id.left_drawer);
-
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, menu);
-
-        dList.setAdapter(adapter);
-        dList.setSelector(android.R.color.holo_blue_dark);
-
-        dList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> arg0, View v, int position, long id) {
-
-                dLayout.closeDrawers();
-                Bundle args = new Bundle();
-                args.putString("Menu", menu[position]);
-                //Fragment detail = new DetailFragment();
-                //detail.setArguments(args);
-                //FragmentManager fragmentManager = getFragmentManager();
-                //fragmentManager.beginTransaction().replace(R.id.content_frame, detail).commit();
-
-            }
-
-        });
-    }
-
-    */
-        inetcon();
-        checkGPS();
-
-        // NAVIGATION DRAWER //
 
         mTitle = mDrawerTitle = getTitle();
 
@@ -286,8 +246,7 @@ public class MainActivity extends AppCompatActivity {
         navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
 
         // nav drawer icons from resources
-        navMenuIcons = getResources()
-                .obtainTypedArray(R.array.nav_drawer_icons);
+        navMenuIcons = getResources().obtainTypedArray(R.array.nav_drawer_icons);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.list_slidermenu);
@@ -295,18 +254,22 @@ public class MainActivity extends AppCompatActivity {
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
         // adding nav drawer items to array
-        // Home
+        // 0 Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
-        // Settings
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
-        // Kommunikation
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1), true, "22"));
-        // AmbulanzInfo
+        // 1 Settings
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, "7"));
+        // 2 Kommunikation
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
+        // 3 AmbulanzInfo
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // User
+        // 4 Incidents
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
-        // What's hot, We  will add a counter here
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "50+"));
+        // 5 PATMAN
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        // 6 ICD-10
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
+        // 7 PTCA Plan
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
 
 
         // Recycle the typed array
@@ -315,8 +278,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setOnItemClickListener(new SlideMenuClickListener());
 
         // setting the nav drawer list adapter
-        adapter = new NavDrawerListAdapter(getApplicationContext(),
-                navDrawerItems);
+        adapter = new NavDrawerListAdapter(getApplicationContext(), navDrawerItems);
         mDrawerList.setAdapter(adapter);
 
         // enabling action bar app icon and behaving it as toggle button
@@ -345,29 +307,53 @@ public class MainActivity extends AppCompatActivity {
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             //displayView(0);
+            navDrawerAction(0);
         }
+
+        // additional
+        inetcon();
+        checkGPS();
     }
 
-    // Recycler View Incident list //
+    //ONCREATE END ------------------------------------------------------------------------------
+
+    //Incident ListView MainstatusFragment
+
 /*
     {
+        Context ctx = getApplicationContext();
+        Resources res = ctx.getResources();
+
+        String[] options = res.getStringArray(R.array.country_names);
+        TypedArray icons = res.obtainTypedArray(R.array.country_icons);
+
+        setListAdapter(new IncidentAdapter(ctx, R.layout.incident_rv_layout, options, icons));
+    }
+    // Recycler View Incident list //
+/*
+    public void incident_rv() {
 
         RecyclerView rv = (RecyclerView) findViewById(R.id.incidentrv);
 
         //rv.setHasFixedSize(true);
 
-        LinearLayoutManager llm = new LinearLayoutManager(this);
+        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
         rv.setLayoutManager(llm);
 
         llm.setOrientation(LinearLayoutManager.VERTICAL);
 
-        //IncidentAdapter mAdapter = new IncidentAdapter(myDataset);
-        //rv.setAdapter(mAdapter);
+        //DATASET
+        ArrayList<String> values = new ArrayList<String>();
+        for (int i = 0; i < 100; i++) {
+            values.add("Test" + i);
+        }
+
+        mAdapter = new IncidentAdapter(values);
+        rv.setAdapter(mAdapter);
 
         //TODO: publish incident list (if more then one)
     }
 */
-
     //NAV DRAWER METHODS//
 
     /**
@@ -380,7 +366,56 @@ public class MainActivity extends AppCompatActivity {
                                 long id) {
             // display view for selected nav drawer item
             // displayView(position);
+            navDrawerAction(position);
+
         }
+    }
+
+    public void gotoicd() {
+        //open link icd-10
+        Uri icd10 = Uri.parse("http://www.icd-code.de/");
+        Intent openicd = new Intent(Intent.ACTION_VIEW, icd10);
+        startActivity(openicd);
+    }
+
+    private void navDrawerAction(int position) {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        switch (position) {
+            case 0:
+                //HOME VIEWPAGER First Tab
+                //MainStatus Fragment
+                break;
+            case 1:
+                Intent isett = new Intent(getApplicationContext(), SettingsActivity.class);
+                startActivity(isett);
+                break;
+            case 2:
+                tabLayout.addTab(tabLayout.newTab().setText("Com"));
+                break;
+            case 3:
+                break;
+            case 4:
+                break;
+            case 5:
+                Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
+                startActivity(ipatman);
+                break;
+            case 6:
+                gotoicd();
+                break;
+            case 7:
+                break;
+
+            default:
+                break;
+        }
+
+        // update selected item and title, then close the drawer
+        mDrawerList.setItemChecked(position, true);
+        mDrawerList.setSelection(position);
+        setTitle(navMenuTitles[position]);
+        mDrawerLayout.closeDrawer(mDrawerList);
+
     }
 
     /***
@@ -446,49 +481,6 @@ public class MainActivity extends AppCompatActivity {
         mTitle = title;
         getSupportActionBar().setTitle(mTitle);
     }
-
-
-    //NAV DRAWER old working//
-    /*
-    private void addDrawerItems() {
-        String[] itemArray = { "Home", "Settings", "Kommunikation", "AmbulanzInfo"};
-
-        //mAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, itemArray);
-        //Layout for TextColor
-
-        mAdapter = new ArrayAdapter<String>(this, R.layout.navdrawer_layout, itemArray);
-        mDrawerList.setAdapter(mAdapter);
-
-        mDrawerList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(MainActivity.this, "Go to Fragment", Toast.LENGTH_SHORT).show();
-            }
-        });
-    }
-
-    private void setupDrawer() {
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.drawer_open, R.string.drawer_close) {
-
-            // Called when a drawer has settled in a completely open state.
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                getSupportActionBar().setTitle("Navigation");
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            // Called when a drawer has settled in a completely closed state.
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                getSupportActionBar().setTitle(mActivityTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        mDrawerToggle.setDrawerIndicatorEnabled(true);
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-    }
-*/
 
 
     /**
@@ -746,7 +738,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        //initilizeMap();
         checkPlayServices();
         //checkMLSConnection();
 
@@ -755,14 +746,51 @@ public class MainActivity extends AppCompatActivity {
         if ((getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) >=
                 Configuration.SCREENLAYOUT_SIZE_LARGE) {
+/*
+            //TODO: set tabs depending on unit status
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            tabLayout.addTab(tabLayout.newTab().setText("Main"));
+            tabLayout.addTab(tabLayout.newTab().setText("Status"));
+            tabLayout.addTab(tabLayout.newTab().setText("AO"));
+            //tabLayout.addTab(tabLayout.newTab().setText("Map"));
+            //tabLayout.addTab(tabLayout.newTab().setText("Com"));
+            tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
+
+            //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
+
+            //TODO: on incident emergency set tablayout_color to blue #1565C0
+            //tabLayout.setBackgroundColor(BLUE);
+
+            final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
+            final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(adapter);
+            viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+            tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+                @Override
+                public void onTabSelected(TabLayout.Tab tab) {
+                    viewPager.setCurrentItem(tab.getPosition());
+                }
+
+                @Override
+                public void onTabUnselected(TabLayout.Tab tab) {
+
+                }
+
+                @Override
+                public void onTabReselected(TabLayout.Tab tab) {
+
+                }
+            });
+
+
             // on a large screen device ...
             this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
+*/
             // FM support manager
             FragmentManager fm = getSupportFragmentManager();
             // Transaction start
             FragmentTransaction ft = fm.beginTransaction();
-
+/*
             // Begin the transaction
             if (findViewById(R.id.framelayout_1) != null) {
 
@@ -773,7 +801,7 @@ public class MainActivity extends AppCompatActivity {
 
                 ft.add(R.id.framelayout_2, new incidentFragment());
             }
-
+*/
             if (findViewById(R.id.framelayout_3) != null) {
 
                 ft.add(R.id.framelayout_3, new mapFragment());
@@ -1418,7 +1446,7 @@ public class MainActivity extends AppCompatActivity {
                                     //patedit.putString("patgender", patgender);
                                     patedit.putString("patward", patward);
 
-                                    patedit.commit();
+                                    patedit.apply();
 
                                     //TODO: send data
 
@@ -1616,21 +1644,39 @@ public class MainActivity extends AppCompatActivity {
     // PatMan start btn //
     // TODO: not needed in test version
 
+    public void patman_enable() {
+        Button button21 = (Button) findViewById(R.id.button21);
+
+        if ((getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+
+            button21.setEnabled(true);
+            button21.setClickable(true);
+
+        } else {
+
+            button21.setEnabled(false);
+            button21.setClickable(false);
+
+            }
+        }
+
     public void patmanstart(View v) {
         if (v.getId() == R.id.button21) {
 
-            Button button21 = (Button) findViewById(R.id.button21);
-            button21.setOnClickListener(new View.OnClickListener() {
+                Button button21 = (Button) findViewById(R.id.button21);
+                button21.setOnClickListener(new View.OnClickListener() {
 
-                @Override
-                public void onClick(View arg0) {
-                    Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
-                    startActivity(ipatman);
-                }
-            });
+                    @Override
+                    public void onClick(View arg0) {
+                        Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
+                        startActivity(ipatman);
+                    }
+                });
 
+            }
         }
-    }
 
     // Store Pat Data // with shared prefs
 
@@ -1798,6 +1844,8 @@ public class MainActivity extends AppCompatActivity {
                 dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
                 dlgBuilder.setCancelable(false);
 
+                button42.setClickable(false);
+
                 dlgBuilder.setView(reportincident);
 
                 /*
@@ -1919,6 +1967,7 @@ public class MainActivity extends AppCompatActivity {
 
                 AlertDialog alert = dlgBuilder.create();
                 alert.show();
+                button42.setClickable(true);
 
                 // remove layout
                 View viewToRemove = findViewById(R.id.reportincidentrelayout);

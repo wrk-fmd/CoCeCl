@@ -33,7 +33,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
-                    android:padding="3dp">
+                    android:padding="8dp">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -386,10 +386,18 @@
                         android:id="@+id/textView10"
                         android:textColor="#00b0ff"/>
 
-                    <android.support.v7.widget.RecyclerView
+                    <GridView
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/unitrv" />
+                        android:layout_height="wrap_content"
+                        android:id="@+id/asUnitGV"
+                        android:layout_gravity="center_horizontal"
+
+                        android:numColumns="auto_fit"
+                        android:columnWidth="100dp"
+                        android:stretchMode="columnWidth"
+
+                        android:verticalSpacing="10dp"
+                        android:horizontalSpacing="10dp"/>
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

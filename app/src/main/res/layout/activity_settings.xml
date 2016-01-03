@@ -61,10 +61,12 @@
         android:id="@+id/linearLayout12"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_below="@+id/textView9">
+        android:layout_below="@+id/textView9"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp">
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Fullscreen"
             android:id="@+id/switch3"
@@ -77,7 +79,7 @@
             android:layout_gravity="left" />
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="GPS"
             android:id="@+id/switch1"
@@ -91,7 +93,7 @@
             android:layout_gravity="left" />
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Funk"
             android:id="@+id/switch2"
@@ -105,7 +107,7 @@
             android:layout_gravity="left" />
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Alarm Sounds"
             android:id="@+id/switch4"
@@ -118,7 +120,7 @@
             android:layout_gravity="left" />
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Maps"
             android:id="@+id/switch5"
@@ -127,12 +129,21 @@
             android:layout_marginTop="10dp"/>
 
         <Switch
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Hell/Dunkel"
             android:id="@+id/switch6"
             android:layout_marginTop="10dp"/>
 
     </LinearLayout>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Call FMD-IT Support"
+        android:id="@+id/button71"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
 </RelativeLayout>

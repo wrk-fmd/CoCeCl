@@ -2,31 +2,6 @@ package it.fmd.cocecl.contentviews;
 
 public class NavDrawerItem {
 
-    String ItemName;
-    int imgResID;
-
-    public NavDrawerItem(String itemName, int imgResID) {
-        super();
-        ItemName = itemName;
-        this.imgResID = imgResID;
-    }
-
-    public String getItemName() {
-        return ItemName;
-    }
-    public void setItemName(String itemName) {
-        ItemName = itemName;
-    }
-    public int getImgResID() {
-        return imgResID;
-    }
-    public void setImgResID(int imgResID) {
-        this.imgResID = imgResID;
-    }
-
-
-    // Second opinion
-
     private String title;
     private int icon;
     private String count = "0";
@@ -34,12 +9,12 @@ public class NavDrawerItem {
     private boolean isCounterVisible = false;
 
     public NavDrawerItem(){}
-/*
+
     public NavDrawerItem(String title, int icon){
         this.title = title;
         this.icon = icon;
     }
-*/
+
     public NavDrawerItem(String title, int icon, boolean isCounterVisible, String count){
         this.title = title;
         this.icon = icon;

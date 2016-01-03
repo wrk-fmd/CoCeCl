@@ -9,12 +9,18 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.contentviews.IncidentAdapter;
+import it.fmd.cocecl.contentviews.Incidents;
 
 import static android.graphics.Color.GREEN;
 
@@ -56,12 +62,59 @@ public class mainstatusFragment extends Fragment {
                 st9();
             }
         });
+
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+        setIncidentLVData();
+    }
+
+    public void setIncidentLVData() {
+
+        // Construct the data source
+
+        ArrayList<Incidents> arrayOfIncidentses = new ArrayList<Incidents>();
+
+// Create the adapter to convert the array to views
+
+        IncidentAdapter adapter = new IncidentAdapter(getContext(), arrayOfIncidentses);
+
+// Attach the adapter to a ListView
+
+        final ListView listView = (ListView) getActivity().findViewById(R.id.activeincidentlv);
+
+        listView.setAdapter(adapter);
+
+        // Add item to adapter
+
+        // TEST DATA - later from server JSON, stored in shared prefs
+        Incidents newIncidents = new Incidents("Sturz", "unklar", "Neubaugasse 64","QU");
+
+        Incidents secondIncident = new Incidents("29D04", "unklar Lage", "Liechtensteinstrasse 166","ZBO");
+
+        adapter.add(newIncidents);
+        adapter.add(secondIncident);
+
+
+        // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
+        listView.setClickable(true);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
+
+                Object incidentclick = listView.getItemAtPosition(position);
+    /* write you handling code like...
+    String st = "sdcard/";
+    File f = new File(st+o.toString());
+    // do whatever u want to do with 'f' File object
+    */
+            }
+        });
+
     }
 
 

@@ -46,7 +46,7 @@ public class NewIncident extends MainActivity {
     CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
 
     // change incident information/ snackbar update
-    public void onchangeIncident() {
+    public void onIncidentUpdate() {
 
         final Snackbar snackbar = Snackbar
                 .make(coordinatorLayout, "EINSATZ Update!", Snackbar.LENGTH_INDEFINITE)
@@ -67,20 +67,7 @@ public class NewIncident extends MainActivity {
             }
         };
     }
-
-
-    // SnackBar // for incident update notification //
-    // show updates on incident in snackbar
-    //TODO: redundant method in incodentAction class
-    public void onIncidentUpdate() {
-
-        coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
-        Snackbar snackbar = Snackbar.make(coordinatorLayout, R.string.inciupdate, Snackbar.LENGTH_INDEFINITE);
-
-        snackbar.show();
-    }
-
-
+    
     // Alert Push Notification Manager //
     // alerts on incoming incident, gcm server!!
     //

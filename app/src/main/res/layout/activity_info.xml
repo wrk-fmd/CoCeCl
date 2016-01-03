@@ -96,18 +96,6 @@
         android:layout_alignParentStart="true">
     </View>
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:background="#000000"
-        android:layout_below="@+id/textView3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:id="@+id/view3">
-    </View>
-
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -155,26 +143,6 @@
         android:enabled="true"
         android:onClick="exitbtn"
         android:drawableLeft="@drawable/ic_power_settings_new_black_24dp"/>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView95"
-        android:layout_below="@+id/view3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="username" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView96"
-        android:layout_below="@+id/textView95"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:hint="email" />
 
     <View
         android:layout_width="fill_parent"

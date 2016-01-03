@@ -16,57 +16,7 @@ import java.util.List;
 import it.fmd.cocecl.R;
 
 public class NavDrawerListAdapter extends BaseAdapter {
-/*
-    Context context;
-    List<NavDrawerItem> drawerItemList;
-    int layoutResID;
 
-    public NavDrawerListAdapter(Context context, int layoutResourceID,
-                               List<NavDrawerItem> listItems) {
-        super(context, layoutResourceID, listItems);
-        this.context = context;
-        this.drawerItemList = listItems;
-        this.layoutResID = layoutResourceID;
-
-    }
-
-    @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-
-        DrawerItemHolder drawerHolder;
-        View view = convertView;
-
-        if (view == null) {
-            LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-            drawerHolder = new DrawerItemHolder();
-
-            view = inflater.inflate(layoutResID, parent, false);
-            drawerHolder.ItemName = (TextView) view.findViewById(R.id.drawer_itemName);
-            drawerHolder.icon = (ImageView) view.findViewById(R.id.drawer_icon);
-
-            view.setTag(drawerHolder);
-
-        } else {
-            drawerHolder = (DrawerItemHolder) view.getTag();
-
-        }
-
-        NavDrawerItem dItem = (NavDrawerItem) this.drawerItemList.get(position);
-
-        drawerHolder.icon.setImageDrawable(view.getResources().getDrawable(
-                dItem.getImgResID()));
-        drawerHolder.ItemName.setText(dItem.getItemName());
-
-        return view;
-    }
-
-    private static class DrawerItemHolder {
-        TextView ItemName;
-        ImageView icon;
-    }
-*/
-    //second class
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
 

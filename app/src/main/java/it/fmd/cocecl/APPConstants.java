@@ -1,6 +1,5 @@
 package it.fmd.cocecl;
 
-
 public class APPConstants {
 
     //JSON Node Names general
@@ -53,5 +52,14 @@ public class APPConstants {
     public static final String mlsdispo = "+ 43 660 123 456 78";
     //EL
     public static final String hio = "+ 43 660 123 456 78";
+
+    //EMERGENCY
+    public static final String polnbr = "133";
+    public static final String rdnbr = "144";
+    public static final String fdnbr = "122";
+    public static final String wrnbr = "";
+    public static final String mrdnbr = "";
+    public static final String oebbnbr = "";
+
 
     }

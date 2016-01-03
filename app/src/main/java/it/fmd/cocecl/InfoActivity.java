@@ -34,8 +34,10 @@ public class InfoActivity extends MainActivity {
         unitname = (TextView)findViewById(R.id.textView3);
         start = (Button)findViewById(R.id.button14);
 
-        txtName = (TextView) findViewById(R.id.textView95);
-        txtEmail = (TextView) findViewById(R.id.textView96);
+        //removed
+        //txtName = (TextView) findViewById(R.id.textView95);
+        //txtEmail = (TextView) findViewById(R.id.textView96);
+
         //btnLogout = (Button) findViewById(R.id.btnLogout);
 
         // Displaying the user details from login on the screen

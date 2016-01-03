@@ -1,3 +1,21 @@
+<android.support.v4.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/drawer_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:layout_alignParentTop="true">
+
+    <ListView
+        android:id="@+id/list_slidermenu"
+        android:layout_width="240dp"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@color/list_divider"
+        android:dividerHeight="1dp"
+        android:listSelector="@drawable/list_selector"
+        android:background="@color/list_background"/>
+
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -13,6 +31,8 @@
         android:layout_height="match_parent"
         android:orientation="horizontal">
 
+        <include layout="@layout/toolbar_layout"/>
+        <!--
         <android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/appbar"
@@ -83,34 +103,33 @@
                     android:id="@+id/textView7"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView83"
-                    android:layout_alignStart="@+id/textView83"
-                    android:layout_below="@+id/textView107"
                     android:text="WIFI"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_below="@+id/textView107"
+                    android:layout_alignLeft="@+id/textView107"
+                    android:layout_alignStart="@+id/textView107" />
 
                 <TextView
                     android:id="@+id/textView83"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/textView7"
-                    android:layout_marginEnd="30dp"
-                    android:layout_marginRight="30dp"
-                    android:layout_toLeftOf="@+id/imageView2"
-                    android:layout_toStartOf="@+id/imageView2"
                     android:text="MOBILE"
-                    android:textAppearance="?android:attr/textAppearanceSmall" />
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:layout_below="@+id/textView7"
+                    android:layout_alignLeft="@+id/textView7"
+                    android:layout_alignStart="@+id/textView7" />
 
                 <TextView
                     android:id="@+id/textView107"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignLeft="@+id/textView7"
-                    android:layout_alignParentTop="true"
-                    android:layout_alignStart="@+id/textView7"
                     android:text="@string/connection"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textStyle="bold" />
+                    android:textStyle="bold"
+                    android:layout_alignParentTop="true"
+                    android:layout_toLeftOf="@+id/textView97"
+                    android:layout_toStartOf="@+id/textView97"
+                    android:layout_marginRight="15dp"/>
 
                 <ImageView
                     android:id="@+id/erroriconView"
@@ -122,10 +141,72 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignStart="@+id/imageView_mlscon"
                     android:layout_below="@+id/imageView2" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="GPS"
+                    android:id="@+id/textView108"
+                    android:layout_alignTop="@+id/imageView2"
+                    android:layout_toRightOf="@+id/textView83"
+                    android:layout_toEndOf="@+id/textView83" />
             </RelativeLayout>
 
         </android.support.v7.widget.Toolbar>
+        -->
 
+        <LinearLayout
+            android:id="@+id/linearLayout13"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@+id/appbar">
+
+            <FrameLayout
+                android:id="@+id/framelayout_4"
+                android:layout_width="400dp"
+                android:layout_height="match_parent">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tab_layout"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#9E9E9E"
+                        android:elevation="6dp"
+                        android:minHeight="?attr/actionBarSize"
+                        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                    <android.support.v4.view.ViewPager
+                        xmlns:android="http://schemas.android.com/apk/res/android"
+                        android:id="@+id/viewPager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_below="@+id/tab_layout">
+                    </android.support.v4.view.ViewPager>
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+            <FrameLayout
+                android:id="@+id/framelayout_3"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
+            </FrameLayout>
+            <!--
+                            <FrameLayout
+                                android:id="@+id/framelayout_3"
+                                android:layout_width="wrap_content"
+                                android:layout_height="match_parent"
+                                android:layout_weight="1">
+                            </FrameLayout>
+            -->
+        </LinearLayout>
+<!--
         <LinearLayout
             android:id="@+id/linearLayout13"
             android:layout_width="match_parent"
@@ -136,22 +217,26 @@
                 android:id="@+id/framelayout_1"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></FrameLayout>
+                android:layout_weight="1">
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/framelayout_2"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></FrameLayout>
+                android:layout_weight="1">
+            </FrameLayout>
 
             <FrameLayout
                 android:id="@+id/framelayout_3"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_weight="1"></FrameLayout>
+                android:layout_weight="1">
+            </FrameLayout>
 
         </LinearLayout>
-
+-->
     </RelativeLayout>
 
 </android.support.design.widget.CoordinatorLayout>
+</android.support.v4.widget.DrawerLayout>

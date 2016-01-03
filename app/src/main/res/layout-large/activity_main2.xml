@@ -15,24 +15,9 @@
         android:dividerHeight="1dp"
         android:listSelector="@drawable/list_selector"
         android:background="@color/list_background"/>
-    <!--
-        <ListView
-            android:id="@+id/left_drawer"
-            android:layout_width="200dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="left|start"
-            android:background="#ffeeeeee"/>
 
-            <ListView android:id="@+id/left_drawer"
-                android:layout_width="240dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="start"
-                android:choiceMode="singleChoice"
-                android:divider="@android:color/transparent"
-                android:dividerHeight="0dp"
-                android:background="#fff"/>
-        -->
-    <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <android.support.design.widget.CoordinatorLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/coordinatorLayout"
@@ -41,8 +26,12 @@
         tools:context=".MainActivity">
 
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content">
+
+            xmlns:android="http://schemas.android.com/apk/res/android"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="3">
 
             <include layout="@layout/toolbar_layout"/>
 <!--
@@ -168,23 +157,56 @@
 
             </android.support.v7.widget.Toolbar>
 -->
-            <android.support.design.widget.TabLayout
-                android:id="@+id/tab_layout"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/appbar"
-                android:background="#9E9E9E"
-                android:elevation="6dp"
-                android:minHeight="?attr/actionBarSize"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
-
-            <android.support.v4.view.ViewPager
-                xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/viewPager"
+            <LinearLayout
+                android:id="@+id/linearLayout13"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@+id/tab_layout">
-            </android.support.v4.view.ViewPager>
+                android:layout_below="@+id/appbar">
+
+                <FrameLayout
+                    android:id="@+id/framelayout_4"
+                    android:layout_width="400dp"
+                    android:layout_height="match_parent">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <android.support.design.widget.TabLayout
+                            android:id="@+id/tab_layout"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="#9E9E9E"
+                            android:elevation="6dp"
+                            android:minHeight="?attr/actionBarSize"
+                            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar" />
+
+                        <android.support.v4.view.ViewPager
+                            xmlns:android="http://schemas.android.com/apk/res/android"
+                            android:id="@+id/viewPager"
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_below="@+id/tab_layout">
+                        </android.support.v4.view.ViewPager>
+
+                    </RelativeLayout>
+
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/framelayout_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent">
+                </FrameLayout>
+<!--
+                <FrameLayout
+                    android:id="@+id/framelayout_3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1">
+                </FrameLayout>
+-->
+            </LinearLayout>
 
         </RelativeLayout>
 

@@ -5,4 +5,6 @@
 
     <dimen name="cardview_horizontal_margin">8dp</dimen>
     <dimen name="cardview_vertical_margin">8dp</dimen>
+
+    <dimen name="fab_margin">5dp</dimen>
 </resources>

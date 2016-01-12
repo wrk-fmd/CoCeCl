@@ -57,4 +57,14 @@
     <color name="colorFAB1">#2196F3</color>
     <color name="colorFAB2">#E040FB</color>
 
+    //ListView Selector
+    <color name="pressed_color">#FFFFBB33</color>
+    <color name="default_color">#ffffff</color>
+
+    //Button State
+    <color name="btnclr_pdred">@color/darkred</color>
+    <color name="btnclr_pdyellow">#EF6C00</color>
+    <color name="btnclr_pdgreen">#76ff03</color>
+    <color name="btnclr_purple">#9C27B0</color>
+
 </resources>

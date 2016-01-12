@@ -1,6 +1,5 @@
-package it.fmd.cocecl.IncidentAction;
+package it.fmd.cocecl.incidentaction;
 
-import android.app.Application;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.widget.TextView;

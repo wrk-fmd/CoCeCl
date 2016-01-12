@@ -125,6 +125,7 @@
                     android:id="@+id/button38"
                     android:drawableTop="@drawable/ic_play_arrow_black_18dp"
                     style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/button_pdgreen_selector"
                     android:clickable="true" />
 
                 <Button
@@ -135,6 +136,7 @@
                     android:drawableTop="@drawable/ic_pause_black_18dp"
                     android:layout_weight="1"
                     style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/button_pdyellow_selector"
                     android:clickable="true" />
 
                 <Button
@@ -145,6 +147,7 @@
                     android:drawableTop="@drawable/ic_stop_black_18dp"
                     android:layout_weight="1"
                     style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/button_pdyellow_selector"
                     android:clickable="true" />
 
             </LinearLayout>
@@ -199,7 +202,8 @@
                     android:clickable="true"
                     android:onClick="radiostatusbtn"
                     android:layout_gravity="left"
-                    style="@style/MainStatusButtonStyle"/>
+                    style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/button_pdred_selector" />
 
                 <Button
                     android:layout_width="150dp"
@@ -211,7 +215,8 @@
                     android:onClick="radiostatusbtn"
                     android:drawableLeft="@drawable/ic_phone_forwarded_black_18dp"
                     android:layout_gravity="right"
-                    style="@style/MainStatusButtonStyle"/>
+                    style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/button_pdyellow_selector" />
 
             </LinearLayout>
 
@@ -228,8 +233,9 @@
                     android:id="@+id/button47"
                     android:layout_gravity="right"
                     android:drawableLeft="@drawable/ic_call_black_18dp"
-                    android:onClick="lscall"
-                    style="@style/MainStatusButtonStyle"/>
+                    style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/custom_button_selector"
+                    android:onClick="lscall" />
 
                 <Button
                     android:layout_width="150dp"
@@ -239,7 +245,8 @@
                     android:layout_gravity="left"
                     android:onClick="reportincident"
                     android:drawableLeft="@drawable/ic_my_location_black_18dp"
-                    style="@style/MainStatusButtonStyle"/>
+                    style="@style/MainStatusButtonStyle"
+                    android:background="@drawable/custom_button_selector" />
 
             </LinearLayout>
 
@@ -294,8 +301,14 @@
 
             <ListView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/activeincidentlv" />
+                android:layout_height="200dp"
+                android:id="@+id/activeincidentlv"
+                android:isScrollContainer="false"
+                android:nestedScrollingEnabled="false"
+                android:listSelector="@drawable/lv_selector"
+                android:saveEnabled="true"
+                android:clickable="true"
+                android:choiceMode="singleChoice" />
             <!--
                         <android.support.v7.widget.RecyclerView
                             android:layout_width="match_parent"

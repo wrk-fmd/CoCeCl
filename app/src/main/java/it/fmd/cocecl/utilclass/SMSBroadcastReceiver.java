@@ -6,9 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
-import android.widget.Toast;
 
-import it.fmd.cocecl.IncidentAction.SMS_Alert;
+import it.fmd.cocecl.incidentaction.SMS_Alert;
 import it.fmd.cocecl.MainActivity;
 
 public class SMSBroadcastReceiver extends BroadcastReceiver {

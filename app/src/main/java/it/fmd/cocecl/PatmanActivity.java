@@ -134,7 +134,7 @@ public class PatmanActivity extends FragmentActivity {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                Log.d(TAG, "Incidents name: " + value);
+                Log.d(TAG, "User name: " + value);
                 return;
             }
         });
@@ -166,7 +166,7 @@ public class PatmanActivity extends FragmentActivity {
             @Override
             public void onClick(DialogInterface dialog, int whichButton) {
                 String value = input.getText().toString();
-                Log.d(TAG, "Incidents name: " + value);
+                Log.d(TAG, "User name: " + value);
                 return;
             }
         });

@@ -5,9 +5,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -16,6 +18,10 @@ import java.net.URLConnection;
 
 import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.LoginActivity;
+import it.fmd.cocecl.R;
+
+import static android.graphics.Color.GREEN;
+import static android.graphics.Color.RED;
 
 public class ConnectionManager extends Application {
 
@@ -90,5 +96,29 @@ public class ConnectionManager extends Application {
         }
         return false;
     }
+
+    // Check if GPS enabled / show icon in appbar
+/*
+    public void checkGPS() {
+
+        TextView gpstext = (TextView) findViewById(R.id.textView108);
+
+        LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean gps_enabled = false;
+
+        try {
+            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        } catch (Exception ex) {}
+
+        if (!gps_enabled) {
+            gpstext.setBackgroundColor(RED);
+        }
+
+        if (gps_enabled) {
+            gpstext.setBackgroundColor(GREEN);
+        }
+    }
+    */
 }
 

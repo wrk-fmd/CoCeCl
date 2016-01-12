@@ -22,7 +22,6 @@ public class IncidentAdapter extends ArrayAdapter<Incidents> {
     }
 
     @Override
-
     public View getView(int position, View convertView, ViewGroup parent) {
 
         // Get the data item for this position
@@ -62,7 +61,12 @@ public class IncidentAdapter extends ArrayAdapter<Incidents> {
         return convertView;
 
     }
-
+/*
+    @Override
+    public int getCount() {
+        return incidentses.size();
+    }
+*/
 }
 
 /*

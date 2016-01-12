@@ -1,7 +1,6 @@
-package it.fmd.cocecl.IncidentAction;
+package it.fmd.cocecl.incidentaction;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Handler;
@@ -18,8 +17,11 @@ import static android.graphics.Color.YELLOW;
 
 public class StatusReport extends MainActivity {
 
-    // Button state & color functions START //
+    /**
+     * NOT USED anymore
+     **/
 
+    // Button state & color functions START //
     // Status Tastenfeld //
 
     final Button button = (Button)findViewById(R.id.button);

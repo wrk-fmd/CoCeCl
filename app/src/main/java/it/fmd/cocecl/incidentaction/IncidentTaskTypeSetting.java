@@ -1,4 +1,4 @@
-package it.fmd.cocecl.IncidentAction;
+package it.fmd.cocecl.incidentaction;
 
 
 import android.graphics.Color;

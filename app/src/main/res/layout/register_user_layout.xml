@@ -27,9 +27,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="familienname"
-                android:ems="10"
                 android:singleLine="true"
-                android:inputType="textCapWords" />
+                android:inputType="textCapWords|textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -40,9 +39,8 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:inputType="textCapWords|textPersonName"
             android:hint="vorname"
-            android:ems="10"
             android:id="@+id/registername" />
         </android.support.design.widget.TextInputLayout>
 
@@ -59,7 +57,9 @@
                 android:hint="dienstnummer"
                 android:ems="10"
                 android:singleLine="true"
-                android:inputType="number" />
+                android:inputType="number"
+                android:maxLength="5"
+                android:maxLines="1" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -72,7 +72,6 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="email"
-                android:ems="10"
                 android:inputType="textEmailAddress"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
@@ -87,14 +86,12 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="password"
-                android:ems="10"
                 android:inputType="textPassword"
                 android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
 
-
-        <!-- Login Button -->
+        <!-- Register Button -->
 
         <Button
             android:id="@+id/btnRegister"
@@ -103,20 +100,8 @@
             android:layout_marginTop="20dip"
             android:text="register"
             android:enabled="true"
-            android:onClick="register" />
+            android:visibility="gone" />
 
-        <!-- Link to Login Screen -->
-
-        <Button
-            android:id="@+id/btnLinkToLoginScreen"
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dip"
-            android:text="back to login"
-            android:textAllCaps="false"
-            android:textSize="15dp"
-            android:enabled="false"
-            android:visibility="gone"/>
     </LinearLayout>
 
 </LinearLayout>

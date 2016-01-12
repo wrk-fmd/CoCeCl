@@ -1,4 +1,4 @@
-package it.fmd.cocecl.IncidentAction;
+package it.fmd.cocecl.incidentaction;
 
 import android.app.AlertDialog;
 import android.app.Notification;
@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,6 +25,8 @@ import java.util.TimeZone;
 
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
+
+import static android.graphics.Color.BLUE;
 
 public class NewIncident extends MainActivity {
 
@@ -148,5 +151,16 @@ public class NewIncident extends MainActivity {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, mBuilder.build());
+    }
+
+    // set emergency/priority //
+    public void setEmergency(View v) {
+        if (v.getId() == R.id.checkBox) {
+
+            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
+            checkBox.setEnabled(true);
+            checkBox.setClickable(false);
+            checkBox.setHintTextColor(BLUE);
+        }
     }
 }

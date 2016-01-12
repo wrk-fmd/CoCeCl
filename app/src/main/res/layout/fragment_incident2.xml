@@ -15,7 +15,8 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:fillViewport="true">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -144,7 +145,8 @@
                             android:enabled="true"
                             android:clickable="true"
                             android:onClick="stbtnClick"
-                            style="@style/IncidentTabButtonStyle"
+                        style="@style/MainStatusButtonStyle"
+                        android:background="@drawable/button_pdyellow_selector"
                         android:layout_gravity="center"/>
 
                     <TextView
@@ -226,7 +228,8 @@
                             android:enabled="true"
                             android:drawableTop="@drawable/ic_navigation_black_18dp"
                             android:onClick="navigate"
-                            style="@style/IncidentTabButtonStyle"/>
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/custom_button_selector" />
                     </LinearLayout>
 
                     <TextView
@@ -305,9 +308,10 @@
                             android:drawableTop="@drawable/ic_person_add_black_18dp"
                             android:onClick="createpat"
                             android:clickable="false"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:layout_gravity="left"
-                            style="@style/IncidentTabButtonStyle"
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/custom_button_selector"
                             android:layout_weight="1"/>
 
                         <Button
@@ -316,12 +320,12 @@
                             android:text="@string/stbutton10"
                             android:id="@+id/button10"
                             android:clickable="false"
-                            android:onClick="patstatusbtns"
                             android:drawableTop="@drawable/ic_call_missed_black_18dp"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:layout_gravity="right"
-                            style="@style/IncidentTabButtonStyle"
-                            android:layout_weight="1"/>
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/button_pdgreen_selector"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -339,12 +343,12 @@
                             android:text="@string/stbutton13"
                             android:id="@+id/button13"
                             android:clickable="false"
-                            android:onClick="patstatusbtns"
                             android:drawableTop="@drawable/ic_repeat_black_18dp"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:layout_gravity="left"
-                            style="@style/IncidentTabButtonStyle"
-                            android:layout_weight="1"/>
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/button_pdgreen_selector"
+                            android:layout_weight="1" />
 
                         <Button
                             android:layout_width="150dp"
@@ -352,12 +356,12 @@
                             android:text="@string/stbutton11"
                             android:id="@+id/button11"
                             android:clickable="false"
-                            android:onClick="patstatusbtns"
                             android:drawableTop="@drawable/ic_directions_run_black_18dp"
-                            android:enabled="false"
+                            android:enabled="true"
                             android:layout_gravity="right"
-                            style="@style/IncidentTabButtonStyle"
-                            android:layout_weight="1"/>
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/button_pdgreen_selector"
+                            android:layout_weight="1" />
 
                     </LinearLayout>
 
@@ -388,7 +392,7 @@
 
                     <GridView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="200dp"
                         android:id="@+id/asUnitGV"
                         android:layout_gravity="center_horizontal"
 
@@ -397,7 +401,9 @@
                         android:stretchMode="columnWidth"
 
                         android:verticalSpacing="10dp"
-                        android:horizontalSpacing="10dp"/>
+                        android:horizontalSpacing="10dp"
+                        android:nestedScrollingEnabled="false"
+                        android:isScrollContainer="false" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

@@ -20,6 +20,7 @@
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.20"
         android:hint="Addresse Vorfall"
+        android:gravity="center"
         android:lines="5"
         android:minLines="5"
         android:maxLines="5"

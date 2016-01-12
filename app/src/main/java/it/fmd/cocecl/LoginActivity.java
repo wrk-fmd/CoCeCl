@@ -1,38 +1,31 @@
 package it.fmd.cocecl;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.AssetManager;
-import android.content.res.Resources;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.app.AlertDialog;
+import android.os.Handler;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Properties;
-
-import it.fmd.cocecl.gcm.Utility;
-import it.fmd.cocecl.utilclass.JSONParser;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -40,6 +33,35 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.HashMap;
+
+import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.ValidateInput;
+
+/**
+ * LogIn and Register Class
+ * <p/>
+ * Register Fields:
+ * ETxt FamilyName
+ * ETxt Name
+ * ETxt DNR
+ * ETxt EMail
+ * ETxt Password
+ * Button Register
+ * <p/>
+ * Login Fields:
+ * ETxt DNR
+ * ETxt Password
+ * Button SignIn
+ * Button gotoRegister
+ * TxtV ErrorMessage
+ * ProgressBar
+ */
 
 public class LoginActivity extends MainActivity {
 
@@ -50,15 +72,20 @@ public class LoginActivity extends MainActivity {
     private EditText loginpassword;
 
     private TextView errormsgtxt;
+    private ProgressBar loginProgressBar;
 
     // RegisterLayout
+    //private LinearLayout registeruserlayout;
+/*
+    private EditText registerfamilyname;
     private EditText registername;
     private EditText registerdnr;
     private EditText registeremail;
     private EditText registerpassword;
+    */
     private Button btnRegister;
 
-    // Floating Labels
+    // Floating Labels & errorMessages
     private Toolbar toolbar;
     private TextInputLayout inputLayoutDnr, inputLayoutEmail, inputLayoutPassword;
 
@@ -70,60 +97,99 @@ public class LoginActivity extends MainActivity {
     String regId = "";
 
 
-
     // OnCreate Method // -------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        //GCM//
+        // Register Layout EditText
+        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
 
-            applicationContext = getApplicationContext();
-            emailET = (EditText) findViewById(R.id.registeremail);
 
-            prgDialog = new ProgressDialog(this);
-            // Set Progress Dialog Text
-            prgDialog.setMessage("Please wait...");
-            // Set Cancelable as False
-            prgDialog.setCancelable(false);
+        // OnClickListerners SignIn & Register
+        signinbtn = (Button) findViewById(R.id.signinbtn);
+        btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
+        gotoregisterbtn = (Button) findViewById(R.id.gotoregisterbtn);
 
-            SharedPreferences prefs = getSharedPreferences("UserDetails",
-                    Context.MODE_PRIVATE);
-            String registrationId = prefs.getString(REG_ID, "");
-
-            //When Email ID is set in Sharedpref, Incidents will be taken to HomeActivity
-            if (!TextUtils.isEmpty(registrationId)) {
-                Intent i = new Intent(applicationContext, InfoActivity.class);
-                i.putExtra("regId", registrationId);
-                startActivity(i);
-                finish();
+        //SignIn
+        signinbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignIn();
             }
+        });
 
+        //gotoRegisterScreen
+        gotoregisterbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                gotoRegisterScreen();
+            }
+        });
+/*
+        //Register
+        btnRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                RegisterUserGCM();
+                RegisterUserMLS();
+            }
+        });
+*/
+
+
+        // GCM Server //
+        applicationContext = getApplicationContext();
+
+        prgDialog = new ProgressDialog(this);
+        // Set Progress Dialog Text
+        prgDialog.setMessage("Please wait...");
+        // Set Cancelable as False
+        prgDialog.setCancelable(false);
+
+        SharedPreferences prefs = getSharedPreferences("UserDetails",
+                Context.MODE_PRIVATE);
+        String registrationId = prefs.getString(REG_ID, "");
+
+/* User still needs to Login
+        //When Email ID is set in Sharedpref, User will be taken to HomeActivity
+        if (!TextUtils.isEmpty(registrationId)) {
+            Intent i = new Intent(applicationContext, InfoActivity.class);
+            i.putExtra("regId", registrationId);
+            startActivity(i);
+            finish();
+        }
+*/
         //Floating Labels//
         inputLayoutDnr = (TextInputLayout) findViewById(R.id.input_layout_dnr);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
         logindnr = (EditText) findViewById(R.id.logindnr);
         loginpassword = (EditText) findViewById(R.id.loginpassword);
 
-        final LinearLayout registeruserlayout = (LinearLayout)getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        //final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
 
-            //Displaying TextInputLayout Error
-            TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
-            registernameLayout.setErrorEnabled(true);
-            registernameLayout.setError("Min 2 chars required");
+        //Displaying TextInputLayout Error
+        TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
+        registernameLayout.setErrorEnabled(true);
+        registernameLayout.setError("Min 2 chars required");
 
-            //Displaying EditText Error
-            EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
-            name.setError("Required");
+        //Displaying EditText Error
+        EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
+        name.setError("Required");
 
-            //Displaying both TextInputLayout and EditText Errors
-            TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
-            emailLayout.setErrorEnabled(true);
-            emailLayout.setError("Please enter a phone number");
+        //Displaying both TextInputLayout and EditText Errors
+        TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
+        emailLayout.setErrorEnabled(true);
+        emailLayout.setError("Please enter EMailAddress");
 
-            EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-            email.setError("Required");
+        EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        email.setError("Required");
 
 /*
         inputDNr.addTextChangedListener(new MyTextWatcher(inputDNr));
@@ -236,7 +302,7 @@ public class LoginActivity extends MainActivity {
 
                 if (success == 1) {
                     Log.d("Success!", message);
-                }else{
+                } else {
                     Log.d("Failure", message);
                 }
             }
@@ -312,7 +378,7 @@ public class LoginActivity extends MainActivity {
 
                 if (success == 1) {
                     Log.d("Success!", message);
-                }else{
+                } else {
                     Log.d("Failure", message);
                 }
             }
@@ -324,90 +390,26 @@ public class LoginActivity extends MainActivity {
         loginpassword = (EditText) findViewById(R.id.loginpassword);
         signinbtn = (Button) findViewById(R.id.signinbtn);
         gotoregisterbtn = (Button) findViewById(R.id.gotoregisterbtn);
+        errormsgtxt = (TextView) findViewById(R.id.textView94);
 
-        errormsgtxt = (TextView)findViewById(R.id.textView94);
+        // LogIn TextChangeListener
+        logindnr.addTextChangedListener(new LogInTextWatcher(logindnr));
+        //inputEmail.addTextChangedListener(new LogInTextWatcher(inputEmail));
+        loginpassword.addTextChangedListener(new LogInTextWatcher(loginpassword));
 
-        // Login button Click Event
-        signinbtn.setOnClickListener(new View.OnClickListener() {
+        // Register TextChangeListener
+        registerfamilyname.addTextChangedListener(new RegisterEntryWatcher(registerfamilyname));
 
-            public void onClick(View view) {
-                String dnr = registerdnr.getText().toString().trim();
-                String password = registerpassword.getText().toString().trim();
-
-                // Check for empty data in the form
-                if (!dnr.isEmpty() && !password.isEmpty()) {
-                    // login user
-
-                } else {
-                    // Prompt user to enter credentials
-                    Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
-                            .show();
-                    errormsgtxt.setText("Please enter the credentials!");
-                }
-            }
-
-        });
-
-        // Link to Register Screen
-        // Dialog for user registering
-        gotoregisterbtn.setOnClickListener(new View.OnClickListener() {
-
-            public void onClick(View view) {
-                final LinearLayout registeruserlayout = (LinearLayout)getLayoutInflater().inflate(R.layout.register_user_layout, null);
-                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
-                dlgBuilder.setTitle("Register Incidents");
-
-                registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-                registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-                registerpassword = (EditText) registeruserlayout.findViewById(R.id.loginpassword);
-                btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
-                //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
-/*
-                dlgBuilder.setView(registeruserlayout).setPositiveButton("Senden", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        //remove layout
-                        View viewToRemove = findViewById(R.id.registeruserrelaout);
-                        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-                    }
-
-                });
-*/
-                    dlgBuilder.setView(registeruserlayout).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
-
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    //remove layout
-                                    View viewToRemove = findViewById(R.id.registeruserrelaout);
-                                    if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                        ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
-/*
-                Intent i = new Intent(getApplicationContext(),
-                        InfoActivity.class);
-                startActivity(i);
-                finish();
-*/
-                                }
-                            }
-                    );
-
-                        AlertDialog alert = dlgBuilder.create();
-                        alert.show();
-
-            }
-        });
     }
 
+    // OnCreate END ----------------------------------------------------------------- //
+
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         //checkMLSConnection();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -442,12 +444,103 @@ public class LoginActivity extends MainActivity {
 
 
     }
+
+    // SignIn --------------
+
+    public void SignIn() {
+
+        submitForm();
+        /*
+        String dnr = logindnr.getText().toString().trim();
+        String password = loginpassword.getText().toString().trim();
+
+        // Check for empty data in the form
+        if (!dnr.isEmpty() && !password.isEmpty()) {
+
+            // Connect with MlS SERVER
+            // login user
+
+        } else {
+            // Prompt user to enter credentials
+            Toast.makeText(getApplicationContext(),
+                    "Please enter the credentials!", Toast.LENGTH_LONG)
+                    .show();
+            errormsgtxt.setText("Please enter the credentials!");
+
+            // Return wrong/error login from Server
+        }
+        */
+    }
+
+    // Validate SignIn Form
+
+    private void submitForm() {
+        if (!validateDnr()) {
+            return;
+        }
 /*
-    private class MyTextWatcher implements TextWatcher {
+        if (!validateEmail()) {
+            return;
+        }
+*/
+        if (!validatePassword()) {
+            return;
+        }
+
+        //Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+    }
+
+    private boolean validateDnr() {
+        if (logindnr.getText().toString().trim().isEmpty()) {
+            inputLayoutDnr.setError(getString(R.string.err_msg_dnr));
+            requestFocus(logindnr);
+            return false;
+        } else {
+            inputLayoutDnr.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    /*
+        private boolean validateEmail() {
+
+            String email = registeremail.getText().toString().trim();
+
+            if (email.isEmpty() || !ValidateInput.isValidEmail(email)) {
+                inputLayoutEmail.setError(getString(R.string.err_msg_email));
+                requestFocus(registeremail);
+                return false;
+            } else {
+                inputLayoutEmail.setErrorEnabled(false);
+            }
+
+            return true;
+        }
+    */
+    private boolean validatePassword() {
+        if (loginpassword.getText().toString().trim().isEmpty()) {
+            inputLayoutPassword.setError(getString(R.string.err_msg_password));
+            requestFocus(loginpassword);
+            return false;
+        } else {
+            inputLayoutPassword.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private void requestFocus(View view) {
+        if (view.requestFocus()) {
+            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
+        }
+    }
+
+    private class LogInTextWatcher implements TextWatcher {
 
         private View view;
 
-        private MyTextWatcher(View view) {
+        private LogInTextWatcher(View view) {
             this.view = view;
         }
 
@@ -459,16 +552,185 @@ public class LoginActivity extends MainActivity {
 
         public void afterTextChanged(Editable editable) {
             switch (view.getId()) {
-                case R.id.dnrlogin:
-                    validateName();
+                case R.id.logindnr:
+                    validateDnr();
                     break;
-                case R.id.password:
+                /*case R.id.input_email:
+                    validateEmail();
+                    break;*/
+                case R.id.loginpassword:
+                    validatePassword();
+                    break;
+/*
+                // registerfields
+                case R.id.registerfamilyname:
+                    validatePassword();
+                    break;
+
+                case R.id.registername:
+                    validatePassword();
+                    break;
+
+                case R.id.registerdnr:
+                    validatePassword();
+                    break;
+
+                case R.id.registeremail:
+                    validatePassword();
+                    break;
+
+                case R.id.registerpassword:
+                    validatePassword();
+                    break;
+                    */
+            }
+        }
+    }
+
+    private class RegisterEntryWatcher implements TextWatcher {
+
+        private View view;
+
+        private RegisterEntryWatcher(View view) {
+            this.view = view;
+        }
+
+        @Override
+        public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            switch (view.getId()) {
+                // registerfields
+                case R.id.registerfamilyname:
+                    validateFamilyname();
+                    break;
+
+                case R.id.registername:
+                    break;
+
+                case R.id.registerdnr:
+                    validateDnr();
+                    break;
+
+                case R.id.registeremail:
+                    validateEmail();
+                    break;
+
+                case R.id.registerpassword:
                     validatePassword();
                     break;
             }
         }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
+            final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+            final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+
+            if (registerpassword.getText().toString().isEmpty()) {
+
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+            } else {
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+            }
+
+        }
+
+        @Override
+        public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+        }
+
     }
+
+    private boolean validateEmail() {
+
+        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+
+        String email = registeremail.getText().toString().trim();
+
+        if (email.isEmpty() || !ValidateInput.isValidEmail(email)) {
+            inputLayoutEmail.setError(getString(R.string.err_msg_email));
+            requestFocus(registeremail);
+            return false;
+        } else {
+            inputLayoutEmail.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    public void validateFamilyname() {
+
+        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+
+        if (registerfamilyname.getText().toString().trim().isEmpty()) {
+            registerfamilyname.setError("Invalid Input");
+            requestFocus(registerfamilyname);
+        }
+    }
+    // Link to Register Screen ------------------------------------------
+    // Dialog for user registering
+
+    public void gotoRegisterScreen() {
+
+        //final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
+        dlgBuilder.setTitle("Register User");
+
+        View registeruserlayout = getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        dlgBuilder.setView(registeruserlayout);
+
+        EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.loginpassword);
+        btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
+        //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
+
+        dlgBuilder.setView(registeruserlayout).setPositiveButton("Register", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                //RegisterUserGCM();
+                RegisterUserMLS();
+
+                //remove layout
+                View viewToRemove = findViewById(R.id.registeruserrelaout);
+                if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                    ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+            }
+
+        });
+
+        dlgBuilder.setView(registeruserlayout).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        //remove layout
+                        View viewToRemove = findViewById(R.id.registeruserrelaout);
+                        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
+/*
+                Intent i = new Intent(getApplicationContext(),
+                        InfoActivity.class);
+                startActivity(i);
+                finish();
 */
+                    }
+                }
+        );
+
+        AlertDialog alert = dlgBuilder.create();
+        alert.show();
+    }
+
     //TODO: remove when AppLogin finished
     public void bypasslogin(View v) {
         if (v.getId() == R.id.button22) {
@@ -483,21 +745,45 @@ public class LoginActivity extends MainActivity {
     // TODO: Register in App(those who aren´t from beginning(over MLS database)) and GCM
 
 
-    public void register(View v) {
-        if (v.getId() == R.id.btnRegister) {
+    public void RegisterUserMLS() {
+        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+
+        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+
+        String familyname = registerfamilyname.getText().toString().trim();
             String name = registername.getText().toString().trim();
+        String dnr = registerdnr.getText().toString().trim();
             String email = registeremail.getText().toString().trim();
             String password = registerpassword.getText().toString().trim();
 
-            if (!name.isEmpty() && /*!dnr.isEmpty() && */!email.isEmpty() && !password.isEmpty()) {
+        if (!familyname.isEmpty() && !name.isEmpty() && !dnr.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
+
                 //register user
+
+            //TODO register in mls postgres db (alter existing tables)
+
             } else {
+
                 Toast.makeText(getApplicationContext(),
-                        "Please enter your details!", Toast.LENGTH_LONG)
+                        "Please enter your details!", Toast.LENGTH_SHORT)
                         .show();
+
+            errormsgtxt.setText("No credentials entered!");
+
+            Handler h = new Handler();
+            h.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    errormsgtxt.setText("");
+                }
+            }, 5000);
             }
         }
-    }
+
 
 
     // GCM Login/Registration //
@@ -513,13 +799,22 @@ public class LoginActivity extends MainActivity {
 
     public static final String REG_ID = "regId";
     public static final String EMAIL_ID = "eMailId";
-    EditText emailET;
 
     // When Register Me button is clicked
-    public void RegisterUser(View view) {
-        String emailID = emailET.getText().toString();
+    //public void RegisterUser(View view) {
+    public void RegisterUserGCM() {
 
-        if (!TextUtils.isEmpty(emailID) && Utility.validate(emailID)) {
+        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+
+        //String emailID = emailET.getText().toString();
+        String emailID = registeremail.getText().toString();
+
+        if (!TextUtils.isEmpty(emailID) && ValidateInput.isValidEmail(emailID)) {
 
             // Check if Google Play Service is installed in Device
             // Play services is needed to handle GCM stuffs
@@ -578,7 +873,7 @@ public class LoginActivity extends MainActivity {
         }.execute(null, null, null);
     }
 
-    // Store  RegId and Email entered by Incidents in SharedPref
+    // Store  RegId and Email entered by User in SharedPref
     private void storeRegIdinSharedPref(Context context, String regId,
                                         String emailID) {
         SharedPreferences prefs = getSharedPreferences("UserDetails",
@@ -616,6 +911,7 @@ public class LoginActivity extends MainActivity {
                         finish();
                         */
                     }
+
                     //TODO: log errors
                     // When the response returned by REST has Http
                     // response code other than '200' such as '404',

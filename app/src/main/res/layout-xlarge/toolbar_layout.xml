@@ -60,7 +60,8 @@
                     android:text="WIFI"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView83"
@@ -69,7 +70,8 @@
                     android:text="MOBILE"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -78,7 +80,8 @@
                     android:text="GPS"
                     android:id="@+id/textView108"
                     android:layout_marginRight="10dp"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#000000" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -86,7 +89,8 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="STREAM"
                     android:id="@+id/textView150"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1"
+                    android:textColor="#000000" />
 
             </LinearLayout>
 
@@ -191,6 +195,14 @@
                 android:id="@+id/textView151"
                 android:hint="NOTRUF"
                 android:gravity="center"
+                android:layout_marginRight="10dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textView95"
+                android:hint="Einheit"
                 android:layout_marginRight="10dp"/>
 
             <TextView

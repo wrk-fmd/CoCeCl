@@ -1,6 +1,5 @@
 package it.fmd.cocecl;
 
-import android.Manifest;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -75,6 +74,7 @@ import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
@@ -86,10 +86,7 @@ import static android.graphics.Color.YELLOW;
 
 public class MainActivity extends AppCompatActivity {
 
-    View.OnClickListener mOnClickListener;
-
-    //NAV DRAWER//
-
+    // NAV DRAWER //
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -107,15 +104,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    //Recycler View
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
-
-
     ConnectionManager conman = new ConnectionManager();
-
-    private FragmentTabHost mTabHost;
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -126,23 +115,12 @@ public class MainActivity extends AppCompatActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
-    //Shared Preferences
-    SharedPreferences spref;
-    String patfirstname,patlastname,patdatebirth,patsvnr,patplsnr,patgender,patward;
-    String getpatfirstname,getpatlastname,getpatdatebirth,getpatsvnr,getpatplsnr,getpatgender,getpatward;
-
 
     // OnCreate Method // ------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        {
-            //Shared Prefs// Create Patient
-            spref = getSharedPreferences("PatData", MODE_PRIVATE);
-
-        }
 
         {
             //Coordinator Layout for SnackBar//
@@ -262,7 +240,7 @@ public class MainActivity extends AppCompatActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // 3 AmbulanzInfo
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
-        // 4 Incidents
+        // 4 User
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // 5 PATMAN
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
@@ -317,44 +295,7 @@ public class MainActivity extends AppCompatActivity {
 
     //ONCREATE END ------------------------------------------------------------------------------
 
-    //Incident ListView MainstatusFragment
-
-/*
-    {
-        Context ctx = getApplicationContext();
-        Resources res = ctx.getResources();
-
-        String[] options = res.getStringArray(R.array.country_names);
-        TypedArray icons = res.obtainTypedArray(R.array.country_icons);
-
-        setListAdapter(new IncidentAdapter(ctx, R.layout.incident_rv_layout, options, icons));
-    }
-    // Recycler View Incident list //
-/*
-    public void incident_rv() {
-
-        RecyclerView rv = (RecyclerView) findViewById(R.id.incidentrv);
-
-        //rv.setHasFixedSize(true);
-
-        LinearLayoutManager llm = new LinearLayoutManager(getApplicationContext());
-        rv.setLayoutManager(llm);
-
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-
-        //DATASET
-        ArrayList<String> values = new ArrayList<String>();
-        for (int i = 0; i < 100; i++) {
-            values.add("Test" + i);
-        }
-
-        mAdapter = new IncidentAdapter(values);
-        rv.setAdapter(mAdapter);
-
-        //TODO: publish incident list (if more then one)
-    }
-*/
-    //NAV DRAWER METHODS//
+    //NAV DRAWER //
 
     /**
      * Slide menu item click listener
@@ -501,7 +442,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
-    //NAV DRAWER METHODS END//
+    //NAV DRAWER END//
 
 
     // OPTIONS MENU //
@@ -688,14 +629,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-/*
-        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-            gpstext.setBackgroundColor(GREEN);
-        }else{
-            gpstext.setBackgroundColor(RED);
-        }
-    }
-*/
 
     //TODO: create method to save app/fragment state
     /*
@@ -835,832 +768,32 @@ public class MainActivity extends AppCompatActivity {
 
     // Buttons //
 
-    // Call LS Buttons //
-    // start direct call
-
+    // PhoneCalls
     public void lscall(View view) {
-        Intent callIntent = new Intent(Intent.ACTION_CALL);
-        PackageManager pm = getPackageManager();
-        switch(view.getId()) {
 
-            case R.id.button17:
-
-                callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
-                startActivity(callIntent);
-
-                if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-
-                }
-                break;
-
-            case R.id.button47:
-                callIntent.setData(Uri.parse("tel:" + APPConstants.mlsmain));
-                startActivity(callIntent);
-
-                if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-
-                } else {
-
-                }
-                break;
-
-            case R.id.button43:
-                TextView commphone = (TextView)findViewById(R.id.commphone);
-                String listnumber = commphone.getText().toString();
-
-                if(commphone.getText().toString().trim().length() > 0) {
-
-                    callIntent.setData(Uri.parse("tel:" + listnumber));
-                    startActivity(callIntent);
-
-                    if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
-
-                    } else {
-
-                    }
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Keine Nummer ausgewählt!", Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
-    }
-
-    //Status Buttons//TODO: move methods to mainstatusFragment
-    //Radio
-    public void radiostatusbtn(View view) {
-
-        final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-        final TextView textView112 = (TextView) findViewById(R.id.textView112);
+        Phonecalls phcl = new Phonecalls();
 
         switch (view.getId()) {
-            case R.id.button5://SelectivRuf
 
-                dlgBuilder.setMessage("Selektivruf senden?");
-                dlgBuilder.setCancelable(false);
-                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        final Button button5 = (Button) findViewById(R.id.button5);
-                        button5.setEnabled(true);
-                        button5.setClickable(false);
-                        button5.setBackgroundColor(Color.YELLOW);
-                        Toast.makeText(getApplicationContext(), "Selektivruf gesendet", Toast.LENGTH_SHORT).show();
-                        textView112.setVisibility(View.VISIBLE);
-                        textView112.setText("Selektivruf gesendet");
-
-                        Handler h = new Handler();
-                        h.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                button5.setEnabled(true);
-                                button5.setClickable(true);
-                                button5.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                //button5.setBackgroundResource(android.R.drawable.btn_default);
-                                textView112.setText("");
-                                textView112.setVisibility(View.GONE);
-                            }
-                        }, 30000);
-                    }
-                });
-                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                dlgBuilder.create().show();
+            //lsbv
+            case R.id.button17:
+                phcl.lsbvcall();
                 break;
 
-            case R.id.button12://NOTRUF
-                dlgBuilder.setMessage("NOTRUF senden?");
-                dlgBuilder.setCancelable(false);
-                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        final Button button12 = (Button) findViewById(R.id.button12);
-                        button12.setEnabled(true);
-                        button12.setClickable(false);
-                        button12.setBackgroundColor(RED);
-                        Toast.makeText(getApplicationContext(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
-                        textView112.setVisibility(View.VISIBLE);
-                        textView112.setText("NOTRUF gesendet");
-
-                        Handler h = new Handler();
-                        h.postDelayed(new Runnable() {
-                            @Override
-                            public void run() {
-                                button12.setEnabled(true);
-                                button12.setClickable(true);
-                                button12.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                //button12.setBackgroundResource(android.R.drawable.btn_default);
-                                textView112.setText("");
-                                textView112.setVisibility(View.GONE);
-                            }
-                        }, 45000);
-                    }
-                });
-
-                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                dlgBuilder.create().show();
-                break;
-        }
-    }
-
-    //PatStatus am BO
-    public void patstatusbtns(View view) {
-        final Button button41 = (Button)findViewById(R.id.button41);
-        final TextView textView83 = (TextView)findViewById(R.id.statusView);
-
-        final TextView patstattv = (TextView)findViewById(R.id.textView116);
-
-        final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-        switch(view.getId()) {
-
-            case R.id.button10://INTUNT
-                dlgBuilder.setMessage("Intervention unterblieben?");
-                dlgBuilder.setCancelable(false);
-                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Button button10 = (Button) findViewById(R.id.button10);
-                        button10.setEnabled(true);
-                        button10.setClickable(false);
-                        button10.setBackgroundColor(GREEN);
-
-                        Button button11 = (Button) findViewById(R.id.button11);
-                        button11.setEnabled(false);
-                        button11.setClickable(false);
-                        button11.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button11.setBackgroundResource(android.R.drawable.btn_default);
-
-                        Button button13 = (Button) findViewById(R.id.button13);
-                        button13.setEnabled(false);
-                        button13.setClickable(false);
-                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button13.setBackgroundResource(android.R.drawable.btn_default);
-
-                        button41.setEnabled(true);
-                        button41.setClickable(true);
-                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText("Einsatz abschliessen");
-                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-                        textView83.setText("EB");
-
-                        //Toast.makeText(MainActivity.this, "keine Intervention", Toast.LENGTH_SHORT).show();
-                        patstattv.setVisibility(View.VISIBLE);
-                        patstattv.setText("Intervention unterblieben");
-                    }
-                });
-
-                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                AlertDialog alert = dlgBuilder.create();
-                alert.show();
+            //call kh on commFragment
+            case R.id.button43:
+                phcl.chkhcall();
                 break;
 
-            case R.id.button11://BEL/VER
-                dlgBuilder.setTitle("Patient belassen/verweigert?");
-                dlgBuilder.setItems(new CharSequence[]
-                                {"Patient belassen", "Patient verweigert", "Nein"},
-
-                        new DialogInterface.OnClickListener() {
-
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                switch (which) {
-
-                                    case 0:
-
-                                        Button button11 = (Button) findViewById(R.id.button11);
-                                        button11.setEnabled(true);
-                                        button11.setClickable(false);
-                                        button11.setBackgroundColor(GREEN);
-
-                                        Button button10 = (Button) findViewById(R.id.button10);
-                                        button10.setEnabled(false);
-                                        button10.setClickable(false);
-                                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button10.setBackgroundResource(android.R.drawable.btn_default);
-
-                                        Button button13 = (Button) findViewById(R.id.button13);
-                                        button13.setEnabled(false);
-                                        button13.setClickable(false);
-                                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button13.setBackgroundResource(android.R.drawable.btn_default);
-
-                                        button41.setEnabled(true);
-                                        button41.setClickable(true);
-                                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText("Einsatz abschliessen");
-                                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-                                        textView83.setText("EB");
-
-                                        //Toast.makeText(MainActivity.this, "Belassung", Toast.LENGTH_SHORT).show();
-                                        patstattv.setVisibility(View.VISIBLE);
-                                        patstattv.setText("Belassung");
-                                        break;
-                                    case 1:
-
-                                        button11 = (Button) findViewById(R.id.button11);
-                                        button11.setEnabled(true);
-                                        button11.setClickable(false);
-                                        button11.setBackgroundColor(GREEN);
-
-                                        button10 = (Button) findViewById(R.id.button10);
-                                        button10.setEnabled(false);
-                                        button10.setClickable(false);
-                                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button10.setBackgroundResource(android.R.drawable.btn_default);
-
-                                        button13 = (Button) findViewById(R.id.button13);
-                                        button13.setEnabled(false);
-                                        button13.setClickable(false);
-                                        button13.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button13.setBackgroundResource(android.R.drawable.btn_default);
-
-                                        button41.setEnabled(true);
-                                        button41.setClickable(true);
-                                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                        //button41.setBackgroundResource(android.R.drawable.btn_default);
-                                        button41.setText("Einsatz abschliessen");
-                                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-                                        textView83.setText("EB");
-
-                                        //Toast.makeText(MainActivity.this, "Patient verweigert", Toast.LENGTH_SHORT).show();
-                                        patstattv.setVisibility(View.VISIBLE);
-                                        patstattv.setText("Patient verweigert");
-                                        break;
-                                    case 2:
-                                        break;
-                                }
-                            }
-                        });
-
-                dlgBuilder.create().show();
+            //lsmain
+            case R.id.button47:
+                phcl.lsmaincall();
                 break;
-
-            case R.id.button13://Anderes RM
-                dlgBuilder.setMessage("Patient an anderes Rettungsmittel übergeben?");
-                dlgBuilder.setCancelable(false);
-                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Button button13 = (Button) findViewById(R.id.button13);
-                        button13.setEnabled(true);
-                        button13.setClickable(false);
-                        button13.setBackgroundColor(GREEN);
-
-                        Button button10 = (Button) findViewById(R.id.button10);
-                        button10.setEnabled(false);
-                        button10.setClickable(false);
-                        button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button10.setBackgroundResource(android.R.drawable.btn_default);
-
-                        Button button11 = (Button) findViewById(R.id.button11);
-                        button11.setEnabled(false);
-                        button11.setClickable(false);
-                        button11.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button11.setBackgroundResource(android.R.drawable.btn_default);
-
-                        button41.setEnabled(true);
-                        button41.setClickable(true);
-                        button41.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                        //button41.setBackgroundResource(android.R.drawable.btn_default);
-                        button41.setText("Einsatz abschliessen");
-                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-                        textView83.setText("EB");
-
-                        //Toast.makeText(MainActivity.this, "Übergabe an anderes Rettungsmittel", Toast.LENGTH_SHORT).show();
-                        patstattv.setVisibility(View.VISIBLE);
-                        patstattv.setText("Übergabe an anderes Rettungsmittel");
-                    }
-                });
-
-                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                });
-
-                dlgBuilder.create().show();
-                break;
-        }
-    }
-
-    // Status Button incidentFragment //
-    // change unit status
-    //TODO: set fragments on status change?? / sync with server
-
-    public void stbtnClick(View v) {
-
-        final RelativeLayout deliveryloclayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
-
-        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-        Button button41 = (Button) findViewById(R.id.button41);
-
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-        dlgBuilder.setTitle(R.string.stwe);
-        dlgBuilder.setMessage(button41.getText().toString());
-        dlgBuilder.setCancelable(false);
-        dlgBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-            final Button button41 = (Button) findViewById(R.id.button41);
-            final TextView textView83 = (TextView) findViewById(R.id.statusView);
-            final TextView textView85 = (TextView) findViewById(R.id.textView85);
-            final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
-
-            final TextView statuserror = (TextView)findViewById(R.id.textView129);
-
-            Button button10 = (Button) findViewById(R.id.button10);
-            Button button11 = (Button) findViewById(R.id.button11);
-            Button button13 = (Button) findViewById(R.id.button13);
-            Button button46 = (Button) findViewById(R.id.button46);
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
-
-                    button41.setEnabled(false);
-                    button41.setClickable(false);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText(R.string.zbo);
-                    textView83.setText("QU");
-                    textView85.setText(sdf.format(cal.getTime()));
-                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_fast_forward_black_18dp, 0, 0, 0);
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                        }
-                    }, 3000);
-
-                } else if (textView83.getText().equals("QU")) {
-
-                    button41.setEnabled(false);
-                    button41.setClickable(false);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText(R.string.abo);
-                    textView83.setText("ZBO");
-                    textView85.setText(sdf.format(cal.getTime()));
-                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_skip_next_black_18dp, 0, 0, 0);
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                        }
-                    }, 10000);
-
-                } else if (textView83.getText().equals("ZBO")) {
-
-                    button41.setEnabled(false);
-                    button41.setClickable(false);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText(R.string.zao);
-                    textView83.setText("ABO");
-                    textView85.setText(sdf.format(cal.getTime()));
-                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_call_made_black_18dp, 0, 0, 0);
-
-                    button10.setEnabled(true);
-                    button10.setClickable(true);
-                    button11.setEnabled(true);
-                    button11.setClickable(true);
-                    button13.setEnabled(true);
-                    button13.setClickable(true);
-                    button46.setEnabled(true);
-                    button46.setClickable(true);
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                        }
-                    }, 10000);
-
-                } else if ((textView83.getText().equals("ABO")) /*&& (aofield.getText().toString().trim().length() > 0)*/) {
-                    //TODO: redundante funktion
-                    if (aofield.getText().toString().trim().length() > 0) {
-                        button41.setEnabled(true);
-                        button41.setClickable(true);
-                        button41.setBackgroundColor(YELLOW);
-                        button41.setText(R.string.aao);
-                        textView83.setText("ZAO");
-                        textView85.setText(sdf.format(cal.getTime()));
-                        button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_local_hospital_black_18dp, 0, 0, 0);
-
-                        button10.setEnabled(false);
-                        button10.setClickable(false);
-                        button11.setEnabled(false);
-                        button11.setClickable(false);
-                        button13.setEnabled(false);
-                        button13.setClickable(false);
-                        button46.setEnabled(false);
-                        button46.setClickable(false);
-                    } else {
-                        button41.setEnabled(false);
-                        button41.setClickable(false);
-                        //Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen", Toast.LENGTH_LONG).show();
-                        statuserror.setText("Kein Abgabeort eingetragen");
-                        statuserror.setVisibility(View.VISIBLE);
-                    }
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                            statuserror.setText("");
-                            statuserror.setVisibility(View.GONE);
-                        }
-                    }, 10000);
-
-                } else if (textView83.getText().equals("ZAO")) {
-
-                    button41.setEnabled(false);
-                    button41.setClickable(false);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText(R.string.eb);
-                    textView83.setText("AAO");
-                    textView85.setText(sdf.format(cal.getTime()));
-                    button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                        }
-                    }, 10000);
-
-                } else if (textView83.getText().equals("AAO")) {
-
-                    button41.setEnabled(false);
-                    button41.setClickable(false);
-                    button41.setBackgroundColor(YELLOW);
-                    button41.setText("QU");
-                    textView83.setText("EB");
-                    textView85.setText(sdf.format(cal.getTime()));
-
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            button41.setEnabled(true);
-                            button41.setClickable(true);
-                            button41.setBackgroundResource(android.R.drawable.btn_default);
-                        }
-                    }, 10000);
-
-                } else if (button41.getText().equals("Einsatzbereit")) {
-
-                    endIncident();
-                }
-            }
-        });
-
-        dlgBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        AlertDialog alert = dlgBuilder.create();
-        alert.show();
-    }
-
-    // Remove Incident Tab, when Incident accomplished
-    public void endIncident() {
-
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.incidentfraglayout);
-        if(fragment != null)
-            getSupportFragmentManager().beginTransaction().remove(fragment).commit();
-
-    }
-
-    // Emergency light yes/no //
-    public void setEmergency(View v) {
-        if (v.getId() == R.id.checkBox) {
-
-            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
-            checkBox.setEnabled(true);
-            checkBox.setClickable(false);
-            checkBox.setHintTextColor(BLUE);
-        }
-    }
-
-    // Button state & color functions END
-
-    // Patienten Management dialog builder //
-    // data stored in shared preferences
-
-    public void createpat(View v) {
-
-        final RelativeLayout patmanlayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.patman, null);
-        final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
-        final TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
-
-        final LinearLayout patmanbtnlinlay = (LinearLayout)findViewById(R.id.patmanbtnlinlay);
-
-        final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
-        final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
-        final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
-        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById();
-        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
-        final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
-        final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
-
-        switch(v.getId()) {
-
-            case R.id.button46:
-
-                    AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-                    //dlgBuilder.setMessage("Patient anlegen");
-                    dlgBuilder.setTitle("PATADMIN");
-                    //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
-
-                    dlgBuilder.setView(patmanlayout).setPositiveButton("Senden", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    // Store in sharedprefs
-                                    patfirstname = addpatfirstname.getText().toString();
-                                    patlastname = addpatlastname.getText().toString();
-                                    patdatebirth = addpatdatebirth.getText().toString();
-                                    //patsvnr = addactoradd.getText().toString();
-                                    patplsnr = addpatplsnr.getText().toString();
-                                    //patgender = addpatgender.getText().toString();
-                                    patward = addpatward.getText().toString();
-
-
-                                    SharedPreferences.Editor patedit = spref.edit();
-
-                                    patedit.putString("patfirstname", patfirstname);
-                                    patedit.putString("patlastname", patlastname);
-                                    patedit.putString("patdatebirth", patdatebirth);
-                                    //patedit.putString("patsvnr", patsvnr);
-                                    patedit.putString("patplsnr", patplsnr);
-                                    //patedit.putString("patgender", patgender);
-                                    patedit.putString("patward", patward);
-
-                                    patedit.apply();
-
-                                    //TODO: send data
-
-                                    Toast.makeText(MainActivity.this, "Patient angelegt", Toast.LENGTH_SHORT).show();
-
-                                    // Set Pat. Management Buttons visible
-                                    patmanbtnlinlay.setVisibility(View.VISIBLE);
-
-
-                                }
-                            });
-
-                    dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
-
-                            {
-
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                    // Store in sharedprefs
-                                    patfirstname = addpatfirstname.getText().toString();
-                                    patlastname = addpatlastname.getText().toString();
-                                    patdatebirth = addpatdatebirth.getText().toString();
-                                    //patsvnr = addactoradd.getText().toString();
-                                    patplsnr = addpatplsnr.getText().toString();
-                                    //patgender = addpatgender.getText().toString();
-                                    patward = addpatward.getText().toString();
-
-
-                                    SharedPreferences.Editor patedit = spref.edit();
-
-                                    patedit.putString("patfirstname", patfirstname);
-                                    patedit.putString("patlastname", patlastname);
-                                    patedit.putString("patdatebirth", patdatebirth);
-                                    //patedit.putString("patsvnr", patsvnr);
-                                    patedit.putString("patplsnr", patplsnr);
-                                    //patedit.putString("patgender", patgender);
-                                    patedit.putString("patward", patward);
-
-                                    patedit.commit();
-
-
-                                }
-                            }
-
-                    );
-
-                    AlertDialog alert = dlgBuilder.create();
-                    alert.show();
-                break;
-
-            case R.id.changepatbtn:
-
-                    dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-                    //dlgBuilder.setMessage("Patient anlegen");
-                    dlgBuilder.setTitle("PATADMIN");
-
-                    //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
-
-                    dlgBuilder.setView(patmanlayout);
-                    //bettbtn.setEnabled(false);
-                    //bettbtn.setClickable(false);
-                    bettbtn.setVisibility(View.GONE);
-                    textView11.setVisibility(View.GONE);
-
-                    //Getting Stored data from SharedPreferences
-                    getpatfirstname = spref.getString("patfirstname", "");
-                    getpatlastname = spref.getString("patlastname", "");
-                    getpatdatebirth = spref.getString("patdatebirth", "");
-                    //getpatsvnr = spref.getString("patsvnr", "");
-                    getpatplsnr = spref.getString("patplsnr", "");
-                    //getpatgender = spref.getString("patgender", "");
-                    getpatward = spref.getString("patward", "");
-
-                    //write to textview
-                    addpatfirstname.setText("" + getpatfirstname);
-                    addpatlastname.setText("" + getpatlastname);
-                    addpatdatebirth.setText("" + getpatdatebirth);
-                    //addpatsvnr.setText(""+getpatsvnr);
-                    addpatplsnr.setText("" + getpatplsnr);
-                    addpatward.setText("" + getpatgender);
-                    //addpatgender.setText(""+getpatward);
-
-                    dlgBuilder.setPositiveButton("Senden", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            //remove layout
-                            View viewToRemove = findViewById(R.id.patmanrelayout);
-                            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
-                            //TODO: store again in sharedprefs / send pat data to server
-
-                            //Toast.makeText(MainActivity.this, "Pat. Daten geändert", Toast.LENGTH_SHORT).show();
-
-                        }
-                    });
-
-                    dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
-
-                            {
-
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-
-                                }
-                            }
-
-                    );
-
-                    alert = dlgBuilder.create();
-                    alert.show();
-
-                }
-
-        //remove layout after dialog creation
-        View viewToRemove = findViewById(R.id.patmanrelayout);
-        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-    }
-
-    // Bett abbuchen btn //
-    // TODO: method not needed in first test version
-
-    public void bettbuchen(View v) {
-
-        final RelativeLayout patmanlayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.patman, null);
-        /*
-        LayoutInflater inflater = getLayoutInflater();
-        getWindow().addContentView(inflater.inflate(R.layout.patman, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-*/
-        if (v.getId() == R.id.bettbtn) {
-
-            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(MainActivity.this);
-            dlgbuilder.setTitle("Abteilung auswählen");
-            dlgbuilder.setItems(new CharSequence[]
-                            {"Intern", "Unfall", "Chirurgie", "HNO", "Dermatologie", "Spezialbett", "andere Abteilung"},
-
-                    new DialogInterface.OnClickListener() {
-
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            TextView abtedit = (TextView) patmanlayout.findViewById(R.id.textView11);
-
-                            switch (which) {
-
-                                case 0:
-                                    abtedit.setText(R.string.intern);
-                                    Toast.makeText(MainActivity.this, R.string.intern, Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case 1:
-                                    abtedit.setText(R.string.unfall, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.unfall, Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case 2:
-                                    abtedit.setText(R.string.chir, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.chir, Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case 3:
-                                    abtedit.setText(R.string.hno, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.hno, Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case 4:
-                                    abtedit.setText(R.string.derma, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.derma, Toast.LENGTH_SHORT).show();
-                                    break;
-
-                                case 5:
-                                    abtedit.setText(R.string.spezbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
-                                    break;
-
-                                case 6:
-                                    abtedit.setText(R.string.andbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(MainActivity.this, R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
-                                    break;
-                            }
-                        }
-                    }
-            );
-
-            dlgbuilder.create().
-
-                    show();
         }
     }
 
     // PatMan start btn //
     // TODO: not needed in test version
-
-    public void patman_enable() {
-        Button button21 = (Button) findViewById(R.id.button21);
-
-        if ((getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) >=
-                Configuration.SCREENLAYOUT_SIZE_LARGE) {
-
-            button21.setEnabled(true);
-            button21.setClickable(true);
-
-        } else {
-
-            button21.setEnabled(false);
-            button21.setClickable(false);
-
-            }
-        }
 
     public void patmanstart(View v) {
         if (v.getId() == R.id.button21) {
@@ -1678,153 +811,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-    // Store Pat Data // with shared prefs
 
-    // Store Pat Data end //
-
-    // Navigate to provided address //
-    // TODO: choose between built-in maps api and own navigation app
-    public void navigate(View view) {
-
-        final TextView botext = (TextView) findViewById(R.id.bofield);
-        final TextView aotext = (TextView) findViewById(R.id.aofield);
-        final TextView custom = (TextView) findViewById(R.id.commaddress);
-
-        switch(view.getId())
-        {
-            case R.id.button18:
-                if(botext.getText().toString().trim().length() > 0) {
-
-                    String navadress = "google.navigation:" + botext.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
-                }
-                break;
-
-            case R.id.button19:
-                if (aotext.getText().toString().trim().length() > 0) {
-
-                    String navadress = "google.navigation:" + aotext.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
-                }
-                break;
-
-            case R.id.button45: //commfragment, custom navigation
-                if (custom.getText().toString().trim().length() > 0) {
-
-                    String navadress = "google.navigation:" + custom.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
-
-                } else {
-                    Toast.makeText(MainActivity.this, "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
-                }
-                break;
-        }
-    }
-/*
-    // City Map View //
-    // user can choose between leaflet(webview) and google maps(fragment api)
-        public void showmap(View v) {
-            if (v.getId() == R.id.button30) {
-
-                AlertDialog.Builder alert = new AlertDialog.Builder(this);
-                alert.setTitle("Stadtplan");
-
-                WebView gisView = new WebView(this);
-                gisView.getSettings().setJavaScriptEnabled(true);
-                gisView.getSettings().getAllowFileAccessFromFileURLs();
-                gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-                gisView.getSettings().setGeolocationEnabled(true);
-
-                gisView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                gisView.getSettings().setBuiltInZoomControls(true);
-
-                gisView.setWebViewClient(new GeoWebViewActivity.GeoWebViewClient());
-                gisView.setWebChromeClient(new GeoWebViewActivity.GeoWebChromeClient());
-
-                gisView.loadUrl("file:///android_asset/leaflet.html");
-                gisView.setWebViewClient(new WebViewClient() {
-                    @Override
-                    public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                        view.loadUrl(url);
-
-                        return true;
-                    }
-                });
-
-                alert.setView(gisView);
-                alert.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int id) {
-                        dialog.dismiss();
-                    }
-                });
-                alert.show();
-            }
-        }
-/*
-                WebView gisView = (WebView) findViewById(R.id.gisView);
-
-                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-                dlgBuilder.setTitle("Stadtplan");
-                dlgBuilder.setView(gisView);
-
-                gisView.getSettings().setJavaScriptEnabled(true);
-                gisView.getSettings().getAllowFileAccessFromFileURLs();
-                gisView.getSettings().setAllowUniversalAccessFromFileURLs(true);
-                gisView.getSettings().setGeolocationEnabled(true);
-
-                gisView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-                gisView.getSettings().setBuiltInZoomControls(true);
-
-                gisView.setWebViewClient(new GeoWebViewActivity.GeoWebViewClient());
-                gisView.setWebChromeClient(new GeoWebViewActivity.GeoWebChromeClient());
-
-                gisView.loadUrl("file:///android_asset/leaflet.html");
-
-                dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-/*
-                MapFragment mapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map);
-                if (mapFragment != null)
-                    this.getFragmentManager().beginTransaction().remove(mapFragment).commit();
-*//*
-                    }
-                });
-                dlgBuilder.create().show();
-            }
-        }
-
-    public void removeWebView() {
-
-        WebView gisView = (WebView) findViewById(R.id.gisView);
-        gisView.removeAllViews();
-
-        if(gisView != null) {
-            gisView.clearHistory();
-            gisView.clearCache(true);
-            gisView.loadUrl("about:blank");
-            gisView.freeMemory();
-            gisView.pauseTimers();
-            gisView = null;
-        }
-
-    }
-
-    */
 
     // Report incident method on mainstatus fragment //
     // Get coordinates, and nearest address
@@ -1876,7 +863,8 @@ public class MainActivity extends AppCompatActivity {
                         for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
                             strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                         }
-                        strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
+
+                        //strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
                         //strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
                         //strReturnedAddress.append(returnedAddress.getCountryName());
 
@@ -1892,28 +880,6 @@ public class MainActivity extends AppCompatActivity {
                     editText24.setText("Cannot get Address!");
                 }
 
-/*
-                Geocoder geocoder = new Geocoder(getApplicationContext(), Locale.getDefault());
-                String result = null;
-                try {
-                    List<Address> addressList = geocoder.getFromLocation(
-                            latitude, longitude, 1);
-                    if (addressList != null && addressList.size() > 0) {
-                        Address address = addressList.get(0);
-                        StringBuilder sb = new StringBuilder();
-                        for (int i = 0; i < address.getMaxAddressLineIndex(); i++) {
-                            sb.append(address.getAddressLine(i)).append("\n");
-                        }
-                        sb.append(address.getLocality()).append("\n");
-                        sb.append(address.getPostalCode()).append("\n");
-                        sb.append(address.getCountryName());
-                        result = sb.toString();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-*/
-
                     //editText24.setText(locationAddress);
                     textView86.setText("lat: " + latitude);
                     textView93.setText("lon: " + longitude);
@@ -1925,7 +891,8 @@ public class MainActivity extends AppCompatActivity {
 
                                 button42.setEnabled(false);
                                 button42.setClickable(false);
-                                button42.setBackgroundColor(YELLOW);
+                                //button42.setBackgroundColor(YELLOW);
+                                button42.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
 
                                 Handler h = new Handler();
                                 h.postDelayed(new
@@ -1935,7 +902,8 @@ public class MainActivity extends AppCompatActivity {
                                                           public void run() {
                                                               button42.setEnabled(true);
                                                               button42.setClickable(true);
-                                                              button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                                              //button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                                              button42.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
                                                               editText24.setText("");
                                                               textView86.setText("");
                                                               textView93.setText("");
@@ -1949,6 +917,8 @@ public class MainActivity extends AppCompatActivity {
                                 Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
                                 textView112.setVisibility(View.VISIBLE);
                                 textView112.setText("Einsatz gemeldet");
+
+                                dialog.cancel();
                             }
                         }
 
@@ -1960,6 +930,9 @@ public class MainActivity extends AppCompatActivity {
 
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
+
+                                dialog.cancel();
+
                             }
                         }
 

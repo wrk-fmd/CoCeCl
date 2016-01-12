@@ -148,7 +148,15 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_toLeftOf="@+id/relativeLayout"
-        android:layout_toStartOf="@+id/relativeLayout"></LinearLayout>
+        android:layout_toStartOf="@+id/relativeLayout">
+
+        <WebView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/webView"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="20dp" />
+    </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
@@ -167,6 +175,21 @@
         android:layout_below="@+id/textView"
         android:layout_toRightOf="@+id/linearLayout19"
         android:layout_toEndOf="@+id/linearLayout19"
-        android:layout_above="@+id/relativeLayout"></LinearLayout>
+        android:layout_above="@+id/relativeLayout">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="LiveTicker"
+            android:id="@+id/textView175"
+            android:layout_gravity="center_horizontal" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView2"
+            android:layout_gravity="center_horizontal" />
+    </LinearLayout>
 
 </RelativeLayout>

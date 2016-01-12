@@ -53,7 +53,7 @@ public class APPConstants {
     //EL
     public static final String hio = "+ 43 660 123 456 78";
 
-    //EMERGENCY
+    //EMERGENCY Nbrs
     public static final String polnbr = "133";
     public static final String rdnbr = "144";
     public static final String fdnbr = "122";

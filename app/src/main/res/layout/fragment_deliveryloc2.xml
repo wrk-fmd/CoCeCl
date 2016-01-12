@@ -84,7 +84,8 @@
                             android:enabled="true"
                             android:drawableTop="@drawable/ic_navigation_black_18dp"
                             android:onClick="navigate"
-                            style="@style/MainStatusButtonStyle"/>
+                            style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/custom_button_selector" />
 
                     </LinearLayout>
 
@@ -165,9 +166,10 @@
                         android:drawableLeft="@drawable/ic_call_black_18dp"
                         android:enabled="true"
                         android:clickable="true"
-                        android:onClick="lscall"
                         style="@style/MainStatusButtonStyle"
-                        android:layout_weight="1"/>
+                        android:background="@drawable/custom_button_selector"
+                        android:layout_weight="1"
+                        android:onClick="lscall" />
 
                     <Button
                         android:layout_width="wrap_content"
@@ -176,7 +178,9 @@
                         android:id="@+id/button30"
                         android:drawableLeft="@drawable/ic_call_black_18dp"
                         style="@style/MainStatusButtonStyle"
-                        android:layout_weight="1"/>
+                        android:background="@drawable/custom_button_selector"
+                        android:layout_weight="1"
+                        android:onClick="lscall" />
 
                 </LinearLayout>
 
@@ -195,6 +199,7 @@
                             android:drawableLeft="@drawable/ic_person_add_black_24dp"
                             android:onClick="createpat"
                             style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/custom_button_selector"
                             android:layout_weight="1"/>
 
                         <Button
@@ -205,6 +210,7 @@
                             android:drawableLeft="@drawable/ic_person_black_24dp"
                             android:onClick="patmanstart"
                             style="@style/MainStatusButtonStyle"
+                            android:background="@drawable/custom_button_selector"
                             android:enabled="true"
                             android:clickable="true"
                             android:layout_weight="1"/>
@@ -243,7 +249,16 @@
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Anzahl Pat"
                         android:id="@+id/textView122"
-                        android:textColor="#ff9800"/>
+                        android:textColor="#ff9800"
+                        android:visibility="gone" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:text="PLS Nr."
+                        android:id="@+id/textView96"
+                        android:textColor="#000000" />
 
                     <TextView
                         android:layout_width="wrap_content"

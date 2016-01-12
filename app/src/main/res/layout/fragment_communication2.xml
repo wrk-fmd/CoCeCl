@@ -128,14 +128,15 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Anrufen"
-                            android:id="@+id/button59"
-                            android:layout_weight="1"/>
+                            android:id="@+id/button43"
+                            android:layout_weight="1"
+                            android:onClick="lscall" />
 
                         <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Navigieren"
-                            android:id="@+id/button60"
+                            android:id="@+id/button45"
                             android:layout_weight="1"/>
                     </LinearLayout>
 

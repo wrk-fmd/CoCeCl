@@ -1,11 +1,8 @@
 package it.fmd.cocecl.utilclass;
 
-
 import android.util.Log;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -23,7 +20,7 @@ public class JSONParser {
     String charset = "UTF-8";
     HttpURLConnection conn;
     DataOutputStream wr;
-    StringBuilder result = new StringBuilder();
+    StringBuilder result;
     URL urlObj;
     JSONObject jObj = null;
     StringBuilder sbParams;
@@ -109,7 +106,7 @@ public class JSONParser {
             //Receive the response from the server
             InputStream in = new BufferedInputStream(conn.getInputStream());
             BufferedReader reader = new BufferedReader(new InputStreamReader(in));
-
+            result = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
                 result.append(line);

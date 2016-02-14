@@ -11,7 +11,9 @@ import java.util.ArrayList;
 
 import it.fmd.cocecl.R;
 
-/** Incident ListView on mainstatusFragment **/
+/**
+ * Incident ListView on mainstatusFragment
+ **/
 
 public class IncidentAdapter extends ArrayAdapter<Incidents> {
 

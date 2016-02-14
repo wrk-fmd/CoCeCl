@@ -34,19 +34,18 @@ public class NewIncident extends MainActivity {
     // Alerts/server sync on new incident
     // set tabhost open new fragment
     // alertdialog builder
-
-    public void onNewIncident() {
-
-        //TODO: GCMNotificationIntentService gcm class
-
-    }
-
     /**
      * Show Updates from CallCenter during active Incident on Snackbar, onclick to dismiss
      */
 
     //Coordinator Layout for SnackBar//
     CoordinatorLayout coordinatorLayout = (CoordinatorLayout) findViewById(R.id.coordinatorLayout);
+
+    public void onNewIncident() {
+
+        //TODO: GCMNotificationIntentService gcm class
+
+    }
 
     // change incident information/ snackbar update
     public void onIncidentUpdate() {
@@ -70,7 +69,7 @@ public class NewIncident extends MainActivity {
             }
         };
     }
-    
+
     // Alert Push Notification Manager //
     // alerts on incoming incident, gcm server!!
     //

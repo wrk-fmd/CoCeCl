@@ -10,13 +10,26 @@ import it.fmd.cocecl.MainActivity;
 public class PhoneManager extends MainActivity {
 
 
+    //get phonenumber
+    TelephonyManager tMgr = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
+
+    // PHONE STATE MANAGER //
+    String mPhoneNumber = tMgr.getLine1Number();
+
+    {
+        //PhoneStateListener//
+        PhoneCallListener phoneListener = new PhoneCallListener();
+        TelephonyManager telephonyManager = (TelephonyManager) this
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
+    }
+
     // PHONE CALL MANAGER //
     //monitor phone call activities
     public class PhoneCallListener extends PhoneStateListener {
 
-        private boolean isPhoneCalling = false;
-
         String LOG_TAG = "LOGGING";
+        private boolean isPhoneCalling = false;
 
         @Override
         public void onCallStateChanged(int state, String incomingNumber) {
@@ -55,18 +68,4 @@ public class PhoneManager extends MainActivity {
             }
         }
     }
-
-    // PHONE STATE MANAGER //
-
-    {
-        //PhoneStateListener//
-        PhoneCallListener phoneListener = new PhoneCallListener();
-        TelephonyManager telephonyManager = (TelephonyManager) this
-                .getSystemService(Context.TELEPHONY_SERVICE);
-        telephonyManager.listen(phoneListener, PhoneStateListener.LISTEN_CALL_STATE);
-    }
-
-    //get phonenumber
-    TelephonyManager tMgr = (TelephonyManager)this.getSystemService(Context.TELEPHONY_SERVICE);
-    String mPhoneNumber = tMgr.getLine1Number();
 }

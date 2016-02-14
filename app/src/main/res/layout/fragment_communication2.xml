@@ -1,21 +1,21 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/communicationfraglayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#bdbdbd"
+
     android:gravity="center_horizontal"
     android:orientation="vertical"
-
+    android:paddingBottom="@dimen/cardview_vertical_margin"
     android:paddingLeft="@dimen/cardview_horizontal_margin"
     android:paddingRight="@dimen/cardview_horizontal_margin"
-    android:paddingTop="@dimen/cardview_vertical_margin"
-    android:paddingBottom="@dimen/cardview_vertical_margin"
-    android:id="@+id/communicationfraglayout"
-    android:background="#bdbdbd">
+    android:paddingTop="@dimen/cardview_vertical_margin">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -25,9 +25,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
+                cardview:cardBackgroundColor="#ffffff"
                 cardview:cardCornerRadius="5dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -36,45 +36,45 @@
                     android:padding="8dp">
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Kommunikation"
                         android:id="@+id/textView131"
-                        android:textColor="#00b0ff"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Analog und Digital Funk"
-                        android:id="@+id/textView132"
-                        android:textColor="#ff9800"/>
+                        android:text="Kommunikation"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView132"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Analog und Digital Funk"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
+
+                    <TextView
+                        android:id="@+id/textView8"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:hint="live analog Funk call sign"
-                        android:id="@+id/textView8"
-                        android:gravity="center"
-                        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
-                        android:background="@drawable/edittext_style_1"
-                        android:textColorHint="@color/primary_dark_material_dark"
-                        android:layout_below="@+id/textView50"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_alignParentRight="true"
                         android:layout_alignParentEnd="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/textView50"
+                        android:layout_marginBottom="10dp"
                         android:layout_marginTop="10dp"
-                        android:layout_marginBottom="10dp"/>
+                        android:background="@drawable/edittext_style_1"
+                        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
+                        android:gravity="center"
+                        android:hint="live analog Funk call sign"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
                     <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="PTT"
                         android:id="@+id/button31"
-                        android:layout_gravity="center"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="PTT" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -83,10 +83,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
                 cardview:cardBackgroundColor="#ffffff"
-                android:layout_marginTop="10dp">
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -96,28 +96,28 @@
 
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Telefonbuch"
                         android:id="@+id/textView133"
-                        android:textColor="#00b0ff"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Einheiten Funkkennungen"
+                        android:text="Telefonbuch"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/textView134"
-                        android:textColor="#ff9800"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Einheiten Funkkennungen"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Krankenhausverzeichnis"
+                        android:textColor="#ff9800" />
+
+                    <TextView
                         android:id="@+id/textView135"
-                        android:textColor="#ff9800"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Krankenhausverzeichnis"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -125,19 +125,19 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Anrufen"
                             android:id="@+id/button43"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_weight="1"
-                            android:onClick="lscall" />
+                            android:onClick="lscall"
+                            android:text="Anrufen" />
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Navigieren"
                             android:id="@+id/button45"
-                            android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Navigieren" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -147,10 +147,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
                 cardview:cardBackgroundColor="#ffffff"
-                android:layout_marginTop="10dp">
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -160,20 +160,20 @@
 
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Lagepläne"
                         android:id="@+id/textView140"
-                        android:textColor="#00b0ff"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="KH"
+                        android:text="Lagepläne"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/textView141"
-                        android:textColor="#ff9800"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="KH"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -182,10 +182,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
                 cardview:cardBackgroundColor="#ffffff"
-                android:layout_marginTop="10dp">
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -195,20 +195,20 @@
 
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Notrufnummern"
                         android:id="@+id/textView136"
-                        android:textColor="#00b0ff"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="gewählt"
+                        android:text="Notrufnummern"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/textView137"
-                        android:textColor="#ff9800"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="gewählt"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -216,26 +216,26 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Polizei"
                             android:id="@+id/button65"
-                            android:layout_weight="1"/>
-
-                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Feuerwehr"
+                            android:layout_weight="1"
+                            android:text="Polizei" />
+
+                        <Button
                             android:id="@+id/button64"
-                            android:layout_gravity="center_horizontal"
-                            android:layout_weight="1"/>
-
-                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="RD LS"
+                            android:layout_gravity="center_horizontal"
+                            android:layout_weight="1"
+                            android:text="Feuerwehr" />
+
+                        <Button
                             android:id="@+id/button66"
-                            android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="RD LS" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -244,25 +244,25 @@
                         android:orientation="horizontal">
 
                         <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="WasserRD"
                             android:id="@+id/button68"
-                            android:layout_weight="1"/>
-
-                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="BergRD"
+                            android:layout_weight="1"
+                            android:text="WasserRD" />
+
+                        <Button
                             android:id="@+id/button69"
-                            android:layout_weight="1"/>
-
-                        <Button
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Bahn ÖBB"
+                            android:layout_weight="1"
+                            android:text="BergRD" />
+
+                        <Button
                             android:id="@+id/button70"
-                            android:layout_weight="1"/>
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Bahn ÖBB" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -272,10 +272,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
+                android:layout_marginTop="10dp"
                 cardview:cardBackgroundColor="#ffffff"
-                android:layout_marginTop="10dp">
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -285,20 +285,20 @@
 
 
                     <TextView
+                        android:id="@+id/textView138"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Dialer"
-                        android:id="@+id/textView138"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView139"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="zuletzt gewählte nr"
-                        android:id="@+id/textView139"
-                        android:textColor="#ff9800"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -306,22 +306,22 @@
                         android:orientation="horizontal">
 
                         <EditText
+                            android:id="@+id/dialereditext"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:inputType="phone"
-                            android:ems="10"
-                            android:id="@+id/dialereditext"
                             android:layout_weight="0.75"
-                            android:textColorHint="#000000"
+                            android:ems="10"
+                            android:hint="TelNr. eingeben"
+                            android:inputType="phone"
                             android:textColor="#000000"
-                            android:hint="TelNr. eingeben"/>
+                            android:textColorHint="#000000" />
 
                         <Button
+                            android:id="@+id/button67"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Call"
-                            android:id="@+id/button67"
-                            android:layout_weight="0.25"/>
+                            android:layout_weight="0.25"
+                            android:text="Call" />
 
                     </LinearLayout>
 
@@ -330,5 +330,5 @@
 
         </LinearLayout>
 
-        </ScrollView>
-    </LinearLayout>
+    </ScrollView>
+</LinearLayout>

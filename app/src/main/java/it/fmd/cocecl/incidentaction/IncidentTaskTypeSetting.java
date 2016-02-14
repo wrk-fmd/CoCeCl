@@ -12,8 +12,8 @@ public class IncidentTaskTypeSetting extends MainActivity {
 
     public void noTask() {
 
-        TextView nbrtext = (TextView)findViewById(R.id.textView113);
-        TextView incitext = (TextView)findViewById(R.id.textView114);
+        TextView nbrtext = (TextView) findViewById(R.id.textView113);
+        TextView incitext = (TextView) findViewById(R.id.textView114);
 
         if (nbrtext.getText().toString().trim().length() > 0) {
 
@@ -28,8 +28,8 @@ public class IncidentTaskTypeSetting extends MainActivity {
 
     public void tasktypeCardcolor() {
 
-        TextView tasktype = (TextView)findViewById(R.id.tasktype);
-        CardView estatcard = (CardView)findViewById(R.id.estatcard);
+        TextView tasktype = (TextView) findViewById(R.id.tasktype);
+        CardView estatcard = (CardView) findViewById(R.id.estatcard);
 
         if (tasktype.getText() == "EINSATZ") {
 

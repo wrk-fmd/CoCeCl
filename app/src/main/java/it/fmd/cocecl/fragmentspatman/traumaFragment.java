@@ -1,4 +1,4 @@
-package it.fmd.cocecl.fragments;
+package it.fmd.cocecl.fragmentspatman;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import it.fmd.cocecl.R;
 
 
-public class anamnesisFragment extends Fragment {
+public class traumaFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -19,7 +19,7 @@ public class anamnesisFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_anamnesis, container, false);
+        View v = inflater.inflate(R.layout.fragment_trauma, container, false);
         return v;
     }
 }

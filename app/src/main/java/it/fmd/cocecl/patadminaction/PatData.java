@@ -6,7 +6,7 @@ package it.fmd.cocecl.patadminaction;
 
 /**
  * Patient Data
- * <p/>
+ * <p>
  * ID
  * PLS Number
  * Gender

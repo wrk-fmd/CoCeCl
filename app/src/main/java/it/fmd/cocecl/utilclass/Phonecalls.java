@@ -1,13 +1,9 @@
 package it.fmd.cocecl.utilclass;
 
 import android.Manifest;
-import android.app.Application;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
-import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,7 +14,7 @@ import it.fmd.cocecl.R;
 public class Phonecalls extends MainActivity {
 
     Intent callIntent = new Intent(Intent.ACTION_CALL);
-    PackageManager pm = getPackageManager();
+    PackageManager pm = getApplicationContext().getPackageManager();
 
     public void lsmaincall() {
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsmain));

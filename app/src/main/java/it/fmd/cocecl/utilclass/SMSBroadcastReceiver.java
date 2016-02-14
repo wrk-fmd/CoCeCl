@@ -7,15 +7,14 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
-import it.fmd.cocecl.incidentaction.SMS_Alert;
 import it.fmd.cocecl.MainActivity;
+import it.fmd.cocecl.incidentaction.SMS_Alert;
 
 public class SMSBroadcastReceiver extends BroadcastReceiver {
 
+    public static final String SMS_BUNDLE = "pdus";
     final SmsManager sms = SmsManager.getDefault();
     MainActivity ourSMS;
-
-    public static final String SMS_BUNDLE = "pdus";
 
     public void onReceive(Context context, Intent intent) {
 

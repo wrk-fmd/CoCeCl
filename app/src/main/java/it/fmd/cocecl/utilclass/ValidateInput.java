@@ -2,7 +2,6 @@ package it.fmd.cocecl.utilclass;
 
 import android.text.TextUtils;
 
-import java.util.Calendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 

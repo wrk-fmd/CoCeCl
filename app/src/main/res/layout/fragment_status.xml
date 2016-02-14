@@ -1,273 +1,269 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#757575"
+    android:paddingBottom="16dp"
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:paddingBottom="16dp"
-    tools:context="it.fmd.cocecl.fragments.statusFragment"
-    android:background="#757575">
+    tools:context="it.fmd.cocecl.fragments.statusFragment">
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </View>
+        android:layout_alignParentStart="true"
+        android:background="#000000"></View>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/stbutton1"
-            android:textSize="12dp"
             android:id="@+id/button"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_play_arrow_black_18dp"
             android:enabled="true"
-            android:clickable="true"
             android:onClick="st1"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_play_arrow_black_18dp"/>
+            android:text="@string/stbutton1"
+            android:textSize="12dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/stbutton2"
-            android:textSize="12dp"
             android:id="@+id/button2"
-            android:clickable="true"
-            android:onClick="st2"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_play_circle_outline_black_18dp"/>
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="@string/stbutton3"
-            android:textSize="12dp"
-            android:id="@+id/button3"
-            android:clickable="true"
-            android:onClick="st3"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_fast_forward_black_18dp"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_play_circle_outline_black_18dp"
+            android:onClick="st2"
+            android:text="@string/stbutton2"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_fast_forward_black_18dp"
+            android:onClick="st3"
+            android:text="@string/stbutton3"
+            android:textSize="12dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout2"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/stbutton4"
-            android:textSize="12dp"
             android:id="@+id/button4"
-            android:clickable="true"
-            android:onClick="st4"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_skip_next_black_18dp"/>
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="@string/stbutton5"
-            android:textSize="12dp"
-            android:id="@+id/button5"
+            android:layout_weight="1"
             android:clickable="true"
+            android:drawableTop="@drawable/ic_skip_next_black_18dp"
+            android:onClick="st4"
+            android:text="@string/stbutton4"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button5"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_phone_forwarded_black_18dp"
             android:enabled="true"
             android:onClick="st5"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_phone_forwarded_black_18dp"/>
+            android:text="@string/stbutton5"
+            android:textSize="12dp" />
 
         <Button
+            android:id="@+id/button6"
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="@string/stbutton6"
-            android:textSize="12dp"
-            android:id="@+id/button6"
-            android:clickable="true"
-            android:onClick="st6"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_pause_black_18dp"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_pause_black_18dp"
+            android:onClick="st6"
+            android:text="@string/stbutton6"
+            android:textSize="12dp" />
 
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
+        android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerHorizontal="true"
-        android:id="@+id/linearLayout3"
-        android:gravity="center">
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/stbutton7"
-            android:textSize="12dp"
             android:id="@+id/button7"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
             android:clickable="true"
+            android:drawableTop="@drawable/ic_call_made_black_18dp"
             android:onClick="st7"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_call_made_black_18dp"/>
+            android:text="@string/stbutton7"
+            android:textSize="12dp" />
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:text="@string/stbutton8"
-            android:textSize="12dp"
             android:id="@+id/button8"
-            android:clickable="true"
-            android:onClick="st8"
-            android:layout_weight="1"
-            android:drawableTop="@drawable/ic_local_hospital_black_18dp"/>
-
-        <Button
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:text="@string/stbutton9"
-            android:textSize="12dp"
-            android:id="@+id/button9"
-            android:clickable="true"
-            android:onClick="st9"
             android:layout_weight="1"
-            android:drawableTop="@drawable/ic_stop_black_18dp"/>
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_local_hospital_black_18dp"
+            android:onClick="st8"
+            android:text="@string/stbutton8"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button9"
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_stop_black_18dp"
+            android:onClick="st9"
+            android:text="@string/stbutton9"
+            android:textSize="12dp" />
 
     </LinearLayout>
-
-<View
-    android:layout_width="fill_parent"
-    android:layout_height="2dip"
-    android:background="#000000"
-    android:layout_below="@+id/linearLayout3"
-    android:layout_alignParentLeft="true"
-    android:layout_alignParentStart="true">
-</View>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/meldungen"
-        android:id="@+id/textView4"
-        android:textColor="#ff000000"
-        android:layout_below="@+id/linearLayout3"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"/>
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/textView4"
-            android:layout_centerHorizontal="true"
-            android:gravity="center"
-            android:id="@+id/linearLayout4">
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/stbutton10"
-                android:textSize="12dp"
-                android:id="@+id/button10"
-                android:clickable="true"
-                android:onClick="st10"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_call_missed_black_18dp"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/stbutton13"
-                android:textSize="12dp"
-                android:id="@+id/button13"
-                android:clickable="true"
-                android:onClick="st13"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_repeat_black_18dp"/>
-
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="70dp"
-                android:text="@string/stbutton11"
-                android:textSize="12dp"
-                android:id="@+id/button11"
-                android:clickable="true"
-                android:onClick="st11"
-                android:layout_weight="1"
-                android:drawableTop="@drawable/ic_directions_run_black_18dp"/>
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="70dp"
-            android:text="@string/stbutton12"
-            android:textSize="12dp"
-            android:id="@+id/button12"
-            android:layout_below="@+id/linearLayout4"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:drawableLeft="@drawable/ic_warning_black_18dp"
-            android:clickable="true"
-            android:onClick="st12"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="70dp"
-        android:text="@string/newinc"
-        android:id="@+id/button42"
-        android:layout_gravity="left"
-        android:onClick="st14"
-        android:layout_above="@+id/textView8"
-        android:layout_alignRight="@+id/button16"
-        android:layout_alignEnd="@+id/button16"
-        android:drawableLeft="@drawable/ic_my_location_black_18dp"/>
 
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout3"
+        android:background="#000000"></View>
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout3"
+        android:layout_marginTop="10dp"
+        android:text="@string/meldungen"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="#ff000000" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView4"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/button10"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_call_missed_black_18dp"
+            android:onClick="st10"
+            android:text="@string/stbutton10"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button13"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_repeat_black_18dp"
+            android:onClick="st13"
+            android:text="@string/stbutton13"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/button11"
+            android:layout_width="match_parent"
+            android:layout_height="70dp"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:drawableTop="@drawable/ic_directions_run_black_18dp"
+            android:onClick="st11"
+            android:text="@string/stbutton11"
+            android:textSize="12dp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button12"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/linearLayout4"
+        android:clickable="true"
+        android:drawableLeft="@drawable/ic_warning_black_18dp"
+        android:onClick="st12"
+        android:text="@string/stbutton12"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/button42"
+        android:layout_width="wrap_content"
+        android:layout_height="70dp"
+        android:layout_above="@+id/textView8"
+        android:layout_alignEnd="@+id/button16"
+        android:layout_alignRight="@+id/button16"
+        android:layout_gravity="left"
+        android:drawableLeft="@drawable/ic_my_location_black_18dp"
+        android:onClick="st14"
+        android:text="@string/newinc" />
+
+    <View
+        android:id="@+id/button16"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
         android:layout_alignBottom="@+id/button12"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/button16">
-    </View>
+        android:background="#000000"></View>
 
     <TextView
+        android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:hint="aktueller Funk"
-        android:id="@+id/textView8"
-        android:gravity="center"
-        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
-        android:background="@drawable/edittext_style_1"
-        android:textColorHint="@color/primary_dark_material_dark"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/button16"
-        android:layout_marginTop="5dp"/>
+        android:layout_marginTop="5dp"
+        android:background="@drawable/edittext_style_1"
+        android:drawableLeft="@drawable/ic_phone_in_talk_black_24dp"
+        android:gravity="center"
+        android:hint="aktueller Funk"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColorHint="@color/primary_dark_material_dark" />
 
 </RelativeLayout>

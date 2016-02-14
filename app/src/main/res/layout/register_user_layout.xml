@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/registeruserrelaout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:gravity="center"
     android:orientation="vertical"
     android:padding="10dp"
-    android:id="@+id/registeruserrelaout"
     android:weightSum="1">
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
+        android:layout_weight="0.41"
         android:orientation="vertical"
         android:paddingLeft="20dp"
-        android:paddingRight="20dp"
-        android:layout_weight="0.41">
+        android:paddingRight="20dp">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/registerfamilynameLayout"
@@ -27,8 +27,8 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:hint="familienname"
-                android:singleLine="true"
-                android:inputType="textCapWords|textPersonName" />
+                android:inputType="textCapWords|textPersonName"
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -36,12 +36,12 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapWords|textPersonName"
-            android:hint="vorname"
-            android:id="@+id/registername" />
+            <EditText
+                android:id="@+id/registername"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="vorname"
+                android:inputType="textCapWords|textPersonName" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -50,16 +50,16 @@
             android:layout_height="wrap_content">
 
             <EditText
+                android:id="@+id/registerdnr"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/registerdnr"
                 android:layout_gravity="center_horizontal"
-                android:hint="dienstnummer"
                 android:ems="10"
-                android:singleLine="true"
+                android:hint="dienstnummer"
                 android:inputType="number"
                 android:maxLength="5"
-                android:maxLines="1" />
+                android:maxLines="1"
+                android:singleLine="true" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
@@ -98,8 +98,8 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dip"
-            android:text="register"
             android:enabled="true"
+            android:text="register"
             android:visibility="gone" />
 
     </LinearLayout>

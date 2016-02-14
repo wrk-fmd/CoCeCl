@@ -1,34 +1,33 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/abcdefraglayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#bdbdbd"
+
     android:gravity="center_horizontal"
     android:orientation="vertical"
-
+    android:paddingBottom="@dimen/cardview_vertical_margin"
     android:paddingLeft="@dimen/cardview_horizontal_margin"
     android:paddingRight="@dimen/cardview_horizontal_margin"
-    android:paddingTop="@dimen/cardview_vertical_margin"
-    android:paddingBottom="@dimen/cardview_vertical_margin"
-    android:id="@+id/abcdefraglayout"
-    android:background="#bdbdbd">
+    android:paddingTop="@dimen/cardview_vertical_margin">
 
     <LinearLayout
+        android:id="@+id/linearLayout14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/linearLayout14"
-        android:orientation="vertical"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginRight="10dp">
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical">
 
         <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
+            cardview:cardBackgroundColor="#424242"
             cardview:cardCornerRadius="5dp"
-            cardview:cardBackgroundColor="#424242">
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -37,18 +36,18 @@
                 android:padding="8dp">
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="A - Atemweg"
                     android:id="@+id/textView28"
-                    android:textColor="@color/headline"/>
-
-                <Spinner
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="A - Atemweg"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
+
+                <Spinner
                     android:id="@+id/spinner2"
-                    android:entries="@array/Atemweg"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Atemweg" />
 
             </LinearLayout>
         </android.support.v7.widget.CardView>
@@ -56,10 +55,10 @@
         <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
-            cardview:cardCornerRadius="5dp"
             android:layout_marginTop="10dp"
-            cardview:cardBackgroundColor="#424242">
+            cardview:cardBackgroundColor="#424242"
+            cardview:cardCornerRadius="5dp"
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -68,39 +67,40 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/textView29"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="B - Atmung"
-                    android:id="@+id/textView29"
-                    android:textColor="@color/headline"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
 
                 <Spinner
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:id="@+id/spinner15"
-                    android:entries="@array/Atmung"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Atmung" />
 
                 <Button
+                    android:id="@+id/button33"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Auskultation"
-                    android:id="@+id/button33" />
+                    android:text="Auskultation" />
 
                 <Button
+                    android:id="@+id/button34"
                     style="?android:attr/buttonStyleSmall"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Palpation"
-                    android:id="@+id/button34" />
+                    android:text="Palpation" />
+
                 <Button
-                    style="?android:attr/buttonStyleSmall"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Beschreibung"
                     android:id="@+id/button35"
-                    android:layout_column="0" />
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_column="0"
+                    android:text="Beschreibung" />
 
 
             </LinearLayout>
@@ -109,10 +109,10 @@
         <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
-            cardview:cardCornerRadius="5dp"
             android:layout_marginTop="10dp"
-            cardview:cardBackgroundColor="#424242">
+            cardview:cardBackgroundColor="#424242"
+            cardview:cardCornerRadius="5dp"
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -121,29 +121,29 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/textView30"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="C - Kreislauf"
-                    android:id="@+id/textView30"
-                    android:textColor="@color/headline"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
 
                 <TableLayout
+                    android:id="@+id/tableLayout5"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/tableLayout5">
+                    android:layout_height="wrap_content">
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <Button
+                            android:id="@+id/button36"
                             style="?android:attr/buttonStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pulse"
-                            android:id="@+id/button36"
-                            android:layout_column="0" />
+                            android:layout_column="0"
+                            android:text="Pulse" />
                     </TableRow>
 
                     <TableRow
@@ -151,21 +151,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/textView47"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_column="0"
                             android:text="ReKap-Zeit"
-                            android:id="@+id/textView47"
-                            android:layout_column="0" />
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <EditText
+                            android:id="@+id/editText13"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/editText13"
                             android:layout_column="1"
-                            android:hint="sek" />
+                            android:ems="10"
+                            android:hint="sek"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -173,23 +173,22 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/textView48"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_column="0"
                             android:text="Hautkolorit"
-                            android:id="@+id/textView48"
-                            android:layout_column="0" />
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <Spinner
+                            android:id="@+id/spinner16"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner16"
                             android:layout_column="1"
-                            android:entries="@array/Hautkolorit"/>
+                            android:entries="@array/Hautkolorit" />
                     </TableRow>
 
                 </TableLayout>
-
 
 
             </LinearLayout>
@@ -197,184 +196,21 @@
 
     </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/linearLayout14"
-                android:layout_toEndOf="@+id/linearLayout14"
-                android:layout_marginRight="10dp"
-                android:id="@+id/linearLayout15">
-
-                <android.support.v7.widget.CardView
-                    android:layout_width="300dp"
-                    android:layout_height="wrap_content"
-                    cardview:cardElevation="4dp"
-                    cardview:cardCornerRadius="5dp"
-                    cardview:cardBackgroundColor="#424242">
-
-                    <LinearLayout
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:orientation="vertical"
-                        android:padding="8dp">
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceLarge"
-                            android:text="D - Neurologie"
-                            android:id="@+id/textView31"
-                            android:textColor="@color/headline"/>
-
-                        <TableLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/tableLayout3">
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <Button
-                                    style="?android:attr/buttonStyleSmall"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="GCS"
-                                    android:id="@+id/button23"
-                                    android:layout_column="0"
-                                    android:onClick="gcsbtn" />
-
-                                <EditText
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:inputType="number"
-                                    android:ems="10"
-                                    android:id="@+id/editText12"
-                                    android:layout_column="1" />
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="Bewusstseinslage"
-                                    android:id="@+id/textView42"
-                                    android:layout_column="0" />
-
-                                <Spinner
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/spinner3"
-                                    android:layout_column="1"
-                                    android:entries="@array/Bewusstseinslage"/>
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="Pupillen"
-                                    android:id="@+id/textView43"
-                                    android:layout_column="0" />
-
-                                <Spinner
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/spinner4"
-                                    android:layout_column="1"
-                                    android:entries="@array/Pupillen"/>
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="MDS"
-                                    android:id="@+id/textView44"
-                                    android:layout_column="0" />
-
-                                <Spinner
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/spinner5"
-                                    android:layout_column="1" />
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="Koordination"
-                                    android:id="@+id/textView45"
-                                    android:layout_column="0" />
-
-                                <Spinner
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/spinner6"
-                                    android:layout_column="1" />
-                            </TableRow>
-
-                            <TableRow
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textAppearance="?android:attr/textAppearanceMedium"
-                                    android:text="Kraft"
-                                    android:id="@+id/textView46"
-                                    android:layout_column="0" />
-
-                                <Spinner
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:id="@+id/spinner7"
-                                    android:layout_column="1" />
-                            </TableRow>
-                        </TableLayout>
-
-
-                    </LinearLayout>
-                </android.support.v7.widget.CardView>
-
-            </LinearLayout>
-
     <LinearLayout
+        android:id="@+id/linearLayout15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_toRightOf="@+id/linearLayout15"
-        android:layout_toEndOf="@+id/linearLayout15"
-        android:id="@+id/linearLayout16"
-        android:layout_marginRight="10dp">
-
-
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/linearLayout14"
+        android:layout_toRightOf="@+id/linearLayout14">
 
         <android.support.v7.widget.CardView
-            android:layout_width="wrap_content"
+            android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
+            cardview:cardBackgroundColor="#424242"
             cardview:cardCornerRadius="5dp"
-            cardview:cardBackgroundColor="#424242">
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -383,29 +219,191 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/textView31"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:text="D - Neurologie"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:text="E - Erweitert"
-                    android:id="@+id/textView32"
-                    android:textColor="@color/headline"/>
+                    android:textColor="@color/headline" />
 
                 <TableLayout
+                    android:id="@+id/tableLayout3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <Button
+                            android:id="@+id/button23"
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:onClick="gcsbtn"
+                            android:text="GCS" />
+
+                        <EditText
+                            android:id="@+id/editText12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:ems="10"
+                            android:inputType="number" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView42"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Bewusstseinslage"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:entries="@array/Bewusstseinslage" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView43"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Pupillen"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1"
+                            android:entries="@array/Pupillen" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView44"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="MDS"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView45"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Koordination"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1" />
+                    </TableRow>
+
+                    <TableRow
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/textView46"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Kraft"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <Spinner
+                            android:id="@+id/spinner7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="1" />
+                    </TableRow>
+                </TableLayout>
+
+
+            </LinearLayout>
+        </android.support.v7.widget.CardView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout16"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_marginRight="10dp"
+        android:layout_toEndOf="@+id/linearLayout15"
+        android:layout_toRightOf="@+id/linearLayout15">
+
+
+        <android.support.v7.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            cardview:cardBackgroundColor="#424242"
+            cardview:cardCornerRadius="5dp"
+            cardview:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    android:id="@+id/textView32"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:id="@+id/tableLayout2">
+                    android:text="E - Erweitert"
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
+
+                <TableLayout
+                    android:id="@+id/tableLayout2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Allergien"
                             android:id="@+id/button24"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Allergien" />
                     </TableRow>
 
                     <TableRow
@@ -413,12 +411,12 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Medikamente"
                             android:id="@+id/button25"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Medikamente" />
 
                     </TableRow>
 
@@ -427,12 +425,12 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Vorerkrankungen"
                             android:id="@+id/button26"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Vorerkrankungen" />
 
                     </TableRow>
 
@@ -441,12 +439,12 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="KH-Aufenthalte"
                             android:id="@+id/button27"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="KH-Aufenthalte" />
 
                     </TableRow>
 
@@ -455,12 +453,12 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Nahrungsaufnahme"
                             android:id="@+id/button28"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Nahrungsaufnahme" />
 
                     </TableRow>
 
@@ -469,12 +467,12 @@
                         android:layout_height="match_parent">
 
                         <Button
-                            style="?android:attr/buttonStyleSmall"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Ereignisse"
                             android:id="@+id/button29"
-                            android:layout_column="0" />
+                            style="?android:attr/buttonStyleSmall"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Ereignisse" />
 
                     </TableRow>
 
@@ -483,12 +481,12 @@
                         android:layout_height="match_parent">
 
                         <Button
+                            android:id="@+id/button32"
                             style="?android:attr/buttonStyleSmall"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Schmerzen - OPQRST"
-                            android:id="@+id/button32"
-                            android:layout_column="0" />
+                            android:layout_column="0"
+                            android:text="Schmerzen - OPQRST" />
                     </TableRow>
 
                     <TableRow
@@ -507,17 +505,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/linearLayout16"
-        android:layout_toRightOf="@+id/linearLayout16"
-        android:layout_toEndOf="@+id/linearLayout16">
+        android:layout_toEndOf="@+id/linearLayout16"
+        android:layout_toRightOf="@+id/linearLayout16">
 
         <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
-            cardview:cardCornerRadius="5dp"
-            cardview:cardBackgroundColor="#424242"
+            android:layout_column="0"
             android:layout_row="0"
-            android:layout_column="0">
+            cardview:cardBackgroundColor="#424242"
+            cardview:cardCornerRadius="5dp"
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -526,42 +524,42 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/textView33"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="Messwerte"
-                    android:id="@+id/textView33"
-                    android:textColor="@color/headline"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
 
                 <TableLayout
+                    android:id="@+id/tableLayout"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_below="@+id/textView33"
+                    android:layout_above="@+id/textView41"
                     android:layout_alignLeft="@+id/textView33"
                     android:layout_alignStart="@+id/textView33"
-                    android:id="@+id/tableLayout"
-                    android:layout_above="@+id/textView41">
+                    android:layout_below="@+id/textView33">
 
                     <TableRow
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="HF"
                             android:id="@+id/textView34"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="HF"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="bts/min" />
+                            android:ems="10"
+                            android:hint="bts/min"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -569,21 +567,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="RR"
                             android:id="@+id/textView35"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="RR"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText6"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="mmHg" />
+                            android:ems="10"
+                            android:hint="mmHg"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -591,21 +589,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="AF"
                             android:id="@+id/textView36"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="AF"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText7"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="AZ/min" />
+                            android:ems="10"
+                            android:hint="AZ/min"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -613,21 +611,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="spO2"
                             android:id="@+id/textView37"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="spO2"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="%" />
+                            android:ems="10"
+                            android:hint="%"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -635,21 +633,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="etCO2"
                             android:id="@+id/textView38"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="etCO2"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="mmHg" />
+                            android:ems="10"
+                            android:hint="mmHg"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -657,21 +655,21 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:text="BZ"
                             android:id="@+id/textView39"
-                            android:layout_column="0" />
-
-                        <EditText
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
+                            android:layout_column="0"
+                            android:text="BZ"
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+                        <EditText
                             android:id="@+id/editText10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:hint="mg/dl" />
+                            android:ems="10"
+                            android:hint="mg/dl"
+                            android:inputType="number" />
                     </TableRow>
 
                     <TableRow
@@ -679,24 +677,23 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/textView40"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_column="0"
                             android:text="Temp"
-                            android:id="@+id/textView40"
-                            android:layout_column="0" />
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <EditText
+                            android:id="@+id/editText11"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:inputType="number"
-                            android:ems="10"
-                            android:id="@+id/editText11"
                             android:layout_column="1"
-                            android:hint="°C" />
+                            android:ems="10"
+                            android:hint="°C"
+                            android:inputType="number" />
                     </TableRow>
                 </TableLayout>
-
 
 
             </LinearLayout>
@@ -707,15 +704,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout16"
-        android:layout_toRightOf="@+id/linearLayout16"
-        android:layout_toEndOf="@+id/linearLayout16">
+        android:layout_toEndOf="@+id/linearLayout16"
+        android:layout_toRightOf="@+id/linearLayout16">
 
         <android.support.v7.widget.CardView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            cardview:cardElevation="4dp"
+            cardview:cardBackgroundColor="#424242"
             cardview:cardCornerRadius="5dp"
-            cardview:cardBackgroundColor="#424242">
+            cardview:cardElevation="4dp">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -724,12 +721,12 @@
                 android:padding="8dp">
 
                 <TextView
+                    android:id="@+id/textView41"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textAppearance="?android:attr/textAppearanceLarge"
                     android:text="EKG"
-                    android:id="@+id/textView41"
-                    android:textColor="@color/headline"/>
+                    android:textAppearance="?android:attr/textAppearanceLarge"
+                    android:textColor="@color/headline" />
 
                 <TableLayout
                     android:layout_width="wrap_content"
@@ -740,18 +737,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Rhytmus"
                             android:id="@+id/textView57"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Rhytmus" />
+
+                        <Spinner
                             android:id="@+id/spinner9"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/Rhytmus"/>
+                            android:entries="@array/Rhytmus" />
 
                     </TableRow>
 
@@ -760,18 +757,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Frequenz"
                             android:id="@+id/textView58"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Frequenz" />
+
+                        <Spinner
                             android:id="@+id/spinner8"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/Frequenz"/>
+                            android:entries="@array/Frequenz" />
                     </TableRow>
 
                     <TableRow
@@ -779,18 +776,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="Schenkelblock"
                             android:id="@+id/textView59"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="Schenkelblock" />
+
+                        <Spinner
                             android:id="@+id/spinner10"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/Schenkelblock"/>
+                            android:entries="@array/Schenkelblock" />
                     </TableRow>
 
                     <TableRow
@@ -798,18 +795,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="AV-Block"
                             android:id="@+id/textView60"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="AV-Block" />
+
+                        <Spinner
                             android:id="@+id/spinner11"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/AVBlock"/>
+                            android:entries="@array/AVBlock" />
                     </TableRow>
 
                     <TableRow
@@ -817,18 +814,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="VES"
                             android:id="@+id/textView61"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="VES" />
+
+                        <Spinner
                             android:id="@+id/spinner12"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/VES"/>
+                            android:entries="@array/VES" />
                     </TableRow>
 
                     <TableRow
@@ -836,18 +833,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="PEA/etc."
                             android:id="@+id/textView62"
-                            android:layout_column="0" />
-
-                        <Spinner
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_column="0"
+                            android:text="PEA/etc." />
+
+                        <Spinner
                             android:id="@+id/spinner13"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
                             android:layout_column="1"
-                            android:entries="@array/PEA"/>
+                            android:entries="@array/PEA" />
                     </TableRow>
 
                     <TableRow
@@ -855,18 +852,18 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/textView64"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="ST-Strecke"
-                            android:id="@+id/textView64"
-                            android:layout_column="0" />
+                            android:layout_column="0"
+                            android:text="ST-Strecke" />
 
                         <Spinner
+                            android:id="@+id/spinner14"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/spinner14"
                             android:layout_column="1"
-                            android:entries="@array/STStrecke"/>
+                            android:entries="@array/STStrecke" />
                     </TableRow>
 
                     <TableRow
@@ -874,17 +871,17 @@
                         android:layout_height="match_parent">
 
                         <TextView
+                            android:id="@+id/textView63"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:layout_column="0"
                             android:text="Beschreibung"
-                            android:id="@+id/textView63"
-                            android:layout_column="0" />
+                            android:textAppearance="?android:attr/textAppearanceMedium" />
 
                         <EditText
+                            android:id="@+id/editText19"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:id="@+id/editText19"
                             android:layout_column="1" />
                     </TableRow>
                 </TableLayout>
@@ -892,7 +889,6 @@
             </LinearLayout>
         </android.support.v7.widget.CardView>
     </LinearLayout>
-
 
 
 </RelativeLayout>

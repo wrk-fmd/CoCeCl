@@ -3,14 +3,15 @@
 <!--AlertBox surrounding-->
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:thickness="0dp"
-    android:shape="rectangle">
-    <stroke android:width="3dp"
-        android:color="#D50000"/>
+    android:shape="rectangle"
+    android:thickness="0dp">
+    <stroke
+        android:width="3dp"
+        android:color="#D50000" />
     <corners android:radius="5dp" />
     <gradient
-        android:startColor="#F5F5F5"
+        android:angle="270"
         android:endColor="#F5F5F5"
-        android:type="linear"
-        android:angle="270"/>
+        android:startColor="#F5F5F5"
+        android:type="linear" />
 </shape>

@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mainstatusfraglayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#bdbdbd"
+
     android:gravity="center_horizontal"
     android:orientation="vertical"
-
+    android:paddingBottom="@dimen/cardview_vertical_margin"
     android:paddingLeft="@dimen/cardview_horizontal_margin"
     android:paddingRight="@dimen/cardview_horizontal_margin"
     android:paddingTop="@dimen/cardview_vertical_margin"
-    android:paddingBottom="@dimen/cardview_vertical_margin"
-    tools:context="it.fmd.cocecl.mainstatus"
-    android:id="@+id/mainstatusfraglayout"
-    android:background="#bdbdbd">
+    tools:context="it.fmd.cocecl.mainstatus">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -27,9 +28,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
+                cardview:cardBackgroundColor="#ffffff"
                 cardview:cardCornerRadius="5dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -37,85 +39,85 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/textView117"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Abgabeort"
-                        android:id="@+id/textView117"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView118"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Ziel POI"
-                        android:id="@+id/textView118"
-                        android:textColor="#ff9800"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/aofield"
                             android:layout_width="0dp"
                             android:layout_height="120dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textColor="@color/primary_dark_material_dark"
-                            android:textColorHint="@color/primary_dark_material_dark"
-                            android:hint="@string/ao"
-                            android:id="@+id/aofield"
+                            android:layout_weight="100"
+                            android:background="@drawable/edittext_style_3"
+                            android:clickable="true"
                             android:editable="false"
                             android:enabled="false"
-                            android:inputType="textPostalAddress"
-                            android:clickable="true"
                             android:gravity="center"
-                            android:background="@drawable/edittext_style_3"
-                            android:layout_weight="100"/>
+                            android:hint="@string/ao"
+                            android:inputType="textPostalAddress"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_dark"
+                            android:textColorHint="@color/primary_dark_material_dark" />
 
                         <Button
+                            android:id="@+id/button19"
+                            style="@style/MainStatusButtonStyle"
                             android:layout_width="70dp"
                             android:layout_height="match_parent"
-                            android:text="NAVI"
-                            android:id="@+id/button19"
+                            android:background="@drawable/custom_button_selector"
                             android:clickable="true"
-                            android:enabled="true"
                             android:drawableTop="@drawable/ic_navigation_black_18dp"
+                            android:enabled="true"
                             android:onClick="navigate"
-                            style="@style/MainStatusButtonStyle"
-                            android:background="@drawable/custom_button_selector" />
+                            android:text="NAVI" />
 
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark"
-                        android:hint="@string/abt"
-                        android:id="@+id/textView6"
-                        android:inputType="text"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_style_3"
                         android:enabled="false"
                         android:gravity="center"
-                        android:background="@drawable/edittext_style_3"
-                        android:layout_marginTop="5dp"/>
+                        android:hint="@string/abt"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
                     <TextView
+                        android:id="@+id/textView12"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark"
-                        android:hint="@string/tcnr"
-                        android:id="@+id/textView12"
-                        android:inputType="number"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_style_3"
                         android:enabled="false"
                         android:gravity="center"
-                        android:background="@drawable/edittext_style_3"
-                        android:layout_marginTop="5dp"/>
+                        android:hint="@string/tcnr"
+                        android:inputType="number"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -124,10 +126,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardCornerRadius="5dp"
-                cardview:cardElevation="4dp"
                 android:layout_marginTop="10dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -136,84 +139,83 @@
 
 
                     <TextView
+                        android:id="@+id/textView119"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Patienten Management"
-                        android:id="@+id/textView119"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView120"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Aktion"
-                        android:id="@+id/textView120"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ff9800" />
 
-                <LinearLayout
-                    android:orientation="horizontal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:weightSum="2">
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="LS Betten"
-                        android:id="@+id/button17"
-                        android:drawableLeft="@drawable/ic_call_black_18dp"
-                        android:enabled="true"
-                        android:clickable="true"
-                        style="@style/MainStatusButtonStyle"
-                        android:background="@drawable/custom_button_selector"
-                        android:layout_weight="1"
-                        android:onClick="lscall" />
-
-                    <Button
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Ziel KH"
-                        android:id="@+id/button30"
-                        android:drawableLeft="@drawable/ic_call_black_18dp"
-                        style="@style/MainStatusButtonStyle"
-                        android:background="@drawable/custom_button_selector"
-                        android:layout_weight="1"
-                        android:onClick="lscall" />
-
-                </LinearLayout>
-
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
                         android:weightSum="2">
 
                         <Button
+                            android:id="@+id/button17"
+                            style="@style/MainStatusButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Pat. Daten ändern"
-                            android:id="@+id/changepatbtn"
-                            android:drawableLeft="@drawable/ic_person_add_black_24dp"
-                            android:onClick="createpat"
-                            style="@style/MainStatusButtonStyle"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_button_selector"
-                            android:layout_weight="1"/>
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_call_black_18dp"
+                            android:enabled="true"
+                            android:onClick="lscall"
+                            android:text="LS Betten" />
 
                         <Button
+                            android:id="@+id/button30"
+                            style="@style/MainStatusButtonStyle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="PatMan"
-                            android:id="@+id/button21"
-                            android:drawableLeft="@drawable/ic_person_black_24dp"
-                            android:onClick="patmanstart"
-                            style="@style/MainStatusButtonStyle"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_button_selector"
-                            android:enabled="true"
+                            android:drawableLeft="@drawable/ic_call_black_18dp"
+                            android:onClick="lscall"
+                            android:text="Ziel KH" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/changepatbtn"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
+                            android:drawableLeft="@drawable/ic_person_add_black_24dp"
+                            android:text="Pat. Daten ändern" />
+
+                        <Button
+                            android:id="@+id/button21"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
                             android:clickable="true"
-                            android:layout_weight="1"/>
+                            android:drawableLeft="@drawable/ic_person_black_24dp"
+                            android:enabled="true"
+                            android:onClick="patmanstart"
+                            android:text="PatMan" />
                     </LinearLayout>
 
 
@@ -224,10 +226,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
                 android:layout_marginTop="10dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -236,66 +239,66 @@
 
 
                     <TextView
+                        android:id="@+id/textView121"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Patientendaten"
-                        android:id="@+id/textView121"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView122"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Anzahl Pat"
-                        android:id="@+id/textView122"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ff9800"
                         android:visibility="gone" />
 
                     <TextView
+                        android:id="@+id/textView96"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:text="PLS Nr."
-                        android:id="@+id/textView96"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="#000000" />
 
                     <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Nachname"
                         android:id="@+id/textView123"
-                        android:textColor="#000000"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Nachname"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Vorname"
+                        android:textColor="#000000" />
+
+                    <TextView
                         android:id="@+id/textView124"
-                        android:textColor="#000000"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Vorname"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="SVNR.Geburtstag"
+                        android:textColor="#000000" />
+
+                    <TextView
                         android:id="@+id/textView125"
-                        android:textColor="#000000"/>
-
-                    <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="SVNR.Geburtstag"
                         android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:text="Gender"
+                        android:textColor="#000000" />
+
+                    <TextView
                         android:id="@+id/textView126"
-                        android:textColor="#000000"/>
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Gender"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#000000" />
 
                     <android.support.v7.widget.RecyclerView
+                        android:id="@+id/patrv"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:id="@+id/patrv" />
+                        android:layout_height="match_parent" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

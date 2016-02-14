@@ -1,6 +1,5 @@
 package it.fmd.cocecl.utilclass;
 
-import android.app.Application;
 import android.os.Handler;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,7 +14,7 @@ import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 
 /**
- *  Animated SyncIcons in AppBar
+ * Animated SyncIcons in AppBar
  */
 
 public class SyncState extends MainActivity {
@@ -34,12 +33,12 @@ public class SyncState extends MainActivity {
     }
 
     public void onSyncIconStop() {
-        ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
-        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
+        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
-        r.setDuration((long) 2*3000);
+        r.setDuration((long) 2 * 3000);
         r.setRepeatCount(Animation.INFINITE);
         syncicon.startAnimation(r);
 
@@ -57,9 +56,9 @@ public class SyncState extends MainActivity {
     }
 
     public void onSyncError() {
-        final ImageView syncicon = (ImageView)findViewById(R.id.imageView2);
-        final ImageView erroricon = (ImageView)findViewById(R.id.erroriconView);
-        final TextView serveranswer = (TextView)findViewById(R.id.textView49);
+        final ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+        final ImageView erroricon = (ImageView) findViewById(R.id.erroriconView);
+        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 

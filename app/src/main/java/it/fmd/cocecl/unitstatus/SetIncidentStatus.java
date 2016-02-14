@@ -1,5 +1,6 @@
 package it.fmd.cocecl.unitstatus;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
@@ -20,12 +21,49 @@ import static android.graphics.Color.YELLOW;
 
 public class SetIncidentStatus extends MainActivity {
 
+    RelativeLayout deliveryloclayout;
+    Calendar cal;
+    SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+
+    Button button41;
+    TextView textView83;
+    TextView textView85;
+    TextView aofield;
+
+    TextView statuserror;
+
+    Button button10;
+    Button button11;
+    Button button13;
+    Button button46;
+
+    AlertDialog.Builder dlgBuilder;
+
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.fragment_incident2);
 
-    }
+        deliveryloclayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
+
+        cal = Calendar.getInstance(TimeZone.getDefault());
+        sdf = new SimpleDateFormat("HH:mm:ss");
+
+        button41 = (Button) findViewById(R.id.button41);
+        textView83 = (TextView) findViewById(R.id.statusView);
+        textView85 = (TextView) findViewById(R.id.textView85);
+        aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
+
+        statuserror = (TextView) findViewById(R.id.textView129);
+
+        button10 = (Button) findViewById(R.id.button10);
+        button11 = (Button) findViewById(R.id.button11);
+        button13 = (Button) findViewById(R.id.button13);
+        button46 = (Button) findViewById(R.id.button46);
+
+        dlgBuilder = new AlertDialog.Builder(getApplicationContext());
+
+
 /*
         final RelativeLayout deliveryloclayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
 
@@ -46,24 +84,25 @@ public class SetIncidentStatus extends MainActivity {
 
         AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getApplicationContext());
 */
-
+    }
     // Status Button incidentFragment //
     // change unit status
     //TODO: set fragments on status change?? / sync with server
 
     public void qu() {
-
+/*
         final Button button41 = (Button) findViewById(R.id.button41);
         final TextView textView83 = (TextView) findViewById(R.id.statusView);
         final TextView textView85 = (TextView) findViewById(R.id.textView85);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
+*/
         // QU Einsatz übernehmen
         button41.setEnabled(false);
         button41.setClickable(false);
-        button41.setBackgroundColor(YELLOW);
+        //button41.setBackgroundColor(YELLOW);
+        button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
         button41.setText(R.string.zbo);
         textView83.setText("QU");
         textView85.setText(sdf.format(cal.getTime()));
@@ -75,7 +114,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
             }
         }, 3000);
 
@@ -90,18 +130,19 @@ public class SetIncidentStatus extends MainActivity {
     }
 
     public void st3() {
-
+/*
         final Button button41 = (Button) findViewById(R.id.button41);
         final TextView textView83 = (TextView) findViewById(R.id.statusView);
         final TextView textView85 = (TextView) findViewById(R.id.textView85);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
+*/
         // ZBO
         button41.setEnabled(false);
         button41.setClickable(false);
-        button41.setBackgroundColor(YELLOW);
+        //button41.setBackgroundColor(YELLOW);
+        button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
         button41.setText(R.string.abo);
         textView83.setText("ZBO");
         textView85.setText(sdf.format(cal.getTime()));
@@ -113,7 +154,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
             }
         }, 10000);
 
@@ -136,7 +178,8 @@ public class SetIncidentStatus extends MainActivity {
         // ABO
         button41.setEnabled(false);
         button41.setClickable(false);
-        button41.setBackgroundColor(YELLOW);
+        //button41.setBackgroundColor(YELLOW);
+        button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
         button41.setText(R.string.zao);
         textView83.setText("ABO");
         textView85.setText(sdf.format(cal.getTime()));
@@ -157,7 +200,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
             }
         }, 10000);
 
@@ -194,7 +238,8 @@ public class SetIncidentStatus extends MainActivity {
         if (aofield.getText().toString().trim().length() > 0) {
             button41.setEnabled(true);
             button41.setClickable(true);
-            button41.setBackgroundColor(YELLOW);
+            //button41.setBackgroundColor(YELLOW);
+            button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
             button41.setText(R.string.aao);
             textView83.setText("ZAO");
             textView85.setText(sdf.format(cal.getTime()));
@@ -222,7 +267,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
                 statuserror.setText("");
                 statuserror.setVisibility(View.GONE);
             }
@@ -242,7 +288,8 @@ public class SetIncidentStatus extends MainActivity {
         // AAO
         button41.setEnabled(false);
         button41.setClickable(false);
-        button41.setBackgroundColor(YELLOW);
+        //button41.setBackgroundColor(YELLOW);
+        button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
         button41.setText(R.string.eb);
         textView83.setText("AAO");
         textView85.setText(sdf.format(cal.getTime()));
@@ -254,7 +301,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
             }
         }, 10000);
 
@@ -272,7 +320,8 @@ public class SetIncidentStatus extends MainActivity {
         // Einsatz abschliessen
         button41.setEnabled(false);
         button41.setClickable(false);
-        button41.setBackgroundColor(YELLOW);
+        //button41.setBackgroundColor(YELLOW);
+        button41.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
         button41.setText("Einsatz abschliessen");
         textView83.setText("ENDE");
         textView85.setText(sdf.format(cal.getTime()));
@@ -283,7 +332,8 @@ public class SetIncidentStatus extends MainActivity {
             public void run() {
                 button41.setEnabled(true);
                 button41.setClickable(true);
-                button41.setBackgroundResource(android.R.drawable.btn_default);
+                //button41.setBackgroundResource(android.R.drawable.btn_default);
+                button41.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
             }
         }, 10000);
 

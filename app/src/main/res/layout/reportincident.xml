@@ -1,50 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/reportincidentrelayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:weightSum="1"
+    android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:id="@+id/reportincidentrelayout">
+    android:weightSum="1">
 
-    <EditText
+    <AutoCompleteTextView
+        android:id="@+id/editText24"
         android:layout_width="match_parent"
         android:layout_height="120dp"
-        android:inputType="textPostalAddress"
-        android:ems="10"
-        android:id="@+id/editText24"
         android:layout_gravity="center_horizontal"
         android:layout_weight="0.20"
-        android:hint="Addresse Vorfall"
-        android:gravity="center"
-        android:lines="5"
-        android:minLines="5"
-        android:maxLines="5"
+        android:autoText="false"
+        android:editable="true"
+        android:ems="10"
         android:enabled="true"
-        android:editable="true"/>
+        android:gravity="center"
+        android:hint="Addresse Vorfall"
+        android:inputType="textPostalAddress"
+        android:lines="5"
+        android:maxLines="5"
+        android:minLines="5">
+
+        <requestFocus />
+    </AutoCompleteTextView>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:id="@+id/textView86"
-        android:hint="latitude"
-        android:layout_below="@+id/editText24"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:id="@+id/textView93"
-        android:hint="longitude"
-        android:layout_below="@+id/textView86"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/editText24"
+        android:hint="latitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textView93"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView86"
+        android:hint="longitude"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

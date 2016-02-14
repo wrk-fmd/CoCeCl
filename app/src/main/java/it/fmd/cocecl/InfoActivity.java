@@ -1,16 +1,12 @@
 package it.fmd.cocecl;
 
 import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import it.fmd.cocecl.utilclass.SessionManagement;
@@ -32,9 +28,9 @@ public class InfoActivity extends MainActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
 
-        ambname = (TextView)findViewById(R.id.textView2);
-        unitname = (TextView)findViewById(R.id.textView3);
-        start = (Button)findViewById(R.id.button14);
+        ambname = (TextView) findViewById(R.id.textView2);
+        unitname = (TextView) findViewById(R.id.textView3);
+        start = (Button) findViewById(R.id.button14);
 
         //removed
         //txtName = (TextView) findViewById(R.id.textView95);
@@ -117,22 +113,22 @@ public class InfoActivity extends MainActivity {
     }
 
     public void btnunitinfo(View v) {
-        if (v.getId()==R.id.button63) {
+        if (v.getId() == R.id.button63) {
             unitinfo();
         }
     }
 
     public void unitinfo() {
 
-            // Create custom dialog object
-            final Dialog dialog = new Dialog(InfoActivity.this);
-            // Include dialog.xml file
-            dialog.setContentView(R.layout.unit_info_layout);
-            // Set dialog title
-            dialog.setTitle("Einheit - Information");
+        // Create custom dialog object
+        final Dialog dialog = new Dialog(InfoActivity.this);
+        // Include dialog.xml file
+        dialog.setContentView(R.layout.unit_info_layout);
+        // Set dialog title
+        dialog.setTitle("Einheit - Information");
 
 
-            dialog.show();
+        dialog.show();
 /*
             Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
             // if decline button is clicked, close the custom dialog
@@ -143,5 +139,5 @@ public class InfoActivity extends MainActivity {
                     dialog.dismiss();
                 }
             });*/
-        }
     }
+}

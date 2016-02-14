@@ -1,22 +1,22 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/incidentfraglayout"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    xmlns:tools="http://schemas.android.com/tools"
+    android:background="#bdbdbd"
+
     android:gravity="center_horizontal"
     android:orientation="vertical"
-
+    android:paddingBottom="@dimen/cardview_vertical_margin"
     android:paddingLeft="@dimen/cardview_horizontal_margin"
     android:paddingRight="@dimen/cardview_horizontal_margin"
-    android:paddingTop="@dimen/cardview_vertical_margin"
-    android:paddingBottom="@dimen/cardview_vertical_margin"
-    android:id="@+id/incidentfraglayout"
-    android:background="#bdbdbd">
+    android:paddingTop="@dimen/cardview_vertical_margin">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -26,9 +26,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
+                cardview:cardBackgroundColor="#ffffff"
                 cardview:cardCornerRadius="5dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -37,69 +37,70 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/tasktype"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColorHint="@color/primary_dark_material_dark"
-                        android:gravity="center"
-                        android:id="@+id/tasktype"
                         android:layout_gravity="left"
                         android:layout_marginRight="10dp"
+                        android:gravity="center"
                         android:text="Einsatzbeschreibung"
-                        android:textColor="#00b0ff" />
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
-                <LinearLayout
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <LinearLayout
+                        android:layout_width="fill_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:text="Einsatzart"
-                        android:id="@+id/textView127"
-                        android:textColor="#ff9800"
-                        android:layout_marginRight="10dp"
-                        android:layout_weight="1"/>
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/textView127"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginRight="10dp"
+                            android:layout_weight="1"
+                            android:text="Einsatzart"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="#ff9800" />
 
                         <CheckBox
+                            android:id="@+id/emergencyBox"
                             android:layout_width="wrap_content"
                             android:layout_height="match_parent"
-                            android:text="@string/ssig"
-                            android:id="@+id/emergencyBox"
+                            android:layout_gravity="right"
+                            android:layout_weight="0"
                             android:checked="false"
                             android:clickable="false"
                             android:enabled="true"
-                            android:layout_gravity="right"
                             android:gravity="center"
+                            android:text="@string/ssig"
                             android:textColor="#000000"
-                            android:visibility="invisible"
-                            android:layout_weight="0"/>
+                            android:visibility="invisible" />
 
-                </LinearLayout>
+                    </LinearLayout>
 
                     <TextView
+                        android:id="@+id/textView128"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Einsatztyp"
-                        android:id="@+id/textView128"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ff9800"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
 
             <android.support.v7.widget.CardView
+                android:id="@+id/estatcard"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardCornerRadius="5dp"
-                cardview:cardElevation="4dp"
                 android:layout_marginTop="10dp"
                 cardview:cardBackgroundColor="#ffffff"
-                android:id="@+id/estatcard">
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -107,56 +108,55 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/textView82"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="Einsatzstatus"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:text="Einsatz Status"
-                        android:id="@+id/textView82"
                         android:textColor="#00b0ff" />
 
 
                     <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:id="@+id/statusView"
-                            android:hint="aktueller status"
-                            android:gravity="left"
-                            android:textStyle="bold"
-                            android:textColorHint="@color/primary_dark_material_dark"
-                            android:textColor="#ff9800"/>
-
-                    <TextView
+                        android:id="@+id/statusView"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceSmall"
-                        android:id="@+id/textView85"
                         android:gravity="left"
+                        android:hint="aktueller status"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/textView85"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
                         android:editable="false"
-                        android:inputType="time"
+                        android:gravity="left"
                         android:hint="time statuschange"
+                        android:inputType="time"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
                         android:textColor="#000000" />
 
                     <Button
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:id="@+id/button41"
-                            android:hint="status weiterschalten"
-                            android:enabled="true"
-                            android:clickable="true"
-                            android:onClick="stbtnClick"
-                        style="@style/MainStatusButtonStyle"
+                        android:id="@+id/button41"
+                        style="@style/IncidentTabButtonStyle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
                         android:background="@drawable/button_pdyellow_selector"
-                        android:layout_gravity="center"/>
+                        android:clickable="true"
+                        android:enabled="true"
+                        android:hint="status weiterschalten" />
 
                     <TextView
+                        android:id="@+id/textView129"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:id="@+id/textView129"
                         android:hint="error"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ff9800"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -165,10 +165,10 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardCornerRadius="5dp"
-                cardview:cardElevation="4dp"
                 android:layout_marginTop="10dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
                 <LinearLayout
                     android:layout_width="fill_parent"
@@ -177,88 +177,88 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/textView81"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Einsatzdaten"
-                        android:id="@+id/textView81"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/bgfield"
                         android:layout_width="wrap_content"
                         android:layout_height="25dp"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:enabled="false"
                         android:gravity="center"
                         android:hint="@string/bg"
-                        android:id="@+id/bgfield"
                         android:inputType="text"
-                        android:enabled="false"
-                        android:visibility="gone"
-                        android:textColor="#ff9800"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800"
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:visibility="gone" />
 
                     <LinearLayout
-                        android:orientation="horizontal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
-                        android:layout_marginTop="10dp">
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
                         <TextView
+                            android:id="@+id/bofield"
                             android:layout_width="0dp"
                             android:layout_height="120dp"
-                            android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:id="@+id/bofield"
-                            android:enabled="true"
+                            android:layout_weight="100"
+                            android:background="@drawable/edittext_style_3"
                             android:clickable="false"
-                            android:textColor="@color/primary_dark_material_dark"
-                            android:textColorHint="@color/primary_dark_material_dark"
+                            android:editable="false"
+                            android:enabled="true"
                             android:gravity="center"
                             android:hint="@string/bo"
-                            android:editable="false"
-                            android:layout_weight="100"
-                            android:background="@drawable/edittext_style_3"/>
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_dark"
+                            android:textColorHint="@color/primary_dark_material_dark" />
 
                         <Button
+                            android:id="@+id/button18"
+                            style="@style/MainStatusButtonStyle"
                             android:layout_width="70dp"
                             android:layout_height="match_parent"
-                            android:text="NAVI"
-                            android:id="@+id/button18"
+                            android:background="@drawable/custom_button_selector"
                             android:clickable="true"
-                            android:enabled="true"
                             android:drawableTop="@drawable/ic_navigation_black_18dp"
+                            android:enabled="true"
                             android:onClick="navigate"
-                            style="@style/MainStatusButtonStyle"
-                            android:background="@drawable/custom_button_selector" />
+                            android:text="NAVI" />
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/infofield"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_style_3"
+                        android:enabled="false"
                         android:gravity="center"
                         android:hint="@string/info"
-                        android:id="@+id/infofield"
                         android:inputType="text"
-                        android:enabled="false"
-                        android:layout_marginTop="10dp"
-                        android:background="@drawable/edittext_style_3"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
+
+                    <TextView
+                        android:id="@+id/brfrfield"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:background="@drawable/edittext_style_3"
                         android:gravity="center"
                         android:hint="@string/brfr"
-                        android:id="@+id/brfrfield"
                         android:inputType="phone"
-                        android:layout_marginTop="10dp"
                         android:phoneNumber="true"
-                        android:background="@drawable/edittext_style_3"/>
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
@@ -267,10 +267,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardElevation="4dp"
-                cardview:cardCornerRadius="5dp"
                 android:layout_marginTop="10dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -278,21 +279,21 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/textView110"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Patienten Management"
-                        android:id="@+id/textView110"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <TextView
+                        android:id="@+id/textView116"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:text="Pat. Aktion"
-                        android:id="@+id/textView116"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#ff9800"
-                        android:visibility="gone"/>
+                        android:visibility="gone" />
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -301,67 +302,66 @@
                         android:weightSum="2">
 
                         <Button
+                            android:id="@+id/button46"
+                            style="@style/IncidentTabButtonStyle"
                             android:layout_width="150dp"
                             android:layout_height="70dp"
-                            android:text="Pat anlegen"
-                            android:id="@+id/button46"
-                            android:drawableTop="@drawable/ic_person_add_black_18dp"
-                            android:onClick="createpat"
-                            android:clickable="false"
-                            android:enabled="true"
                             android:layout_gravity="left"
-                            style="@style/MainStatusButtonStyle"
+                            android:layout_weight="1"
                             android:background="@drawable/custom_button_selector"
-                            android:layout_weight="1"/>
+                            android:clickable="false"
+                            android:drawableTop="@drawable/ic_person_add_black_18dp"
+                            android:enabled="true"
+                            android:text="Pat anlegen" />
 
                         <Button
+                            android:id="@+id/button10"
+                            style="@style/IncidentTabButtonStyle"
                             android:layout_width="150dp"
                             android:layout_height="70dp"
-                            android:text="@string/stbutton10"
-                            android:id="@+id/button10"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_pdgreen_selector"
                             android:clickable="false"
                             android:drawableTop="@drawable/ic_call_missed_black_18dp"
                             android:enabled="true"
-                            android:layout_gravity="right"
-                            style="@style/MainStatusButtonStyle"
-                            android:background="@drawable/button_pdgreen_selector"
-                            android:layout_weight="1" />
+                            android:text="@string/stbutton10" />
 
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/patmanbtnlinlay"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:orientation="horizontal"
-                        android:weightSum="2"
                         android:visibility="gone"
-                        android:id="@+id/patmanbtnlinlay">
+                        android:weightSum="2">
 
                         <Button
+                            android:id="@+id/button13"
+                            style="@style/IncidentTabButtonStyle"
                             android:layout_width="150dp"
                             android:layout_height="70dp"
-                            android:text="@string/stbutton13"
-                            android:id="@+id/button13"
+                            android:layout_gravity="left"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_pdgreen_selector"
                             android:clickable="false"
                             android:drawableTop="@drawable/ic_repeat_black_18dp"
                             android:enabled="true"
-                            android:layout_gravity="left"
-                            style="@style/MainStatusButtonStyle"
-                            android:background="@drawable/button_pdgreen_selector"
-                            android:layout_weight="1" />
+                            android:text="@string/stbutton13" />
 
                         <Button
+                            android:id="@+id/button11"
+                            style="@style/IncidentTabButtonStyle"
                             android:layout_width="150dp"
                             android:layout_height="70dp"
-                            android:text="@string/stbutton11"
-                            android:id="@+id/button11"
+                            android:layout_gravity="right"
+                            android:layout_weight="1"
+                            android:background="@drawable/button_pdgreen_selector"
                             android:clickable="false"
                             android:drawableTop="@drawable/ic_directions_run_black_18dp"
                             android:enabled="true"
-                            android:layout_gravity="right"
-                            style="@style/MainStatusButtonStyle"
-                            android:background="@drawable/button_pdgreen_selector"
-                            android:layout_weight="1" />
+                            android:text="@string/stbutton11" />
 
                     </LinearLayout>
 
@@ -372,10 +372,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                cardview:cardCornerRadius="5dp"
-                cardview:cardElevation="4dp"
                 android:layout_marginTop="10dp"
-                cardview:cardBackgroundColor="#ffffff">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
                 <LinearLayout
                     android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
@@ -383,27 +384,27 @@
                     android:padding="8dp">
 
                     <TextView
+                        android:id="@+id/textView10"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceLarge"
                         android:text="Zugewiesene Einheiten"
-                        android:id="@+id/textView10"
-                        android:textColor="#00b0ff"/>
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
                     <GridView
+                        android:id="@+id/asUnitGV"
                         android:layout_width="match_parent"
                         android:layout_height="200dp"
-                        android:id="@+id/asUnitGV"
                         android:layout_gravity="center_horizontal"
 
-                        android:numColumns="auto_fit"
                         android:columnWidth="100dp"
-                        android:stretchMode="columnWidth"
-
-                        android:verticalSpacing="10dp"
                         android:horizontalSpacing="10dp"
+                        android:isScrollContainer="false"
+
                         android:nestedScrollingEnabled="false"
-                        android:isScrollContainer="false" />
+                        android:numColumns="auto_fit"
+                        android:stretchMode="columnWidth"
+                        android:verticalSpacing="10dp" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

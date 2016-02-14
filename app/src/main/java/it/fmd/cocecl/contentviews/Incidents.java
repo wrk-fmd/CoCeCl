@@ -1,6 +1,8 @@
 package it.fmd.cocecl.contentviews;
 
-/** Incident ListView on mainstatusFragment **/
+/**
+ * Incident ListView on mainstatusFragment
+ **/
 
 public class Incidents {
 
@@ -11,7 +13,6 @@ public class Incidents {
     public String eadress;
 
     public String estshort;
-
 
 
     public Incidents(String ecode, String edescription, String eadress, String estshort) {

@@ -6,6 +6,6 @@
     <item
         android:drawable="@color/default_color" />
 -->
-    <item android:state_pressed="true" android:drawable="@color/pressed_color" />
+    <item android:drawable="@color/pressed_color" android:state_pressed="true" />
     <!--<item android:state_focused="true" android:drawable="@color/default_color" />-->
 </selector>

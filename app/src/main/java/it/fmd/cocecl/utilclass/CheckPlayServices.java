@@ -6,10 +6,8 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import it.fmd.cocecl.MainActivity;
-
 public class CheckPlayServices extends Application {
-/*
+
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(this);
@@ -34,5 +32,5 @@ public class CheckPlayServices extends Application {
                     Toast.LENGTH_LONG).show();
         }
         return true;
-    }*/
+    }
 }

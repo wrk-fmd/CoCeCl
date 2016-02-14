@@ -19,18 +19,21 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import it.fmd.cocecl.MainActivity;
+import java.util.ArrayList;
+
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.gmapsnav.GetDirections;
 import it.fmd.cocecl.utilclass.GPSManager;
 
 public class mapFragment extends Fragment {
 
     MapView mMapView;
-    private GoogleMap googleMap;
-
+    ArrayList<LatLng> markerPoints;
     GPSManager gps = new GPSManager(getContext());
     double latitude = gps.getLatitude();
     double longitude = gps.getLongitude();
+    GetDirections GD = new GetDirections();
+    private GoogleMap googleMap;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -70,8 +73,84 @@ public class mapFragment extends Fragment {
         // MapCamera to unit position
         mapcamera();
 
+        //return v;
+
+        // GET DIRECTIONS/ROUTE
+
+        //TODO: get route btn, nav buttons on incident and delivery fragment
+
+        // Initializing
+        markerPoints = new ArrayList<LatLng>();
+/*
+        // Getting reference to SupportMapFragment of the activity_main
+        SupportMapFragment fm = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+
+        // Getting Map for the SupportMapFragment
+        googleMap = fm.getMap();
+*/
+        if (googleMap != null) {
+
+            // Enable MyLocation Button in the Map
+            //googleMap.setMyLocationEnabled(true);
+
+            // Setting onclick event listener for the map
+            googleMap.setOnMapClickListener(new GoogleMap.OnMapClickListener() {
+
+                @Override
+                public void onMapClick(LatLng point) {
+
+                    // Already two locations
+                    if (markerPoints.size() > 1) {
+                        markerPoints.clear();
+                        googleMap.clear();
+                    }
+
+                    // Adding new item to the ArrayList
+                    markerPoints.add(point);
+
+                    // Creating MarkerOptions
+                    MarkerOptions options = new MarkerOptions();
+
+                    // Setting the position of the marker
+                    options.position(point);
+
+                    /**
+                     * For the start location, the color of marker is GREEN and
+                     * for the end location, the color of marker is RED.
+                     */
+                    if (markerPoints.size() == 1) {
+                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_GREEN));
+                    } else if (markerPoints.size() == 2) {
+                        options.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_RED));
+                    }
+
+                    // Add new marker to the Google Map Android API V2
+                    googleMap.addMarker(options);
+
+                    // Checks, whether start and end locations are captured
+                    if (markerPoints.size() >= 2) {
+                        LatLng origin = markerPoints.get(0);
+                        LatLng dest = markerPoints.get(1);
+
+                        // Getting URL to the Google Directions API
+                        String url = GD.getDirectionsUrl(origin, dest);
+
+                        //TODO: resolve nonstatic method
+                        //GetDirections.DownloadTask downloadTask = new GetDirections.DownloadTask();
+                        //GetDirections.DownloadTask.execute(url);
+
+                        // Start downloading json data from Google Directions API
+                        //downloadTask.execute(url);
+                    }
+                }
+            });
+        }
+
         return v;
     }
+
+    // DIRECTIONS END //
+
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
@@ -91,7 +170,7 @@ public class mapFragment extends Fragment {
         //.icon(BitmapDescriptorFactory.fromResource(R.drawable.ic)));
     }
 
-    public void mapcamera () {
+    public void mapcamera() {
         //unit position from gps
         CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(latitude, longitude)).zoom(12).build();
         googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
@@ -129,7 +208,7 @@ public class mapFragment extends Fragment {
 
         if ((bo.getText().toString().trim().length() > 0) && (ao.getText().toString().trim().length() == 0)) {
 
-            Uri gmmIntentUribo = Uri.parse("google.navigation:q="+bo+"&mode=d");
+            Uri gmmIntentUribo = Uri.parse("google.navigation:q=" + bo + "&mode=d");
             Intent mapIntentbo = new Intent(Intent.ACTION_VIEW, gmmIntentUribo);
             mapIntentbo.setPackage("com.google.android.apps.maps");
             startActivity(mapIntentbo);

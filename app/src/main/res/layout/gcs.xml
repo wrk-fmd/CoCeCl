@@ -1,47 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent" android:layout_height="match_parent"
-    android:id="@+id/gcsrelayout">>
+    android:id="@+id/gcsrelayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">>
 
     <TextView
+        android:id="@+id/textView51"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Glascow Come Scale"
-        android:id="@+id/textView51"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="Glascow Come Scale"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
     <Space
+        android:id="@+id/space6"
         android:layout_width="20px"
         android:layout_height="30dp"
-        android:layout_below="@+id/textView51"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_gravity="center_horizontal"
-        android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:id="@+id/space6" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView51"
+        android:layout_gravity="center_horizontal" />
 
     <TextView
+        android:id="@+id/textView52"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="Augen öffnen"
-        android:id="@+id/textView52"
-        android:layout_below="@+id/space6"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/space6"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="70dp"
-        android:layout_marginBottom="10dp"/>
+        android:text="Augen öffnen"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView52"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView52"
         android:layout_toLeftOf="@+id/textView53"
         android:layout_toStartOf="@+id/textView53">
 
@@ -50,20 +51,20 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="4"
                 android:id="@+id/textView56"
-                android:layout_column="1" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="4"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:text="spontan"
-                android:onClick="onCheckboxClicked" />
+                android:onClick="onCheckboxClicked"
+                android:text="spontan" />
         </TableRow>
 
         <TableRow
@@ -71,20 +72,20 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="3"
                 android:id="@+id/textView68"
-                android:layout_column="1" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="3"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:text="auf Aufforderung"
-                android:onClick="onCheckboxClicked" />
+                android:onClick="onCheckboxClicked"
+                android:text="auf Aufforderung" />
         </TableRow>
 
         <TableRow
@@ -92,20 +93,20 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="2"
                 android:id="@+id/textView69"
-                android:layout_column="1" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="2"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_column="2"
-                android:text="auf Schmerzreiz"
-                android:onClick="onCheckboxClicked" />
+                android:onClick="onCheckboxClicked"
+                android:text="auf Schmerzreiz" />
         </TableRow>
 
         <TableRow
@@ -113,52 +114,52 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView70"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="1"
                 android:text="1"
-                android:id="@+id/textView70"
-                android:layout_column="1" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
+                android:id="@+id/checkBox5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/checkBox5"
                 android:layout_column="2"
-                android:text="nicht"
-                android:onClick="onCheckboxClicked" />
+                android:onClick="onCheckboxClicked"
+                android:text="nicht" />
         </TableRow>
     </TableLayout>
 
     <TextView
+        android:id="@+id/textView53"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="verbale Reaktion"
-        android:id="@+id/textView53"
         android:layout_alignTop="@+id/textView52"
-        android:layout_toRightOf="@+id/textView52"
-        android:layout_toEndOf="@+id/textView52"
+        android:layout_marginBottom="10dp"
         android:layout_marginRight="70dp"
-        android:layout_marginBottom="10dp"/>
+        android:layout_toEndOf="@+id/textView52"
+        android:layout_toRightOf="@+id/textView52"
+        android:text="verbale Reaktion"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
+        android:id="@+id/textView54"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="motorische Reaktion"
-        android:id="@+id/textView54"
         android:layout_alignTop="@+id/textView53"
-        android:layout_toRightOf="@+id/textView53"
+        android:layout_marginBottom="10dp"
         android:layout_toEndOf="@+id/textView53"
-        android:layout_marginBottom="10dp"/>
+        android:layout_toRightOf="@+id/textView53"
+        android:text="motorische Reaktion"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@+id/textView53"
-        android:layout_toRightOf="@+id/textView52"
         android:layout_toLeftOf="@+id/textView54"
+        android:layout_toRightOf="@+id/textView52"
         android:layout_toStartOf="@+id/textView54">
 
         <TableRow
@@ -166,19 +167,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="5"
                 android:id="@+id/textView71"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="orientiert"
+                android:layout_column="0"
+                android:text="5"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox6"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="orientiert" />
         </TableRow>
 
         <TableRow
@@ -186,19 +187,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="4"
                 android:id="@+id/textView72"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="desorietiert"
+                android:layout_column="0"
+                android:text="4"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox7"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="desorietiert" />
         </TableRow>
 
         <TableRow
@@ -206,19 +207,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="3"
                 android:id="@+id/textView73"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="inadäquate Äusserung"
+                android:layout_column="0"
+                android:text="3"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox8"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="inadäquate Äusserung" />
         </TableRow>
 
         <TableRow
@@ -226,19 +227,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="2"
                 android:id="@+id/textView74"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="unverständliche Laute"
+                android:layout_column="0"
+                android:text="2"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox9"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="unverständliche Laute" />
         </TableRow>
 
         <TableRow
@@ -246,49 +247,49 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView75"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
                 android:text="1"
-                android:id="@+id/textView75"
-                android:layout_column="0" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
+                android:id="@+id/checkBox10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="keine"
-                android:id="@+id/checkBox10"
-                android:layout_column="1" />
+                android:layout_column="1"
+                android:text="keine" />
         </TableRow>
     </TableLayout>
 
     <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/textView54"
+        android:layout_alignEnd="@+id/textView54"
         android:layout_alignLeft="@+id/textView54"
-        android:layout_alignStart="@+id/textView54"
         android:layout_alignRight="@+id/textView54"
-        android:layout_alignEnd="@+id/textView54">
+        android:layout_alignStart="@+id/textView54"
+        android:layout_below="@+id/textView54">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="6"
                 android:id="@+id/textView55"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="auf Aufforderung"
+                android:layout_column="0"
+                android:text="6"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox11"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="auf Aufforderung" />
         </TableRow>
 
         <TableRow
@@ -296,19 +297,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="5"
                 android:id="@+id/textView65"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="gezielt auf Schmerzreiz"
+                android:layout_column="0"
+                android:text="5"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox12"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="gezielt auf Schmerzreiz" />
         </TableRow>
 
         <TableRow
@@ -316,19 +317,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="4"
                 android:id="@+id/textView66"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ungezielt auf Schmerzreiz"
+                android:layout_column="0"
+                android:text="4"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox13"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="ungezielt auf Schmerzreiz" />
         </TableRow>
 
         <TableRow
@@ -336,19 +337,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="3"
                 android:id="@+id/textView67"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="abnorme Beugeabwehr"
+                android:layout_column="0"
+                android:text="3"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox14"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="abnorme Beugeabwehr" />
         </TableRow>
 
         <TableRow
@@ -356,19 +357,19 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="2"
                 android:id="@+id/textView76"
-                android:layout_column="0" />
-
-            <CheckBox
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Streckneigung"
+                android:layout_column="0"
+                android:text="2"
+                android:textAppearance="?android:attr/textAppearanceSmall" />
+
+            <CheckBox
                 android:id="@+id/checkBox15"
-                android:layout_column="1" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="1"
+                android:text="Streckneigung" />
         </TableRow>
 
         <TableRow
@@ -376,19 +377,19 @@
             android:layout_height="match_parent">
 
             <TextView
+                android:id="@+id/textView77"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:layout_column="0"
                 android:text="1"
-                android:id="@+id/textView77"
-                android:layout_column="0" />
+                android:textAppearance="?android:attr/textAppearanceSmall" />
 
             <CheckBox
+                android:id="@+id/checkBox16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="keine"
-                android:id="@+id/checkBox16"
-                android:layout_column="1" />
+                android:layout_column="1"
+                android:text="keine" />
         </TableRow>
     </TableLayout>
 

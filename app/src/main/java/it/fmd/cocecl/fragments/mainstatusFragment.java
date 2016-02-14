@@ -14,37 +14,26 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.TimeZone;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.IncidentAdapter;
 import it.fmd.cocecl.contentviews.Incidents;
 import it.fmd.cocecl.contentviews.ListViewUtil;
-import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 import it.fmd.cocecl.unitstatus.SetUnitStatus;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 public class mainstatusFragment extends Fragment {
 
     SetUnitStatus sus = new SetUnitStatus();
-    SetIncidentStatus sis = new SetIncidentStatus();
 
-    /*
-        @Override
-        public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-        }
-    */
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,6 +87,9 @@ public class mainstatusFragment extends Fragment {
                 emergencybtn();
             }
         });
+
+
+        // ReportIncident PlacesAutoComplete
 
         return v;
     }
@@ -355,84 +347,6 @@ public class mainstatusFragment extends Fragment {
 
         //cardviewst.setCardBackgroundColor(Color.parseColor("#9C27B0"));
         statusbtnlinlay.setBackgroundColor(Color.parseColor("#9C27B0"));
-    }
-
-    public void stbtnClick(View v) {
-
-        //final RelativeLayout deliveryloclayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
-
-        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
-        Button button41 = (Button) getActivity().findViewById(R.id.button41);
-
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getContext());
-        dlgBuilder.setTitle(R.string.stwe);
-        dlgBuilder.setMessage(button41.getText().toString());
-        dlgBuilder.setCancelable(false);
-        dlgBuilder.setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-
-            final Button button41 = (Button) getActivity().findViewById(R.id.button41);
-            final TextView textView83 = (TextView) getActivity().findViewById(R.id.statusView);
-            final TextView textView85 = (TextView) getActivity().findViewById(R.id.textView85);
-            //final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
-
-            final TextView statuserror = (TextView) getActivity().findViewById(R.id.textView129);
-
-            Button button10 = (Button) getActivity().findViewById(R.id.button10);
-            Button button11 = (Button) getActivity().findViewById(R.id.button11);
-            Button button13 = (Button) getActivity().findViewById(R.id.button13);
-            Button button46 = (Button) getActivity().findViewById(R.id.button46);
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-
-                // QU Einsatz übernehmen
-                if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
-
-                    sis.qu();
-
-                    // ZBO
-                } else if (textView83.getText().equals("QU")) {
-
-                    sis.st3();
-
-                    // ABO
-                } else if (textView83.getText().equals("ZBO")) {
-
-                    sis.st4();
-
-                    // ZAO
-                } else if ((textView83.getText().equals("ABO")) /*&& (aofield.getText().toString().trim().length() > 0)*/) {
-                    //TODO: redundante funktion
-                    sis.st7();
-
-                    // AAO
-                } else if (textView83.getText().equals("ZAO")) {
-
-                    sis.st8();
-
-                    // Einsatz abschliessen
-                } else if (textView83.getText().equals("AAO")) {
-
-                    sis.endIncident();
-
-                } else if (button41.getText().equals("Einsatz abschliessen")) {
-
-                    sis.removeIncident();
-                }
-            }
-        });
-
-        dlgBuilder.setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-            }
-        });
-
-        AlertDialog alert = dlgBuilder.create();
-        alert.show();
     }
 
     //Radio

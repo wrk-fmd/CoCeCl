@@ -1,4 +1,4 @@
-package it.fmd.cocecl.utilclass;
+package it.fmd.cocecl.gmapsnav;
 
 import android.content.Intent;
 import android.net.Uri;

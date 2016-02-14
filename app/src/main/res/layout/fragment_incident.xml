@@ -1,345 +1,340 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="it.fmd.cocecl.incident">
 
     <!-- Fragment wird bei Einsatz oder Auftrag geladen -->
 
     <LinearLayout
+        android:id="@+id/linearLayout5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_gravity="center_horizontal"
-        android:id="@+id/linearLayout5"
-        android:layout_marginTop="15dp">
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
         <TextView
+            android:id="@+id/tasktype"
             android:layout_width="180dp"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:textColorHint="@color/primary_dark_material_dark"
-            android:hint="Einsatzart"
-            android:gravity="center"
-            android:id="@+id/tasktype"
-            android:background="@drawable/edittext_style_1"
             android:layout_gravity="left"
-            android:layout_marginRight="10dp"/>
+            android:layout_marginRight="10dp"
+            android:background="@drawable/edittext_style_1"
+            android:gravity="center"
+            android:hint="Einsatzart"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textColorHint="@color/primary_dark_material_dark" />
 
         <CheckBox
+            android:id="@+id/emergencyBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/ssig"
-            android:id="@+id/emergencyBox"
+            android:layout_gravity="right"
             android:checked="false"
             android:clickable="false"
             android:enabled="true"
-            android:layout_gravity="right"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:hint="@string/ssig" />
 
     </LinearLayout>
 
     <View
+        android:id="@+id/linearLayout6"
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_below="@+id/linearLayout5"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout6"
-        android:layout_marginBottom="5dp">
-    </View>
+        android:layout_marginBottom="5dp"
+        android:background="#000000"></View>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/status"
         android:id="@+id/textView82"
-        android:layout_below="@+id/linearLayout6"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:layout_below="@+id/linearLayout6"
+        android:layout_centerHorizontal="true"
+        android:text="@string/status"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <TextView
         android:id="@+id/statusView"
-        android:layout_below="@+id/textView82"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button41"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView82"
         android:layout_toLeftOf="@+id/textView82"
         android:layout_toStartOf="@+id/textView82"
-        android:hint="aktueller status"
-        android:gravity="center"
-        android:textStyle="bold"
         android:background="@drawable/edittext_style_1"
+        android:gravity="center"
+        android:hint="aktueller status"
+        android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/primary_dark_material_dark"
         android:textColorHint="@color/primary_dark_material_dark"
-        android:layout_alignBottom="@+id/button41" />
+        android:textStyle="bold" />
 
     <Button
+        android:id="@+id/button41"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/button41"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textView82"
         android:layout_toRightOf="@+id/statusView"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:hint="status weiterschalten"
-        android:enabled="true"
         android:clickable="true"
+        android:enabled="true"
+        android:hint="status weiterschalten"
         android:onClick="stbtnClick" />
 
     <View
+        android:id="@+id/view7"
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
-        android:layout_below="@+id/statusView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/view7"
-        android:layout_marginTop="5dp">
-    </View>
+        android:layout_below="@+id/statusView"
+        android:layout_marginTop="5dp"
+        android:background="#000000"></View>
 
     <ScrollView
+        android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView2"
         android:layout_below="@+id/view7">
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/button41">
-
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp">
+            android:layout_height="match_parent"
+            android:layout_below="@+id/button41"
+            android:layout_centerHorizontal="true"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/bofield"
+                    android:layout_width="0dp"
+                    android:layout_height="120dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_below="@+id/tasktype"
+                    android:layout_weight="100"
+                    android:background="@drawable/edittext_style_1"
+                    android:clickable="false"
+                    android:editable="false"
+                    android:enabled="true"
+                    android:gravity="center"
+                    android:hint="@string/bo"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:textColor="@color/primary_dark_material_dark"
+                    android:textColorHint="@color/primary_dark_material_dark" />
+
+                <Button
+                    android:id="@+id/button18"
+                    android:layout_width="70dp"
+                    android:layout_height="match_parent"
+                    android:clickable="true"
+                    android:drawableTop="@drawable/ic_navigation_black_18dp"
+                    android:enabled="true"
+                    android:onClick="navigate"
+                    android:text="@string/nav" />
+            </LinearLayout>
 
             <TextView
-                android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:id="@+id/bgfield"
+                android:layout_width="match_parent"
+                android:layout_height="25dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bofield"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_style_1"
+                android:enabled="false"
+                android:gravity="center"
+                android:hint="@string/bg"
+                android:inputType="text"
                 android:textAppearance="?android:attr/textAppearanceMedium"
-                android:id="@+id/bofield"
-                android:enabled="true"
-                android:clickable="false"
                 android:textColor="@color/primary_dark_material_dark"
                 android:textColorHint="@color/primary_dark_material_dark"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/infofield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/bgfield"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/edittext_style_1"
+                android:enabled="false"
                 android:gravity="center"
-                android:hint="@string/bo"
-                android:layout_below="@+id/tasktype"
+                android:hint="@string/info"
+                android:inputType="text"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textColorHint="@color/primary_dark_material_dark" />
+
+            <TextView
+                android:id="@+id/brfrfield"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignEnd="@+id/textView8"
                 android:layout_alignParentLeft="true"
                 android:layout_alignParentStart="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentEnd="true"
+                android:layout_alignRight="@+id/textView8"
+                android:layout_below="@+id/infofield"
+                android:layout_marginTop="10dp"
                 android:background="@drawable/edittext_style_1"
-                android:editable="false"
-                android:layout_weight="100" />
+                android:gravity="center"
+                android:hint="@string/brfr"
+                android:inputType="phone"
+                android:phoneNumber="true"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textColor="@color/primary_dark_material_dark"
+                android:textColorHint="@color/primary_dark_material_dark" />
 
-            <Button
-                android:layout_width="70dp"
-                android:layout_height="match_parent"
-                android:text="@string/nav"
-                android:id="@+id/button18"
-                android:clickable="true"
-                android:enabled="true"
-                android:drawableTop="@drawable/ic_navigation_black_18dp"
-                android:onClick="navigate"/>
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="25dp"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_dark_material_dark"
-            android:textColorHint="@color/primary_dark_material_dark"
-            android:gravity="center"
-            android:hint="@string/bg"
-            android:id="@+id/bgfield"
-            android:inputType="text"
-            android:enabled="false"
-            android:layout_below="@+id/bofield"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/edittext_style_1"
-            android:layout_marginTop="10dp"
-            android:visibility="gone"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_dark_material_dark"
-            android:textColorHint="@color/primary_dark_material_dark"
-            android:gravity="center"
-            android:hint="@string/info"
-            android:id="@+id/infofield"
-            android:inputType="text"
-            android:enabled="false"
-            android:layout_below="@+id/bgfield"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/edittext_style_1"
-            android:layout_marginTop="10dp" />
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:textColor="@color/primary_dark_material_dark"
-            android:textColorHint="@color/primary_dark_material_dark"
-            android:gravity="center"
-            android:hint="@string/brfr"
-            android:id="@+id/brfrfield"
-            android:inputType="phone"
-            android:layout_below="@+id/infofield"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignRight="@+id/textView8"
-            android:layout_alignEnd="@+id/textView8"
-            android:background="@drawable/edittext_style_1"
-            android:layout_marginTop="10dp"
-            android:phoneNumber="true" />
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#000000"
-            android:layout_marginTop="10dp">
-        </View>
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:layout_marginTop="10dp"
+                android:background="#000000"></View>
 
 
-        <TableLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
-
-            <TableRow
+            <TableLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="3"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <Button
+                        android:id="@+id/button46"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_column="0"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:drawableTop="@drawable/ic_person_add_black_18dp"
+                        android:enabled="false"
+                        android:onClick="createpat"
+                        android:text="Pat anlegen"
+                        android:textSize="12dp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:weightSum="3">
+
+                    <Button
+                        android:id="@+id/button10"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_column="0"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:drawableTop="@drawable/ic_call_missed_black_18dp"
+                        android:enabled="false"
+                        android:onClick="patstatusbtns"
+                        android:text="@string/stbutton10"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/button13"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_column="1"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:drawableTop="@drawable/ic_repeat_black_18dp"
+                        android:enabled="false"
+                        android:onClick="patstatusbtns"
+                        android:text="@string/stbutton13"
+                        android:textSize="12dp" />
+
+                    <Button
+                        android:id="@+id/button11"
+                        android:layout_width="0dp"
+                        android:layout_height="70dp"
+                        android:layout_column="2"
+                        android:layout_weight="1"
+                        android:clickable="false"
+                        android:drawableTop="@drawable/ic_directions_run_black_18dp"
+                        android:enabled="false"
+                        android:onClick="patstatusbtns"
+                        android:text="@string/stbutton11"
+                        android:textSize="12dp" />
+                </TableRow>
+            </TableLayout>
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="2dip"
+                android:background="#000000"></View>
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Zugewiesene Einheiten"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ListView
+                android:id="@+id/unitLView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
                 android:orientation="horizontal">
 
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:text="Pat anlegen"
-                    android:id="@+id/button46"
-                    android:layout_column="0"
-                    android:drawableTop="@drawable/ic_person_add_black_18dp"
-                    android:layout_weight="1"
-                    android:textSize="12dp"
-                    android:onClick="createpat"
-                    android:clickable="false"
-                    android:enabled="false" />
-
-            </TableRow>
-
-            <TableRow
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:weightSum="3"
-                android:orientation="horizontal">
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:text="@string/stbutton10"
-                    android:textSize="12dp"
-                    android:id="@+id/button10"
-                    android:clickable="false"
-                    android:onClick="patstatusbtns"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_call_missed_black_18dp"
-                    android:layout_column="0"
-                    android:enabled="false" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:text="@string/stbutton13"
-                    android:textSize="12dp"
-                    android:id="@+id/button13"
-                    android:clickable="false"
-                    android:onClick="patstatusbtns"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_repeat_black_18dp"
-                    android:layout_column="1"
-                    android:enabled="false" />
-
-                <Button
-                    android:layout_width="0dp"
-                    android:layout_height="70dp"
-                    android:text="@string/stbutton11"
-                    android:textSize="12dp"
-                    android:id="@+id/button11"
-                    android:clickable="false"
-                    android:onClick="patstatusbtns"
-                    android:layout_weight="1"
-                    android:drawableTop="@drawable/ic_directions_run_black_18dp"
-                    android:layout_column="2"
-                    android:enabled="false" />
-            </TableRow>
-        </TableLayout>
-
-        <View
-            android:layout_width="fill_parent"
-            android:layout_height="2dip"
-            android:background="#000000">
-        </View>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Zugewiesene Einheiten"
-            android:id="@+id/textView10" />
-
-        <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/unitLView"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
-
-        <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal">
+            </LinearLayout>
 
         </LinearLayout>
-
-    </LinearLayout>
     </ScrollView>
 
     <TextView
+        android:id="@+id/textView85"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:id="@+id/textView85"
-        android:gravity="center"
         android:layout_alignBottom="@+id/textView82"
+        android:layout_alignEnd="@+id/statusView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout6"
         android:layout_alignRight="@+id/statusView"
-        android:layout_alignEnd="@+id/statusView"
+        android:layout_below="@+id/linearLayout6"
         android:editable="false"
+        android:gravity="center"
+        android:hint="time statuschange"
         android:inputType="time"
-        android:hint="time statuschange" />
+        android:textAppearance="?android:attr/textAppearanceSmall" />
 
 </RelativeLayout>

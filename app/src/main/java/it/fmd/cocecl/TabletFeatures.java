@@ -10,6 +10,7 @@ public class TabletFeatures extends Application {
 
     // Toolbar
     //TODO aditional toolbar textfields
+    // Radio stream
 
     // disable phone if no gsm available
     //TODO set phonecall buttons gone

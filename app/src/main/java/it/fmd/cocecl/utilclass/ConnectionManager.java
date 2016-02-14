@@ -4,12 +4,9 @@ import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
-import android.widget.TextView;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -17,11 +14,6 @@ import java.net.URL;
 import java.net.URLConnection;
 
 import it.fmd.cocecl.APPConstants;
-import it.fmd.cocecl.LoginActivity;
-import it.fmd.cocecl.R;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 public class ConnectionManager extends Application {
 

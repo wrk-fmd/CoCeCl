@@ -24,20 +24,20 @@ public class StatusReport extends MainActivity {
     // Button state & color functions START //
     // Status Tastenfeld //
 
-    final Button button = (Button)findViewById(R.id.button);
-    final Button button2 = (Button)findViewById(R.id.button2);
-    final Button button3 = (Button)findViewById(R.id.button3);
-    final Button button4 = (Button)findViewById(R.id.button4);
-    final Button button5 = (Button)findViewById(R.id.button5);
-    final Button button6 = (Button)findViewById(R.id.button6);
-    final Button button7 = (Button)findViewById(R.id.button7);
-    final Button button8 = (Button)findViewById(R.id.button8);
-    final Button button9 = (Button)findViewById(R.id.button9);
-    final Button button10 = (Button)findViewById(R.id.button10);
-    final Button button11 = (Button)findViewById(R.id.button11);
-    final Button button12 = (Button)findViewById(R.id.button12);
-    final Button button13 = (Button)findViewById(R.id.button13);
-    final Button button42 = (Button)findViewById(R.id.button42);
+    final Button button = (Button) findViewById(R.id.button);
+    final Button button2 = (Button) findViewById(R.id.button2);
+    final Button button3 = (Button) findViewById(R.id.button3);
+    final Button button4 = (Button) findViewById(R.id.button4);
+    final Button button5 = (Button) findViewById(R.id.button5);
+    final Button button6 = (Button) findViewById(R.id.button6);
+    final Button button7 = (Button) findViewById(R.id.button7);
+    final Button button8 = (Button) findViewById(R.id.button8);
+    final Button button9 = (Button) findViewById(R.id.button9);
+    final Button button10 = (Button) findViewById(R.id.button10);
+    final Button button11 = (Button) findViewById(R.id.button11);
+    final Button button12 = (Button) findViewById(R.id.button12);
+    final Button button13 = (Button) findViewById(R.id.button13);
+    final Button button42 = (Button) findViewById(R.id.button42);
 
 
     public void st1(View v) {

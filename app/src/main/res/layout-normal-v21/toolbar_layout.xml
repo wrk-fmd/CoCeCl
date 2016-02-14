@@ -68,33 +68,33 @@
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="WIFI"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_below="@+id/textView107"
             android:layout_alignLeft="@+id/textView107"
-            android:layout_alignStart="@+id/textView107" />
+            android:layout_alignStart="@+id/textView107"
+            android:layout_below="@+id/textView107"
+            android:text="WIFI"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView83"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="MOBILE"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:layout_below="@+id/textView7"
             android:layout_alignLeft="@+id/textView7"
-            android:layout_alignStart="@+id/textView7" />
+            android:layout_alignStart="@+id/textView7"
+            android:layout_below="@+id/textView7"
+            android:text="MOBILE"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <TextView
             android:id="@+id/textView107"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/connection"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:textStyle="bold"
             android:layout_alignParentTop="true"
+            android:layout_marginRight="15dp"
             android:layout_toLeftOf="@+id/textView97"
             android:layout_toStartOf="@+id/textView97"
-            android:layout_marginRight="15dp"/>
+            android:text="@string/connection"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textStyle="bold" />
 
         <ImageView
             android:id="@+id/erroriconView"
@@ -108,14 +108,14 @@
             android:layout_below="@+id/imageView2" />
 
         <TextView
+            android:id="@+id/textView108"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="GPS"
-            android:id="@+id/textView108"
             android:layout_alignTop="@+id/imageView2"
+            android:layout_toEndOf="@+id/textView83"
             android:layout_toRightOf="@+id/textView83"
-            android:layout_toEndOf="@+id/textView83" />
+            android:text="GPS"
+            android:textAppearance="?android:attr/textAppearanceSmall" />
     </RelativeLayout>
 
 </android.support.v7.widget.Toolbar>

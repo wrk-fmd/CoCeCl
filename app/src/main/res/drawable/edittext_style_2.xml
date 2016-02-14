@@ -4,17 +4,18 @@
 
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
 
-    android:thickness="0dp"
-    android:shape="rectangle">
+    android:shape="rectangle"
+    android:thickness="0dp">
 
-    <stroke android:width="0dp"
-        android:color="#0D47A1"/>
+    <stroke
+        android:width="0dp"
+        android:color="#0D47A1" />
 
     <corners android:radius="5dp" />
 
     <gradient
-        android:startColor="#ffeb3b"
+        android:angle="270"
         android:endColor="#fff59d"
-        android:type="linear"
-        android:angle="270"/>
+        android:startColor="#ffeb3b"
+        android:type="linear" />
 </shape>

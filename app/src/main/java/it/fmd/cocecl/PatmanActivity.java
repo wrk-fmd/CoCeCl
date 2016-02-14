@@ -15,21 +15,18 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import it.fmd.cocecl.fragments.abcdeFragment;
-import it.fmd.cocecl.fragments.anamnesisFragment;
-import it.fmd.cocecl.fragments.patmanFragment;
-import it.fmd.cocecl.fragments.traumaFragment;
+import it.fmd.cocecl.fragmentspatman.abcdeFragment;
+import it.fmd.cocecl.fragmentspatman.anamnesisFragment;
+import it.fmd.cocecl.fragmentspatman.patmanFragment;
+import it.fmd.cocecl.fragmentspatman.traumaFragment;
 
 public class PatmanActivity extends FragmentActivity {
-    private FragmentTabHost mTabHost;
-
     private static final String TAG = "DialogActivity";
-
     private static final int DLG_Allergien = 0;
     private static final int DLG_Medikamente = 1;
-
     private static final int TEXT_Allergien = 0;
     private static final int TEXT_Medikamente = 1;
+    private FragmentTabHost mTabHost;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -196,7 +193,7 @@ public class PatmanActivity extends FragmentActivity {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
 
-                            View viewToRemove= findViewById(R.id.gcsrelayout);
+                            View viewToRemove = findViewById(R.id.gcsrelayout);
                             if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                                 ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
                         }
@@ -241,9 +238,7 @@ public class PatmanActivity extends FragmentActivity {
                     CheckBox checkBox5 = (CheckBox) findViewById(R.id.checkBox5);
                     checkBox5.setEnabled(false);
                     checkBox5.setClickable(false);
-                }
-                    else
-                {
+                } else {
                     Toast.makeText(PatmanActivity.this,
                             "unchecked", Toast.LENGTH_LONG).show();
 
@@ -263,52 +258,47 @@ public class PatmanActivity extends FragmentActivity {
                     checkBox5.setEnabled(true);
                     checkBox5.setClickable(true);
                 }
-                    break;
+                break;
 
-                    case R.id.checkBox3:
-                        if (checked) {
-                            // Cheese me
-                        }
-                        else {
-                            // I'm lactose intolerant
-                        }
-                        break;
-                    case R.id.checkBox4:
-                        if (checked) {
-                            // Cheese me
-                        }
-                        else {
-                            // I'm lactose intolerant
-                        }
-                        break;
-                    case R.id.checkBox5:
-                        if (checked) {
-                            // Cheese me
-                        }
-                        else {
-                            // I'm lactose intolerant
-                        }
-                        break;
-
-                }
-        }
-
-/**
-        checkBox2.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                if (checkBox2.isChecked()) {
-                    System.out.println("Checked");
+            case R.id.checkBox3:
+                if (checked) {
+                    // Cheese me
                 } else {
-                    System.out.println("Un-Checked");
+                    // I'm lactose intolerant
                 }
-            }
-        });
+                break;
+            case R.id.checkBox4:
+                if (checked) {
+                    // Cheese me
+                } else {
+                    // I'm lactose intolerant
+                }
+                break;
+            case R.id.checkBox5:
+                if (checked) {
+                    // Cheese me
+                } else {
+                    // I'm lactose intolerant
+                }
+                break;
+
+        }
     }
 
-*/
+    /**
+     * checkBox2.setOnClickListener(new View.OnClickListener() {
+     *
+     * @Override public void onClick(View v) {
+     * // TODO Auto-generated method stub
+     * if (checkBox2.isChecked()) {
+     * System.out.println("Checked");
+     * } else {
+     * System.out.println("Un-Checked");
+     * }
+     * }
+     * });
+     * }
+     */
     public void checkBox3(View v) {
         if (v.getId() == R.id.checkBox3) {
 

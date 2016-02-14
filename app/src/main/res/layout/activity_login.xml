@@ -11,115 +11,124 @@
     tools:context="it.fmd.cocecl.LoginActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/app_fullname"
-        android:textSize="15pt"
-        android:id="@+id/textView"
-        android:textStyle="bold|italic"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <EditText android:id="@+id/logindnr" android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:hint="Dienstnummer"
-        android:inputType="textEmailAddress" android:maxLines="1"
-        android:singleLine="true"
-        android:gravity="center"
-        android:layout_below="@+id/view8"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_style_login" />
+        android:layout_alignParentTop="true"
+        android:text="@string/app_fullname"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="15pt"
+        android:textStyle="bold|italic" />
 
-    <EditText android:id="@+id/loginpassword" android:layout_width="match_parent"
+    <EditText
+        android:id="@+id/logindnr"
+        android:layout_width="match_parent"
         android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/view8"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_style_login"
+        android:gravity="center"
+        android:hint="Dienstnummer"
+        android:inputType="textEmailAddress"
+        android:maxLines="1"
+        android:singleLine="true" />
+
+    <EditText
+        android:id="@+id/loginpassword"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/logindnr"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/edittext_style_login"
+        android:gravity="center"
         android:hint="@string/prompt_password"
         android:imeActionId="@+id/login"
         android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionUnspecified" android:inputType="textPassword"
-        android:maxLines="1" android:singleLine="true"
-        android:layout_below="@+id/logindnr"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:gravity="center"
-        android:layout_marginTop="10dp"
-        android:background="@drawable/edittext_style_login" />
-
-    <Button android:id="@+id/signinbtn" style="?android:textAppearanceSmall"
-        android:layout_width="match_parent" android:layout_height="wrap_content"
-        android:text="Sign In"
-        android:textStyle="bold"
-        android:onClick="signin"
-        android:layout_below="@+id/loginpassword"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"/>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:background="#000000"
-        android:id="@+id/view8"
-        android:layout_below="@+id/progressBar"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
-    </View>
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:background="#000000"
-        android:layout_below="@+id/signinbtn"
-        android:id="@+id/view10"
-        android:layout_marginBottom="10dp">
-    </View>
+        android:imeOptions="actionUnspecified"
+        android:inputType="textPassword"
+        android:maxLines="1"
+        android:singleLine="true" />
 
     <Button
+        android:id="@+id/signinbtn"
+        style="?android:textAppearanceSmall"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/loginpassword"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:onClick="signin"
+        android:text="Sign In"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/view8"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/progressBar"
+        android:background="#000000"></View>
+
+    <View
+        android:id="@+id/view10"
+        android:layout_width="fill_parent"
+        android:layout_height="2dip"
+        android:layout_below="@+id/signinbtn"
+        android:layout_marginBottom="10dp"
+        android:background="#000000"></View>
+
+    <Button
+        android:id="@+id/gotoregisterbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Register"
-        android:id="@+id/gotoregisterbtn"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/view10"
         android:clickable="true"
         android:enabled="true"
-        android:layout_below="@+id/view10"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:text="Register" />
 
     <ProgressBar
+        android:id="@+id/progressBar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/progressBar"
-        android:layout_below="@+id/textView"
+        android:layout_alignParentEnd="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView" />
 
     <TextView
+        android:id="@+id/textView94"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/textView94"
-        android:layout_below="@+id/view10"
+        android:layout_alignBottom="@+id/gotoregisterbtn"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/gotoregisterbtn"
+        android:layout_below="@+id/view10"
         android:layout_toLeftOf="@+id/gotoregisterbtn"
         android:layout_toStartOf="@+id/gotoregisterbtn"
-        android:hint="errorMsg" />
+        android:hint="errorMsg"
+        android:textColor="@color/red" />
 
     <Button
+        android:id="@+id/button22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="BYPASS"
-        android:id="@+id/button22"
-        android:layout_below="@+id/view10"
-        android:layout_alignRight="@+id/textView94"
         android:layout_alignEnd="@+id/textView94"
-        android:onClick="bypasslogin" />
+        android:layout_alignRight="@+id/textView94"
+        android:layout_below="@+id/view10"
+        android:onClick="bypasslogin"
+        android:text="BYPASS" />
 
 </RelativeLayout>

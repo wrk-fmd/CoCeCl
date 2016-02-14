@@ -5,13 +5,11 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import it.fmd.cocecl.R;
 
@@ -20,7 +18,7 @@ public class NavDrawerListAdapter extends BaseAdapter {
     private Context context;
     private ArrayList<NavDrawerItem> navDrawerItems;
 
-    public NavDrawerListAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems){
+    public NavDrawerListAdapter(Context context, ArrayList<NavDrawerItem> navDrawerItems) {
         this.context = context;
         this.navDrawerItems = navDrawerItems;
     }
@@ -57,9 +55,9 @@ public class NavDrawerListAdapter extends BaseAdapter {
 
         // displaying count
         // check whether it set visible or not
-        if(navDrawerItems.get(position).getCounterVisibility()){
+        if (navDrawerItems.get(position).getCounterVisibility()) {
             txtCount.setText(navDrawerItems.get(position).getCount());
-        }else{
+        } else {
             // hide the counter view
             txtCount.setVisibility(View.GONE);
         }

@@ -7,10 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -24,16 +22,13 @@ import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
@@ -43,30 +38,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.TimeZone;
 
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
@@ -78,10 +69,8 @@ import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
-import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
-import static android.graphics.Color.YELLOW;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -160,21 +149,21 @@ public class MainActivity extends AppCompatActivity {
 
         // VIEWPAGER //
         {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-        if ((getResources().getConfiguration().screenLayout &
-                Configuration.SCREENLAYOUT_SIZE_MASK) >=
-                Configuration.SCREENLAYOUT_SIZE_LARGE) {
+            if ((getResources().getConfiguration().screenLayout &
+                    Configuration.SCREENLAYOUT_SIZE_MASK) >=
+                    Configuration.SCREENLAYOUT_SIZE_LARGE) {
 
-            // on a normal screen device ...
-            this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                // on a normal screen device ...
+                this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
 
-            //TODO: set tabs depending on unit status
+                //TODO: set tabs depending on unit status
 
-            tabLayout.addTab(tabLayout.newTab().setText("Main"));
-            tabLayout.addTab(tabLayout.newTab().setText("Status"));
-            tabLayout.addTab(tabLayout.newTab().setText("AO"));
-        }
+                tabLayout.addTab(tabLayout.newTab().setText("Main"));
+                tabLayout.addTab(tabLayout.newTab().setText("Status"));
+                tabLayout.addTab(tabLayout.newTab().setText("AO"));
+            }
 
             if ((getResources().getConfiguration().screenLayout &
                     Configuration.SCREENLAYOUT_SIZE_MASK) <=
@@ -299,7 +288,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Slide menu item click listener
-     * */
+     */
     private class SlideMenuClickListener implements
             ListView.OnItemClickListener {
         @Override
@@ -372,7 +361,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Diplaying fragment view for selected nav drawer list item
-     * */
+     */
     /*
     private void displayView(int position) {
         // update the main content by replacing fragments
@@ -515,31 +504,31 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-/*
-    public void setConnectionIcons() {
-    //TODO: if on fullscreen set connection icons on toolbar visible, else invisible
+    /*
+        public void setConnectionIcons() {
+        //TODO: if on fullscreen set connection icons on toolbar visible, else invisible
 
-        //requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            //requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        TextView wifitext = (TextView)findViewById(R.id.textView7);
-        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+            TextView wifitext = (TextView)findViewById(R.id.textView7);
+            TextView mobiletext = (TextView)findViewById(R.id.textView83);
 
-        Window window = this.getWindow();
-        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-        if () {
+            Window window = this.getWindow();
+            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+            if () {
 
-            wifitext.setVisibility(View.VISIBLE);
-            mobiletext.setVisibility(View.VISIBLE);
+                wifitext.setVisibility(View.VISIBLE);
+                mobiletext.setVisibility(View.VISIBLE);
 
-        }else{
+            }else{
 
-            wifitext.setVisibility(View.INVISIBLE);
-            mobiletext.setVisibility(View.INVISIBLE);
+                wifitext.setVisibility(View.INVISIBLE);
+                mobiletext.setVisibility(View.INVISIBLE);
 
+            }
         }
-    }
-*/
+    */
     // ConnectionManager //
     //TODO: use broadcast receiver from connectionmanager class
     private void registerReceivers() {
@@ -549,26 +538,26 @@ public class MainActivity extends AppCompatActivity {
     // ToolBar status icons //
     public void checkMLSConnection() {
 
-            // ToolBar mls connection state icon
-            ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
-            {
-                // check if you are connected or not
+        // ToolBar mls connection state icon
+        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
+        {
+            // check if you are connected or not
 
-                if (conman.isConnectedToServer()) {
+            if (conman.isConnectedToServer()) {
 
-                    mlscon.setImageResource(R.drawable.connected64);
+                mlscon.setImageResource(R.drawable.connected64);
 
-                } else {
+            } else {
 
-                    mlscon.setImageResource(R.drawable.disconnected64);
-                }
+                mlscon.setImageResource(R.drawable.disconnected64);
             }
         }
+    }
 
     public void inetcon() {
         //TODO: use from Connection manager class
-        TextView wifitext = (TextView)findViewById(R.id.textView7);
-        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+        TextView wifitext = (TextView) findViewById(R.id.textView7);
+        TextView mobiletext = (TextView) findViewById(R.id.textView83);
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         if (activeNetwork != null) { // connected to the internet
@@ -587,11 +576,12 @@ public class MainActivity extends AppCompatActivity {
             mobiletext.setBackgroundColor(RED);
         }
     }
+
     public void checkInetConnection() {
 
         // TextView in ToolBar
-        TextView wifitext = (TextView)findViewById(R.id.textView7);
-        TextView mobiletext = (TextView)findViewById(R.id.textView83);
+        TextView wifitext = (TextView) findViewById(R.id.textView7);
+        TextView mobiletext = (TextView) findViewById(R.id.textView83);
 
         if (conman.isOnline()) {
 
@@ -618,7 +608,8 @@ public class MainActivity extends AppCompatActivity {
         try {
             gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
-        } catch (Exception ex) {}
+        } catch (Exception ex) {
+        }
 
         if (!gps_enabled) {
             gpstext.setBackgroundColor(RED);
@@ -663,11 +654,12 @@ public class MainActivity extends AppCompatActivity {
     //TODO: create app life cycle
 
     @Override
-    public void onStart(){
+    public void onStart() {
         super.onStart();
         //setSMS();
         //checkMLSConnection();
     }
+
     @Override
     public void onResume() {
         super.onResume();
@@ -798,42 +790,41 @@ public class MainActivity extends AppCompatActivity {
     public void patmanstart(View v) {
         if (v.getId() == R.id.button21) {
 
-                Button button21 = (Button) findViewById(R.id.button21);
-                button21.setOnClickListener(new View.OnClickListener() {
+            Button button21 = (Button) findViewById(R.id.button21);
+            button21.setOnClickListener(new View.OnClickListener() {
 
-                    @Override
-                    public void onClick(View arg0) {
-                        Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
-                        startActivity(ipatman);
-                    }
-                });
+                @Override
+                public void onClick(View arg0) {
+                    Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
+                    startActivity(ipatman);
+                }
+            });
 
-            }
         }
-
+    }
 
 
     // Report incident method on mainstatus fragment //
     // Get coordinates, and nearest address
-        public void reportincident(View v) {
+    public void reportincident(View v) {
 
-            RelativeLayout reportincident = (RelativeLayout)getLayoutInflater().inflate(R.layout.reportincident, null);
+        RelativeLayout reportincident = (RelativeLayout) getLayoutInflater().inflate(R.layout.reportincident, null);
 
-            if (v.getId() == R.id.button42) {
+        if (v.getId() == R.id.button42) {
 
-                final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
-                final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
-                final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
-                final TextView textView112 = (TextView) findViewById(R.id.textView112);
-                final Button button42 = (Button) findViewById(R.id.button42);
+            final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
+            final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
+            final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
+            final TextView textView112 = (TextView) findViewById(R.id.textView112);
+            final Button button42 = (Button) findViewById(R.id.button42);
 
-                AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-                dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
-                dlgBuilder.setCancelable(false);
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
+            dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
+            dlgBuilder.setCancelable(false);
 
-                button42.setClickable(false);
+            button42.setClickable(false);
 
-                dlgBuilder.setView(reportincident);
+            dlgBuilder.setView(reportincident);
 
                 /*
                 GPSManager.LocationResult locationResult = new GPSManager.LocationResult() {
@@ -848,108 +839,108 @@ public class MainActivity extends AppCompatActivity {
                 GPSManager mylocation = new GPSManager();
                 mylocation.getLocation(MainActivity.this, locationResult);
 */
-                GPSManager gps = new GPSManager(MainActivity.this);
-                double latitude = gps.getLatitude();
-                double longitude = gps.getLongitude();
+            GPSManager gps = new GPSManager(MainActivity.this);
+            double latitude = gps.getLatitude();
+            double longitude = gps.getLongitude();
 
-                Geocoder geocoder = new Geocoder(this, Locale.getDefault());
+            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
 
-                try {
-                    List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
+            try {
+                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
 
-                    if(addresses != null && addresses.size() > 0) {
-                        Address returnedAddress = addresses.get(0);
-                        StringBuilder strReturnedAddress = new StringBuilder();
-                        for(int i=0; i<returnedAddress.getMaxAddressLineIndex(); i++) {
-                            strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                        }
-
-                        //strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
-                        //strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
-                        //strReturnedAddress.append(returnedAddress.getCountryName());
-
-                        editText24.setText(strReturnedAddress.toString());
-
-                    } else {
-
-                        editText24.setText("No Address found!");
+                if (addresses != null && addresses.size() > 0) {
+                    Address returnedAddress = addresses.get(0);
+                    StringBuilder strReturnedAddress = new StringBuilder();
+                    for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
+                        strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
                     }
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                    editText24.setText("Cannot get Address!");
+
+                    //strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
+                    //strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
+                    //strReturnedAddress.append(returnedAddress.getCountryName());
+
+                    editText24.setText(strReturnedAddress.toString());
+
+                } else {
+
+                    editText24.setText("No Address found!");
                 }
-
-                    //editText24.setText(locationAddress);
-                    textView86.setText("lat: " + latitude);
-                    textView93.setText("lon: " + longitude);
-
-                dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                button42.setEnabled(false);
-                                button42.setClickable(false);
-                                //button42.setBackgroundColor(YELLOW);
-                                button42.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
-
-                                Handler h = new Handler();
-                                h.postDelayed(new
-
-                                                      Runnable() {
-                                                          @Override
-                                                          public void run() {
-                                                              button42.setEnabled(true);
-                                                              button42.setClickable(true);
-                                                              //button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                                              button42.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
-                                                              editText24.setText("");
-                                                              textView86.setText("");
-                                                              textView93.setText("");
-                                                              textView112.setText("");
-                                                              textView112.setVisibility(View.GONE);
-                                                          }
-                                                      }
-
-                                        , 30000);
-
-                                Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
-                                textView112.setVisibility(View.VISIBLE);
-                                textView112.setText("Einsatz gemeldet");
-
-                                dialog.cancel();
-                            }
-                        }
-
-                );
-
-                dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener()
-
-                        {
-
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-
-                                dialog.cancel();
-
-                            }
-                        }
-
-                );
-
-                AlertDialog alert = dlgBuilder.create();
-                alert.show();
-                button42.setClickable(true);
-
-                // remove layout
-                View viewToRemove = findViewById(R.id.reportincidentrelayout);
-                if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                    ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
-
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+                editText24.setText("Cannot get Address!");
             }
+
+            //editText24.setText(locationAddress);
+            textView86.setText("lat: " + latitude);
+            textView93.setText("lon: " + longitude);
+
+            dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            button42.setEnabled(false);
+                            button42.setClickable(false);
+                            //button42.setBackgroundColor(YELLOW);
+                            button42.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
+
+                            Handler h = new Handler();
+                            h.postDelayed(new
+
+                                                  Runnable() {
+                                                      @Override
+                                                      public void run() {
+                                                          button42.setEnabled(true);
+                                                          button42.setClickable(true);
+                                                          //button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
+                                                          button42.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
+                                                          editText24.setText("");
+                                                          textView86.setText("");
+                                                          textView93.setText("");
+                                                          textView112.setText("");
+                                                          textView112.setVisibility(View.GONE);
+                                                      }
+                                                  }
+
+                                    , 30000);
+
+                            Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
+                            textView112.setVisibility(View.VISIBLE);
+                            textView112.setText("Einsatz gemeldet");
+
+                            dialog.cancel();
+                        }
+                    }
+
+            );
+
+            dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener()
+
+                    {
+
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            dialog.cancel();
+
+                        }
+                    }
+
+            );
+
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+            button42.setClickable(true);
+
+            // remove layout
+            View viewToRemove = findViewById(R.id.reportincidentrelayout);
+            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+
+
         }
+    }
 
     // GCM Message/Notification/Snackbar update --------------------------
     //
@@ -985,7 +976,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-        // Check if Google Playservices is installed in Device or not
+    // Check if Google Playservices is installed in Device or not
 
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
@@ -1087,7 +1078,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (success == 1) {
                 Log.d("Success!", message);
-            }else{
+            } else {
                 Log.d("Failure", message);
             }
         }
@@ -1163,7 +1154,7 @@ public class MainActivity extends AppCompatActivity {
 
             if (success == 1) {
                 Log.d("Success!", message);
-            }else{
+            } else {
                 Log.d("Failure", message);
             }
         }

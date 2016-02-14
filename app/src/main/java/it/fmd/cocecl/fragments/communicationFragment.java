@@ -19,7 +19,9 @@ import it.fmd.cocecl.R;
 public class communicationFragment extends Fragment {
 
     @Override
-    public void onCreate(Bundle savedInstanceState) { super.onCreate(savedInstanceState); }
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -29,10 +31,10 @@ public class communicationFragment extends Fragment {
         return v;
     }
 
-    public void comcalls (View view) {
+    public void comcalls(View view) {
         Intent callIntent = new Intent(Intent.ACTION_CALL);
         PackageManager pm = getContext().getPackageManager();
-        switch(view.getId()) {
+        switch (view.getId()) {
 
             case R.id.button65:
 
@@ -58,10 +60,10 @@ public class communicationFragment extends Fragment {
                 break;
 
             case R.id.button67:
-                EditText dialer = (EditText)getActivity().findViewById(R.id.dialereditext);
+                EditText dialer = (EditText) getActivity().findViewById(R.id.dialereditext);
                 String dialernbr = dialer.getText().toString();
 
-                if(dialer.getText().toString().trim().length() > 0) {
+                if (dialer.getText().toString().trim().length() > 0) {
 
                     callIntent.setData(Uri.parse("tel:" + dialernbr));
                     startActivity(callIntent);

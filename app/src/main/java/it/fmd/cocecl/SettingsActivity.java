@@ -4,10 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.res.Configuration;
 import android.os.Bundle;
-import android.preference.PreferenceActivity;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.TabLayout;
-import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
@@ -119,9 +116,9 @@ public class SettingsActivity extends MainActivity {
     public void mapsswitch() {
 
         Switch mapsw = (Switch) getWindow().findViewById(R.id.switch5);
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
-            //tabLayout.removeTab(tabLayout.removeTab();
+        //tabLayout.removeTab(tabLayout.removeTab();
 
         mapsw.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override

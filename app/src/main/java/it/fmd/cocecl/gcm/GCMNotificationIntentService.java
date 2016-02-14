@@ -13,14 +13,13 @@ import android.support.v4.app.NotificationCompat;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.APPConstants;
+import it.fmd.cocecl.MainActivity;
 
 /**
  * This class post GCM messages as Notification and AlertDialog
- *
+ * <p>
  * GCM used to send custom Messages and WAKE Device, Incident info comes via JSON
- *
  */
 
 //TODO: Snackbar in NewIncident class
@@ -104,7 +103,7 @@ public class GCMNotificationIntentService extends IntentService {
         // Setting Dialog Message
         alertDialog.setMessage(message);
 
-        if(status != null)
+        if (status != null)
             // Setting alert dialog icon
             //alertDialog.setIcon((status) ? R.drawable.success : R.drawable.fail);
 

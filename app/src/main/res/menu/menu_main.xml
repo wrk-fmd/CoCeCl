@@ -1,34 +1,39 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools" tools:context=".MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
 
-    <item android:id="@+id/action_settings"
-          android:title="@string/action_settings"
-          android:orderInCategory="100"
-            app:showAsAction="never"
-            android:visible="false"/>
+    <item
+        android:id="@+id/action_settings"
+        android:orderInCategory="100"
+        android:title="@string/action_settings"
+        android:visible="false"
+        app:showAsAction="never" />
 
     <item
         android:id="@+id/action_user"
+        android:icon="@drawable/ic_person_white_24dp"
         android:orderInCategory="300"
         android:title="User"
-        android:icon="@drawable/ic_person_white_24dp"
         app:showAsAction="ifRoom">
 
         <menu>
-            <item android:id="@+id/showuser"
+            <item
+                android:id="@+id/showuser"
                 android:title="Account" />
-            <item android:id="@+id/logoutuser"
+            <item
+                android:id="@+id/logoutuser"
                 android:title="LogOut" />
-            <item android:id="@+id/unitinfo"
+            <item
+                android:id="@+id/unitinfo"
                 android:title="UnitInfo" />
         </menu>
 
     </item>
-<!--
-    <item
-        android:id="@+id/action_refresh"
-        android:title="Refresh"
-        android:src="@android:drawable/ic_popup_sync"/>
-        -->
+    <!--
+        <item
+            android:id="@+id/action_refresh"
+            android:title="Refresh"
+            android:src="@android:drawable/ic_popup_sync"/>
+            -->
 </menu>

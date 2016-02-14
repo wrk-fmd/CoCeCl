@@ -1,178 +1,179 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
-    android:layout_height="match_parent" tools:context="it.fmd.cocecl.fragments.commanderFragment">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="it.fmd.cocecl.fragments.commanderFragment">
 
 
     <TextView
+        android:id="@+id/textView87"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="CommanderTab"
-        android:id="@+id/textView87"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true" />
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_below="@+id/textView87"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="CommanderTab"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    <LinearLayout
         android:id="@+id/linearLayout7"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView87"
+        android:orientation="horizontal"
         android:weightSum="3">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Einsatz erstellen"
             android:id="@+id/textView88"
-            android:layout_weight="1.26" />
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Anforderungen"
+            android:layout_weight="1.26"
+            android:text="Einsatz erstellen"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
             android:id="@+id/textView89"
-            android:layout_weight="1"/>
-
-        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="Personal verwalten"
+            android:layout_weight="1"
+            android:text="Anforderungen"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <TextView
             android:id="@+id/textView90"
-            android:layout_weight="1"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Personal verwalten"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
     </LinearLayout>
 
     <View
+        android:id="@+id/linearLayout8"
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
-        android:layout_below="@+id/linearLayout7"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:id="@+id/linearLayout8">
-    </View>
+        android:layout_below="@+id/linearLayout7"
+        android:background="#000000"></View>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout9"
         android:layout_width="500dp"
         android:layout_height="match_parent"
-        android:layout_below="@+id/linearLayout7"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:weightSum="1"
-        android:id="@+id/linearLayout9">
+        android:layout_below="@+id/linearLayout7"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <Spinner
+            android:id="@+id/spinner19"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner19"
             android:layout_gravity="center_horizontal" />
 
         <Spinner
+            android:id="@+id/spinner20"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner20"
             android:layout_gravity="center_horizontal" />
 
         <Button
+            android:id="@+id/button58"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hinzufügen"
-            android:id="@+id/button58" />
+            android:text="Hinzufügen" />
 
         <CheckBox
+            android:id="@+id/checkBox17"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/ssig"
-            android:id="@+id/checkBox17"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="@string/ssig" />
 
         <EditText
+            android:id="@+id/editText16"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:inputType="textPostalAddress"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
             android:ems="10"
-            android:id="@+id/editText16"
-            android:layout_gravity="center_horizontal"
             android:hint="@string/bo"
-            android:layout_marginBottom="10dp"/>
+            android:inputType="textPostalAddress" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:id="@+id/editText17"
-            android:layout_gravity="center_horizontal"
-            android:hint="@string/bg"
-            android:layout_marginBottom="10dp"/>
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/editText18"
             android:layout_gravity="center_horizontal"
-            android:hint="@string/info"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            android:hint="@string/bg" />
+
+        <EditText
+            android:id="@+id/editText18"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="10dp"
+            android:hint="@string/info" />
 
         <TextView
+            android:id="@+id/textView91"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/textView91"
             android:layout_gravity="center_horizontal"
             android:layout_marginBottom="10dp"
             android:text="Ausgewählte Einheiten" />
 
         <ListView
+            android:id="@+id/listView"
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:id="@+id/listView"
             android:layout_gravity="center_horizontal"
             android:layout_weight="0.90" />
 
         <Button
+            android:id="@+id/button48"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Alarmieren"
-            android:id="@+id/button48"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:text="Alarmieren" />
     </LinearLayout>
 
     <TableLayout
+        android:id="@+id/tableLayout6"
         android:layout_width="400dp"
         android:layout_height="match_parent"
         android:layout_below="@+id/linearLayout8"
-        android:layout_toRightOf="@+id/linearLayout9"
-        android:id="@+id/tableLayout6">
+        android:layout_toRightOf="@+id/linearLayout9">
 
         <TableRow
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="KTW"
                 android:id="@+id/button49"
-                android:layout_column="0" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NEF"
+                android:layout_column="0"
+                android:text="KTW" />
+
+            <Button
                 android:id="@+id/button51"
-                android:layout_column="2" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="FW"
+                android:layout_column="2"
+                android:text="NEF" />
+
+            <Button
                 android:id="@+id/button53"
-                android:layout_column="3" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:text="FW" />
         </TableRow>
 
         <TableRow
@@ -180,25 +181,25 @@
             android:layout_height="match_parent">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="RTW"
                 android:id="@+id/button50"
-                android:layout_column="0" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="NAW"
+                android:layout_column="0"
+                android:text="RTW" />
+
+            <Button
                 android:id="@+id/button52"
-                android:layout_column="2" />
-
-            <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="SW"
+                android:layout_column="2"
+                android:text="NAW" />
+
+            <Button
                 android:id="@+id/button54"
-                android:layout_column="3" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="3"
+                android:text="SW" />
         </TableRow>
 
         <TableRow
@@ -206,11 +207,11 @@
             android:layout_height="match_parent">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="NAH"
                 android:id="@+id/button55"
-                android:layout_column="2" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="2"
+                android:text="NAH" />
         </TableRow>
 
         <TableRow
@@ -218,11 +219,11 @@
             android:layout_height="match_parent">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="MANV"
                 android:id="@+id/button56"
-                android:layout_column="4" />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_column="4"
+                android:text="MANV" />
         </TableRow>
 
         <TableRow
@@ -230,11 +231,11 @@
             android:layout_height="match_parent">
 
             <Button
+                android:id="@+id/button57"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="LAGEMELDUNG"
-                android:id="@+id/button57"
-                android:layout_column="4" />
+                android:layout_column="4"
+                android:text="LAGEMELDUNG" />
         </TableRow>
 
     </TableLayout>
@@ -242,63 +243,62 @@
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dip"
-        android:background="#000000"
-        android:layout_below="@+id/textView87"
+        android:layout_alignEnd="@+id/linearLayout10"
         android:layout_alignRight="@+id/linearLayout10"
-        android:layout_alignEnd="@+id/linearLayout10">
-    </View>
+        android:layout_below="@+id/textView87"
+        android:background="#000000"></View>
 
     <LinearLayout
-        android:orientation="vertical"
+        android:id="@+id/linearLayout10"
         android:layout_width="300dp"
         android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/linearLayout8"
         android:layout_toRightOf="@+id/tableLayout6"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/linearLayout10">
+        android:orientation="vertical">
 
         <Spinner
+            android:id="@+id/spinner21"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/spinner21"
             android:layout_gravity="center_horizontal" />
 
         <EditText
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
             android:id="@+id/editText20"
-            android:layout_gravity="center_horizontal"
-            android:hint="Dienstnummer" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_gravity="center_horizontal"
             android:ems="10"
+            android:hint="Dienstnummer"
+            android:inputType="number" />
+
+        <EditText
             android:id="@+id/editText21"
-            android:layout_gravity="center_horizontal"
-            android:hint="Familienname" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textPersonName"
+            android:layout_gravity="center_horizontal"
             android:ems="10"
+            android:hint="Familienname"
+            android:inputType="textPersonName" />
+
+        <EditText
             android:id="@+id/editText22"
-            android:layout_gravity="center_horizontal"
-            android:hint="Vorname" />
-
-        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="phone"
-            android:ems="10"
-            android:id="@+id/editText23"
             android:layout_gravity="center_horizontal"
-            android:hint="Telefonnummer" />
+            android:ems="10"
+            android:hint="Vorname"
+            android:inputType="textPersonName" />
+
+        <EditText
+            android:id="@+id/editText23"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:ems="10"
+            android:hint="Telefonnummer"
+            android:inputType="phone" />
     </LinearLayout>
 
 </RelativeLayout>

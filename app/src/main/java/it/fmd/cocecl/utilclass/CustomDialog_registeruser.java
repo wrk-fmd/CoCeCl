@@ -8,15 +8,15 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 
+import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
 /**
  * Validate Input on RegisterUser Dialog
  */
 
-public class CustomDialog_registeruser extends Activity {
+public class CustomDialog_registeruser extends MainActivity {
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
@@ -25,7 +25,7 @@ public class CustomDialog_registeruser extends Activity {
 
         //displayDialogWindow();
     }
-/*
+
     public void displayDialogWindow() {
         final AlertDialog.Builder loginDialog = new AlertDialog.Builder(new ContextThemeWrapper(this, android.R.style.Theme_DeviceDefault_Light_Dialog));
         LayoutInflater factory = LayoutInflater.from(this);
@@ -67,10 +67,10 @@ public class CustomDialog_registeruser extends Activity {
                 }
             }
 
-            );
+            )
 
-            loginDialog.show();
+            loginDialog.show()
         }
-    }*/
+    }
 }
 

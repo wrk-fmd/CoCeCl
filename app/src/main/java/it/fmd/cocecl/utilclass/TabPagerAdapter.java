@@ -3,11 +3,6 @@ package it.fmd.cocecl.utilclass;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.View;
-import android.view.ViewGroup;
-
-import java.util.ArrayList;
 
 import it.fmd.cocecl.fragments.communicationFragment;
 import it.fmd.cocecl.fragments.deliverylocFragment;

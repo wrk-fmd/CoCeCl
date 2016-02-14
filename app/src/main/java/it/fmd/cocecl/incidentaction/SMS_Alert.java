@@ -13,12 +13,11 @@ import it.fmd.cocecl.R;
 
 public class SMS_Alert extends MainActivity {
 
-    private CoordinatorLayout coordinatorLayout;
-
-    //SMS RECEIVER
-    TextView SMSm;
     static String phoneNumber1;
     static String SMSBody1;
+    //SMS RECEIVER
+    TextView SMSm;
+    private CoordinatorLayout coordinatorLayout;
 
     public static void getSmsDetails(String phoneNumber, String SMSBody) {
         phoneNumber1 = phoneNumber;
@@ -30,7 +29,7 @@ public class SMS_Alert extends MainActivity {
     public void setSMS() {
         //SMS Alert// write content to incident fields
 
-        if(phoneNumber1 == "+144") {
+        if (phoneNumber1 == "+144") {
             SMSm = (TextView) findViewById(R.id.bofield);
 
             SMSm.setText(SMSBody1);

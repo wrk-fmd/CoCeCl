@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +15,6 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -74,15 +72,22 @@ public class LoginActivity extends MainActivity {
     private TextView errormsgtxt;
     private ProgressBar loginProgressBar;
 
+    //Strings Register
+    public String familyname;
+    public String name;
+    public String dnr;
+    public String email;
+    public String password;
+
     // RegisterLayout
-    //private LinearLayout registeruserlayout;
-/*
+    private LinearLayout registeruserlayout;
+
     private EditText registerfamilyname;
     private EditText registername;
     private EditText registerdnr;
     private EditText registeremail;
     private EditText registerpassword;
-    */
+
     private Button btnRegister;
 
     // Floating Labels & errorMessages
@@ -104,12 +109,12 @@ public class LoginActivity extends MainActivity {
         setContentView(R.layout.activity_login);
 
         // Register Layout EditText
-        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+        registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
+        registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
 
 
         // OnClickListerners SignIn & Register
@@ -190,47 +195,6 @@ public class LoginActivity extends MainActivity {
 
         EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
         email.setError("Required");
-
-/*
-        inputDNr.addTextChangedListener(new MyTextWatcher(inputDNr));
-        inputEmail.addTextChangedListener(new MyTextWatcher(inputEmail));
-        inputPassword.addTextChangedListener(new MyTextWatcher(inputPassword));
-*/
-/*
-        // GET config file from server //
-        // load file
-        //TODO: get file from server
-
-        // either from assets or raw
-        Resources resources = this.getResources();
-        AssetManager assetManager = resources.getAssets();
-
-        // Read from the /assets directory
-        try {
-            InputStream inputStream = assetManager.open("cocecl.properties");
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            System.out.println("The properties are now loaded");
-            System.out.println("properties: " + properties);
-        } catch (IOException e) {
-            System.err.println("Failed to open property file");
-            e.printStackTrace();
-        }
-        // Read from the /res/raw directory
-        try {
-            InputStream rawResource = resources.openRawResource(R.raw.cocecl_config);
-            Properties properties = new Properties();
-            properties.load(rawResource);
-            System.out.println("The properties are now loaded");
-            System.out.println("properties: " + properties);
-        } catch (Resources.NotFoundException e) {
-            System.err.println("Did not find raw resource: "+e);
-        } catch (IOException e) {
-            System.err.println("Failed to open property file");
-        }
-        // write properties from file to setting
-        //TODO: config
-*/
 
         // LogIn to Server//
         //POST and GET
@@ -487,7 +451,8 @@ public class LoginActivity extends MainActivity {
             return;
         }
 
-        //Toast.makeText(getApplicationContext(), "Thank You!", Toast.LENGTH_SHORT).show();
+        //Toast.makeText(getApplicationContext(), "Validated", Toast.LENGTH_SHORT).show();
+        //TODO send to server and login
     }
 
     private boolean validateDnr() {
@@ -647,12 +612,12 @@ public class LoginActivity extends MainActivity {
     }
 
     private boolean validateEmail() {
-
+/*
         final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
         final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
 
         String email = registeremail.getText().toString().trim();
-
+*/
         if (email.isEmpty() || !ValidateInput.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus(registeremail);
@@ -665,10 +630,10 @@ public class LoginActivity extends MainActivity {
     }
 
     public void validateFamilyname() {
-
+/*
         final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
         final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-
+*/
         if (registerfamilyname.getText().toString().trim().isEmpty()) {
             registerfamilyname.setError("Invalid Input");
             requestFocus(registerfamilyname);
@@ -686,17 +651,26 @@ public class LoginActivity extends MainActivity {
         View registeruserlayout = getLayoutInflater().inflate(R.layout.register_user_layout, null);
         dlgBuilder.setView(registeruserlayout);
 
-        EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.loginpassword);
         btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
         //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
+/*
+        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
+        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+*/
+        familyname = registerfamilyname.getText().toString().trim();
+        name = registername.getText().toString().trim();
+        dnr = registerdnr.getText().toString().trim();
+        email = registeremail.getText().toString().trim();
+        password = registerpassword.getText().toString().trim();
 
         dlgBuilder.setView(registeruserlayout).setPositiveButton("Register", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                //RegisterUserGCM();
+                RegisterUserGCM();
                 RegisterUserMLS();
 
                 //remove layout
@@ -746,31 +720,18 @@ public class LoginActivity extends MainActivity {
 
 
     public void RegisterUserMLS() {
-        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-
-        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
-
-        String familyname = registerfamilyname.getText().toString().trim();
-            String name = registername.getText().toString().trim();
-        String dnr = registerdnr.getText().toString().trim();
-            String email = registeremail.getText().toString().trim();
-            String password = registerpassword.getText().toString().trim();
 
         if (!familyname.isEmpty() && !name.isEmpty() && !dnr.isEmpty() && !email.isEmpty() && !password.isEmpty()) {
 
-                //register user
+            //register user
 
             //TODO register in mls postgres db (alter existing tables)
 
-            } else {
+        } else {
 
-                Toast.makeText(getApplicationContext(),
-                        "Please enter your details!", Toast.LENGTH_SHORT)
-                        .show();
+            Toast.makeText(getApplicationContext(),
+                    "Please enter your details!", Toast.LENGTH_SHORT)
+                    .show();
 
             errormsgtxt.setText("No credentials entered!");
 
@@ -781,9 +742,8 @@ public class LoginActivity extends MainActivity {
                     errormsgtxt.setText("");
                 }
             }, 5000);
-            }
         }
-
+    }
 
 
     // GCM Login/Registration //
@@ -804,24 +764,14 @@ public class LoginActivity extends MainActivity {
     //public void RegisterUser(View view) {
     public void RegisterUserGCM() {
 
-        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
-
-        //String emailID = emailET.getText().toString();
-        String emailID = registeremail.getText().toString();
-
-        if (!TextUtils.isEmpty(emailID) && ValidateInput.isValidEmail(emailID)) {
+        if (!TextUtils.isEmpty(email) && ValidateInput.isValidEmail(email)) {
 
             // Check if Google Play Service is installed in Device
             // Play services is needed to handle GCM stuffs
             if (checkPlayServices()) {
 
                 // Register Device in GCM Server
-                registerInBackground(emailID);
+                registerInBackground(email);
             }
         }
         // When Email is invalid
@@ -833,7 +783,7 @@ public class LoginActivity extends MainActivity {
     }
 
     // AsyncTask to register Device in GCM Server
-    private void registerInBackground(final String emailID) {
+    private void registerInBackground(final String email) {
         new AsyncTask<Void, Void, String>() {
             @Override
             protected String doInBackground(Void... params) {
@@ -857,7 +807,7 @@ public class LoginActivity extends MainActivity {
             protected void onPostExecute(String msg) {
                 if (!TextUtils.isEmpty(regId)) {
                     // Store RegId created by GCM Server in SharedPref
-                    storeRegIdinSharedPref(applicationContext, regId, emailID);
+                    storeRegIdinSharedPref(applicationContext, regId, email);
 
                     //Toast.makeText(applicationContext, "Registered with GCM Server successfully.nn" + msg, Toast.LENGTH_SHORT).show();
 
@@ -868,6 +818,15 @@ public class LoginActivity extends MainActivity {
                             "Reg ID Creation Failed.nnEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."
                                     + msg, Toast.LENGTH_LONG).show();
                                     */
+
+                    errormsgtxt.setText(msg);
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            errormsgtxt.setText("");
+                        }
+                    }, 5000);
                 }
             }
         }.execute(null, null, null);
@@ -875,12 +834,12 @@ public class LoginActivity extends MainActivity {
 
     // Store  RegId and Email entered by User in SharedPref
     private void storeRegIdinSharedPref(Context context, String regId,
-                                        String emailID) {
+                                        String email) {
         SharedPreferences prefs = getSharedPreferences("UserDetails",
                 Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(REG_ID, regId);
-        editor.putString(EMAIL_ID, emailID);
+        editor.putString(EMAIL_ID, email);
         editor.commit();
         storeRegIdinServer();
 
@@ -930,6 +889,7 @@ public class LoginActivity extends MainActivity {
                                     "Requested resource not found",
                                     Toast.LENGTH_LONG).show();
                                     */
+                            errormsgtxt.setText("404");
                         }
                         // When Http response code is '500'
                         else if (statusCode == 500) {
@@ -938,6 +898,7 @@ public class LoginActivity extends MainActivity {
                                     "Something went wrong at server end",
                                     Toast.LENGTH_LONG).show();
                                     */
+                            errormsgtxt.setText("500");
                         }
                         // When Http response code other than 404, 500
                         else {
@@ -949,6 +910,7 @@ public class LoginActivity extends MainActivity {
                                             + "not be connected to Internet or remote server is not up and running], check for other errors as well",
                                     Toast.LENGTH_LONG).show();
                                     */
+                            errormsgtxt.setText("Unexpected error");
                         }
                     }
                 });

@@ -5,10 +5,11 @@
     <!-- Bottom 2dp Shadow -->
 
     <item
+
         android:bottom="11px"
-        android:top="19px"
         android:left="10px"
-        android:right="10px">
+        android:right="10px"
+        android:top="19px">
 
         <shape android:shape="rectangle">
 
@@ -24,9 +25,9 @@
 
     <item
         android:bottom="15px"
-        android:top="15px"
         android:left="10px"
-        android:right="10px">
+        android:right="10px"
+        android:top="15px">
 
         <shape android:shape="rectangle">
 

@@ -51,7 +51,7 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyC_ez6nG0ndVXy78zR4BwL4uO-x65Mzjzw" />
+            android:value="mykey" />
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -69,7 +69,6 @@
         </activity>
 
         <!--
-        not an activity -> is a Fragment
         <activity
             android:name=".statusFragment"
             android:label="@string/statustab" >
@@ -126,12 +125,12 @@
         </receiver>
 
         <service
-            android:enabled="true"
-            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice"></service>
+            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice"
+            android:enabled="true"></service>
 
         <receiver
-            android:enabled="true"
-            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice">
+            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice"
+            android:enabled="true">
             <intent-filter>
                 <action android:name="it.fmd.cocecl.intent.action.LOCATION" />
             </intent-filter>
@@ -146,5 +145,4 @@
                 </receiver>
         -->
     </application>
-
 </manifest>

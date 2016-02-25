@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.location.Address;
 import android.location.Geocoder;
@@ -62,6 +63,7 @@ import java.util.Locale;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.fragments.mapFragment;
+import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.JSONParser;
@@ -93,7 +95,9 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    ConnectionManager conman = new ConnectionManager();
+    public ConnectionManager conman = new ConnectionManager();
+
+    public CheckPlayServices cps = new CheckPlayServices();
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -128,24 +132,6 @@ public class MainActivity extends AppCompatActivity {
             setSupportActionBar(toolbar);
             //setTitle(R.string.app_name);
         }
-
-        // GPS Coordinates //
-
-        GPSManager gps = new GPSManager(MainActivity.this);
-        double latitude = gps.getLatitude();
-        double longitude = gps.getLongitude();
-
-        Handler h = new Handler();
-        h.postDelayed(new
-
-                              Runnable() {
-                                  @Override
-                                  public void run() {
-                                      //TODO: send coordinates every 10 sec
-                                  }
-                              }
-
-                , 10000);
 
         // VIEWPAGER //
         {
@@ -663,7 +649,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onResume() {
         super.onResume();
-        checkPlayServices();
+        cps.checkPlayServices(this);
         //checkMLSConnection();
 
         // FRAGMENT MANAGER //
@@ -769,17 +755,17 @@ public class MainActivity extends AppCompatActivity {
 
             //lsbv
             case R.id.button17:
-                phcl.lsbvcall();
+                phcl.lsbvcall(this);
                 break;
 
             //call kh on commFragment
             case R.id.button43:
-                phcl.chkhcall();
+                phcl.chkhcall(getApplicationContext());
                 break;
 
             //lsmain
             case R.id.button47:
-                phcl.lsmaincall();
+                phcl.lsmaincall(this);
                 break;
         }
     }
@@ -945,7 +931,7 @@ public class MainActivity extends AppCompatActivity {
     // GCM Message/Notification/Snackbar update --------------------------
     //
     //
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
+    //private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
     public void gmcmessage() {
         // Intent Message sent from Broadcast Receiver
@@ -960,7 +946,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Check if Google Play Service is installed in Device
         // Play services is needed to handle GCM stuffs
-        if (!checkPlayServices()) {
+        if (!cps.checkPlayServices(this)) {
             Toast.makeText(
                     getApplicationContext(),
                     "This device doesn't support Play services, App will not work normally",
@@ -977,7 +963,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Check if Google Playservices is installed in Device or not
-
+/*
     private boolean checkPlayServices() {
         int resultCode = GooglePlayServicesUtil
                 .isGooglePlayServicesAvailable(this);
@@ -999,11 +985,11 @@ public class MainActivity extends AppCompatActivity {
             /*Toast.makeText(
                     getApplicationContext(),
                     "This device supports Play services, App will work normally",
-                    Toast.LENGTH_LONG).show();*/
+                    Toast.LENGTH_LONG).show();*//*
         }
         return true;
     }
-
+*/
 
     //JSON GET and POST method// ----------------------------------------------------
     // Async Task

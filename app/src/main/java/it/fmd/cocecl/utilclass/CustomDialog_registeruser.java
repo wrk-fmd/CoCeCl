@@ -8,6 +8,7 @@ import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
@@ -16,14 +17,14 @@ import it.fmd.cocecl.R;
  * Validate Input on RegisterUser Dialog
  */
 
-public class CustomDialog_registeruser extends MainActivity {
+public class CustomDialog_registeruser extends Activity {
 
     @Override
     public void onCreate(Bundle saveInstanceState) {
         super.onCreate(saveInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main2);
 
-        //displayDialogWindow();
+        displayDialogWindow();
     }
 
     public void displayDialogWindow() {
@@ -37,40 +38,38 @@ public class CustomDialog_registeruser extends MainActivity {
         Button submit = (Button) f.findViewById(R.id.btnRegister);
 
         submit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                                      @Override
+                                      public void onClick(View v) {
 
-                EditText familyname = (EditText) f.findViewById(R.id.registerfamilyname);
-                EditText name = (EditText) f.findViewById(R.id.registername);
-                EditText dnr = (EditText) f.findViewById(R.id.registerdnr);
-                EditText email = (EditText) f.findViewById(R.id.registeremail);
-                EditText password = (EditText) f.findViewById(R.id.registerpassword);
+                                          EditText familyname = (EditText) f.findViewById(R.id.registerfamilyname);
+                                          EditText name = (EditText) f.findViewById(R.id.registername);
+                                          EditText dnr = (EditText) f.findViewById(R.id.registerdnr);
+                                          EditText regmail = (EditText) f.findViewById(R.id.registeremail);
+                                          EditText password = (EditText) f.findViewById(R.id.registerpassword);
 
-                String dnr = full_name.getText().toString();
-                String email = email_address.getText().toString();
+                                          String fname = familyname.getText().toString();
+                                          String email = regmail.getText().toString();
 
-                boolean validDNr = ValidateInput.isValidDnr(dnr);
-                boolean validEmail = ValidateInput.isValidEmail(email);
+                                          boolean validDNr = ValidateInput.isValidDnr(fname);
+                                          boolean validEmail = ValidateInput.isValidEmail(email);
 
-                if (!validDNr || !validEmail) {
-                    if (!validDNr) {
-                        full_name.setError("Please enter a valid name");
-                    }
+                                          if (!validDNr || !validEmail) {
+                                              if (!validDNr) {
+                                                  familyname.setError("Please enter a valid name");
+                                              }
 
-                    if (!validEmail) {
-                        email_address.setError("Please enter a valid email address");
-                    }
-                } else {
-                    //send data to the database
-                    //basically like dismissing the dialog window here (you can start a new intent)
+                                              if (!validEmail) {
+                                                  regmail.setError("Please enter a valid email address");
+                                              }
+                                          } else {
 
-                }
-            }
+                                              //send data to the database
+                                              //basically like dismissing the dialog window here (you can start a new intent)
 
-            )
-
-            loginDialog.show()
-        }
+                                          }
+                                      }
+                                  }
+        );
+        loginDialog.show();
     }
 }
-

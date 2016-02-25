@@ -47,10 +47,6 @@ public class incidentFragment extends Fragment {
         final Button button13 = (Button) v.findViewById(R.id.button13);
         final Button statusbtn = (Button) v.findViewById(R.id.button41);
         final Button createpatbtn = (Button) v.findViewById(R.id.button46);
-        final Button changepatbtn = (Button) v.findViewById(R.id.changepatbtn);
-
-
-        //return v;
 
         button10.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +81,6 @@ public class incidentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 //cp.createpat();
-            }
-        });
-
-        changepatbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
             }
         });
 

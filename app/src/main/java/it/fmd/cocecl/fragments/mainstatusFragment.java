@@ -361,8 +361,7 @@ public class mainstatusFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                /*sus.*/
-                selectivmt();
+                sus.selectivmt();
             }
         });
         dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener() {
@@ -385,8 +384,7 @@ public class mainstatusFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                /*sus.*/
-                emergencymt();
+                sus.emergencymt();
             }
         });
 
@@ -398,65 +396,5 @@ public class mainstatusFragment extends Fragment {
         });
 
         dlgBuilder.create().show();
-    }
-
-    public void selectivmt() {
-
-        final TextView textView112 = (TextView) getActivity().findViewById(R.id.textView112);
-        final Button button5 = (Button) getActivity().findViewById(R.id.button5);
-        final Button button12 = (Button) getActivity().findViewById(R.id.button12);
-
-        button5.setEnabled(true);
-        button5.setClickable(false);
-        //button5.setBackgroundColor(Color.YELLOW);
-        button5.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
-        Toast.makeText(getContext(), "Selektivruf gesendet", Toast.LENGTH_SHORT).show();
-        textView112.setVisibility(View.VISIBLE);
-        textView112.setText("Selektivruf gesendet");
-
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                button5.setEnabled(true);
-                button5.setClickable(true);
-                button5.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                //button5.setBackgroundResource(android.R.drawable.btn_default);
-                button5.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
-                textView112.setText("");
-                textView112.setVisibility(View.GONE);
-            }
-        }, 30000);
-    }
-
-
-    //NOTRUF
-    public void emergencymt() {
-
-        final TextView textView112 = (TextView) getActivity().findViewById(R.id.textView112);
-        final Button button5 = (Button) getActivity().findViewById(R.id.button5);
-        final Button button12 = (Button) getActivity().findViewById(R.id.button12);
-
-        button12.setEnabled(true);
-        button12.setClickable(false);
-        //button12.setBackgroundColor(RED);
-        button12.setBackground(getResources().getDrawable(R.drawable.button_red_pressed));
-        Toast.makeText(getContext(), "NOTRUF gesendet", Toast.LENGTH_LONG).show();
-        textView112.setVisibility(View.VISIBLE);
-        textView112.setText("NOTRUF gesendet");
-
-        Handler h = new Handler();
-        h.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                button12.setEnabled(true);
-                button12.setClickable(true);
-                //button12.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                //button12.setBackgroundResource(android.R.drawable.btn_default);
-                button12.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
-                textView112.setText("");
-                textView112.setVisibility(View.GONE);
-            }
-        }, 45000);
     }
 }

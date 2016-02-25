@@ -15,6 +15,7 @@ import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -38,6 +39,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.HashMap;
 
+import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.ValidateInput;
 
@@ -101,6 +103,8 @@ public class LoginActivity extends MainActivity {
     Context applicationContext;
     String regId = "";
 
+    CheckPlayServices cps = new CheckPlayServices();
+
 
     // OnCreate Method // -------------------------------------- //
     @Override
@@ -147,7 +151,6 @@ public class LoginActivity extends MainActivity {
             }
         });
 */
-
 
         // GCM Server //
         applicationContext = getApplicationContext();
@@ -377,7 +380,7 @@ public class LoginActivity extends MainActivity {
     @Override
     public void onResume() {
         super.onResume();
-        checkPlayServices();
+        cps.checkPlayServices(this);
         //checkMLSConnection();
     }
 
@@ -644,53 +647,53 @@ public class LoginActivity extends MainActivity {
 
     public void gotoRegisterScreen() {
 
-        //final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
-        dlgBuilder.setTitle("Register User");
-
-        View registeruserlayout = getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        dlgBuilder.setView(registeruserlayout);
-
-        btnRegister = (Button) registeruserlayout.findViewById(R.id.btnRegister);
-        //btnLinkToLogin = (Button) registeruserlayout.findViewById(R.id.btnLinkToLoginScreen);
-/*
-        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-        final EditText registername = (EditText) registeruserlayout.findViewById(R.id.registername);
-        final EditText registerdnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
-*/
         familyname = registerfamilyname.getText().toString().trim();
         name = registername.getText().toString().trim();
         dnr = registerdnr.getText().toString().trim();
         email = registeremail.getText().toString().trim();
         password = registerpassword.getText().toString().trim();
 
-        dlgBuilder.setView(registeruserlayout).setPositiveButton("Register", new DialogInterface.OnClickListener() {
+        LayoutInflater factory = LayoutInflater.from(this);
+        final View f = factory.inflate(R.layout.register_user_layout, null);
+
+        //Dialog
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
+
+        //Title
+        dlgBuilder.setTitle("Register User");
+
+        //View registeruserlayout = getLayoutInflater().inflate(R.layout.register_user_layout, null);
+
+        //dlgBuilder.setView(registeruserlayout);
+        dlgBuilder.setView(f);
+
+        //Buttons
+        dlgBuilder.setPositiveButton("Register", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 RegisterUserGCM();
                 RegisterUserMLS();
-
+/*
                 //remove layout
                 View viewToRemove = findViewById(R.id.registeruserrelaout);
                 if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                     ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                    */
             }
 
         });
 
-        dlgBuilder.setView(registeruserlayout).setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
+        dlgBuilder.setNegativeButton("Abbrechen", new DialogInterface.OnClickListener() {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-
+/*
                         //remove layout
                         View viewToRemove = findViewById(R.id.registeruserrelaout);
                         if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                             ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
+*/
 /*
                 Intent i = new Intent(getApplicationContext(),
                         InfoActivity.class);
@@ -753,8 +756,6 @@ public class LoginActivity extends MainActivity {
     //
     //TODO: unregister on logout
 
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-
     AsyncTask<Void, Void, String> createRegIdTask;
 
     public static final String REG_ID = "regId";
@@ -768,7 +769,7 @@ public class LoginActivity extends MainActivity {
 
             // Check if Google Play Service is installed in Device
             // Play services is needed to handle GCM stuffs
-            if (checkPlayServices()) {
+            if (cps.checkPlayServices(this)) {
 
                 // Register Device in GCM Server
                 registerInBackground(email);
@@ -914,34 +915,5 @@ public class LoginActivity extends MainActivity {
                         }
                     }
                 });
-    }
-
-    // Check if Google Playservices is installed in Device or not
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(this);
-        // When Play services not found in device
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                // Show Error dialog to install Play services
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Toast.makeText(
-                        applicationContext,
-                        "This device doesn't support Play services, App will not work normally",
-                        Toast.LENGTH_LONG).show();
-                finish();
-            }
-            return false;
-        } else {
-            /*
-            Toast.makeText(
-                    applicationContext,
-                    "This device supports Play services, App will work normally",
-                    Toast.LENGTH_SHORT).show();
-                    */
-        }
-        return true;
     }
 }

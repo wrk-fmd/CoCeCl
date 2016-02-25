@@ -24,8 +24,7 @@ public class APPConstants {
     public static final String TAG_EMERGENCY = "blue";
     public static final String TAG_DEPARTMENT_AO = "department_ao";
     public static final String TAG_TRANSPORT_NR = "tnr";
-    // Message Key
-    public static final String MSG_KEY = "m";
+
     //MLS URL
     public static final String MLS_DOMAIN = "http://192.168.43.224/JSON/index.php";
     //Configuration file link
@@ -49,6 +48,8 @@ public class APPConstants {
     static final String APP_SERVER_URL = "http://192.168.43.224:9000/gcm/gcm.php?shareRegId=true";
     // Google Project Number
     static final String GOOGLE_PROJ_ID = "000000000000";
+    // Message Key
+    public static final String MSG_KEY = "m";
     //REGISTER / LOGIN URL
     public static String URL_LOGIN = "http://192.168.43.224/android_json_login/getmeth.php";
     public static String URL_REGISTER = "http://192.168.43.224/android_json_login/postmeth.php";

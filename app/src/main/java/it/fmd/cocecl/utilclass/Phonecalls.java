@@ -1,11 +1,15 @@
 package it.fmd.cocecl.utilclass;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Bundle;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.net.ConnectException;
 
 import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.MainActivity;
@@ -14,11 +18,11 @@ import it.fmd.cocecl.R;
 public class Phonecalls extends MainActivity {
 
     Intent callIntent = new Intent(Intent.ACTION_CALL);
-    PackageManager pm = getApplicationContext().getPackageManager();
 
-    public void lsmaincall() {
+    public void lsmaincall(Context context) {
+        PackageManager pm = context.getPackageManager();
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsmain));
-        startActivity(callIntent);
+        context.startActivity(callIntent);
 
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
@@ -27,9 +31,10 @@ public class Phonecalls extends MainActivity {
         }
     }
 
-    public void lsbvcall() {
+    public void lsbvcall(Context context) {
+        PackageManager pm = context.getPackageManager();
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
-        startActivity(callIntent);
+        context.startActivity(callIntent);
 
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
@@ -38,10 +43,11 @@ public class Phonecalls extends MainActivity {
         }
     }
 
-    public void khcall() {
+    public void khcall(Context context) {
         //TODO: get number from hospital ao
+        PackageManager pm = context.getPackageManager();
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
-        startActivity(callIntent);
+        context.startActivity(callIntent);
 
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
@@ -50,15 +56,16 @@ public class Phonecalls extends MainActivity {
         }
     }
 
-    public void chkhcall() {
+    public void chkhcall(Context context) {
         // Call btn on commFragment
+        PackageManager pm = context.getPackageManager();
         TextView commphone = (TextView) findViewById(R.id.commphone);
         String listnumber = commphone.getText().toString();
 
         if (commphone.getText().toString().trim().length() > 0) {
 
             callIntent.setData(Uri.parse("tel:" + listnumber));
-            startActivity(callIntent);
+            context.startActivity(callIntent);
 
             if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 

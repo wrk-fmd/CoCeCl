@@ -1,6 +1,7 @@
 package it.fmd.cocecl.patadminaction;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -33,9 +34,16 @@ public class CreatePat extends MainActivity {
     private LinearLayout patmanbtnlinlay;
     private RelativeLayout patmanlayout;
 
+    //Shared Preferences
+    SharedPreferences spref;
+    String patfirstname, patlastname, patdatebirth, patsvnr, patplsnr, patgender, patward;
+    String getpatfirstname, getpatlastname, getpatdatebirth, getpatsvnr, getpatplsnr, getpatgender, getpatward;
+    public static final String PatData = "patprefs";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
 
         // Text fields
         patmanlayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.patman, null);
@@ -52,16 +60,9 @@ public class CreatePat extends MainActivity {
         addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
         addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
         dlgBuilder = new AlertDialog.Builder(getApplicationContext());
-    }
 
-    //Shared Preferences
-    SharedPreferences spref;
-    String patfirstname, patlastname, patdatebirth, patsvnr, patplsnr, patgender, patward;
-    String getpatfirstname, getpatlastname, getpatdatebirth, getpatsvnr, getpatplsnr, getpatgender, getpatward;
-
-    {
         //Shared Prefs// Create Patient
-        spref = getSharedPreferences("PatData", MODE_PRIVATE);
+        spref = getSharedPreferences(PatData, Context.MODE_PRIVATE);
     }
 
     // Patient Management dialog builder //

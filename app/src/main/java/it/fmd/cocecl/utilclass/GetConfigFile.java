@@ -1,5 +1,6 @@
 package it.fmd.cocecl.utilclass;
 
+import android.content.Context;
 import android.content.res.AssetManager;
 import android.content.res.Resources;
 import android.os.AsyncTask;
@@ -53,18 +54,20 @@ public class GetConfigFile extends AsyncTask<String, Void, String> {
     protected void onPostExecute(String path) {
         Process process = null;
 
-        try {
-            loadConfig();
+        loadConfig();
 
-        } catch (IOException e) {
+    }
 
-        }
+    private Context c;
+
+    public GetConfigFile(Context c) {
+        this.c = c;
     }
 
     public void loadConfig() {
 
         // either from assets or raw
-        Resources resources = this.getResources();
+        Resources resources = this.c.getResources();
         AssetManager assetManager = resources.getAssets();
 
         // Read from the /assets directory

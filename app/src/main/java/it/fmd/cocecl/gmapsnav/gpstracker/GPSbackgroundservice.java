@@ -1,4 +1,4 @@
-package it.fmd.cocecl.gmapsnav;
+package it.fmd.cocecl.gmapsnav.gpstracker;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -26,7 +26,7 @@ public class GPSbackgroundservice extends BroadcastReceiver {
 
     private void updateRemote(final double latitude, final double longitude) {
 
-        //HERE YOU CAN PUT YOUR ASYNCTASK TO UPDATE THE LOCATION ON YOUR SERVER
-        //TODO: send method
+        // ASYNCTASK TO UPDATE THE LOCATION ON SERVER
+        // TODO: send method
     }
 }

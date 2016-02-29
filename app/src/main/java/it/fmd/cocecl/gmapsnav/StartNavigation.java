@@ -1,5 +1,6 @@
 package it.fmd.cocecl.gmapsnav;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
@@ -9,27 +10,33 @@ import android.widget.Toast;
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
-public class StartNavigation extends MainActivity {
+public class StartNavigation implements View.OnClickListener {
 
-    // Navigate to provided address //
+    // navigate to provided address //
     // TODO: choose between built-in maps api and own navigation app
-    public void navigate(View view) {
+    public Activity activity;
 
-        final TextView botext = (TextView) findViewById(R.id.bofield);
-        final TextView aotext = (TextView) findViewById(R.id.aofield);
-        final TextView custom = (TextView) findViewById(R.id.commaddress);
+    public StartNavigation(Activity _activity) {
 
-        switch (view.getId()) {
+        this.activity = _activity;
+    }
+
+    @Override
+    public void onClick(View v) {
+        final TextView botext = (TextView) this.activity.findViewById(R.id.bofield);
+        final TextView aotext = (TextView) this.activity.findViewById(R.id.aofield);
+        final TextView custom = (TextView) this.activity.findViewById(R.id.commaddress);
+        switch (v.getId()) {
             case R.id.button18:
                 if (botext.getText().toString().trim().length() > 0) {
 
                     String navadress = "google.navigation:" + botext.getText().toString();
                     Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
                     nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
+                    this.activity.startActivity(nav);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.activity, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -39,10 +46,10 @@ public class StartNavigation extends MainActivity {
                     String navadress = "google.navigation:" + aotext.getText().toString();
                     Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
                     nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
+                    this.activity.startActivity(nav);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.activity, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
                 }
                 break;
 
@@ -52,10 +59,10 @@ public class StartNavigation extends MainActivity {
                     String navadress = "google.navigation:" + custom.getText().toString();
                     Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
                     nav.setData(Uri.parse(navadress));
-                    startActivity(nav);
+                    this.activity.startActivity(nav);
 
                 } else {
-                    Toast.makeText(getApplicationContext(), "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this.activity, "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
                 }
                 break;
         }

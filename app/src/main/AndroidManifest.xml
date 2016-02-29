@@ -125,11 +125,11 @@
         </receiver>
 
         <service
-            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice"
+            android:name=".gmapsnav.gpstracker.GPSbackgroundservice"
             android:enabled="true"></service>
 
         <receiver
-            android:name="it.fmd.cocecl.gmapsnav.GPSbackgroundservice"
+            android:name=".gmapsnav.gpstracker.GPSbackgroundservice"
             android:enabled="true">
             <intent-filter>
                 <action android:name="it.fmd.cocecl.intent.action.LOCATION" />

@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -412,6 +413,16 @@ public class LoginActivity extends MainActivity {
 
     }
 
+    public void signincolor() {
+        if (!logindnr.getText().toString().trim().isEmpty() && !loginpassword.getText().toString().trim().isEmpty()) {
+            signinbtn.setBackgroundResource(R.drawable.button_green_pressed);
+            signinbtn.setEnabled(true);
+        } else {
+            signinbtn.setBackgroundResource(R.drawable.button_red_pressed);
+            signinbtn.setEnabled(false);
+        }
+    }
+
     // SignIn --------------
 
     public void SignIn() {
@@ -519,6 +530,9 @@ public class LoginActivity extends MainActivity {
         }
 
         public void afterTextChanged(Editable editable) {
+
+            signincolor();
+
             switch (view.getId()) {
                 case R.id.logindnr:
                     validateDnr();

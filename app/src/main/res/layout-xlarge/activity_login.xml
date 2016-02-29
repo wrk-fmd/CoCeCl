@@ -60,7 +60,7 @@
                     android:background="@drawable/edittext_style_login"
                     android:gravity="center"
                     android:hint="Dienstnummer"
-                    android:inputType="textEmailAddress"
+                    android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:textColorHint="#ffffff" />

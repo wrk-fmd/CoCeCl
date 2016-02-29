@@ -7,8 +7,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.content.res.Configuration;
-import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.location.Address;
 import android.location.Geocoder;
@@ -46,11 +47,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.model.LatLng;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -63,6 +59,7 @@ import java.util.Locale;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.fragments.mapFragment;
+import it.fmd.cocecl.gmapsnav.StartNavigation;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
@@ -115,17 +112,32 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        PackageInfo pInfo = null;
+        try {
+            pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        final String version = pInfo.versionName;
+
         {
             //Coordinator Layout for SnackBar//
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
 
             Snackbar snackbar = Snackbar
-                    .make(coordinatorLayout, "Welcome to CoCeCl", Snackbar.LENGTH_LONG);
-
+                    .make(coordinatorLayout, "Welcome to CoCeCl", Snackbar.LENGTH_LONG)
+                    .setAction("OK", new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Snackbar snackbar1 = Snackbar.make(coordinatorLayout, "Version " + version, Snackbar.LENGTH_SHORT);
+                            snackbar1.show();
+                        }
+                    });
             snackbar.show();
 
         }
+
 
         {
             Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
@@ -223,6 +235,8 @@ public class MainActivity extends AppCompatActivity {
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
         // 7 PTCA Plan
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        // 8 KH Pläne
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 
 
         // Recycle the typed array
@@ -262,10 +276,6 @@ public class MainActivity extends AppCompatActivity {
             //displayView(0);
             navDrawerAction(0);
         }
-
-        // additional
-        inetcon();
-        checkGPS();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
@@ -488,7 +498,6 @@ public class MainActivity extends AppCompatActivity {
         AlertDialog alert = dlgBuilder.create();
         alert.show();
     }
-
 
     /*
         public void setConnectionIcons() {
@@ -785,145 +794,6 @@ public class MainActivity extends AppCompatActivity {
                     startActivity(ipatman);
                 }
             });
-
-        }
-    }
-
-
-    // Report incident method on mainstatus fragment //
-    // Get coordinates, and nearest address
-    public void reportincident(View v) {
-
-        RelativeLayout reportincident = (RelativeLayout) getLayoutInflater().inflate(R.layout.reportincident, null);
-
-        if (v.getId() == R.id.button42) {
-
-            final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
-            final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
-            final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
-            final TextView textView112 = (TextView) findViewById(R.id.textView112);
-            final Button button42 = (Button) findViewById(R.id.button42);
-
-            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
-            dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
-            dlgBuilder.setCancelable(false);
-
-            button42.setClickable(false);
-
-            dlgBuilder.setView(reportincident);
-
-                /*
-                GPSManager.LocationResult locationResult = new GPSManager.LocationResult() {
-                    @Override
-                    public void gotLocation(Location location) {
-                        loc = location;
-                        latitude = loc.getLatitude();
-                        longitude = loc.getLongitude();
-                    }
-                };
-
-                GPSManager mylocation = new GPSManager();
-                mylocation.getLocation(MainActivity.this, locationResult);
-*/
-            GPSManager gps = new GPSManager(MainActivity.this);
-            double latitude = gps.getLatitude();
-            double longitude = gps.getLongitude();
-
-            Geocoder geocoder = new Geocoder(this, Locale.getDefault());
-
-            try {
-                List<Address> addresses = geocoder.getFromLocation(latitude, longitude, 1);
-
-                if (addresses != null && addresses.size() > 0) {
-                    Address returnedAddress = addresses.get(0);
-                    StringBuilder strReturnedAddress = new StringBuilder();
-                    for (int i = 0; i < returnedAddress.getMaxAddressLineIndex(); i++) {
-                        strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
-                    }
-
-                    //strReturnedAddress.append(returnedAddress.getLocality()).append("\n");
-                    //strReturnedAddress.append(returnedAddress.getPostalCode()).append("\n");
-                    //strReturnedAddress.append(returnedAddress.getCountryName());
-
-                    editText24.setText(strReturnedAddress.toString());
-
-                } else {
-
-                    editText24.setText("No Address found!");
-                }
-            } catch (IOException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-                editText24.setText("Cannot get Address!");
-            }
-
-            //editText24.setText(locationAddress);
-            textView86.setText("lat: " + latitude);
-            textView93.setText("lon: " + longitude);
-
-            dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            button42.setEnabled(false);
-                            button42.setClickable(false);
-                            //button42.setBackgroundColor(YELLOW);
-                            button42.setBackground(getResources().getDrawable(R.drawable.button_yellow_pressed));
-
-                            Handler h = new Handler();
-                            h.postDelayed(new
-
-                                                  Runnable() {
-                                                      @Override
-                                                      public void run() {
-                                                          button42.setEnabled(true);
-                                                          button42.setClickable(true);
-                                                          //button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
-                                                          button42.setBackground(getResources().getDrawable(R.drawable.custom_button_normal));
-                                                          editText24.setText("");
-                                                          textView86.setText("");
-                                                          textView93.setText("");
-                                                          textView112.setText("");
-                                                          textView112.setVisibility(View.GONE);
-                                                      }
-                                                  }
-
-                                    , 30000);
-
-                            Toast.makeText(MainActivity.this, "Neuen Einsatz an Leitstelle gemeldet", Toast.LENGTH_SHORT).show();
-                            textView112.setVisibility(View.VISIBLE);
-                            textView112.setText("Einsatz gemeldet");
-
-                            dialog.cancel();
-                        }
-                    }
-
-            );
-
-            dlgBuilder.setNegativeButton("Nein", new DialogInterface.OnClickListener()
-
-                    {
-
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            dialog.cancel();
-
-                        }
-                    }
-
-            );
-
-            AlertDialog alert = dlgBuilder.create();
-            alert.show();
-            button42.setClickable(true);
-
-            // remove layout
-            View viewToRemove = findViewById(R.id.reportincidentrelayout);
-            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
 
         }
     }

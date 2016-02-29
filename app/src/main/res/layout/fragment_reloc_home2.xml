@@ -190,7 +190,6 @@
                             android:clickable="true"
                             android:drawableTop="@drawable/ic_navigation_black_18dp"
                             android:enabled="true"
-                            android:onClick="navigate"
                             android:text="NAVI" />
 
                     </LinearLayout>

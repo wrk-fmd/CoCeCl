@@ -18,20 +18,11 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginTop="10dp"
-        android:text="@string/app_fullname"
+        android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15pt"
-        android:textStyle="bold|italic" />
-
-    <Space
-        android:id="@+id/space"
-        android:layout_width="20dp"
-        android:layout_height="40dp"
-        android:layout_alignEnd="@+id/textView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/textView"
-        android:layout_below="@+id/textView" />
+        android:textStyle="bold|italic"
+        android:layout_marginBottom="30dp" />
 
     <TextView
         android:id="@+id/textView2"
@@ -41,22 +32,13 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/space"
         android:background="@drawable/edittext_style_1"
         android:gravity="center"
         android:hint="@string/amb"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColorHint="@color/primary_dark_material_dark" />
-
-    <Space
-        android:id="@+id/space2"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignEnd="@+id/space"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignRight="@+id/space"
-        android:layout_below="@+id/textView2" />
+        android:textColorHint="@color/primary_dark_material_dark"
+        android:layout_below="@+id/textView"
+        android:layout_marginBottom="20dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -64,14 +46,16 @@
         android:layout_height="30dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/space2"
         android:layout_toLeftOf="@+id/button15"
         android:layout_toStartOf="@+id/button15"
         android:background="@drawable/edittext_style_1"
         android:gravity="center"
+        android:layout_marginRight="5dp"
         android:hint="@string/unit"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColorHint="@color/primary_dark_material_dark" />
+        android:textColorHint="@color/primary_dark_material_dark"
+        android:layout_below="@+id/textView2"
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:id="@+id/textView5"
@@ -122,13 +106,13 @@
         android:id="@+id/versionText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/view11"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/button14"
-        android:layout_toRightOf="@+id/button14"
         android:ems="10"
-        android:hint="version" />
+        android:hint="version"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/textView5"
+        android:layout_alignStart="@+id/textView5" />
 
     <Button
         android:id="@+id/button20"
@@ -175,5 +159,18 @@
         android:layout_alignParentStart="true"
         android:layout_alignTop="@+id/button14"
         android:background="#000000"></View>
+
+    <WebView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/webView"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView3"
+        android:layout_alignRight="@+id/versionText"
+        android:layout_alignEnd="@+id/versionText"
+        android:background="@drawable/edittext_style_1"
+        android:visibility="invisible"
+        android:layout_above="@+id/button14" />
 
 </RelativeLayout>

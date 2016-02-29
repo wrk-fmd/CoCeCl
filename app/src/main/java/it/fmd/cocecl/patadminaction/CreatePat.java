@@ -1,10 +1,10 @@
 package it.fmd.cocecl.patadminaction;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
-import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,55 +15,43 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
-public class CreatePat extends MainActivity {
+public class CreatePat implements View.OnClickListener {
 
-    private Button bettbtn;
-    private TextView textView11;
-    private EditText addpatfirstname;
-    private EditText addpatlastname;
-    private EditText addpatdatebirth;
-    private EditText addpatplsnr;
-    private TextView addpatward;
-    private Spinner addpatgender;
+    public Activity activity;
 
-    private AlertDialog.Builder dlgBuilder;
+    public CreatePat(Activity _activity) {
 
-    private LinearLayout patmanbtnlinlay;
-    private RelativeLayout patmanlayout;
+        this.activity = _activity;
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            //CreatePat
+            case R.id.button46:
+                createpat();
+                break;
+            //ChangePat
+            case R.id.changepatbtn:
+                changepat();
+                break;
+            case R.id.bettbtn:
+                bettbuchen();
+                break;
+
+        }
+    }
 
     //Shared Preferences
-    SharedPreferences spref;
     String patfirstname, patlastname, patdatebirth, patsvnr, patplsnr, patgender, patward;
     String getpatfirstname, getpatlastname, getpatdatebirth, getpatsvnr, getpatplsnr, getpatgender, getpatward;
     public static final String PatData = "patprefs";
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        // Text fields
-        patmanlayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.patman, null);
-        bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
-        textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
 
-        patmanbtnlinlay = (LinearLayout) findViewById(R.id.patmanbtnlinlay);
 
-        addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
-        addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
-        addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
-        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.);
-        addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
-        addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
-        addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
-        dlgBuilder = new AlertDialog.Builder(getApplicationContext());
-
-        //Shared Prefs// Create Patient
-        spref = getSharedPreferences(PatData, Context.MODE_PRIVATE);
-    }
 
     // Patient Management dialog builder //
     // data stored in shared preferences
@@ -71,11 +59,32 @@ public class CreatePat extends MainActivity {
     // Pat. anlegen
     public void createpat() {
 
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getApplicationContext());
+        RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
+        final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
+        TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
+
+        final TextView textView116 = (TextView) this.activity.findViewById(R.id.textView116);
+        TextView textView120 = (TextView) this.activity.findViewById(R.id.textView120);
+
+
+        final LinearLayout patmanbtnlinlay = (LinearLayout) this.activity.findViewById(R.id.patmanbtnlinlay);
+
+        final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
+        final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
+        final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
+        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.);
+        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
+        final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
+        //Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
+
+        //Shared Prefs// Create Patient
+        final SharedPreferences spref = this.activity.getSharedPreferences(PatData, Context.MODE_PRIVATE);
+
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
         //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
-        bettbtn.setEnabled(false);
+        bettbtn.setEnabled(true);
 
         dlgBuilder.setView(patmanlayout).setPositiveButton("Senden", new DialogInterface.OnClickListener() {
             @Override
@@ -105,7 +114,8 @@ public class CreatePat extends MainActivity {
 
                 //TODO: send data
 
-                Toast.makeText(getApplicationContext(), "Patient angelegt", Toast.LENGTH_SHORT).show();
+                textView116.setVisibility(View.VISIBLE);
+                textView116.setText("Patient angelegt");
 
                 // Set Pat. Management Buttons visible
                 patmanbtnlinlay.setVisibility(View.VISIBLE);
@@ -151,19 +161,53 @@ public class CreatePat extends MainActivity {
 
         );
 
+        dlgBuilder.setNeutralButton("Abteilung", new DialogInterface.OnClickListener()
+
+                {
+
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        bettbuchen();
+
+                    }
+                }
+
+        );
+
         AlertDialog alert = dlgBuilder.create();
         alert.show();
     }
 
     public void changepat() {
 
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(getApplicationContext());
+        RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
+        Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
+        TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
+
+        final TextView textView120 = (TextView) this.activity.findViewById(R.id.textView120);
+
+
+        LinearLayout patmanbtnlinlay = (LinearLayout) this.activity.findViewById(R.id.patmanbtnlinlay);
+
+        EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
+        EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
+        EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
+        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.);
+        EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
+        TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
+        Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
+
+        //Shared Prefs// Create Patient
+        SharedPreferences spref = this.activity.getSharedPreferences(PatData, Context.MODE_PRIVATE);
+
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
         //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
         bettbtn.setEnabled(false);
 
-        dlgBuilder = new AlertDialog.Builder(getApplicationContext());
+        dlgBuilder = new AlertDialog.Builder(this.activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
 
@@ -198,13 +242,12 @@ public class CreatePat extends MainActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 //remove layout
-                View viewToRemove = findViewById(R.id.patmanrelayout);
-                if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                    ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+                removelayout();
 
                 //TODO: store again in sharedprefs / send pat data to server
 
-                Toast.makeText(getApplicationContext(), "Pat. Daten geändert", Toast.LENGTH_SHORT).show();
+                textView120.setVisibility(View.VISIBLE);
+                textView120.setText("Pat. Daten geändert");
 
             }
         });
@@ -227,25 +270,24 @@ public class CreatePat extends MainActivity {
 
     }
 
-    /*
-            //remove layout after dialog creation
-            View viewToRemove = findViewById(R.id.patmanrelayout);
-            if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-                ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-        }
-    */
-    // Abteilung buchen
-    public void bettbuchen(View v) {
+    public void removelayout() {
+        View viewToRemove = this.activity.findViewById(R.id.patmanrelayout);
+        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
+            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
+    }
 
-        final RelativeLayout patmanlayout = (RelativeLayout) getLayoutInflater().inflate(R.layout.patman, null);
+    // Abteilung buchen
+    public void bettbuchen() {
+
+        final RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
+
+        final TextView textView116 = (TextView) this.activity.findViewById(R.id.textView116);
         /*
         LayoutInflater inflater = getLayoutInflater();
         getWindow().addContentView(inflater.inflate(R.layout.patman, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
 */
-        if (v.getId() == R.id.bettbtn) {
-
-            AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(getApplicationContext());
+        AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(this.activity);
             dlgbuilder.setTitle("Abteilung auswählen");
             dlgbuilder.setItems(new CharSequence[]
                             {"Intern", "Unfall", "Chirurgie", "HNO", "Dermatologie", "Spezialbett", "andere Abteilung"},
@@ -260,37 +302,38 @@ public class CreatePat extends MainActivity {
 
                                 case 0:
                                     abtedit.setText(R.string.intern);
-                                    Toast.makeText(getApplicationContext(), R.string.intern, Toast.LENGTH_SHORT).show();
+                                    textView116.setText(R.string.intern);
+                                    //Toast.makeText(getApplicationContext(), R.string.intern, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 1:
                                     abtedit.setText(R.string.unfall, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.unfall, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.unfall, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 2:
                                     abtedit.setText(R.string.chir, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.chir, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.chir, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 3:
                                     abtedit.setText(R.string.hno, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.hno, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.hno, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 4:
                                     abtedit.setText(R.string.derma, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.derma, Toast.LENGTH_SHORT).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.derma, Toast.LENGTH_SHORT).show();
                                     break;
 
                                 case 5:
                                     abtedit.setText(R.string.spezbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
                                     break;
 
                                 case 6:
                                     abtedit.setText(R.string.andbett, TextView.BufferType.EDITABLE);
-                                    Toast.makeText(getApplicationContext(), R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
+                                    //Toast.makeText(getApplicationContext(), R.string.lsbvanrufen, Toast.LENGTH_LONG).show();
                                     break;
                             }
                         }
@@ -302,4 +345,4 @@ public class CreatePat extends MainActivity {
                     show();
         }
     }
-}
+

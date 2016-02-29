@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.Locale;
 
 public class GPSGeolocation {
+
     private static final String TAG = "LocationAddress";
 
     public static void getAddressFromLocation(final double latitude, final double longitude,

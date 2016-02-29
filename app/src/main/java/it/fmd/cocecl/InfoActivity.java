@@ -6,6 +6,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,6 +28,8 @@ public class InfoActivity extends MainActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_info);
+
+        loadambinf();
 
         ambname = (TextView) findViewById(R.id.textView2);
         unitname = (TextView) findViewById(R.id.textView3);
@@ -139,5 +142,12 @@ public class InfoActivity extends MainActivity {
                     dialog.dismiss();
                 }
             });*/
+    }
+
+    public void loadambinf() {
+        WebView wv;
+        wv = (WebView) findViewById(R.id.webView);
+        wv.setVisibility(View.VISIBLE);
+        wv.loadUrl("file:///android_asset/ambinf.html");
     }
 }

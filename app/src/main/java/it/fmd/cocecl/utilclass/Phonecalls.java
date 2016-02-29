@@ -23,12 +23,12 @@ public class Phonecalls extends MainActivity {
         PackageManager pm = context.getPackageManager();
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsmain));
         context.startActivity(callIntent);
-
+/*
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
         } else {
 
-        }
+        }*/
     }
 
     public void lsbvcall(Context context) {
@@ -36,11 +36,12 @@ public class Phonecalls extends MainActivity {
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
         context.startActivity(callIntent);
 
+        /*
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
         } else {
 
-        }
+        }*/
     }
 
     public void khcall(Context context) {
@@ -49,11 +50,12 @@ public class Phonecalls extends MainActivity {
         callIntent.setData(Uri.parse("tel:" + APPConstants.mlsbv));
         context.startActivity(callIntent);
 
+        /*
         if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
         } else {
 
-        }
+        }*/
     }
 
     public void chkhcall(Context context) {
@@ -67,11 +69,12 @@ public class Phonecalls extends MainActivity {
             callIntent.setData(Uri.parse("tel:" + listnumber));
             context.startActivity(callIntent);
 
-            if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
+            /*
+        if (pm.checkPermission(Manifest.permission.CALL_PHONE, getPackageName()) == PackageManager.PERMISSION_GRANTED) {
 
-            } else {
+        } else {
 
-            }
+        }*/
 
         } else {
             Toast.makeText(getApplicationContext(), "Keine Nummer ausgewählt!", Toast.LENGTH_LONG).show();

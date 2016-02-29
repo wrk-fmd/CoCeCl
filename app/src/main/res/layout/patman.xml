@@ -89,7 +89,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:onClick="bettbuchen"
-            android:text="Bett abbuchen" />
+            android:text="Bett abbuchen"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/textView11"

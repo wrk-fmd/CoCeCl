@@ -62,7 +62,7 @@
     <string name="gps">GPS</string>
     <string name="radio">Funk</string>
     <string name="language">Sprache</string>
-    <string name="end">App Beenden</string>
+    <string name="end">Beenden</string>
     <string name="reloadconf">config neu laden</string>
     <string name="chooseserver">Server auswählen</string>
 

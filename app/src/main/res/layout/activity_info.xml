@@ -12,16 +12,13 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
         android:text="@string/app_name"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="15pt"
         android:textStyle="bold|italic"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_marginBottom="30dp" />
 
     <TextView
@@ -38,7 +35,7 @@
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textColorHint="@color/primary_dark_material_dark"
         android:layout_below="@+id/textView"
-        android:layout_marginBottom="20dp" />
+        android:layout_marginBottom="10dp" />
 
     <TextView
         android:id="@+id/textView3"
@@ -72,35 +69,28 @@
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColorHint="@color/primary_dark_material_dark" />
 
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#000000"></View>
-
     <Button
         android:id="@+id/button14"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignTop="@+id/button15"
-        android:layout_toLeftOf="@+id/button15"
-        android:layout_toStartOf="@+id/button15"
         android:drawableLeft="@drawable/ic_send_black_24dp"
-        android:text="START" />
+        android:text="START"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/button63"
+        android:layout_toEndOf="@+id/button63"
+        android:layout_alignTop="@+id/button63" />
 
     <Button
         android:id="@+id/button15"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/button20"
         android:layout_alignEnd="@+id/button20"
         android:layout_alignLeft="@+id/button20"
         android:layout_alignRight="@+id/button20"
         android:layout_alignStart="@+id/button20"
         android:drawableLeft="@drawable/ic_settings_black_24dp"
-        android:text="@string/action_settings" />
+        android:text="@string/action_settings"
+        android:layout_alignTop="@+id/button14" />
 
     <TextView
         android:id="@+id/versionText"
@@ -125,52 +115,32 @@
         android:drawableLeft="@drawable/ic_power_settings_new_black_24dp"
         android:enabled="true"
         android:onClick="exitbtn"
-        android:text="@string/end" />
-
-    <View
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignBottom="@+id/button14"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
-        android:background="#000000"></View>
+        android:text="@string/end"
+        android:layout_toRightOf="@+id/button14"
+        android:layout_toEndOf="@+id/button14" />
 
     <Button
         android:id="@+id/button63"
-        android:layout_width="wrap_content"
+        android:layout_width="80dp"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/button14"
-        android:layout_toLeftOf="@+id/button14"
-        android:layout_toStartOf="@+id/button14"
         android:drawableTop="@drawable/ic_local_taxi_black_18dp"
         android:onClick="btnunitinfo"
-        android:text="Unit Info" />
-
-    <View
-        android:id="@+id/view11"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
+        android:text="Unit Info"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/button14"
-        android:background="#000000"></View>
+        android:layout_alignParentStart="true" />
 
     <WebView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/webView"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
         android:layout_below="@+id/textView3"
-        android:layout_alignRight="@+id/versionText"
-        android:layout_alignEnd="@+id/versionText"
         android:background="@drawable/edittext_style_1"
         android:visibility="invisible"
-        android:layout_above="@+id/button14" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_above="@+id/button63" />
 
 </RelativeLayout>

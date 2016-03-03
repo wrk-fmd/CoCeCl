@@ -103,7 +103,8 @@
                 android:layout_marginBottom="10dp"
                 android:onClick="signin"
                 android:text="Sign In"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                android:enabled="false" />
 
             <TextView
                 android:id="@+id/textView94"

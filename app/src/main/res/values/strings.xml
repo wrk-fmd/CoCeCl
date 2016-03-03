@@ -123,6 +123,8 @@
     <string name="msg_title">Message</string>
     <string name="user_title">Hello User</string>
 
+    <string name="gcm_defaultSenderId">Your Project ID</string>
+
     //Tab strings//
     <string name="einsatztab">Einsatzdaten</string>
     <string name="statustab">Statusfenster</string>

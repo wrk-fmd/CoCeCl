@@ -6,17 +6,17 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,9 +27,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -41,6 +40,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 import it.fmd.cocecl.utilclass.CheckPlayServices;
+import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.ValidateInput;
 
@@ -105,6 +105,7 @@ public class LoginActivity extends MainActivity {
     String regId = "";
 
     CheckPlayServices cps = new CheckPlayServices();
+    ConnectionManager cm = new ConnectionManager(this);
 
 
     // OnCreate Method // -------------------------------------- //
@@ -112,6 +113,8 @@ public class LoginActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //cm.ping();
 
         // Register Layout EditText
         registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
@@ -180,25 +183,6 @@ public class LoginActivity extends MainActivity {
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
         logindnr = (EditText) findViewById(R.id.logindnr);
         loginpassword = (EditText) findViewById(R.id.loginpassword);
-
-        //final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-
-        //Displaying TextInputLayout Error
-        TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
-        registernameLayout.setErrorEnabled(true);
-        registernameLayout.setError("Min 2 chars required");
-
-        //Displaying EditText Error
-        EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
-        name.setError("Required");
-
-        //Displaying both TextInputLayout and EditText Errors
-        TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
-        emailLayout.setErrorEnabled(true);
-        emailLayout.setError("Please enter EMailAddress");
-
-        EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        email.setError("Required");
 
         // LogIn to Server//
         //POST and GET
@@ -365,9 +349,9 @@ public class LoginActivity extends MainActivity {
         //inputEmail.addTextChangedListener(new LogInTextWatcher(inputEmail));
         loginpassword.addTextChangedListener(new LogInTextWatcher(loginpassword));
 
-        // Register TextChangeListener
-        registerfamilyname.addTextChangedListener(new RegisterEntryWatcher(registerfamilyname));
-
+        // Register TextChangeListener //TODO: Focus loss on input
+        //registerfamilyname.addTextChangedListener(new RegisterEntryWatcher(registerfamilyname));
+        //registername.addTextChangedListener(new RegisterEntryWatcher(registername));
     }
 
     // OnCreate END ----------------------------------------------------------------- //
@@ -409,18 +393,6 @@ public class LoginActivity extends MainActivity {
         }
         */
         super.onDestroy();
-
-
-    }
-
-    public void signincolor() {
-        if (!logindnr.getText().toString().trim().isEmpty() && !loginpassword.getText().toString().trim().isEmpty()) {
-            signinbtn.setBackgroundResource(R.drawable.button_green_pressed);
-            signinbtn.setEnabled(true);
-        } else {
-            signinbtn.setBackgroundResource(R.drawable.button_red_pressed);
-            signinbtn.setEnabled(false);
-        }
     }
 
     // SignIn --------------
@@ -453,60 +425,39 @@ public class LoginActivity extends MainActivity {
     // Validate SignIn Form
 
     private void submitForm() {
-        if (!validateDnr()) {
-            return;
-        }
-/*
-        if (!validateEmail()) {
-            return;
-        }
-*/
-        if (!validatePassword()) {
+        /*
+        if (!validateFamilyname()) {
             return;
         }
 
+        if (!validateName()) {
+            return;
+        }
+
+        if (!validateDnr()) {
+            return;
+        }
+*//*
+        if (!validateEmail()) {
+            return;
+        }
+
+        if (!validatePassword()) {
+            return;
+        }
+*/
         //Toast.makeText(getApplicationContext(), "Validated", Toast.LENGTH_SHORT).show();
         //TODO send to server and login
     }
 
-    private boolean validateDnr() {
-        if (logindnr.getText().toString().trim().isEmpty()) {
-            inputLayoutDnr.setError(getString(R.string.err_msg_dnr));
-            requestFocus(logindnr);
-            return false;
+    public void signincolor() {
+        if (!logindnr.getText().toString().trim().isEmpty() && !loginpassword.getText().toString().trim().isEmpty()) {
+            signinbtn.setBackgroundResource(R.drawable.button_green_pressed);
+            signinbtn.setEnabled(true);
         } else {
-            inputLayoutDnr.setErrorEnabled(false);
+            signinbtn.setBackgroundResource(R.drawable.button_red_pressed);
+            signinbtn.setEnabled(false);
         }
-
-        return true;
-    }
-
-    /*
-        private boolean validateEmail() {
-
-            String email = registeremail.getText().toString().trim();
-
-            if (email.isEmpty() || !ValidateInput.isValidEmail(email)) {
-                inputLayoutEmail.setError(getString(R.string.err_msg_email));
-                requestFocus(registeremail);
-                return false;
-            } else {
-                inputLayoutEmail.setErrorEnabled(false);
-            }
-
-            return true;
-        }
-    */
-    private boolean validatePassword() {
-        if (loginpassword.getText().toString().trim().isEmpty()) {
-            inputLayoutPassword.setError(getString(R.string.err_msg_password));
-            requestFocus(loginpassword);
-            return false;
-        } else {
-            inputLayoutPassword.setErrorEnabled(false);
-        }
-
-        return true;
     }
 
     private void requestFocus(View view) {
@@ -543,28 +494,6 @@ public class LoginActivity extends MainActivity {
                 case R.id.loginpassword:
                     validatePassword();
                     break;
-/*
-                // registerfields
-                case R.id.registerfamilyname:
-                    validatePassword();
-                    break;
-
-                case R.id.registername:
-                    validatePassword();
-                    break;
-
-                case R.id.registerdnr:
-                    validatePassword();
-                    break;
-
-                case R.id.registeremail:
-                    validatePassword();
-                    break;
-
-                case R.id.registerpassword:
-                    validatePassword();
-                    break;
-                    */
             }
         }
     }
@@ -580,10 +509,15 @@ public class LoginActivity extends MainActivity {
         @Override
         public void onTextChanged(CharSequence s, int start, int before, int count) {
 
+        }
+
+        @Override
+        public void afterTextChanged(Editable s) {
+
             switch (view.getId()) {
                 // registerfields
                 case R.id.registerfamilyname:
-                    validateFamilyname();
+                    //validateFamilyname();
                     break;
 
                 case R.id.registername:
@@ -594,20 +528,13 @@ public class LoginActivity extends MainActivity {
                     break;
 
                 case R.id.registeremail:
-                    validateEmail();
+                    //validateEmail();
                     break;
 
                 case R.id.registerpassword:
                     validatePassword();
                     break;
             }
-        }
-
-        @Override
-        public void afterTextChanged(Editable s) {
-
-            final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-            final EditText registerpassword = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
 
             AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
             AlertDialog alert = dlgBuilder.create();
@@ -619,22 +546,57 @@ public class LoginActivity extends MainActivity {
             } else {
                 alert.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
             }
-
         }
 
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+
+            if (registerpassword.getText().toString().isEmpty()) {
+
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(false);
+            } else {
+                alert.getButton(AlertDialog.BUTTON_POSITIVE).setEnabled(true);
+            }
         }
 
     }
 
-    private boolean validateEmail() {
-/*
-        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        final EditText registeremail = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+    // Validations //
 
-        String email = registeremail.getText().toString().trim();
-*/
+    public void validateFamilyname() {
+
+        if (registerfamilyname.getText().toString().trim().isEmpty()) {
+            registerfamilyname.setError("Invalid Input");
+            requestFocus(registerfamilyname);
+        }
+    }
+
+    public void validateName() {
+
+        if (registername.getText().toString().trim().isEmpty()) {
+            registername.setError("Invalid Input");
+            requestFocus(registername);
+        }
+    }
+
+    private boolean validateDnr() {
+        if (logindnr.getText().toString().trim().isEmpty()) {
+            inputLayoutDnr.setError(getString(R.string.err_msg_dnr));
+            requestFocus(logindnr);
+            return false;
+        } else {
+            inputLayoutDnr.setErrorEnabled(false);
+        }
+
+        return true;
+    }
+
+    private boolean validateEmail() {
+
         if (email.isEmpty() || !ValidateInput.isValidEmail(email)) {
             inputLayoutEmail.setError(getString(R.string.err_msg_email));
             requestFocus(registeremail);
@@ -646,54 +608,69 @@ public class LoginActivity extends MainActivity {
         return true;
     }
 
-    public void validateFamilyname() {
-/*
-        final LinearLayout registeruserlayout = (LinearLayout) getLayoutInflater().inflate(R.layout.register_user_layout, null);
-        final EditText registerfamilyname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
-*/
-        if (registerfamilyname.getText().toString().trim().isEmpty()) {
-            registerfamilyname.setError("Invalid Input");
-            requestFocus(registerfamilyname);
+    private boolean validatePassword() {
+        if (loginpassword.getText().toString().trim().isEmpty()) {
+            inputLayoutPassword.setError(getString(R.string.err_msg_password));
+            requestFocus(loginpassword);
+            return false;
+        } else {
+            inputLayoutPassword.setErrorEnabled(false);
         }
+
+        return true;
     }
+
+    public void textInputErrorMsg() {
+
+        //Displaying TextInputLayout Error
+        TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
+        registernameLayout.setErrorEnabled(true);
+        registernameLayout.setError("Min 2 chars required");
+
+        //Displaying EditText Error
+        EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
+        name.setError("Required");
+
+        //Displaying both TextInputLayout and EditText Errors
+        TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
+        emailLayout.setErrorEnabled(true);
+        emailLayout.setError("Please enter EMailAddress");
+
+        EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        email.setError("Required");
+    }
+
     // Link to Register Screen ------------------------------------------
     // Dialog for user registering
 
     public void gotoRegisterScreen() {
 
-        familyname = registerfamilyname.getText().toString().trim();
-        name = registername.getText().toString().trim();
-        dnr = registerdnr.getText().toString().trim();
-        email = registeremail.getText().toString().trim();
-        password = registerpassword.getText().toString().trim();
-
-        LayoutInflater factory = LayoutInflater.from(this);
-        final View f = factory.inflate(R.layout.register_user_layout, null);
-
         //Dialog
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
+        final AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(LoginActivity.this);
 
         //Title
         dlgBuilder.setTitle("Register User");
 
-        //View registeruserlayout = getLayoutInflater().inflate(R.layout.register_user_layout, null);
-
-        //dlgBuilder.setView(registeruserlayout);
-        dlgBuilder.setView(f);
+        dlgBuilder.setView(registeruserlayout);
 
         //Buttons
         dlgBuilder.setPositiveButton("Register", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
+                familyname = registerfamilyname.getText().toString().trim();
+                name = registername.getText().toString().trim();
+                dnr = registerdnr.getText().toString().trim();
+                email = registeremail.getText().toString().trim();
+                password = registerpassword.getText().toString().trim();
+
                 RegisterUserGCM();
-                RegisterUserMLS();
-/*
+                //RegisterUserMLS();
+
                 //remove layout
-                View viewToRemove = findViewById(R.id.registeruserrelaout);
+                View viewToRemove = registeruserlayout;
                 if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                     ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-                    */
             }
 
         });
@@ -702,18 +679,14 @@ public class LoginActivity extends MainActivity {
 
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-/*
+
                         //remove layout
-                        View viewToRemove = findViewById(R.id.registeruserrelaout);
+                        View viewToRemove = registeruserlayout;
                         if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                             ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-*/
-/*
-                Intent i = new Intent(getApplicationContext(),
-                        InfoActivity.class);
-                startActivity(i);
-                finish();
-*/
+
+                        finish();
+
                     }
                 }
         );

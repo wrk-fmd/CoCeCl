@@ -6,9 +6,11 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.view.View;
+import android.view.Window;
 import android.view.WindowManager;
 import android.widget.CompoundButton;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Locale;
@@ -152,6 +154,34 @@ public class SettingsActivity extends MainActivity {
     protected void onStop(Bundle savedInstanceState) {
         super.onStop();
 
+    }
+
+    // Set connection icons visible on fullscreen (optional)
+    public void iconsvisibility_fullscreen() {
+
+        //requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        TextView wifitext = (TextView) findViewById(R.id.textView7);
+        TextView mobiletext = (TextView) findViewById(R.id.textView83);
+
+        Window window = this.getWindow();
+        window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+
+        WindowManager.LayoutParams lp = getWindow().getAttributes();
+        int i = lp.flags;
+
+        if (i == 1) {
+
+            wifitext.setVisibility(View.VISIBLE);
+            mobiletext.setVisibility(View.VISIBLE);
+
+        } else {
+
+            wifitext.setVisibility(View.INVISIBLE);
+            mobiletext.setVisibility(View.INVISIBLE);
+
+        }
     }
 }
 

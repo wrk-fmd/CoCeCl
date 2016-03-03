@@ -2,9 +2,11 @@ package it.fmd.cocecl;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
@@ -64,6 +66,7 @@ import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
@@ -92,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    public ConnectionManager conman = new ConnectionManager();
+    public ConnectionManager conman = new ConnectionManager(this);
 
     public CheckPlayServices cps = new CheckPlayServices();
 
@@ -112,6 +115,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Broadcast Receiver Connection State
+        // register
+        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        // Connection
+        ConnectionManager cm = new ConnectionManager(this);
+        //cm.ping();
+
+        // Icon
+        NotifiBarIcon nbi = new NotifiBarIcon(this);
+        nbi.StatusBarAppIcon();
+
+        // Get Version
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), 0);
@@ -120,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         }
         final String version = pInfo.versionName;
 
+        // Snackbar
         {
             //Coordinator Layout for SnackBar//
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id
@@ -139,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+        // Custom Toolbar
         {
             Toolbar toolbar = (Toolbar) findViewById(R.id.appbar);
             setSupportActionBar(toolbar);
@@ -499,123 +517,6 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    /*
-        public void setConnectionIcons() {
-        //TODO: if on fullscreen set connection icons on toolbar visible, else invisible
-
-            //requestWindowFeature(Window.FEATURE_NO_TITLE); getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
-            TextView wifitext = (TextView)findViewById(R.id.textView7);
-            TextView mobiletext = (TextView)findViewById(R.id.textView83);
-
-            Window window = this.getWindow();
-            window.setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-            if () {
-
-                wifitext.setVisibility(View.VISIBLE);
-                mobiletext.setVisibility(View.VISIBLE);
-
-            }else{
-
-                wifitext.setVisibility(View.INVISIBLE);
-                mobiletext.setVisibility(View.INVISIBLE);
-
-            }
-        }
-    */
-    // ConnectionManager //
-    //TODO: use broadcast receiver from connectionmanager class
-    private void registerReceivers() {
-        //conman.registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-    }
-
-    // ToolBar status icons //
-    public void checkMLSConnection() {
-
-        // ToolBar mls connection state icon
-        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
-        {
-            // check if you are connected or not
-
-            if (conman.isConnectedToServer()) {
-
-                mlscon.setImageResource(R.drawable.connected64);
-
-            } else {
-
-                mlscon.setImageResource(R.drawable.disconnected64);
-            }
-        }
-    }
-
-    public void inetcon() {
-        //TODO: use from Connection manager class
-        TextView wifitext = (TextView) findViewById(R.id.textView7);
-        TextView mobiletext = (TextView) findViewById(R.id.textView83);
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        if (activeNetwork != null) { // connected to the internet
-            if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-                // connected to wifi
-                wifitext.setBackgroundColor(GREEN);
-                //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
-            } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                // connected to the mobile provider's data plan
-                mobiletext.setBackgroundColor(GREEN);
-                //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
-            }
-        } else {
-            // not connected to the internet
-            wifitext.setBackgroundColor(RED);
-            mobiletext.setBackgroundColor(RED);
-        }
-    }
-
-    public void checkInetConnection() {
-
-        // TextView in ToolBar
-        TextView wifitext = (TextView) findViewById(R.id.textView7);
-        TextView mobiletext = (TextView) findViewById(R.id.textView83);
-
-        if (conman.isOnline()) {
-
-            wifitext.setBackgroundColor(GREEN);
-            mobiletext.setBackgroundColor(GREEN);
-
-        } else {
-
-            wifitext.setBackgroundColor(RED);
-            mobiletext.setBackgroundColor(RED);
-
-        }
-    }
-
-    // Check if GPS enabled / show icon in appbar
-
-    public void checkGPS() {
-
-        TextView gpstext = (TextView) findViewById(R.id.textView108);
-
-        LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        boolean gps_enabled = false;
-
-        try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        } catch (Exception ex) {
-        }
-
-        if (!gps_enabled) {
-            gpstext.setBackgroundColor(RED);
-        }
-
-        if (gps_enabled) {
-            gpstext.setBackgroundColor(GREEN);
-        }
-    }
-
-
     //TODO: create method to save app/fragment state
     /*
         @Override
@@ -651,8 +552,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onStart() {
         super.onStart();
-        //setSMS();
-        //checkMLSConnection();
     }
 
     @Override
@@ -677,9 +576,6 @@ public class MainActivity extends AppCompatActivity {
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
-
-            //TODO: on incident emergency set tablayout_color to blue #1565C0
-            //tabLayout.setBackgroundColor(BLUE);
 
             final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
             final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
@@ -731,11 +627,17 @@ public class MainActivity extends AppCompatActivity {
             // Transaction commit
             ft.commit();
         }
+
+        // register
+        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
     public void onPause() {
         super.onPause();
+
+        // unregister the receiver
+        unregisterReceiver(conman.mReceiver);
 
     }
 
@@ -743,14 +645,18 @@ public class MainActivity extends AppCompatActivity {
     public void onStop() {
         super.onStop();
 
-
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
 
+        // unregister the receiver
+        //unregisterReceiver(conman.mReceiver);
 
+        // remove persistent appbar icon
+        NotifiBarIcon nbi = new NotifiBarIcon(this);
+        nbi.removeSBAI();
     }
 
     // Buttons //

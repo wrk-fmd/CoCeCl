@@ -2,6 +2,7 @@ package it.fmd.cocecl.incidentaction;
 
 
 import android.graphics.Color;
+import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
 import android.widget.TextView;
 
@@ -50,5 +51,10 @@ public class IncidentTaskTypeSetting extends MainActivity {
 
             estatcard.setBackgroundColor(Color.parseColor("#B2DFDB"));
         }
+    }
+
+    public void tasktypeemergencytabcolor() {
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        tabLayout.setBackgroundColor(Color.parseColor("#1565C0"));
     }
 }

@@ -1,5 +1,6 @@
 package it.fmd.cocecl.gmapsnav.gpstracker;
 
+import android.app.Activity;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -15,12 +16,22 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import it.fmd.cocecl.utilclass.ConnectionManager;
+import it.fmd.cocecl.utilclass.ToolbarIconStates;
 
 public class GPSTrackListener extends Service {
 
     PowerManager.WakeLock wakeLock;
 
-    ConnectionManager cm = new ConnectionManager();
+    ConnectionManager cm = new ConnectionManager((Activity) getApplicationContext());
+
+    public Activity activity;
+
+    public GPSTrackListener(Activity _activity) {
+
+        this.activity = _activity;
+    }
+
+    ToolbarIconStates tis = new ToolbarIconStates(activity);
 
     public GPSTrackListener() {
         // TODO Auto-generated constructor stub
@@ -89,12 +100,14 @@ public class GPSTrackListener extends Service {
         @Override
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
+            tis.gpsdisabled();
 
         }
 
         @Override
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
+            tis.gpsenabled();
 
         }
 

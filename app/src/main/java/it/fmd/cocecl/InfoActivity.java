@@ -147,6 +147,7 @@ public class InfoActivity extends MainActivity {
     public void loadambinf() {
         WebView wv;
         wv = (WebView) findViewById(R.id.webView);
+        wv.setBackgroundColor(0x00000000);
         wv.setVisibility(View.VISIBLE);
         wv.loadUrl("file:///android_asset/ambinf.html");
     }

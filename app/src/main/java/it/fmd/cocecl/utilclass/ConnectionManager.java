@@ -1,25 +1,27 @@
 package it.fmd.cocecl.utilclass;
 
-import android.app.Application;
+import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 
-import it.fmd.cocecl.APPConstants;
+import it.fmd.cocecl.LoginActivity;
 
-public class ConnectionManager extends Application {
+public class ConnectionManager {
 
-    //registerReceiver(mNetworkReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+    public Activity activity;
 
-    //public class ConnectivityBroadcast extends BroadcastReceiver {
+    public ConnectionManager(Activity _activity) {
+
+        this.activity = _activity;
+    }
+
+    ToolbarIconStates tis = new ToolbarIconStates(activity);
+
     public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -29,19 +31,22 @@ public class ConnectionManager extends Application {
             if (activeNetwork != null) { // connected to the internet
                 if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
                     // connected to wifi
+                    //tis.setwifigreen();
                     //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
                 } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
-                    // connected to the mobile provider's data plan
+                    // connected to the mobile network
+                    //tis.setmobilegreen();
                     //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
                 }
             } else {
                 // not connected to the internet
+                //tis.setred();
             }
         }
     };
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) this.activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
 
@@ -62,9 +67,57 @@ public class ConnectionManager extends Application {
         return false;
     }
 
+    public boolean ping() {
+
+        Runtime runtime = Runtime.getRuntime();
+        try {
+
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            int exitValue = ipProcess.waitFor();
+
+            tis.mlsonline();
+            //tis.mlsonlineicon();
+            return (exitValue == 0);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        tis.mlsoffline();
+        //tis.mlsofflineicon();
+
+        return false;
+    }
+
+    /*
+    static public boolean isConnectedToServer(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        if (netInfo != null && netInfo.isConnected()) {
+            try {
+                URL url = new URL("http://google.com");
+                HttpURLConnection urlc = (HttpURLConnection) url.openConnection();
+                urlc.setConnectTimeout(10 * 1000);          // 10 s.
+                urlc.connect();
+                if (urlc.getResponseCode() == 200) {        // 200 = "OK" code (http connection is fine).
+                    Log.wtf("Connection", "Success !");
+                    return true;
+                } else {
+                    return false;
+                }
+            } catch (MalformedURLException e1) {
+                return false;
+            } catch (IOException e) {
+                return false;
+            }
+        }
+        return false;
+    }
+/*
     public boolean isConnectedToServer() {
 
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) this.activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
 
         if (activeNetwork != null && activeNetwork.isConnected()) {
@@ -75,6 +128,8 @@ public class ConnectionManager extends Application {
                 connection.connect();
 
                 Log.wtf("Connection to MLS established", "Success!");
+                tis.mlsonline();
+                tis.mlsonlineicon();
                 return true;
 
             } catch (MalformedURLException e1) {
@@ -83,34 +138,12 @@ public class ConnectionManager extends Application {
             } catch (IOException e) {
                 // TODO Auto-generated catch block
                 Log.wtf("Connection to MLS not established", "Failure!");
+                tis.mlsoffline();
+                tis.mlsofflineicon();
                 e.printStackTrace();
             }
         }
         return false;
-    }
-
-    // Check if GPS enabled / show icon in appbar
-/*
-    public void checkGPS() {
-
-        TextView gpstext = (TextView) findViewById(R.id.textView108);
-
-        LocationManager lm = (LocationManager) getApplicationContext().getSystemService(Context.LOCATION_SERVICE);
-        boolean gps_enabled = false;
-
-        try {
-            gps_enabled = lm.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-        } catch (Exception ex) {}
-
-        if (!gps_enabled) {
-            gpstext.setBackgroundColor(RED);
-        }
-
-        if (gps_enabled) {
-            gpstext.setBackgroundColor(GREEN);
-        }
-    }
-    */
+    }*/
 }
 

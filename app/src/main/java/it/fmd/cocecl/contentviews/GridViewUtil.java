@@ -3,20 +3,21 @@ package it.fmd.cocecl.contentviews;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.ViewGroup;
-import android.widget.ListView;
+import android.widget.GridView;
 
-public class ListViewUtil extends ListView {
+public class GridViewUtil extends GridView {
+
     boolean expanded = false;
 
-    public ListViewUtil(Context context) {
+    public GridViewUtil(Context context) {
         super(context);
     }
 
-    public ListViewUtil(Context context, AttributeSet attrs) {
+    public GridViewUtil(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public ListViewUtil(Context context, AttributeSet attrs,
+    public GridViewUtil(Context context, AttributeSet attrs,
                         int defStyle) {
         super(context, attrs, defStyle);
     }
@@ -28,10 +29,10 @@ public class ListViewUtil extends ListView {
     @Override
     public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if (isExpanded()) {
-
-            int expandSpec = MeasureSpec.makeMeasureSpec(
-                    Integer.MAX_VALUE >> 2, MeasureSpec.AT_MOST);
+            int expandSpec = MeasureSpec.makeMeasureSpec(MEASURED_SIZE_MASK,
+                    MeasureSpec.AT_MOST);
             super.onMeasure(widthMeasureSpec, expandSpec);
+
             ViewGroup.LayoutParams params = getLayoutParams();
             params.height = getMeasuredHeight();
         } else {
@@ -42,4 +43,5 @@ public class ListViewUtil extends ListView {
     public void setExpanded(boolean expanded) {
         this.expanded = expanded;
     }
+
 }

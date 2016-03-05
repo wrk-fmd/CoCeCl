@@ -46,7 +46,7 @@ public class PatStatus implements View.OnClickListener {
         final TextView patstattv = (TextView) this.activity.findViewById(R.id.textView116);
 
         Button button10 = (Button) this.activity.findViewById(R.id.button10);
-        button10.setEnabled(true);
+        button10.setEnabled(false);
         button10.setClickable(false);
         button10.setBackgroundColor(GREEN);
 
@@ -94,7 +94,7 @@ public class PatStatus implements View.OnClickListener {
         //button11.setBackgroundResource(android.R.drawable.btn_default);
 
         Button button13 = (Button) this.activity.findViewById(R.id.button13);
-        button13.setEnabled(true);
+        button13.setEnabled(false);
         button13.setClickable(false);
         button13.setBackgroundColor(GREEN);
         //button13.setBackgroundResource(android.R.drawable.btn_default);
@@ -125,7 +125,7 @@ public class PatStatus implements View.OnClickListener {
         button10.setBackgroundColor(Color.parseColor("#bdbdbd"));
 
         Button button11 = (Button) this.activity.findViewById(R.id.button11);
-        button11.setEnabled(true);
+        button11.setEnabled(false);
         button11.setClickable(false);
         button11.setBackgroundColor(GREEN);
         //button11.setBackgroundResource(android.R.drawable.btn_default);

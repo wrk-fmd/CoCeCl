@@ -20,7 +20,7 @@ public class deliverylocFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_deliveryloc2, container, false);
+        View v = inflater.inflate(R.layout.fragment_deliveryloc, container, false);
 
         final Button changepatbtn = (Button) v.findViewById(R.id.changepatbtn);
         Button navao = (Button) v.findViewById(R.id.button19);

@@ -352,6 +352,9 @@ public class LoginActivity extends MainActivity {
         // Register TextChangeListener //TODO: Focus loss on input
         //registerfamilyname.addTextChangedListener(new RegisterEntryWatcher(registerfamilyname));
         //registername.addTextChangedListener(new RegisterEntryWatcher(registername));
+
+        //Set Required Icon
+        setRegisterAllErrorEnabled();
     }
 
     // OnCreate END ----------------------------------------------------------------- //
@@ -620,12 +623,49 @@ public class LoginActivity extends MainActivity {
         return true;
     }
 
+    public void setRegisterAllErrorEnabled() {
+
+        TextInputLayout registerfamilynameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registerfamilynameLayout);
+        TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
+        TextInputLayout registerdnrLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registerdnrLayout);
+        TextInputLayout registeremailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
+        TextInputLayout registerpasswordLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registerpasswordLayout);
+
+        registerfamilynameLayout.setErrorEnabled(true);
+        registernameLayout.setErrorEnabled(true);
+        registerdnrLayout.setErrorEnabled(true);
+        registeremailLayout.setErrorEnabled(true);
+        registerpasswordLayout.setErrorEnabled(true);
+/*
+        registerfamilynameLayout.setError("Required");
+        registernameLayout.setError("Required");
+        registerdnrLayout.setError("Required");
+        registeremailLayout.setError("Required");
+        registerpasswordLayout.setError("Required");
+        */
+
+        EditText famname = (EditText) registeruserlayout.findViewById(R.id.registerfamilyname);
+        famname.setError("Required");
+
+        EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
+        name.setError("Required");
+
+        EditText dnr = (EditText) registeruserlayout.findViewById(R.id.registerdnr);
+        dnr.setError("Required");
+
+        EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
+        email.setError("Required");
+
+        EditText pwd = (EditText) registeruserlayout.findViewById(R.id.registerpassword);
+        pwd.setError("Required");
+    }
+
     public void textInputErrorMsg() {
 
         //Displaying TextInputLayout Error
         TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
         registernameLayout.setErrorEnabled(true);
-        registernameLayout.setError("Min 2 chars required");
+        //registernameLayout.setError("Min 2 chars required");
 
         //Displaying EditText Error
         EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
@@ -634,7 +674,7 @@ public class LoginActivity extends MainActivity {
         //Displaying both TextInputLayout and EditText Errors
         TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
         emailLayout.setErrorEnabled(true);
-        emailLayout.setError("Please enter EMailAddress");
+        //emailLayout.setError("Please enter EMailAddress");
 
         EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
         email.setError("Required");
@@ -685,7 +725,7 @@ public class LoginActivity extends MainActivity {
                         if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
                             ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
 
-                        finish();
+                        //finish();
 
                     }
                 }

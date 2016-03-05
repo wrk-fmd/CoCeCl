@@ -44,9 +44,13 @@ public class AssignedUnitsAdapter extends ArrayAdapter<AssignedUnits> {
 
         TextView AUnit = (TextView) convertView.findViewById(R.id.assignedUnitTV);
 
+        TextView StatusAUnit = (TextView) convertView.findViewById(R.id.assignedUnitstatus);
+
         // Populate the data into the template view using the data object
 
         AUnit.setText(aunitses.aunit);
+
+        StatusAUnit.setText(aunitses.statusaunit);
 
         // Return the completed view to render on screen
 

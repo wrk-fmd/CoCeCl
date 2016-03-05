@@ -8,8 +8,12 @@ public class AssignedUnits {
 
     public String aunit;
 
-    public AssignedUnits(String aunit) {
+    public String statusaunit;
+
+    public AssignedUnits(String aunit, String statusaunit) {
 
         this.aunit = aunit;
+
+        this.statusaunit = statusaunit;
     }
 }

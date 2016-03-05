@@ -22,7 +22,8 @@ public class NotifiBarIcon {
                 .setSmallIcon(R.mipmap.coceclstbar)
                 .setContentTitle("CoCeCl")
                         //TODO get current incident
-                .setContentText("keine Einsatz");
+                .setContentText("keine Einsatz")
+                .setOngoing(true);
 
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, mBuilder.build());

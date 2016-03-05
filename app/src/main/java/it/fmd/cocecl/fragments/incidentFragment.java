@@ -7,14 +7,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.GridView;
-import android.widget.RelativeLayout;
 
 import java.util.ArrayList;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
 import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
+import it.fmd.cocecl.contentviews.GridViewUtil;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
 import it.fmd.cocecl.patadminaction.CreatePat;
 import it.fmd.cocecl.patadminaction.PatStatus;
@@ -29,7 +28,7 @@ public class incidentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_incident2, container, false);
+        View v = inflater.inflate(R.layout.fragment_incident, container, false);
 
         final Button button10 = (Button) v.findViewById(R.id.button10);
         final Button button11 = (Button) v.findViewById(R.id.button11);
@@ -74,23 +73,25 @@ public class incidentFragment extends Fragment {
 
         // Attach the adapter to a GridView
 
-        final GridView gridView = (GridView) getActivity().findViewById(R.id.asUnitGV);
+        //final GridView gridView = (GridView) getActivity().findViewById(R.id.asUnitGV);
+        final GridViewUtil gridView = (GridViewUtil) getActivity().findViewById(R.id.asUnitGV);
+
+        gridView.setExpanded(true);
+        gridView.setNumColumns(2);
 
         gridView.setAdapter(adapter);
 
         // Add item to adapter
         // TEST DATA - later from server JSON, stored in shared prefs
-        AssignedUnits newUnits = new AssignedUnits("RTW-01");
-        AssignedUnits newUnits2 = new AssignedUnits("RTW-02");
-        AssignedUnits newUnits3 = new AssignedUnits("NEF-01");
-        AssignedUnits newUnits4 = new AssignedUnits("VOK");
-
+        AssignedUnits newUnits = new AssignedUnits("RTW-01", "ABO");
+        AssignedUnits newUnits2 = new AssignedUnits("RTW-02", "ZBO");
+        AssignedUnits newUnits3 = new AssignedUnits("NEF-01", "ZBO");
+        AssignedUnits newUnits4 = new AssignedUnits("VOK", "ZBO");
 
         adapter.add(newUnits);
         adapter.add(newUnits2);
         adapter.add(newUnits3);
         adapter.add(newUnits4);
-
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
         gridView.setClickable(true);

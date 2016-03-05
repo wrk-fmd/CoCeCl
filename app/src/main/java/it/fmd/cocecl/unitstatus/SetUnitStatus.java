@@ -83,7 +83,7 @@ public class SetUnitStatus implements View.OnClickListener {
         final Button button12 = (Button) this.activity.findViewById(R.id.button12);
         final TextView textView112 = (TextView) this.activity.findViewById(R.id.textView112);
 
-        button5.setEnabled(true);
+        button5.setEnabled(false);
         button5.setClickable(false);
         //button5.setBackgroundColor(Color.YELLOW);
         button5.setBackground(this.activity.getResources().getDrawable(R.drawable.button_yellow_pressed));
@@ -145,7 +145,7 @@ public class SetUnitStatus implements View.OnClickListener {
         final Button button12 = (Button) this.activity.findViewById(R.id.button12);
         final TextView textView112 = (TextView) this.activity.findViewById(R.id.textView112);
 
-        button12.setEnabled(true);
+        button12.setEnabled(false);
         button12.setClickable(false);
         //button12.setBackgroundColor(RED);
         button12.setBackground(this.activity.getResources().getDrawable(R.drawable.button_red_pressed));

@@ -1,172 +1,369 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="it.fmd.cocecl.fragments.deliverylocFragment">
+    android:id="@+id/mainstatusfraglayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#bdbdbd"
+
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin"
+    tools:context="it.fmd.cocecl.mainstatus">
 
     <ScrollView
-        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
             android:orientation="vertical">
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_gravity="center_horizontal" />
-
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dip"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="10dp"
-                android:background="#000000"></View>
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
-                <TextView
-                    android:id="@+id/aofield"
-                    android:layout_width="0dp"
-                    android:layout_height="120dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_alignParentLeft="true"
-                    android:layout_alignParentRight="true"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_weight="100"
-                    android:background="@drawable/edittext_style_1"
-                    android:clickable="true"
-                    android:editable="false"
-                    android:enabled="false"
-                    android:gravity="center"
-                    android:hint="@string/ao"
-                    android:inputType="textPostalAddress"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/primary_dark_material_dark"
-                    android:textColorHint="@color/primary_dark_material_dark" />
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <Button
-                    android:id="@+id/button19"
-                    android:layout_width="70dp"
-                    android:layout_height="match_parent"
-                    android:clickable="true"
-                    android:drawableTop="@drawable/ic_navigation_black_18dp"
-                    android:enabled="true"
-                    android:onClick="navigate"
-                    android:text="@string/nav" />
-            </LinearLayout>
+                    <TextView
+                        android:id="@+id/textView117"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Abgabeort"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
 
+                    <TextView
+                        android:id="@+id/textView118"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ziel POI"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_gravity="center_horizontal" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
 
-            <TextView
-                android:id="@+id/textView6"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/aofield"
-                android:background="@drawable/edittext_style_1"
-                android:enabled="false"
-                android:gravity="center"
-                android:hint="@string/abt"
-                android:inputType="text"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/primary_dark_material_dark"
-                android:textColorHint="@color/primary_dark_material_dark" />
+                        <TextView
+                            android:id="@+id/aofield"
+                            android:layout_width="0dp"
+                            android:layout_height="120dp"
+                            android:layout_weight="100"
+                            android:background="@drawable/edittext_style_3"
+                            android:clickable="true"
+                            android:editable="false"
+                            android:enabled="false"
+                            android:gravity="center"
+                            android:hint="@string/ao"
+                            android:inputType="textPostalAddress"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textColor="@color/primary_dark_material_dark"
+                            android:textColorHint="@color/primary_dark_material_dark" />
 
-            <Space
-                android:layout_width="match_parent"
-                android:layout_height="5dp"
-                android:layout_gravity="center_horizontal" />
+                        <Button
+                            android:id="@+id/button19"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="70dp"
+                            android:layout_height="match_parent"
+                            android:background="@drawable/custom_button_selector"
+                            android:clickable="true"
+                            android:drawableTop="@drawable/ic_navigation_black_18dp"
+                            android:enabled="true"
+                            android:text="NAVI" />
 
-            <TextView
-                android:id="@+id/textView12"
-                android:layout_width="match_parent"
-                android:layout_height="25dp"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/textView6"
-                android:background="@drawable/edittext_style_1"
-                android:enabled="false"
-                android:gravity="center"
-                android:hint="@string/tcnr"
-                android:inputType="number"
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:textColor="@color/primary_dark_material_dark"
-                android:textColorHint="@color/primary_dark_material_dark" />
+                    </LinearLayout>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dip"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:background="#000000"></View>
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_style_3"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:hint="@string/abt"
+                        android:inputType="text"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
+                    <TextView
+                        android:id="@+id/textView12"
+                        android:layout_width="match_parent"
+                        android:layout_height="25dp"
+                        android:layout_marginTop="5dp"
+                        android:background="@drawable/edittext_style_3"
+                        android:enabled="false"
+                        android:gravity="center"
+                        android:hint="@string/tcnr"
+                        android:inputType="number"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="@color/primary_dark_material_dark"
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
-            <Button
-                android:id="@+id/button17"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentStart="true"
-                android:clickable="true"
-                android:drawableLeft="@drawable/ic_call_black_18dp"
-                android:enabled="true"
-                android:onClick="lscall"
-                android:text="LS Bettenvergabe" />
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
-            <View
-                android:layout_width="fill_parent"
-                android:layout_height="2dip"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="10dp"
-                android:background="#000000"></View>
-
-            <LinearLayout
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal">
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
-                <Button
-                    android:id="@+id/changepatbtn"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentRight="true"
-                    android:drawableLeft="@drawable/ic_person_add_black_24dp"
-                    android:onClick="createpat"
-                    android:text="Pat. Daten ändern" />
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-                <Button
-                    android:id="@+id/button21"
-                    android:layout_width="wrap_content"
+
+                    <TextView
+                        android:id="@+id/textView119"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Patienten Management"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
+                        android:id="@+id/textView120"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Aktion"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/button17"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_call_black_18dp"
+                            android:enabled="true"
+                            android:onClick="lscall"
+                            android:text="LS Betten" />
+
+                        <Button
+                            android:id="@+id/button30"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
+                            android:drawableLeft="@drawable/ic_call_black_18dp"
+                            android:onClick="lscall"
+                            android:text="Ziel KH" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <Button
+                            android:id="@+id/changepatbtn"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
+                            android:drawableLeft="@drawable/ic_person_add_black_24dp"
+                            android:text="Pat. Daten ändern" />
+
+                        <Button
+                            android:id="@+id/button21"
+                            style="@style/MainStatusButtonStyle"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:background="@drawable/custom_button_selector"
+                            android:clickable="true"
+                            android:drawableLeft="@drawable/ic_person_black_24dp"
+                            android:enabled="true"
+                            android:onClick="patmanstart"
+                            android:text="PatMan" />
+                    </LinearLayout>
+
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
-                    android:drawableLeft="@drawable/ic_person_black_24dp"
-                    android:enabled="false"
-                    android:onClick="patmanstart"
-                    android:text="PatMan" />
-            </LinearLayout>
+                    android:orientation="vertical"
+                    android:padding="3dp">
 
+
+                    <TextView
+                        android:id="@+id/textView121"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Patientendaten"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
+                        android:id="@+id/textView122"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Anzahl Pat"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#ff9800"
+                        android:visibility="gone" />
+
+                    <TableLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView96"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="PLS Nr."
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView106"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView123"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Nachname"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView177"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView124"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Vorname"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView178"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView125"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="SVNR.Geburtstag"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView179"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                        </TableRow>
+
+                        <TableRow
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <TextView
+                                android:id="@+id/textView126"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Gender"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                            <TextView
+                                android:id="@+id/textView180"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:textAppearance="?android:attr/textAppearanceSmall"
+                                android:textColor="#000000" />
+
+                        </TableRow>
+                    </TableLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
-</RelativeLayout>
+</LinearLayout>

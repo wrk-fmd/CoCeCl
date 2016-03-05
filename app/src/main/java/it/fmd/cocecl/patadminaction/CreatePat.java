@@ -121,6 +121,7 @@ public class CreatePat implements View.OnClickListener {
                 patmanbtnlinlay.setVisibility(View.VISIBLE);
 
                 bettbtn.setEnabled(false);
+                bettbtn.setClickable(false);
 
 
             }
@@ -156,6 +157,7 @@ public class CreatePat implements View.OnClickListener {
                         patedit.apply();
 
                         bettbtn.setEnabled(true);
+                        bettbtn.setClickable(true);
                     }
                 }
 

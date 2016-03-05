@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 
 import java.util.ArrayList;
 
@@ -28,7 +27,7 @@ public class mainstatusFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_mainstatus2, container, false);
+        View v = inflater.inflate(R.layout.fragment_mainstatus, container, false);
 
         final Button button38 = (Button) v.findViewById(R.id.button38);
         final Button button39 = (Button) v.findViewById(R.id.button39);
@@ -38,8 +37,6 @@ public class mainstatusFragment extends Fragment {
         final Button button12 = (Button) v.findViewById(R.id.button12);
 
         final Button button42 = (Button) v.findViewById(R.id.button42);
-
-        //return v;
 
         //Status EB
         button38.setOnClickListener(new SetUnitStatus(getActivity()));
@@ -78,22 +75,28 @@ public class mainstatusFragment extends Fragment {
         IncidentAdapter adapter = new IncidentAdapter(getContext(), arrayOfIncidentses);
 
         // Attach the adapter to a ListView
-        final ListView listView = (ListView) getActivity().findViewById(R.id.activeincidentlv);
+        //final ListView incidentlv = (ListView) getActivity().findViewById(R.id.activeincidentlv);
+        final ListViewUtil incidentlv = (ListViewUtil) getActivity().findViewById(R.id.activeincidentlv);
 
         // Adapt LV size, LV in ScrollView bug
-        ListViewUtil.setListViewHeightBasedOnChildren(listView);
+        incidentlv.setExpanded(true);
 
-        listView.setAdapter(adapter);
+        incidentlv.setAdapter(adapter);
 
         // Add item to adapter
         // TEST DATA - later from server JSON, stored in shared prefs
+        // Berufungsgrund, Info, Adresse, Status
         Incidents newIncidents = new Incidents("Sturz", "unklar", "Neubaugasse 64", "QU");
+        Incidents newIncidents1 = new Incidents("Auftrag", "Material holen", "Nottendorfer Gasse 21-23, 1030", "ZBO");
+        Incidents newIncidents2 = new Incidents("Auftrag", "Dienstfahrt", "Zentrale, 1030", "ZBO");
 
         adapter.add(newIncidents);
+        adapter.add(newIncidents1);
+        adapter.add(newIncidents2);
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
-        listView.setClickable(true);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        incidentlv.setClickable(true);
+        incidentlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {

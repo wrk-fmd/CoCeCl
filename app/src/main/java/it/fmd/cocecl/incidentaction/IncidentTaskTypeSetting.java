@@ -1,20 +1,32 @@
 package it.fmd.cocecl.incidentaction;
 
 
+import android.app.Activity;
 import android.graphics.Color;
 import android.support.design.widget.TabLayout;
 import android.support.v7.widget.CardView;
+import android.view.View;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
-public class IncidentTaskTypeSetting extends MainActivity {
+import static android.graphics.Color.BLUE;
+
+public class IncidentTaskTypeSetting {
+
+    public Activity activity;
+
+    public IncidentTaskTypeSetting(Activity _activity) {
+
+        this.activity = _activity;
+    }
 
     public void noTask() {
 
-        TextView nbrtext = (TextView) findViewById(R.id.textView113);
-        TextView incitext = (TextView) findViewById(R.id.textView114);
+        TextView nbrtext = (TextView) activity.findViewById(R.id.textView113);
+        TextView incitext = (TextView) activity.findViewById(R.id.textView114);
 
         if (nbrtext.getText().toString().trim().length() > 0) {
 
@@ -29,8 +41,8 @@ public class IncidentTaskTypeSetting extends MainActivity {
 
     public void tasktypeCardcolor() {
 
-        TextView tasktype = (TextView) findViewById(R.id.tasktype);
-        CardView estatcard = (CardView) findViewById(R.id.estatcard);
+        TextView tasktype = (TextView) activity.findViewById(R.id.tasktype);
+        CardView estatcard = (CardView) activity.findViewById(R.id.estatcard);
 
         if (tasktype.getText() == "EINSATZ") {
 
@@ -54,7 +66,16 @@ public class IncidentTaskTypeSetting extends MainActivity {
     }
 
     public void tasktypeemergencytabcolor() {
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+        TabLayout tabLayout = (TabLayout) activity.findViewById(R.id.tab_layout);
         tabLayout.setBackgroundColor(Color.parseColor("#1565C0"));
+    }
+
+    // set emergency/priority //
+    public void setEmergency(View v) {
+
+        CheckBox checkBox = (CheckBox) activity.findViewById(R.id.emergencyBox);
+        checkBox.setEnabled(true);
+        checkBox.setClickable(false);
+        checkBox.setTextColor(BLUE);
     }
 }

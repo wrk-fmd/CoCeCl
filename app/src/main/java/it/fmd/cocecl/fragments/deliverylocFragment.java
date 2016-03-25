@@ -6,11 +6,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.TabletFeatures;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
 
 public class deliverylocFragment extends Fragment {
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -33,6 +36,11 @@ public class deliverylocFragment extends Fragment {
             public void onClick(View v) {
             }
         });
+
+        TabletFeatures tf = new TabletFeatures(getActivity());
+
+        //TODO NPE
+        //tf.patman_enable();
 
         return v;
     }

@@ -61,7 +61,8 @@ public class Phonecalls extends MainActivity {
     public void chkhcall(Context context) {
         // Call btn on commFragment
         PackageManager pm = context.getPackageManager();
-        TextView commphone = (TextView) findViewById(R.id.commphone);
+        //TODO create hospital number textview
+        TextView commphone = (TextView) findViewById(R.id.textView135); //Dummy TextView
         String listnumber = commphone.getText().toString();
 
         if (commphone.getText().toString().trim().length() > 0) {

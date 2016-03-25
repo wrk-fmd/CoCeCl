@@ -144,7 +144,7 @@ public class PatStatus implements View.OnClickListener {
         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
         textView83.setText("EB");
 
-        Button button46 = (Button) this.activity.findViewById(R.id.button13);
+        Button button46 = (Button) this.activity.findViewById(R.id.button46);
         button46.setEnabled(false);
         button46.setClickable(false);
         button46.setBackgroundColor(Color.parseColor("#bdbdbd"));

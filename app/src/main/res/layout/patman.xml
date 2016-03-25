@@ -69,6 +69,21 @@
 
         </LinearLayout>
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Abteilung buchen"
+            android:id="@+id/textView4"
+            android:layout_marginTop="30dp" />
+
+        <Spinner
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner17"
+            android:layout_gravity="center_horizontal"
+            android:entries="@array/Abteilungen" />
+
     </LinearLayout>
 
     <LinearLayout
@@ -100,7 +115,8 @@
             android:enabled="true"
             android:gravity="center"
             android:hint="Abteilung"
-            android:textSize="20dp" />
+            android:textSize="20dp"
+            android:visibility="gone" />
 
     </LinearLayout>
 

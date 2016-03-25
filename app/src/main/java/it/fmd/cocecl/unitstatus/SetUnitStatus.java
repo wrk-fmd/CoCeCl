@@ -17,6 +17,8 @@ import it.fmd.cocecl.R;
 
 /**
  * emergency and radio call server function
+ *
+ * Selectiv, Emergency, EB, NEB, AD
  */
 
 public class SetUnitStatus implements View.OnClickListener {

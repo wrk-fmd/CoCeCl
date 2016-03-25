@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -229,7 +230,7 @@ public class SetIncidentStatus implements View.OnClickListener {
 
     public void st7() {
 
-        final RelativeLayout deliveryloclayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
+        final LinearLayout deliveryloclayout = (LinearLayout) this.activity.getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
@@ -331,6 +332,8 @@ public class SetIncidentStatus implements View.OnClickListener {
         button41.setText("Einsatz abschliessen");
         textView83.setText("ENDE");
         textView85.setText(sdf.format(cal.getTime()));
+
+        removeIncident();
 
         Handler h = new Handler();
         h.postDelayed(new Runnable() {

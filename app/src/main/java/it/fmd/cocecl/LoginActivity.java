@@ -2,10 +2,13 @@ package it.fmd.cocecl;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
@@ -14,7 +17,6 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.widget.Toolbar;
 import android.text.Editable;
-import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -27,21 +29,23 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.gcm.GoogleCloudMessaging;
-import com.google.android.gms.iid.InstanceID;
-import com.loopj.android.http.AsyncHttpClient;
-import com.loopj.android.http.AsyncHttpResponseHandler;
-import com.loopj.android.http.RequestParams;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 
+import it.fmd.cocecl.gcm.RegisterGCM;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.JSONParser;
+import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.ValidateInput;
 
 /**
@@ -97,15 +101,20 @@ public class LoginActivity extends MainActivity {
     private Toolbar toolbar;
     private TextInputLayout inputLayoutDnr, inputLayoutEmail, inputLayoutPassword;
 
+    // User Session Manager Class
+    SessionManagement session;
+
+
     //GCM
-    ProgressDialog prgDialog;
-    RequestParams params = new RequestParams();
-    GoogleCloudMessaging gcmObj;
-    Context applicationContext;
-    String regId = "";
+    private static final String TAG = "LoginActivity";
+
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private ProgressBar mRegistrationProgressBar;
+    private TextView mInformationTextView;
+    private boolean isReceiverRegistered;
 
     CheckPlayServices cps = new CheckPlayServices();
-    ConnectionManager cm = new ConnectionManager(this);
+    ConnectionManager cm = new ConnectionManager();
 
 
     // OnCreate Method // -------------------------------------- //
@@ -113,6 +122,9 @@ public class LoginActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        // User Session Manager
+        session = new SessionManagement(getApplicationContext());
 
         //cm.ping();
 
@@ -134,7 +146,7 @@ public class LoginActivity extends MainActivity {
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SignIn();
+                CheckSignIn();
             }
         });
 
@@ -157,185 +169,59 @@ public class LoginActivity extends MainActivity {
 */
 
         // GCM Server //
-        applicationContext = getApplicationContext();
+        mRegistrationProgressBar = (ProgressBar) findViewById(R.id.progressBar);
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(APPConstants.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                    mInformationTextView.setText(getString(R.string.gcm_ok));
+                    mInformationTextView.setTextColor(Color.GREEN);
 
-        prgDialog = new ProgressDialog(this);
-        // Set Progress Dialog Text
-        prgDialog.setMessage("Please wait...");
-        // Set Cancelable as False
-        prgDialog.setCancelable(false);
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mInformationTextView.setText("");
+                            mInformationTextView.setTextColor(Color.BLACK);
+                        }
+                    }, 3000);
 
-        SharedPreferences prefs = getSharedPreferences("UserDetails",
-                Context.MODE_PRIVATE);
-        String registrationId = prefs.getString(REG_ID, "");
+                } else {
+                    mInformationTextView.setText(getString(R.string.gcm_error2));
+                    mInformationTextView.setTextColor(Color.RED);
 
-/* User still needs to Login
-        //When Email ID is set in Sharedpref, User will be taken to HomeActivity
-        if (!TextUtils.isEmpty(registrationId)) {
-            Intent i = new Intent(applicationContext, InfoActivity.class);
-            i.putExtra("regId", registrationId);
-            startActivity(i);
-            finish();
+                    Handler h = new Handler();
+                    h.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            mInformationTextView.setText("");
+                            mInformationTextView.setTextColor(Color.BLACK);
+                        }
+                    }, 3000);
+                }
+            }
+        };
+        mInformationTextView = (TextView) findViewById(R.id.textView94);
+
+        // Registering BroadcastReceiver
+        registerReceiver();
+
+        if (cps.checkPlayServices(this)) {
+            // Start IntentService to register this application with GCM.
+            Intent intent = new Intent(this, RegisterGCM.class);
+            startService(intent);
         }
-*/
+
         //Floating Labels//
         inputLayoutDnr = (TextInputLayout) findViewById(R.id.input_layout_dnr);
         inputLayoutPassword = (TextInputLayout) findViewById(R.id.input_layout_password);
         logindnr = (EditText) findViewById(R.id.logindnr);
         loginpassword = (EditText) findViewById(R.id.loginpassword);
-
-        // LogIn to Server//
-        //POST and GET
-        class PostAsync extends AsyncTask<String, String, JSONObject> {
-            JSONParser jsonParser = new JSONParser();
-
-            private ProgressDialog pDialog;
-
-            private static final String TAG_SUCCESS = "success";
-            private static final String TAG_MESSAGE = "message";
-
-
-            @Override
-            protected void onPreExecute() {
-                pDialog = new ProgressDialog(LoginActivity.this);
-                pDialog.setMessage("Attempting login...");
-                pDialog.setIndeterminate(false);
-                pDialog.setCancelable(true);
-                pDialog.show();
-            }
-
-            @Override
-            protected JSONObject doInBackground(String... args) {
-
-                try {
-
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("name", args[0]);
-                    params.put("password", args[1]);
-
-                    Log.d("request", "starting");
-
-                    JSONObject json = jsonParser.makeHttpRequest(
-                            APPConstants.URL_LOGIN, "POST", params);
-
-                    if (json != null) {
-                        Log.d("JSON result", json.toString());
-
-                        return json;
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-
-            protected void onPostExecute(JSONObject json) {
-
-                int success = 0;
-                String message = "";
-
-                if (pDialog != null && pDialog.isShowing()) {
-                    pDialog.dismiss();
-                }
-
-                if (json != null) {
-                    Toast.makeText(LoginActivity.this, json.toString(),
-                            Toast.LENGTH_LONG).show();
-
-                    try {
-                        success = json.getInt(TAG_SUCCESS);
-                        message = json.getString(TAG_MESSAGE);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (success == 1) {
-                    Log.d("Success!", message);
-                } else {
-                    Log.d("Failure", message);
-                }
-            }
-
-        }
-
-
-        class GetAsync extends AsyncTask<String, String, JSONObject> {
-
-            JSONParser jsonParser = new JSONParser();
-
-            private ProgressDialog pDialog;
-
-            private static final String TAG_SUCCESS = "success";
-            private static final String TAG_MESSAGE = "message";
-
-            @Override
-            protected void onPreExecute() {
-                pDialog = new ProgressDialog(LoginActivity.this);
-                pDialog.setMessage("Attempting login...");
-                pDialog.setIndeterminate(false);
-                pDialog.setCancelable(true);
-                pDialog.show();
-            }
-
-            @Override
-            protected JSONObject doInBackground(String... args) {
-
-                try {
-
-                    HashMap<String, String> params = new HashMap<>();
-                    params.put("name", args[0]);
-                    params.put("password", args[1]);
-
-                    Log.d("request", "starting");
-
-                    JSONObject json = jsonParser.makeHttpRequest(
-                            APPConstants.URL_LOGIN, "GET", params);
-
-                    if (json != null) {
-                        Log.d("JSON result", json.toString());
-
-                        return json;
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                return null;
-            }
-
-            protected void onPostExecute(JSONObject json) {
-
-                int success = 0;
-                String message = "";
-
-                if (pDialog != null && pDialog.isShowing()) {
-                    pDialog.dismiss();
-                }
-
-                if (json != null) {
-                    Toast.makeText(LoginActivity.this, json.toString(),
-                            Toast.LENGTH_LONG).show();
-
-                    try {
-                        success = json.getInt(TAG_SUCCESS);
-                        message = json.getString(TAG_MESSAGE);
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
-                if (success == 1) {
-                    Log.d("Success!", message);
-                } else {
-                    Log.d("Failure", message);
-                }
-            }
-
-        }
 
         //inputEmail = (EditText) findViewById(R.id.loginemail);
         logindnr = (EditText) findViewById(R.id.logindnr);
@@ -353,8 +239,15 @@ public class LoginActivity extends MainActivity {
         //registerfamilyname.addTextChangedListener(new RegisterEntryWatcher(registerfamilyname));
         //registername.addTextChangedListener(new RegisterEntryWatcher(registername));
 
-        //Set Required Icon
-        setRegisterAllErrorEnabled();
+        if (!cps.checkPlayServices(this)) {
+            signinbtn.setEnabled(false);
+            signinbtn.setClickable(false);
+            logindnr.setEnabled(false);
+            loginpassword.setEnabled(false);
+            //gotoregisterbtn.setEnabled(false);
+            //gotoregisterbtn.setClickable(false);
+            errormsgtxt.setText("App locked, Play Services needed!");
+        }
     }
 
     // OnCreate END ----------------------------------------------------------------- //
@@ -369,12 +262,15 @@ public class LoginActivity extends MainActivity {
     public void onResume() {
         super.onResume();
         cps.checkPlayServices(this);
+        registerReceiver();
         //checkMLSConnection();
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
 
     }
 
@@ -398,15 +294,192 @@ public class LoginActivity extends MainActivity {
         super.onDestroy();
     }
 
+    //GCM Receiver
+    private void registerReceiver() {
+        if (!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(APPConstants.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
+        }
+    }
+
+    // LogIn to Server//
+    //POST
+    class PostAsync extends AsyncTask<String, String, JSONObject> {
+        JSONParser jsonParser = new JSONParser();
+
+        private ProgressDialog pDialog;
+
+        private static final String TAG_SUCCESS = "success";
+        private static final String TAG_MESSAGE = "message";
+
+
+        @Override
+        protected void onPreExecute() {
+            pDialog = new ProgressDialog(LoginActivity.this);
+            pDialog.setMessage("Attempting login...");
+            pDialog.setIndeterminate(false);
+            pDialog.setCancelable(true);
+            pDialog.show();
+        }
+
+        @Override
+        protected JSONObject doInBackground(String... args) {
+
+            try {
+
+                HashMap<String, String> params = new HashMap<>();
+                params.put("name", args[0]);
+                params.put("password", args[1]);
+
+                Log.d("request", "starting");
+
+                JSONObject json = jsonParser.makeHttpRequest(
+                        APPConstants.URL_LOGIN, "POST", params);
+
+                if (json != null) {
+                    Log.d("JSON result", json.toString());
+
+                    return json;
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            return null;
+        }
+
+        protected void onPostExecute(JSONObject json) {
+
+            int success = 0;
+            String message = "";
+
+            if (pDialog != null && pDialog.isShowing()) {
+                pDialog.dismiss();
+            }
+
+            if (json != null) {
+                Toast.makeText(LoginActivity.this, json.toString(),
+                        Toast.LENGTH_LONG).show();
+
+                try {
+                    success = json.getInt(TAG_SUCCESS);
+                    message = json.getString(TAG_MESSAGE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+
+            if (success == 1) {
+
+                //LoginSuccess
+                Log.d("Success!", message);
+                //Create Session
+                session.createUserLoginSession(familyname, dnr, email);
+                //SignIn
+                SignIn();
+
+            } else {
+
+                //ErrorLogin
+                Log.d("Failure", message);
+                FailureSignIn();
+
+            }
+        }
+    }
+
+    public void sendRegisterData() throws UnsupportedEncodingException {
+
+        String FName, Name, Email, Dnr, Pass;
+
+        // Get user defined values
+        FName = registerfamilyname.getText().toString();
+        Name = registername.getText().toString();
+        Email = registeremail.getText().toString();
+        Dnr = registerdnr.getText().toString();
+        Pass = registerpassword.getText().toString();
+
+        // Create data variable for sent values to server
+        String data = URLEncoder.encode("fname", "UTF-8")
+                + "=" + URLEncoder.encode(FName, "UTF-8");
+
+        data += "&" + URLEncoder.encode("name", "UTF-8") + "="
+                + URLEncoder.encode(Name, "UTF-8");
+
+        data += "&" + URLEncoder.encode("email", "UTF-8") + "="
+                + URLEncoder.encode(Email, "UTF-8");
+
+        data += "&" + URLEncoder.encode("dnr", "UTF-8")
+                + "=" + URLEncoder.encode(Dnr, "UTF-8");
+
+        data += "&" + URLEncoder.encode("pass", "UTF-8")
+                + "=" + URLEncoder.encode(Pass, "UTF-8");
+
+        String text = "";
+        BufferedReader reader = null;
+
+        // Send data
+        try {
+
+            // Defined URL  where to send data
+            URL url = new URL("http://10.0.2.2/httppost.php");
+
+            // Send POST data request
+
+            URLConnection conn = url.openConnection();
+            conn.setDoOutput(true);
+            OutputStreamWriter wr = new OutputStreamWriter(conn.getOutputStream());
+            wr.write(data);
+            wr.flush();
+
+            // Get the server response
+
+            reader = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+
+            // Read Server Response
+            while ((line = reader.readLine()) != null) {
+                // Append server response in string
+                sb.append(line + "\n");
+            }
+
+
+            text = sb.toString();
+        } catch (Exception ex) {
+
+        } finally
+        {
+            try {
+
+                reader.close();
+            } catch (Exception ex) {
+            }
+        }
+
+        // Show response on activity
+        errormsgtxt.setText(text);
+    }
+
+
     // SignIn --------------
 
-    public void SignIn() {
+    public void CheckSignIn() {
 
-        submitForm();
+        //TODO add validations
+
+        dnr = logindnr.getText().toString().trim();
+        password = loginpassword.getText().toString().trim();
+
+        String username = "testuser";
+        //String password = "testpass";
+
+
+        new PostAsync().execute(username, password);
+
         /*
-        String dnr = logindnr.getText().toString().trim();
-        String password = loginpassword.getText().toString().trim();
-
         // Check for empty data in the form
         if (!dnr.isEmpty() && !password.isEmpty()) {
 
@@ -422,7 +495,22 @@ public class LoginActivity extends MainActivity {
 
             // Return wrong/error login from Server
         }
-        */
+*/
+
+    }
+
+    public void SignIn() {
+
+        Intent i = new Intent(getApplicationContext(),
+                InfoActivity.class);
+        startActivity(i);
+        finish();
+
+    }
+
+    public void FailureSignIn() {
+
+        errormsgtxt.setText("Please enter correct credentials!");
     }
 
     // Validate SignIn Form
@@ -660,26 +748,6 @@ public class LoginActivity extends MainActivity {
         pwd.setError("Required");
     }
 
-    public void textInputErrorMsg() {
-
-        //Displaying TextInputLayout Error
-        TextInputLayout registernameLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registernameLayout);
-        registernameLayout.setErrorEnabled(true);
-        //registernameLayout.setError("Min 2 chars required");
-
-        //Displaying EditText Error
-        EditText name = (EditText) registeruserlayout.findViewById(R.id.registername);
-        name.setError("Required");
-
-        //Displaying both TextInputLayout and EditText Errors
-        TextInputLayout emailLayout = (TextInputLayout) registeruserlayout.findViewById(R.id.registeremailLayout);
-        emailLayout.setErrorEnabled(true);
-        //emailLayout.setError("Please enter EMailAddress");
-
-        EditText email = (EditText) registeruserlayout.findViewById(R.id.registeremail);
-        email.setError("Required");
-    }
-
     // Link to Register Screen ------------------------------------------
     // Dialog for user registering
 
@@ -693,6 +761,9 @@ public class LoginActivity extends MainActivity {
 
         dlgBuilder.setView(registeruserlayout);
 
+        //Set Required Icon
+        //setRegisterAllErrorEnabled();
+
         //Buttons
         dlgBuilder.setPositiveButton("Register", new DialogInterface.OnClickListener() {
             @Override
@@ -704,8 +775,13 @@ public class LoginActivity extends MainActivity {
                 email = registeremail.getText().toString().trim();
                 password = registerpassword.getText().toString().trim();
 
-                RegisterUserGCM();
                 //RegisterUserMLS();
+                try {
+                    sendRegisterData();
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                    errormsgtxt.setText(" url exeption! ");
+                }
 
                 //remove layout
                 View viewToRemove = registeruserlayout;
@@ -735,19 +811,8 @@ public class LoginActivity extends MainActivity {
         alert.show();
     }
 
-    //TODO: remove when AppLogin finished
-    public void bypasslogin(View v) {
-        if (v.getId() == R.id.button22) {
-            Intent i = new Intent(getApplicationContext(),
-                    InfoActivity.class);
-            startActivity(i);
-            finish();
-        }
-    }
-
     //// REGISTER CLASS HERE ////
     // TODO: Register in App(those who aren´t from beginning(over MLS database)) and GCM
-
 
     public void RegisterUserMLS() {
 
@@ -773,174 +838,5 @@ public class LoginActivity extends MainActivity {
                 }
             }, 5000);
         }
-    }
-
-
-    // GCM Login/Registration //
-    // --------------------------------------------------------------- //
-    //
-    //
-    //
-    //TODO: unregister on logout
-
-    AsyncTask<Void, Void, String> createRegIdTask;
-
-    public static final String REG_ID = "regId";
-    public static final String EMAIL_ID = "eMailId";
-
-    // When Register Me button is clicked
-    //public void RegisterUser(View view) {
-    public void RegisterUserGCM() {
-
-        if (!TextUtils.isEmpty(email) && ValidateInput.isValidEmail(email)) {
-
-            // Check if Google Play Service is installed in Device
-            // Play services is needed to handle GCM stuffs
-            if (cps.checkPlayServices(this)) {
-
-                // Register Device in GCM Server
-                registerInBackground(email);
-            }
-        }
-        // When Email is invalid
-        else {
-            Toast.makeText(applicationContext, "Please enter valid email",
-                    Toast.LENGTH_LONG).show();
-        }
-
-    }
-
-    // AsyncTask to register Device in GCM Server
-    private void registerInBackground(final String email) {
-        new AsyncTask<Void, Void, String>() {
-            @Override
-            protected String doInBackground(Void... params) {
-                String msg = "";
-                try {
-                    if (gcmObj == null) {
-                        gcmObj = GoogleCloudMessaging
-                                .getInstance(applicationContext);
-                    }
-                    regId = gcmObj
-                            .register(APPConstants.GOOGLE_PROJ_ID);
-                    msg = "Registration ID :" + regId;
-
-                } catch (IOException ex) {
-                    msg = "Error :" + ex.getMessage();
-                }
-                return msg;
-            }
-
-            @Override
-            protected void onPostExecute(String msg) {
-                if (!TextUtils.isEmpty(regId)) {
-                    // Store RegId created by GCM Server in SharedPref
-                    storeRegIdinSharedPref(applicationContext, regId, email);
-
-                    //Toast.makeText(applicationContext, "Registered with GCM Server successfully.nn" + msg, Toast.LENGTH_SHORT).show();
-
-                } else {
-                    /*
-                    Toast.makeText(
-                            applicationContext,
-                            "Reg ID Creation Failed.nnEither you haven't enabled Internet or GCM server is busy right now. Make sure you enabled Internet and try registering again after some time."
-                                    + msg, Toast.LENGTH_LONG).show();
-                                    */
-
-                    errormsgtxt.setText(msg);
-                    Handler h = new Handler();
-                    h.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            errormsgtxt.setText("");
-                        }
-                    }, 5000);
-                }
-            }
-        }.execute(null, null, null);
-    }
-
-    // Store  RegId and Email entered by User in SharedPref
-    private void storeRegIdinSharedPref(Context context, String regId,
-                                        String email) {
-        SharedPreferences prefs = getSharedPreferences("UserDetails",
-                Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = prefs.edit();
-        editor.putString(REG_ID, regId);
-        editor.putString(EMAIL_ID, email);
-        editor.commit();
-        storeRegIdinServer();
-
-    }
-
-    // Share RegID with GCM Server Application (Php)
-    private void storeRegIdinServer() {
-        prgDialog.show();
-        params.put("regId", regId);
-        // Make RESTful webservice call using AsyncHttpClient object
-        AsyncHttpClient client = new AsyncHttpClient();
-        client.post(APPConstants.APP_SERVER_URL, params,
-                new AsyncHttpResponseHandler() {
-                    // When the response returned by REST has Http
-                    // response code '200'
-                    public void onSuccess(String response) {
-                        // Hide Progress Dialog
-                        prgDialog.hide();
-                        if (prgDialog != null) {
-                            prgDialog.dismiss();
-                        }
-
-                        /*
-                        Toast.makeText(applicationContext, "Reg Id shared successfully with Web App ", Toast.LENGTH_LONG).show();
-                        Intent i = new Intent(applicationContext, MainActivity.class);
-                        i.putExtra("regId", regId);
-                        startActivity(i);
-                        finish();
-                        */
-                    }
-
-                    //TODO: log errors
-                    // When the response returned by REST has Http
-                    // response code other than '200' such as '404',
-                    // '500' or '403' etc
-                    public void onFailure(int statusCode, Throwable error,
-                                          String content) {
-                        // Hide Progress Dialog
-                        prgDialog.hide();
-                        if (prgDialog != null) {
-                            prgDialog.dismiss();
-                        }
-                        // When Http response code is '404'
-                        if (statusCode == 404) {
-                            /*
-                            Toast.makeText(applicationContext,
-                                    "Requested resource not found",
-                                    Toast.LENGTH_LONG).show();
-                                    */
-                            errormsgtxt.setText("404");
-                        }
-                        // When Http response code is '500'
-                        else if (statusCode == 500) {
-                            /*
-                            Toast.makeText(applicationContext,
-                                    "Something went wrong at server end",
-                                    Toast.LENGTH_LONG).show();
-                                    */
-                            errormsgtxt.setText("500");
-                        }
-                        // When Http response code other than 404, 500
-                        else {
-
-                            /*
-                            Toast.makeText(
-                                    applicationContext,
-                                    "Unexpected Error occcured! [Most common Error: Device might "
-                                            + "not be connected to Internet or remote server is not up and running], check for other errors as well",
-                                    Toast.LENGTH_LONG).show();
-                                    */
-                            errormsgtxt.setText("Unexpected error");
-                        }
-                    }
-                });
     }
 }

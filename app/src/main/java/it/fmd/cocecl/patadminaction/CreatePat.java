@@ -13,7 +13,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import it.fmd.cocecl.R;
 
@@ -38,7 +37,7 @@ public class CreatePat implements View.OnClickListener {
                 changepat();
                 break;
             case R.id.bettbtn:
-                bettbuchen();
+                //bettbuchen();
                 break;
 
         }
@@ -50,9 +49,6 @@ public class CreatePat implements View.OnClickListener {
     public static final String PatData = "patprefs";
 
 
-
-
-
     // Patient Management dialog builder //
     // data stored in shared preferences
 
@@ -61,7 +57,7 @@ public class CreatePat implements View.OnClickListener {
 
         RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
         final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
-        TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
+        final Button button46 = (Button) this.activity.findViewById(R.id.button46);
 
         final TextView textView116 = (TextView) this.activity.findViewById(R.id.textView116);
         TextView textView120 = (TextView) this.activity.findViewById(R.id.textView120);
@@ -120,8 +116,8 @@ public class CreatePat implements View.OnClickListener {
                 // Set Pat. Management Buttons visible
                 patmanbtnlinlay.setVisibility(View.VISIBLE);
 
-                bettbtn.setEnabled(false);
-                bettbtn.setClickable(false);
+                button46.setEnabled(false);
+                button46.setClickable(false);
 
 
             }
@@ -156,13 +152,13 @@ public class CreatePat implements View.OnClickListener {
 
                         patedit.apply();
 
-                        bettbtn.setEnabled(true);
-                        bettbtn.setClickable(true);
+                        button46.setEnabled(true);
+                        button46.setClickable(true);
                     }
                 }
 
         );
-
+/*
         dlgBuilder.setNeutralButton("Abteilung", new DialogInterface.OnClickListener()
 
                 {
@@ -170,13 +166,13 @@ public class CreatePat implements View.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        bettbuchen();
+                        //bettbuchen();
 
                     }
                 }
 
         );
-
+*/
         AlertDialog alert = dlgBuilder.create();
         alert.show();
     }
@@ -277,18 +273,14 @@ public class CreatePat implements View.OnClickListener {
         if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
             ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
     }
-
+/*
     // Abteilung buchen
     public void bettbuchen() {
 
         final RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
 
         final TextView textView116 = (TextView) this.activity.findViewById(R.id.textView116);
-        /*
-        LayoutInflater inflater = getLayoutInflater();
-        getWindow().addContentView(inflater.inflate(R.layout.patman, null), new ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
-*/
+
         AlertDialog.Builder dlgbuilder = new AlertDialog.Builder(this.activity);
             dlgbuilder.setTitle("Abteilung auswählen");
             dlgbuilder.setItems(new CharSequence[]
@@ -345,6 +337,6 @@ public class CreatePat implements View.OnClickListener {
             dlgbuilder.create().
 
                     show();
-        }
-    }
+        }*/
+}
 

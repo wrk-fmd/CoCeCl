@@ -38,12 +38,15 @@ public class SessionManagement {
     /**
      * Create login session
      */
-    public void createLoginSession(String name, String email) {
+    public void createUserLoginSession(String name, String dnr, String email) {
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
         // Storing name in pref
         editor.putString(KEY_NAME, name);
+
+        // Storing name in pref
+        editor.putString(KEY_DNR, dnr);
 
         // Storing email in pref
         editor.putString(KEY_EMAIL, email);

@@ -1,15 +1,37 @@
 package it.fmd.cocecl.fragments;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ListView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.IncidentAdapter;
 import it.fmd.cocecl.contentviews.Incidents;
@@ -96,16 +118,19 @@ public class mainstatusFragment extends Fragment {
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
         incidentlv.setClickable(true);
+        incidentlv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         incidentlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                 //Object incidentclick = listView.getItemAtPosition(position);
+                incidentlv.setItemChecked(position, true);
 
-                arg0.setSelected(true);
+
             }
         });
-
     }
 }
+
+

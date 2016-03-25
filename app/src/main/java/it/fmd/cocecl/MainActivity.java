@@ -2,27 +2,19 @@ package it.fmd.cocecl;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
-import android.location.Address;
-import android.location.Geocoder;
 import android.location.Location;
-import android.location.LocationManager;
 import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
@@ -39,40 +31,29 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Locale;
 
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
+import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.fragments.mapFragment;
-import it.fmd.cocecl.gmapsnav.StartNavigation;
+import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
-import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
 import it.fmd.cocecl.utilclass.TabPagerAdapter;
-
-import static android.graphics.Color.GREEN;
-import static android.graphics.Color.RED;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -95,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    public ConnectionManager conman = new ConnectionManager(this);
+    public ConnectionManager conman = new ConnectionManager();
 
     public CheckPlayServices cps = new CheckPlayServices();
 
@@ -108,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
-
     // OnCreate Method // ------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,10 +98,6 @@ public class MainActivity extends AppCompatActivity {
         // Broadcast Receiver Connection State
         // register
         registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
-
-        // Connection
-        ConnectionManager cm = new ConnectionManager(this);
-        //cm.ping();
 
         // Icon
         NotifiBarIcon nbi = new NotifiBarIcon(this);
@@ -248,11 +224,11 @@ public class MainActivity extends AppCompatActivity {
         // 4 User
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // 5 PATMAN
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
         // 6 ICD-10
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
         // 7 PTCA Plan
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
         // 8 KH Pläne
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 
@@ -287,16 +263,62 @@ public class MainActivity extends AppCompatActivity {
                 invalidateOptionsMenu();
             }
         };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        mDrawerLayout.addDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
             // on first time display view for first nav item
             //displayView(0);
             navDrawerAction(0);
         }
+
+        loadincident();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
+
+    public void loadincident() {
+
+        String ejson = "{\"tasktype\": \"Einsatz\", \"priority\": \"Normal\", \"emergency\": true, \"boaddress\": \"Neubaugasse 168///\nZusatz: EH\n1090 Wien\nÖsterreich\", \"bogrund\": \"17D04\", \"boinfo\": \"Sturz aus dem 4.ten Stock\", \"caller\": \"+43 664 474 786 2\"}";
+
+        String data = "";
+        try {
+            JSONObject jsonO = new JSONObject(ejson);
+
+            String tasktype = jsonO.optString("tasktype");
+            String bo = jsonO.optString("boaddress");
+            String boinfo = jsonO.optString("boinfo");
+            String bogrund = jsonO.optString("bogrund");
+            String caller = jsonO.optString("caller");
+            Boolean emergency = jsonO.optBoolean("emergency");
+/*
+            //Get the instance of JSONArray that contains JSONObjects
+            JSONArray jsonArray = jsonO.optJSONArray("Employee");
+
+            //Iterate the jsonArray and print the info of JSONObjects
+            for(int i=0; i < jsonArray.length(); i++){
+                JSONObject jsonObject = jsonArray.getJSONObject(i);
+
+                int id = Integer.parseInt(jsonObject.optString("id").toString());
+                String name = jsonObject.optString("name").toString();
+                float salary = Float.parseFloat(jsonObject.optString("salary").toString());
+
+                data += "Node"+i+" : \n id= "+ id +" \n Name= "+ name +" \n Salary= "+ salary +" \n ";
+            }
+*/
+            //output.setText(data);
+            IncidentData.getInstance().setTasktype(tasktype);
+            IncidentData.getInstance().setBogrund(bogrund);
+            IncidentData.getInstance().setBoaddress(bo);
+            IncidentData.getInstance().setBoinfo(boinfo);
+            IncidentData.getInstance().setCaller(caller);
+            IncidentData.getInstance().setEmergency(emergency);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 
     //NAV DRAWER //
 
@@ -490,23 +512,30 @@ public class MainActivity extends AppCompatActivity {
                 showuserdialog();
                 break;
             case R.id.unitinfo:
-                //TODO: get unitinfo dialog from infoactivity
-                InfoActivity IA = new InfoActivity();
-                IA.unitinfo();
+                UnitInfoDialog uid = new UnitInfoDialog(this);
+                uid.unitinfo();
         }
 
         return super.onOptionsItemSelected(item);
     }
 
     public void showuserdialog() {
-        //TODO: get user info
         SessionManagement SM = new SessionManagement(getApplicationContext());
-        String user = SM.getUserDetails().values().toString();
+        //String user = SM.getUserDetails().values().toString();
+        Boolean loggedin = SM.isLoggedIn();
+
+        // get user data from session
+        HashMap<String, String> user = SM.getUserDetails();
+
+        // get name
+        String name = user.get(SessionManagement.KEY_NAME);
+        // get dnr
+        String dnr = user.get(SessionManagement.KEY_DNR);
 
         AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(MainActivity.this);
         dlgBuilder.setCancelable(false);
         dlgBuilder.setTitle("Benutzer");
-        dlgBuilder.setMessage(user);
+        dlgBuilder.setMessage("LoggedIn: " + loggedin + "\n" + dnr + ", " + name);
 
         dlgBuilder.setNeutralButton("OK", new DialogInterface.OnClickListener() {
             @Override
@@ -517,48 +546,15 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
-    //TODO: create method to save app/fragment state
-    /*
-        @Override
-        public void onSaveInstanceState(Bundle outState) {
-            super.onSaveInstanceState(outState);
-            System.out.println("TAG, onSaveInstanceState");
-
-            outState.putString("message", "This is my message to be reloaded");
-
-            final TextView textView83 = (TextView)findViewById(R.id.textView83);
-            final Button button41 = (Button)findViewById(R.id.button41);
-
-            CharSequence button41text = button41.getText();
-            CharSequence stateText = textView83.getText();
-            outState.putCharSequence("savedbuttonText", button41text);
-            outState.putCharSequence("savedstateText", stateText);
-        }
-
-        protected void onRestoreInstanceState(Bundle savedState) {
-            System.out.println("TAG, onRestoreInstanceState");
-
-            final TextView textView83 = (TextView)findViewById(R.id.textView83);
-            final Button button41 = (Button) findViewById(R.id.button41);
-
-            CharSequence button41text = savedState.getCharSequence("savedbuttonText");
-            CharSequence stateText = savedState.getCharSequence("savedstateText");
-            button41.setText(button41text);
-            textView83.setText(stateText);
-        }
-    */
-    //TODO: create app life cycle
-
     @Override
-    public void onStart() {
+    protected void onStart() {
         super.onStart();
     }
 
     @Override
-    public void onResume() {
+    protected void onResume() {
         super.onResume();
         cps.checkPlayServices(this);
-        //checkMLSConnection();
 
         // FRAGMENT MANAGER //
         //TODO: Design on Tablet needs to be changed
@@ -633,7 +629,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onPause() {
+    protected void onPause() {
         super.onPause();
 
         // unregister the receiver
@@ -642,13 +638,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    public void onStop() {
+    protected void onStop() {
         super.onStop();
 
     }
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
 
         // unregister the receiver
@@ -658,6 +654,64 @@ public class MainActivity extends AppCompatActivity {
         NotifiBarIcon nbi = new NotifiBarIcon(this);
         nbi.removeSBAI();
     }
+
+    // SavedInstanceState
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        // Save UI state changes to the savedInstanceState.
+        // This bundle will be passed to onCreate if the process is
+        // killed and restarted.
+        savedInstanceState.putBoolean("MyBoolean", true);
+        savedInstanceState.putDouble("myDouble", 1.9);
+        savedInstanceState.putInt("MyInt", 1);
+        savedInstanceState.putString("MyString", "Welcome back to Android");
+        // etc.
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        // Restore UI state from the savedInstanceState.
+        // This bundle has also been passed to onCreate.
+        boolean myBoolean = savedInstanceState.getBoolean("MyBoolean");
+        double myDouble = savedInstanceState.getDouble("myDouble");
+        int myInt = savedInstanceState.getInt("MyInt");
+        String myString = savedInstanceState.getString("MyString");
+    }
+
+    //TODO: create method to save app/fragment state
+    /*
+        @Override
+        public void onSaveInstanceState(Bundle outState) {
+            super.onSaveInstanceState(outState);
+            System.out.println("TAG, onSaveInstanceState");
+
+            outState.putString("message", "This is my message to be reloaded");
+
+            final TextView textView83 = (TextView)findViewById(R.id.textView83);
+            final Button button41 = (Button)findViewById(R.id.button41);
+
+            CharSequence button41text = button41.getText();
+            CharSequence stateText = textView83.getText();
+            outState.putCharSequence("savedbuttonText", button41text);
+            outState.putCharSequence("savedstateText", stateText);
+        }
+
+        protected void onRestoreInstanceState(Bundle savedState) {
+            System.out.println("TAG, onRestoreInstanceState");
+
+            final TextView textView83 = (TextView)findViewById(R.id.textView83);
+            final Button button41 = (Button) findViewById(R.id.button41);
+
+            CharSequence button41text = savedState.getCharSequence("savedbuttonText");
+            CharSequence stateText = savedState.getCharSequence("savedstateText");
+            button41.setText(button41text);
+            textView83.setText(stateText);
+        }
+    */
+
 
     // Buttons //
 
@@ -707,65 +761,7 @@ public class MainActivity extends AppCompatActivity {
     // GCM Message/Notification/Snackbar update --------------------------
     //
     //
-    //private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    public void gmcmessage() {
-        // Intent Message sent from Broadcast Receiver
-        String str = getIntent().getStringExtra("msg");
-
-        // Get Email ID from Shared preferences
-        SharedPreferences prefs = getSharedPreferences("UserDetails",
-                Context.MODE_PRIVATE);
-        String eMailId = prefs.getString("eMailId", "");
-        // Set Title
-        //usertitleET = (TextView) findViewById(R.id.usertitle);
-
-        // Check if Google Play Service is installed in Device
-        // Play services is needed to handle GCM stuffs
-        if (!cps.checkPlayServices(this)) {
-            Toast.makeText(
-                    getApplicationContext(),
-                    "This device doesn't support Play services, App will not work normally",
-                    Toast.LENGTH_LONG).show();
-        }
-
-        //usertitleET.setText("Hello " + eMailId + " !");
-        // When Message sent from Broadcase Receiver is not empty
-        if (str != null) {
-            // Set the message
-            //msgET = (TextView) findViewById(R.id.message);
-            //msgET.setText(str);
-        }
-    }
-
-    // Check if Google Playservices is installed in Device or not
-/*
-    private boolean checkPlayServices() {
-        int resultCode = GooglePlayServicesUtil
-                .isGooglePlayServicesAvailable(this);
-        // When Play services not found in device
-        if (resultCode != ConnectionResult.SUCCESS) {
-            if (GooglePlayServicesUtil.isUserRecoverableError(resultCode)) {
-                // Show Error dialog to install Play services
-                GooglePlayServicesUtil.getErrorDialog(resultCode, this,
-                        PLAY_SERVICES_RESOLUTION_REQUEST).show();
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "This device doesn't support Play services, App will not work normally",
-                        Toast.LENGTH_LONG).show();
-                finish();
-            }
-            return false;
-        } else {
-            /*Toast.makeText(
-                    getApplicationContext(),
-                    "This device supports Play services, App will work normally",
-                    Toast.LENGTH_LONG).show();*//*
-        }
-        return true;
-    }
-*/
 
     //JSON GET and POST method// ----------------------------------------------------
     // Async Task

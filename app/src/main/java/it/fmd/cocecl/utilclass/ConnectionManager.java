@@ -9,18 +9,9 @@ import android.net.NetworkInfo;
 
 import java.io.IOException;
 
-import it.fmd.cocecl.LoginActivity;
+public class ConnectionManager extends Activity {
 
-public class ConnectionManager {
-
-    public Activity activity;
-
-    public ConnectionManager(Activity _activity) {
-
-        this.activity = _activity;
-    }
-
-    ToolbarIconStates tis = new ToolbarIconStates(activity);
+    ToolbarIconStates tis = new ToolbarIconStates();
 
     public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
@@ -28,17 +19,21 @@ public class ConnectionManager {
 
             ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-            if (activeNetwork != null) { // connected to the internet
+            if (activeNetwork != null) {
+
+                // connected to the internet
                 if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
+
                     // connected to wifi
                     //tis.setwifigreen();
-                    //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
+
                 } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
+
                     // connected to the mobile network
                     //tis.setmobilegreen();
-                    //Toast.makeText(context, activeNetwork.getTypeName(), Toast.LENGTH_SHORT).show();
                 }
             } else {
+
                 // not connected to the internet
                 //tis.setred();
             }
@@ -46,7 +41,7 @@ public class ConnectionManager {
     };
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) this.activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
 
@@ -56,11 +51,13 @@ public class ConnectionManager {
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
                 cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
 
+
             return true;
 
         } else if (
                 cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
                         cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+
 
             return false;
         }
@@ -75,8 +72,9 @@ public class ConnectionManager {
             Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
             int exitValue = ipProcess.waitFor();
 
-            tis.mlsonline();
-            //tis.mlsonlineicon();
+            //
+
+
             return (exitValue == 0);
 
         } catch (IOException e) {
@@ -84,8 +82,9 @@ public class ConnectionManager {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        tis.mlsoffline();
-        //tis.mlsofflineicon();
+
+        //
+
 
         return false;
     }

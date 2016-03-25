@@ -174,7 +174,7 @@
     <string name="mlsdiscon">Nicht mit MLS verbunden</string>
 
     //String Array//
-    <string-array name="Geschlecht">
+    <string-array name="Gender">
         <item>männlich</item>
         <item>weiblich</item>
     </string-array>

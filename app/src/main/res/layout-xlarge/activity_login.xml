@@ -116,7 +116,6 @@
                 android:layout_below="@+id/view10"
                 android:layout_toLeftOf="@+id/gotoregisterbtn"
                 android:layout_toStartOf="@+id/gotoregisterbtn"
-                android:hint="errorMsg"
                 android:textColor="@color/red" />
 
         </LinearLayout>
@@ -131,16 +130,6 @@
             android:clickable="true"
             android:enabled="true"
             android:text="Register" />
-
-        <Button
-            android:id="@+id/button22"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:onClick="bypasslogin"
-            android:text="BYPASS" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

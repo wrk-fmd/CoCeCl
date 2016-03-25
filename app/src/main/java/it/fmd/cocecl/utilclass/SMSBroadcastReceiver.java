@@ -8,6 +8,7 @@ import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
 import it.fmd.cocecl.MainActivity;
+import it.fmd.cocecl.dataStorage.SMSData;
 import it.fmd.cocecl.incidentaction.SMS_Alert;
 
 public class SMSBroadcastReceiver extends BroadcastReceiver {
@@ -15,6 +16,8 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
     public static final String SMS_BUNDLE = "pdus";
     final SmsManager sms = SmsManager.getDefault();
     MainActivity ourSMS;
+
+    SMSData sd = new SMSData();
 
     public void onReceive(Context context, Intent intent) {
 
@@ -32,6 +35,8 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 smsMessageStr += smsBody + "\n";
 
                 SMS_Alert.getSmsDetails(address, smsBody);
+
+                sd.setSmscontent(smsBody);
             }
 
             //Toast.makeText(context, smsMessageStr, Toast.LENGTH_LONG).show();

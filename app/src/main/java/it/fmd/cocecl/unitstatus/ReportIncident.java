@@ -49,16 +49,12 @@ public class ReportIncident implements View.OnClickListener {
 
         dlgBuilder.setView(reportincident);
 
-
         GPSManager gps = new GPSManager(this.activity);
         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
 
-        GPSGeolocation gpsgeo = new GPSGeolocation();
-
         GPSGeolocation.getAddressFromLocation(latitude, longitude,
                 this.activity, new GeocoderHandler());
-
 
         textView86.setText("lat: " + latitude);
         textView93.setText("lon: " + longitude);
@@ -146,6 +142,7 @@ public class ReportIncident implements View.OnClickListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             button42.setBackground(this.activity.getDrawable(R.drawable.custom_button_normal));
         }
+
         editText24.setText("");
         textView86.setText("");
         textView93.setText("");
@@ -154,8 +151,8 @@ public class ReportIncident implements View.OnClickListener {
     }
 
     public class GeocoderHandler extends Handler {
-        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
 
+        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
         final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
 
         @Override
@@ -172,6 +169,5 @@ public class ReportIncident implements View.OnClickListener {
             editText24.setText(locationAddress);
         }
     }
-
 }
 

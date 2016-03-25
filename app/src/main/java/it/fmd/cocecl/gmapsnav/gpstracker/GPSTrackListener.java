@@ -22,7 +22,7 @@ public class GPSTrackListener extends Service {
 
     PowerManager.WakeLock wakeLock;
 
-    ConnectionManager cm = new ConnectionManager((Activity) getApplicationContext());
+    ConnectionManager cm = new ConnectionManager();
 
     public Activity activity;
 
@@ -31,7 +31,7 @@ public class GPSTrackListener extends Service {
         this.activity = _activity;
     }
 
-    ToolbarIconStates tis = new ToolbarIconStates(activity);
+    ToolbarIconStates tis = new ToolbarIconStates();
 
     public GPSTrackListener() {
         // TODO Auto-generated constructor stub

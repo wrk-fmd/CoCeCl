@@ -1,5 +1,7 @@
 package it.fmd.cocecl;
 
+import java.net.URL;
+
 public class APPConstants {
 
     //JSON Node Names general
@@ -43,6 +45,8 @@ public class APPConstants {
     public static final String wrnbr = "";
     public static final String mrdnbr = "";
     public static final String oebbnbr = "";
+
+
     //GCM URL
     // Php Application URL to store Reg ID created
     static final String APP_SERVER_URL = "http://192.168.43.224:9000/gcm/gcm.php?shareRegId=true";
@@ -51,8 +55,13 @@ public class APPConstants {
     // Message Key
     public static final String MSG_KEY = "m";
     //REGISTER / LOGIN URL
-    public static String URL_LOGIN = "http://192.168.43.224/android_json_login/getmeth.php";
-    public static String URL_REGISTER = "http://192.168.43.224/android_json_login/postmeth.php";
+    public static String URL_LOGIN = "http://10.0.2.2/loginJSON/postjson.php";
+    public static String URL_REGISTER = "http://10.0.2.2/loginJSON/getjson.php";
+
+    // MAPS API
+
+    //PLACES API
+    public static final String PLACES_API_KEY = "mykey";
 
 
     // GCM 3.0

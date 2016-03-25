@@ -1,10 +1,11 @@
 package it.fmd.cocecl.utilclass;
 
 import android.app.Activity;
-import android.app.Application;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.os.Handler;
+import android.os.PersistableBundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.Animation;
@@ -12,7 +13,6 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
 import static android.graphics.Color.GREEN;
@@ -20,48 +20,44 @@ import static android.graphics.Color.RED;
 
 /**
  * Connectivity Icons on Toolbar in MainActivity
- * MLS Connection State TextView on LoginActivity //TODO: NPE
+ * MLS Connection State TextView on LoginActivity
  */
 
-public class ToolbarIconStates {
+public class ToolbarIconStates extends Activity {
 
-    public Activity activity;
-
-    public ToolbarIconStates(Activity _activity) {
-
-        this.activity = _activity;
-    }
+    public TextView wifitext;
+    public TextView mobiletext;
 
     public void gpsenabled() {
-        TextView gpstext = (TextView) this.activity.findViewById(R.id.textView108);
+        TextView gpstext = (TextView) findViewById(R.id.textView108);
         gpstext.setBackgroundColor(GREEN);
     }
 
     public void gpsdisabled() {
-        TextView gpstext = (TextView) this.activity.findViewById(R.id.textView108);
+        TextView gpstext = (TextView) findViewById(R.id.textView108);
         gpstext.setBackgroundColor(RED);
     }
 
     public void setwifigreen() {
-        TextView wifitext = (TextView) this.activity.findViewById(R.id.textView7);
+        wifitext = (TextView) findViewById(R.id.textView7);
         wifitext.setBackgroundColor(GREEN);
     }
 
     public void setmobilegreen() {
-        TextView mobiletext = (TextView) this.activity.findViewById(R.id.textView83);
+        mobiletext = (TextView) findViewById(R.id.textView83);
         mobiletext.setBackgroundColor(GREEN);
     }
 
     public void setred() {
-        TextView wifitext = (TextView) this.activity.findViewById(R.id.textView7);
-        TextView mobiletext = (TextView) this.activity.findViewById(R.id.textView83);
+        wifitext = (TextView) findViewById(R.id.textView7);
+        mobiletext = (TextView) findViewById(R.id.textView83);
         wifitext.setBackgroundColor(RED);
         mobiletext.setBackgroundColor(RED);
     }
 
     // MLS SERVER
     public void mlsonline() {
-        TextView errormsg = (TextView) this.activity.findViewById(R.id.textView94);
+        TextView errormsg = (TextView) findViewById(R.id.textView94);
         if (errormsg != null)
             errormsg.setText("MLS Online");
         errormsg.setTextColor(Color.GREEN);
@@ -69,20 +65,20 @@ public class ToolbarIconStates {
     }
 
     public void mlsoffline() {
-        TextView errormsg = (TextView) this.activity.findViewById(R.id.textView94);
+        TextView errormsg = (TextView) findViewById(R.id.textView94);
         if (errormsg != null)
             errormsg.setText("MLS Offline");
         errormsg.setTextColor(Color.RED);
     }
 
     public void mlsonlineicon() {
-        ImageView mlscon = (ImageView) this.activity.findViewById(R.id.imageView_mlscon);
+        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
         if (mlscon != null)
             mlscon.setImageResource(R.drawable.connected64);
     }
 
     public void mlsofflineicon() {
-        ImageView mlscon = (ImageView) this.activity.findViewById(R.id.imageView_mlscon);
+        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
         if (mlscon != null)
             mlscon.setImageResource(R.drawable.disconnected64);
     }
@@ -95,7 +91,7 @@ public class ToolbarIconStates {
     //Animated sync symbol in toolbar//
     //rotate imageview animation
     public void onSyncIconStart() {
-        ImageView syncicon = (ImageView) this.activity.findViewById(R.id.imageView2);
+        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
 
         RotateAnimation r = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -105,8 +101,8 @@ public class ToolbarIconStates {
     }
 
     public void onSyncIconStop() {
-        ImageView syncicon = (ImageView) this.activity.findViewById(R.id.imageView2);
-        final TextView serveranswer = (TextView) this.activity.findViewById(R.id.textView49);
+        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -128,9 +124,9 @@ public class ToolbarIconStates {
     }
 
     public void onSyncError() {
-        final ImageView syncicon = (ImageView) this.activity.findViewById(R.id.imageView2);
-        final ImageView erroricon = (ImageView) this.activity.findViewById(R.id.erroriconView);
-        final TextView serveranswer = (TextView) this.activity.findViewById(R.id.textView49);
+        final ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+        final ImageView erroricon = (ImageView) findViewById(R.id.erroriconView);
+        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 

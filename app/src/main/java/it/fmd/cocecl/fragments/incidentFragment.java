@@ -1,12 +1,17 @@
 package it.fmd.cocecl.fragments;
 
+import android.graphics.Color;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 
@@ -14,12 +19,23 @@ import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
 import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
 import it.fmd.cocecl.contentviews.GridViewUtil;
+import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
+import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.patadminaction.CreatePat;
 import it.fmd.cocecl.patadminaction.PatStatus;
 import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 
 public class incidentFragment extends Fragment {
+
+    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(getActivity());
+
+    TextView boaddress;
+    TextView boinfo;
+    TextView tasktype;
+    TextView bgrund;
+    TextView caller;
+    CheckBox emergencyBox;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -52,6 +68,15 @@ public class incidentFragment extends Fragment {
         //Nav
         navbo.setOnClickListener(new StartNavigation(getActivity()));
 
+        bgrund = (TextView) v.findViewById(R.id.bgfield);
+        boaddress = (TextView) v.findViewById(R.id.bofield);
+        boinfo = (TextView) v.findViewById(R.id.infofield);
+        tasktype = (TextView) v.findViewById(R.id.textView127);
+        caller = (TextView) v.findViewById(R.id.brfrfield);
+        emergencyBox = (CheckBox) v.findViewById(R.id.emergencyBox);
+
+        setIncidentData();
+
         return v;
     }
 
@@ -59,6 +84,31 @@ public class incidentFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         setUnitsGVData();
+    }
+
+    public void setIncidentData() {
+        String stboaddress = IncidentData.getInstance().getBoaddress();
+        String stinfo = IncidentData.getInstance().getBoinfo();
+        String sttasktype = IncidentData.getInstance().getTasktype();
+        String stbgrund = IncidentData.getInstance().getBogrund();
+        String stcaller = IncidentData.getInstance().getCaller();
+        Boolean stemergency = IncidentData.getInstance().getEmergency();
+
+        tasktype.setText(sttasktype);
+        bgrund.setText(stbgrund);
+        bgrund.setVisibility(View.VISIBLE);
+        boaddress.setText(stboaddress);
+        boinfo.setText(stinfo);
+        boinfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+        caller.setText(stcaller);
+        emergencyBox.setChecked(stemergency);
+        emergencyBox.setVisibility(View.VISIBLE);
+        if (emergencyBox.isChecked()) {
+            emergencyBox.setTextColor(Color.BLUE);
+            //itts.tasktypeemergencytabcolor();
+        }
+
+
     }
 
     public void setUnitsGVData() {

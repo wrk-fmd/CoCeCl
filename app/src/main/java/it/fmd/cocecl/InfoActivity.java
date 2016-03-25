@@ -10,6 +10,12 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import it.fmd.cocecl.dataStorage.GetPersonnel;
+import it.fmd.cocecl.dataStorage.MainData;
+import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.SessionManagement;
 
 //START PAGE after LogIn//
@@ -66,10 +72,14 @@ public class InfoActivity extends MainActivity {
             start.setClickable(true);
 
         } else {
+
             //TODO: remove // when app finished
             //start.setEnabled(false);
             //start.setClickable(false);
         }
+
+        loadamb();
+        loadunituser();
     }
 
     public void acbtnClick() {
@@ -116,32 +126,10 @@ public class InfoActivity extends MainActivity {
     }
 
     public void btnunitinfo(View v) {
+        UnitInfoDialog uid = new UnitInfoDialog(this);
         if (v.getId() == R.id.button63) {
-            unitinfo();
+            uid.unitinfo();
         }
-    }
-
-    public void unitinfo() {
-
-        // Create custom dialog object
-        final Dialog dialog = new Dialog(InfoActivity.this);
-        // Include dialog.xml file
-        dialog.setContentView(R.layout.unit_info_layout);
-        // Set dialog title
-        dialog.setTitle("Einheit - Information");
-
-
-        dialog.show();
-/*
-            Button declineButton = (Button) dialog.findViewById(R.id.declineButton);
-            // if decline button is clicked, close the custom dialog
-            declineButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Close dialog
-                    dialog.dismiss();
-                }
-            });*/
     }
 
     public void loadambinf() {
@@ -151,4 +139,48 @@ public class InfoActivity extends MainActivity {
         wv.setVisibility(View.VISIBLE);
         wv.loadUrl("file:///android_asset/ambinf.html");
     }
+
+    public void loadamb() {
+
+        TextView ambtv = (TextView) findViewById(R.id.textView2);
+
+        String ambjson = "{\"amb\": \"2016/00123 VCM\"}";
+
+        String data = "";
+        try {
+            JSONObject jsonO = new JSONObject(ambjson);
+
+            String amb = jsonO.optString("amb");
+
+            MainData.getInstance().setAmb(amb);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        ambtv.setText(MainData.getInstance().getAmb());
+    }
+
+    public void loadunituser() {
+        TextView unit = (TextView) findViewById(R.id.textView3);
+        TextView user = (TextView) findViewById(R.id.textView5);
+
+        String unituser = "{\"unit\": \"RTW-01\", \"userdnr\": \"1999\"}";
+
+        String data = "";
+        try {
+            JSONObject jsonO = new JSONObject(unituser);
+
+            String madnr = jsonO.optString("userdnr");
+
+            GetPersonnel.getInstance().setMADnr(madnr);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        user.setText(GetPersonnel.getInstance().getMADnr());
+        //unit.setText(MainData.getInstance().getAmb());
+    }
 }
+

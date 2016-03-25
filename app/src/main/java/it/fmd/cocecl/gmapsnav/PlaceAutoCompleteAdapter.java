@@ -1,5 +1,25 @@
 package it.fmd.cocecl.gmapsnav;
 
+/**
+ * Created by Joel on 28/06/2015.
+ */
+
+/*
+ * Copyright (C) 2015 Google Inc. All Rights Reserved.
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
 import android.content.Context;
 import android.util.Log;
 import android.widget.ArrayAdapter;
@@ -30,9 +50,8 @@ import java.util.concurrent.TimeUnit;
  * The API client must be maintained in the encapsulating Activity, including all lifecycle and
  * connection states. The API client must be connected with the {@link Places#GEO_DATA_API} API.
  */
-
-public class PlacesAutoCompleteAdapter
-        extends ArrayAdapter<PlacesAutoCompleteAdapter.PlaceAutocomplete> implements Filterable {
+public class PlaceAutoCompleteAdapter
+        extends ArrayAdapter<PlaceAutoCompleteAdapter.PlaceAutocomplete> implements Filterable {
 
     private static final String TAG = "PlaceAutocomplete";
     /**
@@ -60,8 +79,8 @@ public class PlacesAutoCompleteAdapter
      *
      * @see ArrayAdapter#ArrayAdapter(Context, int)
      */
-    public PlacesAutoCompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
-                                     LatLngBounds bounds, AutocompleteFilter filter) {
+    public PlaceAutoCompleteAdapter(Context context, int resource, GoogleApiClient googleApiClient,
+                                    LatLngBounds bounds, AutocompleteFilter filter) {
         super(context, resource);
         mGoogleApiClient = googleApiClient;
         mBounds = bounds;
@@ -194,7 +213,7 @@ public class PlacesAutoCompleteAdapter
     /**
      * Holder for Places Geo Data Autocomplete API results.
      */
-    class PlaceAutocomplete {
+    public class PlaceAutocomplete {
 
         public CharSequence placeId;
         public CharSequence description;
@@ -208,8 +227,5 @@ public class PlacesAutoCompleteAdapter
         public String toString() {
             return description.toString();
         }
-
-
     }
-
 }

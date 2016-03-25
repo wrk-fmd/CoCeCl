@@ -3,9 +3,12 @@ package it.fmd.cocecl.gmapsnav;
 import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
+import android.text.Layout;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.lang.reflect.Array;
 
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
@@ -25,7 +28,20 @@ public class StartNavigation implements View.OnClickListener {
     public void onClick(View v) {
         final TextView botext = (TextView) this.activity.findViewById(R.id.bofield);
         final TextView aotext = (TextView) this.activity.findViewById(R.id.aofield);
-        final TextView custom = (TextView) this.activity.findViewById(R.id.commaddress);
+        //TODO create custom navigation address edittext
+        final TextView custom = (TextView) this.activity.findViewById(R.id.textView135); //Dummy TextView
+
+        //Get first address line for google maps navigation
+/*        Layout layout = botext.getLayout();
+        String text = botext.getText().toString();
+        int start=0;
+        int end;
+        for (int i=0; i<botext.getLineCount(); i++) {
+            end = layout.getLineEnd(i);
+            line[i] = text.substring(start,end);
+            start = end;
+        }
+*/
         switch (v.getId()) {
             case R.id.button18:
                 if (botext.getText().toString().trim().length() > 0) {

@@ -151,15 +151,4 @@ public class NewIncident extends MainActivity {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(1, mBuilder.build());
     }
-
-    // set emergency/priority //
-    public void setEmergency(View v) {
-        if (v.getId() == R.id.checkBox) {
-
-            CheckBox checkBox = (CheckBox) findViewById(R.id.checkBox);
-            checkBox.setEnabled(true);
-            checkBox.setClickable(false);
-            checkBox.setHintTextColor(BLUE);
-        }
-    }
 }

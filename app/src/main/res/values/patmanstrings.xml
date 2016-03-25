@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="Abteilungen">
+        <item>Keine Abteilung buchen</item>
+        <item>Interne</item>
+        <item>Unfall</item>
+        <item>Chirurgie</item>
+        <item>HNO</item>
+        <item>Dermatologie</item>
+        <item>Schockraum</item>
+        <item>Überwachung</item>
+        <item>Intensiv</item>
+        <item>PTCA</item>
+        <item>Andere Abteilung</item>
+    </string-array>
+
+    <string-array name="Gender">
+        <item>männlich</item>
+        <item>weiblich</item>
+    </string-array>
+    <string-array name="Atemweg">
+        <item>---</item>
+        <item>frei</item>
+        <item>verengt</item>
+        <item>teilverlegt</item>
+        <item>verlegt</item>
+    </string-array>
+    <string-array name="Bewusstseinslage">
+        <item>---</item>
+        <item>wach</item>
+        <item>somnolent</item>
+        <item>sopor</item>
+        <item>agitiert</item>
+        <item>koma</item>
+        <item>narkotisiert/sediert</item>
+    </string-array>
+    <string-array name="Pupillen">
+        <item>---</item>
+        <item>miosis</item>
+        <item>mydriasis</item>
+        <item>mittel</item>
+        <item>entrundet</item>
+        <item>lichtstarr</item>
+        <item>nicht beurteilbar</item>
+        <item>kein Corn.reflex</item>
+        <item>Meningismus</item>
+        <item>Herdblick ->li</item>
+        <item>Herdblick ->re</item>
+        <item>Anisokorie re>li</item>
+        <item>Anisokorie li>re</item>
+        <item>akute Sehstörung</item>
+        <item>andere</item>
+    </string-array>
+    <string-array name="Frequenz">
+        <item>---</item>
+        <item>Tachykardie</item>
+        <item>Tachykardie QRS schmal</item>
+        <item>Tachykardie QRS breit</item>
+        <item>Bradykardie</item>
+    </string-array>
+    <string-array name="Rhytmus">
+        <item>---</item>
+        <item>Sinusrhytmus</item>
+        <item>Absolute Arrhytmie</item>
+    </string-array>
+    <string-array name="AVBlock">
+        <item>---</item>
+        <item>AV-Block I</item>
+        <item>AV-Block II Typ Mobitz</item>
+        <item>AV-Block II Typ Wenckebach</item>
+        <item>AV-Block III</item>
+    </string-array>
+    <string-array name="VES">
+        <item>---</item>
+        <item>VES</item>
+        <item>VES polytop</item>
+        <item>VES Salven</item>
+    </string-array>
+    <string-array name="STStrecke">
+        <item>---</item>
+        <item>ST-Hebung</item>
+        <item>ST-Senkung</item>
+    </string-array>
+    <string-array name="PEA">
+        <item>---</item>
+        <item>PEA</item>
+        <item>Kammerflimmern/-flattern</item>
+        <item>Asystolie</item>
+        <item>Schrittmacherrhytmus</item>
+    </string-array>
+    <string-array name="Schenkelblock">
+        <item>---</item>
+        <item>Linksschenkelblock</item>
+        <item>Rechtsschenkelblock</item>
+    </string-array>
+    <string-array name="Atmung">
+        <item>---</item>
+        <item>unauffällig</item>
+        <item>Hyperventilation</item>
+        <item>Dyspnoe</item>
+        <item>Zyanose</item>
+        <item>Spastik</item>
+        <item>Rasselgeräusche</item>
+        <item>Stridor</item>
+        <item>Atemwegsverlegung</item>
+        <item>Atemdepression</item>
+        <item>Schnappatmung</item>
+        <item>beatmeter Patient</item>
+        <item>Apnoe</item>
+        <item>andere Atemstörung</item>
+    </string-array>
+    <string-array name="Hautkolorit">
+        <item>---</item>
+        <item>rosig</item>
+        <item>blass</item>
+    </string-array>
+</resources>

@@ -360,8 +360,8 @@ public class LoginActivity extends MainActivity {
             }
 
             if (json != null) {
-                Toast.makeText(LoginActivity.this, json.toString(),
-                        Toast.LENGTH_LONG).show();
+                //Toast.makeText(LoginActivity.this, json.toString(),
+                //Toast.LENGTH_LONG).show();
 
                 try {
                     success = json.getInt(TAG_SUCCESS);

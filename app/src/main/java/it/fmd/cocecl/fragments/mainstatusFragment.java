@@ -1,8 +1,11 @@
 package it.fmd.cocecl.fragments;
 
+import android.app.NotificationManager;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,9 +14,11 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -36,10 +41,24 @@ import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.IncidentAdapter;
 import it.fmd.cocecl.contentviews.Incidents;
 import it.fmd.cocecl.contentviews.ListViewUtil;
+import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.UnitStatus;
+import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.ReportIncident;
 import it.fmd.cocecl.unitstatus.SetUnitStatus;
 
 public class mainstatusFragment extends Fragment {
+
+    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(getActivity());
+
+    TextView countlv;
+    ArrayList<Incidents> arrayOfIncidentses;
+
+    //Status Views&Buttons
+    TextView statustv;
+    Button button38;
+    Button button39;
+    Button button40;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -51,7 +70,7 @@ public class mainstatusFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_mainstatus, container, false);
 
-        final Button button38 = (Button) v.findViewById(R.id.button38);
+        button38 = (Button) v.findViewById(R.id.button38);
         final Button button39 = (Button) v.findViewById(R.id.button39);
         final Button button40 = (Button) v.findViewById(R.id.button40);
 
@@ -79,6 +98,9 @@ public class mainstatusFragment extends Fragment {
         // ReportIncident PlacesAutoComplete
         button42.setOnClickListener(new ReportIncident(getActivity()));
 
+        countlv = (TextView) v.findViewById(R.id.textView113);
+        statustv = (TextView) v.findViewById(R.id.textView111);
+
         return v;
     }
 
@@ -91,7 +113,7 @@ public class mainstatusFragment extends Fragment {
     public void setIncidentLVData() {
 
         // Construct the data source
-        ArrayList<Incidents> arrayOfIncidentses = new ArrayList<Incidents>();
+        arrayOfIncidentses = new ArrayList<Incidents>();
 
         // Create the adapter to convert the array to views
         IncidentAdapter adapter = new IncidentAdapter(getContext(), arrayOfIncidentses);
@@ -107,10 +129,14 @@ public class mainstatusFragment extends Fragment {
 
         // Add item to adapter
         // TEST DATA - later from server JSON, stored in shared prefs
+        final String bggrund = IncidentData.getInstance().getBogrund();
+        final String boaddress = IncidentData.getInstance().getBoaddress();
+        String info = IncidentData.getInstance().getBoinfo();
         // Berufungsgrund, Info, Adresse, Status
         Incidents newIncidents = new Incidents("Sturz", "unklar", "Neubaugasse 64", "QU");
         Incidents newIncidents1 = new Incidents("Auftrag", "Material holen", "Nottendorfer Gasse 21-23, 1030", "ZBO");
-        Incidents newIncidents2 = new Incidents("Auftrag", "Dienstfahrt", "Zentrale, 1030", "ZBO");
+        Incidents newIncidents2 = new Incidents(bggrund, info, boaddress, "ZBO");
+
 
         adapter.add(newIncidents);
         adapter.add(newIncidents1);
@@ -124,12 +150,45 @@ public class mainstatusFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
-                //Object incidentclick = listView.getItemAtPosition(position);
                 incidentlv.setItemChecked(position, true);
 
+                //Update NotificationBar
+                NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity())
+                        .setSmallIcon(R.mipmap.coceclstbar)
+                        .setContentTitle("CoCeCl")
+                        .setContentText(bggrund + " - " + boaddress)
+                        .setOngoing(true);
+
+                NotificationManager notificationManager = (NotificationManager) getActivity().getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(991, mBuilder.build());
 
             }
         });
+
+        getLVCount();
+        setNoTask();
+    }
+
+    public void getLVCount() {
+        int itemCount = arrayOfIncidentses.size();
+        countlv.setText("Anz.: " + String.valueOf(itemCount));
+        if (itemCount == 1) {
+            countlv.setVisibility(View.GONE);
+        }
+    }
+
+    public void setNoTask() {
+        if (countlv.getText().toString().trim().length() == 0) {
+            itts.noTask();
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        UnitStatus.getInstance().getUstatus();
+
     }
 }
 

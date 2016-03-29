@@ -1,180 +1,257 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#757575"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="it.fmd.cocecl.SettingActivity">
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardview="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/incidentfraglayout"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="#bdbdbd"
 
-    <View
-        android:id="@+id/view"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:background="#000000"></View>
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/cardview_vertical_margin"
+    android:paddingLeft="@dimen/cardview_horizontal_margin"
+    android:paddingRight="@dimen/cardview_horizontal_margin"
+    android:paddingTop="@dimen/cardview_vertical_margin">
 
-    <TextView
-        android:id="@+id/textView9"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/view"
-        android:layout_marginBottom="30dp"
-        android:text="@string/action_settings"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textSize="15pt" />
-
-    <View
-        android:id="@+id/view2"
-        android:layout_width="fill_parent"
-        android:layout_height="2dip"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/linearLayout12"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:background="#000000"></View>
-
-    <Button
-        android:id="@+id/button37"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/view2"
-        android:layout_alignParentBottom="true"
-        android:layout_alignRight="@+id/view2"
-        android:onClick="changelang"
-        android:text="@string/language" />
-
-    <LinearLayout
-        android:id="@+id/linearLayout12"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/textView9"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:orientation="vertical">
-
-        <Switch
-            android:id="@+id/switch3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/space4"
-            android:layout_gravity="left"
-            android:checked="false"
-            android:drawableLeft="@drawable/ic_aspect_ratio_black_18dp"
-            android:enabled="true"
-            android:text="Fullscreen" />
-
-        <Switch
-            android:id="@+id/switch1"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/switch3"
-            android:layout_gravity="left"
-            android:layout_marginTop="10dp"
-            android:checked="false"
-            android:drawableLeft="@drawable/ic_gps_fixed_black_18dp"
-            android:enabled="false"
-            android:text="GPS" />
-
-        <Switch
-            android:id="@+id/switch2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/switch1"
-            android:layout_gravity="left"
-            android:layout_marginTop="10dp"
-            android:checked="false"
-            android:drawableLeft="@drawable/ic_ring_volume_black_18dp"
-            android:enabled="false"
-            android:text="Funk" />
-
-        <Switch
-            android:id="@+id/switch4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/switch2"
-            android:layout_gravity="left"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_volume_off_black_18dp"
-            android:enabled="true"
-            android:text="Alarm Sounds" />
-
-        <Switch
-            android:id="@+id/switch6"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:text="Hell/Dunkel" />
-
-    </LinearLayout>
-
-    <Button
-        android:id="@+id/button71"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:text="Call FMD-IT Support" />
-
-    <TextView
-        android:id="@+id/textView176"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/view2"
-        android:text="Navigation"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/button37"
-        android:layout_alignEnd="@+id/linearLayout12"
-        android:layout_alignLeft="@+id/linearLayout12"
-        android:layout_alignRight="@+id/linearLayout12"
-        android:layout_alignStart="@+id/linearLayout12"
-        android:layout_below="@+id/textView176"
-        android:orientation="vertical">
+        android:fillViewport="true">
 
-        <Switch
-            android:id="@+id/switch5"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:drawableLeft="@drawable/ic_map_black_18dp"
-            android:text="Maps on/off" />
+            android:layout_height="match_parent"
+            android:orientation="vertical">
 
-        <Switch
-            android:id="@+id/switch7"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Fast or Short" />
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
 
-        <Switch
-            android:id="@+id/switch8"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="Avoid Motorway" />
-    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
 
-</RelativeLayout>
+                    <TextView
+                        android:id="@+id/textView9"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="@string/action_settings"
+                        android:textAppearance="?android:attr/textAppearanceLarge"
+                        android:textColor="#00b0ff"
+                        android:textSize="15pt" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="Allgemein"
+                        android:id="@+id/textView185"
+                        android:textColor="#00b0ff"
+                        android:layout_marginBottom="10dp" />
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout12"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_below="@+id/textView9"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
+                        android:orientation="vertical">
+
+                        <Switch
+                            android:id="@+id/switch3"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/space4"
+                            android:layout_gravity="left"
+                            android:checked="false"
+                            android:drawableLeft="@drawable/ic_aspect_ratio_black_18dp"
+                            android:enabled="true"
+                            android:text="Fullscreen"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/switch3"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="10dp"
+                            android:checked="false"
+                            android:drawableLeft="@drawable/ic_gps_fixed_black_18dp"
+                            android:enabled="false"
+                            android:text="GPS"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/switch1"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="10dp"
+                            android:checked="false"
+                            android:drawableLeft="@drawable/ic_ring_volume_black_18dp"
+                            android:enabled="false"
+                            android:text="Funk"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch4"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_alignParentStart="true"
+                            android:layout_below="@+id/switch2"
+                            android:layout_gravity="left"
+                            android:layout_marginTop="10dp"
+                            android:drawableLeft="@drawable/ic_volume_off_black_18dp"
+                            android:enabled="true"
+                            android:text="Alarm Sounds"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch6"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:text="Hell/Dunkel"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView176"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:layout_below="@+id/view2"
+                        android:text="Navigation"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#00b0ff" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_above="@+id/button37"
+                        android:layout_alignEnd="@+id/linearLayout12"
+                        android:layout_alignLeft="@+id/linearLayout12"
+                        android:layout_alignRight="@+id/linearLayout12"
+                        android:layout_alignStart="@+id/linearLayout12"
+                        android:layout_below="@+id/textView176"
+                        android:orientation="vertical">
+
+                        <Switch
+                            android:id="@+id/switch5"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:drawableLeft="@drawable/ic_map_black_18dp"
+                            android:text="Maps on/off"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch7"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Fast or Short"
+                            android:textColor="@color/primary_dark_material_dark" />
+
+                        <Switch
+                            android:id="@+id/switch8"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_horizontal"
+                            android:text="Avoid Motorway"
+                            android:textColor="@color/primary_dark_material_dark" />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+            <android.support.v7.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="10dp"
+                cardview:cardBackgroundColor="#ffffff"
+                cardview:cardCornerRadius="5dp"
+                cardview:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/textView184"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Optional"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#00b0ff" />
+
+                    <Button
+                        android:id="@+id/button37"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignEnd="@+id/view2"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignRight="@+id/view2"
+                        android:onClick="changelang"
+                        android:text="@string/language" />
+
+                    <Button
+                        android:id="@+id/button71"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentLeft="true"
+                        android:layout_alignParentStart="true"
+                        android:text="Call FMD-IT Support" />
+
+                </LinearLayout>
+            </android.support.v7.widget.CardView>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -2,6 +2,7 @@ package it.fmd.cocecl.contentviews;
 
 /**
  * Incident ListView on mainstatusFragment
+ * Incident ShortView
  **/
 
 public class Incidents {

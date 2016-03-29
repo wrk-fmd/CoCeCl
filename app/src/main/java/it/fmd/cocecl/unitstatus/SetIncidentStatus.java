@@ -15,6 +15,7 @@ import java.util.Calendar;
 import java.util.TimeZone;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.dataStorage.IncidentData;
 
 
 public class SetIncidentStatus implements View.OnClickListener {
@@ -25,6 +26,8 @@ public class SetIncidentStatus implements View.OnClickListener {
 
         this.activity = _activity;
     }
+
+    IncidentData id;
 
     @Override
     public void onClick(View v) {
@@ -60,37 +63,44 @@ public class SetIncidentStatus implements View.OnClickListener {
                 if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
 
                     qu();
+                    id.setIncistatus("QU");
 
                     // ZBO
                 } else if (textView83.getText().equals("QU")) {
 
                     st3();
+                    id.setIncistatus("ZBO");
 
                     // ABO
                 } else if (textView83.getText().equals("ZBO")) {
 
                     st4();
+                    id.setIncistatus("ABO");
 
                     // ZAO
                 } else if ((textView83.getText().equals("ABO")) /*&& (aofield.getText().toString().trim().length() > 0)*/) {
                     //TODO: redundante funktion
 
                     st7();
+                    id.setIncistatus("ZAO");
 
                     // AAO
                 } else if (textView83.getText().equals("ZAO")) {
 
                     st8();
+                    id.setIncistatus("AAO");
 
                     // Einsatz abschliessen
                 } else if (textView83.getText().equals("AAO")) {
 
 
                     endIncident();
+                    //id.setIncistatus("");
 
                 } else if (button41.getText().equals("Einsatz abschliessen")) {
 
                     removeIncident();
+                    id.setIncistatus("");
                 }
             }
         });

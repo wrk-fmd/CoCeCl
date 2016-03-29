@@ -1,6 +1,7 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
+import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -33,7 +34,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -46,6 +49,8 @@ import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.fragments.mapFragment;
+import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
+import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
@@ -80,6 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
     public CheckPlayServices cps = new CheckPlayServices();
 
+    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(this);
+
     private CoordinatorLayout coordinatorLayout;
 
     // Location
@@ -98,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
         // Broadcast Receiver Connection State
         // register
         registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        //GPS Tracker Service
+        // register
+        startService(new Intent(this, GPSTrackListener.class));
 
         // Icon
         NotifiBarIcon nbi = new NotifiBarIcon(this);
@@ -224,11 +235,11 @@ public class MainActivity extends AppCompatActivity {
         // 4 User
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // 5 PATMAN
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
         // 6 ICD-10
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
         // 7 PTCA Plan
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
         // 8 KH Pläne
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 
@@ -272,13 +283,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         loadincident();
+        ifEmergency();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
 
     public void loadincident() {
 
-        String ejson = "{\"tasktype\": \"Einsatz\", \"priority\": \"Normal\", \"emergency\": true, \"boaddress\": \"Neubaugasse 168///\nZusatz: EH\n1090 Wien\nÖsterreich\", \"bogrund\": \"17D04\", \"boinfo\": \"Sturz aus dem 4.ten Stock\", \"caller\": \"+43 664 474 786 2\"}";
+        String ejson = "{\"tasktype\": \"EINSATZ\", \"priority\": \"Normal\", \"emergency\": true, \"boaddress\": \"Neubaugasse 168///\n1090 Wien\", \"bogrund\": \"17D04\", \"boinfo\": \"Sturz aus dem 4.ten Stock\", \"caller\": \"Hr. Müller +43 664 474 786 2\"}";
 
         String data = "";
         try {
@@ -660,25 +672,52 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
-        // Save UI state changes to the savedInstanceState.
-        // This bundle will be passed to onCreate if the process is
-        // killed and restarted.
-        savedInstanceState.putBoolean("MyBoolean", true);
-        savedInstanceState.putDouble("myDouble", 1.9);
-        savedInstanceState.putInt("MyInt", 1);
-        savedInstanceState.putString("MyString", "Welcome back to Android");
-        // etc.
+
+        TextView textView111 = (TextView) findViewById(R.id.textView111);
+        Button buttonEB = (Button) findViewById(R.id.button38);
+        Button buttonNEB = (Button) findViewById(R.id.button39);
+        Button buttonAD = (Button) findViewById(R.id.button40);
+
+        if (textView111 != null) {
+            CharSequence statusText = textView111.getText();
+            savedInstanceState.putCharSequence("statusText", statusText);
+        }
+
+        if (buttonEB != null) {
+            Boolean buttonEBstate = buttonEB.isPressed();
+            savedInstanceState.putBoolean("EBButtonState", buttonEBstate);
+        }
+        if (buttonEB != null) {
+            Boolean buttonNEBstate = buttonNEB.isPressed();
+            savedInstanceState.putBoolean("NEBButtonState", buttonNEBstate);
+        }
+        if (buttonEB != null) {
+            Boolean buttonADstate = buttonAD.isPressed();
+            savedInstanceState.putBoolean("ADButtonState", buttonADstate);
+        }
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        // Restore UI state from the savedInstanceState.
-        // This bundle has also been passed to onCreate.
-        boolean myBoolean = savedInstanceState.getBoolean("MyBoolean");
-        double myDouble = savedInstanceState.getDouble("myDouble");
-        int myInt = savedInstanceState.getInt("MyInt");
-        String myString = savedInstanceState.getString("MyString");
+
+        TextView textView111 = (TextView) findViewById(R.id.textView111);
+        Button buttonEB = (Button) findViewById(R.id.button38);
+        Button buttonNEB = (Button) findViewById(R.id.button39);
+        Button buttonAD = (Button) findViewById(R.id.button40);
+
+        CharSequence statusText = savedInstanceState.getCharSequence("StatusText");
+        textView111.setText(statusText);
+
+        Boolean buttonEBstate = savedInstanceState.getBoolean("EBButtonState");
+        buttonEB.setEnabled(buttonEBstate);
+
+        Boolean buttonNEBstate = savedInstanceState.getBoolean("NEBButtonState");
+        buttonNEB.setEnabled(buttonNEBstate);
+
+        Boolean buttonADstate = savedInstanceState.getBoolean("ADButtonState");
+        buttonAD.setEnabled(buttonADstate);
+
     }
 
     //TODO: create method to save app/fragment state
@@ -712,6 +751,11 @@ public class MainActivity extends AppCompatActivity {
         }
     */
 
+    public void ifEmergency() {
+        if (IncidentData.getInstance().getEmergency()) {
+            itts.tasktypeemergencytabcolor();
+        }
+    }
 
     // Buttons //
 
@@ -757,10 +801,6 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-
-    // GCM Message/Notification/Snackbar update --------------------------
-    //
-    //
 
 
     //JSON GET and POST method// ----------------------------------------------------

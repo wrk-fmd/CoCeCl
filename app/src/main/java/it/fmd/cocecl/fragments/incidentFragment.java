@@ -1,5 +1,7 @@
 package it.fmd.cocecl.fragments;
 
+import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -14,6 +16,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
@@ -28,14 +32,19 @@ import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 
 public class incidentFragment extends Fragment {
 
-    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(getActivity());
+    Activity activity;
+
+    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(activity);
 
     TextView boaddress;
     TextView boinfo;
     TextView tasktype;
     TextView bgrund;
     TextView caller;
+    TextView statusView;
     CheckBox emergencyBox;
+
+    Timer setcheckTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,6 +84,8 @@ public class incidentFragment extends Fragment {
         caller = (TextView) v.findViewById(R.id.brfrfield);
         emergencyBox = (CheckBox) v.findViewById(R.id.emergencyBox);
 
+        statusView = (TextView) v.findViewById(R.id.statusView);
+
         setIncidentData();
 
         return v;
@@ -84,6 +95,15 @@ public class incidentFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         setUnitsGVData();
+        setcheckStatus();
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        activity = getActivity();
+
+        //itts.tasktypeCardcolor();
     }
 
     public void setIncidentData() {
@@ -101,14 +121,25 @@ public class incidentFragment extends Fragment {
         boinfo.setText(stinfo);
         boinfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         caller.setText(stcaller);
+
         emergencyBox.setChecked(stemergency);
         emergencyBox.setVisibility(View.VISIBLE);
         if (emergencyBox.isChecked()) {
             emergencyBox.setTextColor(Color.BLUE);
-            //itts.tasktypeemergencytabcolor();
         }
+    }
 
+    public void setcheckStatus() {
+        setcheckTimer = new Timer();
+        setcheckTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
 
+                String istatus = IncidentData.getInstance().getIncistatus();
+                statusView.setText(istatus);
+
+            }
+        }, 0, 1000 * 1 * 10); // 10sec
     }
 
     public void setUnitsGVData() {
@@ -151,24 +182,20 @@ public class incidentFragment extends Fragment {
             public void onItemClick(AdapterView<?> arg0, View arg1, int position, long arg3) {
 
                 Object unitclick = gridView.getItemAtPosition(position);
-    /* write you handling code like...
-    String st = "sdcard/";
-    File f = new File(st+o.toString());
-    // do whatever u want to do with 'f' File object
-    */
+
             }
         });
-
     }
-/*
+
     @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+    public void onPause() {
+        super.onPause();
+        setcheckTimer.cancel();
+    }
 
-        //MA.setSMS();
-    }*/
-
-    //PatStatus am BO
-
-
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        setcheckTimer.cancel();
+    }
 }

@@ -3,14 +3,21 @@ package it.fmd.cocecl.incidentaction;
 
 import android.app.Activity;
 import android.graphics.Color;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
 import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.fragments.incidentFragment;
 
 import static android.graphics.Color.BLUE;
 
@@ -25,14 +32,9 @@ public class IncidentTaskTypeSetting {
 
     public void noTask() {
 
-        TextView nbrtext = (TextView) activity.findViewById(R.id.textView113);
         TextView incitext = (TextView) activity.findViewById(R.id.textView114);
 
-        if (nbrtext.getText().toString().trim().length() > 0) {
-
             incitext.setText("derzeit kein Auftrag/Einsatz");
-
-        }
     }
 
     /**
@@ -41,25 +43,26 @@ public class IncidentTaskTypeSetting {
 
     public void tasktypeCardcolor() {
 
-        TextView tasktype = (TextView) activity.findViewById(R.id.tasktype);
+        String tasktype = IncidentData.getInstance().getTasktype();
+
         CardView estatcard = (CardView) activity.findViewById(R.id.estatcard);
 
-        if (tasktype.getText() == "EINSATZ") {
+        if (tasktype.equals("EINSATZ")) {
 
             estatcard.setBackgroundColor(Color.parseColor("#BBDEFB"));
         }
 
-        if (tasktype.getText() == "AUFTRAG") {
+        if (tasktype == "AUFTRAG") {
 
             estatcard.setBackgroundColor(Color.parseColor("#B2DFDB"));
         }
 
-        if (tasktype.getText() == "STANDORTVERLEGUNG") {
+        if (tasktype == "STANDORTVERLEGUNG") {
 
             estatcard.setBackgroundColor(Color.parseColor("#B39DDB"));
         }
 
-        if (tasktype.getText() == "TRANSFER") {
+        if (tasktype == "TRANSFER") {
 
             estatcard.setBackgroundColor(Color.parseColor("#B2DFDB"));
         }
@@ -71,7 +74,7 @@ public class IncidentTaskTypeSetting {
     }
 
     // set emergency/priority //
-    public void setEmergency(View v) {
+    public void setEmergency() {
 
         CheckBox checkBox = (CheckBox) activity.findViewById(R.id.emergencyBox);
         checkBox.setEnabled(true);

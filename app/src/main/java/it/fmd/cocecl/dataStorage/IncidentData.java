@@ -39,6 +39,9 @@ public class IncidentData {
     public String aoaddress;
     public String tnumber;
 
+    //STATUS
+    public String incistatus;
+
     /*
         public IncidentData(String tasktype, String emergency, String priority, String boaddress, String bogrund, String boinfo, String caller, String aoaddress, String tnumber) {
 
@@ -145,4 +148,14 @@ public class IncidentData {
     public void setTnumber(String tnumber) {
         this.tnumber = tnumber;
     }
+
+    // Incident Status
+    public String getIncistatus() {
+        return incistatus;
+    }
+
+    public void setIncistatus(String incistatus) {
+        this.incistatus = incistatus;
+    }
+
 }

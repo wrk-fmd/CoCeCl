@@ -91,6 +91,14 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/textView182"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/abt"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
@@ -104,10 +112,19 @@
                         android:textColorHint="@color/primary_dark_material_dark" />
 
                     <TextView
+                        android:id="@+id/textView183"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/tcnr"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/textView12"
                         android:layout_width="match_parent"
                         android:layout_height="25dp"
-                        android:layout_marginTop="10dp"
+
                         android:background="@drawable/edittext_style_3"
                         android:enabled="false"
                         android:gravity="center"

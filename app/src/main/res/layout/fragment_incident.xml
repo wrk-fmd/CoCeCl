@@ -232,6 +232,14 @@
                     </LinearLayout>
 
                     <TextView
+                        android:id="@+id/textView181"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/info"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/infofield"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -245,10 +253,20 @@
                         android:textColorHint="@color/primary_dark_material_dark" />
 
                     <TextView
+                        android:id="@+id/textView92"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/brfr"
+                        android:textAppearance="?android:attr/textAppearanceSmall"
+                        android:textColor="#00b0ff" />
+
+                    <TextView
                         android:id="@+id/brfrfield"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
+
+                        android:autoLink="phone"
                         android:background="@drawable/edittext_style_3"
                         android:gravity="center"
                         android:hint="@string/brfr"

@@ -35,13 +35,13 @@ public class ReportIncident implements View.OnClickListener {
     @Override
     public void onClick(View v) {
 
-        RelativeLayout reportincident = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.reportincident, null);
+        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
 
         final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
         final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
-        final Button button42 = (Button) this.activity.findViewById(R.id.button42);
+        final Button button42 = (Button) activity.findViewById(R.id.button42);
 
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
         dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
         dlgBuilder.setCancelable(false);
 
@@ -49,12 +49,12 @@ public class ReportIncident implements View.OnClickListener {
 
         dlgBuilder.setView(reportincident);
 
-        GPSManager gps = new GPSManager(this.activity);
+        GPSManager gps = new GPSManager(activity);
         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
 
         GPSGeolocation.getAddressFromLocation(latitude, longitude,
-                this.activity, new GeocoderHandler());
+                activity, new GeocoderHandler());
 
         textView86.setText("lat: " + latitude);
         textView93.setText("lon: " + longitude);

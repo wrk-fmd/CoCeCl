@@ -26,11 +26,11 @@ public class NotifiBarIcon {
                 .setOngoing(true);
 
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(1, mBuilder.build());
+        notificationManager.notify(991, mBuilder.build());
     }
 
     public void removeSBAI() {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(1);
+        notificationManager.cancel(991);
     }
 }

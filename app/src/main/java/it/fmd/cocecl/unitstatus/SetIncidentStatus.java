@@ -7,7 +7,6 @@ import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.text.SimpleDateFormat;
@@ -16,6 +15,7 @@ import java.util.TimeZone;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.gmapsnav.StAskOnLocChange;
 
 
 public class SetIncidentStatus implements View.OnClickListener {
@@ -27,28 +27,11 @@ public class SetIncidentStatus implements View.OnClickListener {
         this.activity = _activity;
     }
 
-    IncidentData id;
-
     @Override
     public void onClick(View v) {
 
-        //final RelativeLayout deliveryloclayout = (RelativeLayout)getLayoutInflater().inflate(R.layout.fragment_deliveryloc, null);
-
-        final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
-        final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-
         final Button button41 = (Button) this.activity.findViewById(R.id.button41);
         final TextView textView83 = (TextView) this.activity.findViewById(R.id.statusView);
-        final TextView textView85 = (TextView) this.activity.findViewById(R.id.textView85);
-        //final TextView aofield = (TextView) deliveryloclayout.findViewById(R.id.aofield);
-
-        final TextView statuserror = (TextView) this.activity.findViewById(R.id.textView129);
-
-        Button button10 = (Button) this.activity.findViewById(R.id.button10);
-        Button button11 = (Button) this.activity.findViewById(R.id.button11);
-        Button button13 = (Button) this.activity.findViewById(R.id.button13);
-        Button button46 = (Button) this.activity.findViewById(R.id.button46);
-
         AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
         dlgBuilder.setTitle(R.string.stwe);
         dlgBuilder.setMessage(button41.getText().toString());
@@ -63,44 +46,48 @@ public class SetIncidentStatus implements View.OnClickListener {
                 if (textView83.getText().equals("") || textView83.getText().equals("EB")) {
 
                     qu();
-                    id.setIncistatus("QU");
+                    IncidentData.getInstance().setIncistatus("QU");
 
                     // ZBO
                 } else if (textView83.getText().equals("QU")) {
 
                     st3();
-                    id.setIncistatus("ZBO");
+                    IncidentData.getInstance().setIncistatus("ZBO");
 
                     // ABO
                 } else if (textView83.getText().equals("ZBO")) {
 
                     st4();
-                    id.setIncistatus("ABO");
+                    IncidentData.getInstance().setIncistatus("ABO");
+
+                    //Set BO location coordiantes
+                    StAskOnLocChange saolc = new StAskOnLocChange();
+                    saolc.locA();
 
                     // ZAO
                 } else if ((textView83.getText().equals("ABO")) /*&& (aofield.getText().toString().trim().length() > 0)*/) {
                     //TODO: redundante funktion
 
                     st7();
-                    id.setIncistatus("ZAO");
+                    IncidentData.getInstance().setIncistatus("ZAO");
 
                     // AAO
                 } else if (textView83.getText().equals("ZAO")) {
 
                     st8();
-                    id.setIncistatus("AAO");
+                    IncidentData.getInstance().setIncistatus("AAO");
 
                     // Einsatz abschliessen
                 } else if (textView83.getText().equals("AAO")) {
 
 
                     endIncident();
-                    //id.setIncistatus("");
+                    //IncidentData.getInstance().setIncistatus("");
 
                 } else if (button41.getText().equals("Einsatz abschliessen")) {
 
                     removeIncident();
-                    id.setIncistatus("");
+                    IncidentData.getInstance().setIncistatus("");
                 }
             }
         });

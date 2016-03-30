@@ -1,17 +1,17 @@
 package it.fmd.cocecl.incidentaction;
 
+import android.app.Activity;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.widget.TextView;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 
 /**
  * Class used when Alert comes via SMS, if no network connection available
  */
 
-public class SMS_Alert extends MainActivity {
+public class SMS_Alert extends Activity {
 
     static String phoneNumber1;
     static String SMSBody1;

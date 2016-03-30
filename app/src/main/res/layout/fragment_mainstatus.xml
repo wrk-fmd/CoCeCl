@@ -63,7 +63,7 @@
                         android:gravity="center"
                         android:hint="Vorfall Nr&amp;Name"
                         android:textAppearance="?android:attr/textAppearanceLarge"
-                        android:textColorHint="@color/primary_dark_material_dark" />
+                        android:textColor="@color/primary_dark_material_dark" />
 
                     <TextView
                         android:id="@+id/textView80"
@@ -74,7 +74,7 @@
                         android:gravity="center"
                         android:hint="@string/unit"
                         android:textAppearance="?android:attr/textAppearanceMedium"
-                        android:textColorHint="@color/primary_dark_material_dark" />
+                        android:textColor="@color/primary_dark_material_dark" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

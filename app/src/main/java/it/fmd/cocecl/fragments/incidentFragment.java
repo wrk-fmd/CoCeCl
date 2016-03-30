@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
@@ -25,7 +22,6 @@ import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
 import it.fmd.cocecl.contentviews.GridViewUtil;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
-import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.patadminaction.CreatePat;
 import it.fmd.cocecl.patadminaction.PatStatus;
 import it.fmd.cocecl.unitstatus.SetIncidentStatus;
@@ -34,8 +30,6 @@ public class incidentFragment extends Fragment {
 
     Activity activity;
 
-    IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(activity);
-
     TextView boaddress;
     TextView boinfo;
     TextView tasktype;
@@ -43,8 +37,6 @@ public class incidentFragment extends Fragment {
     TextView caller;
     TextView statusView;
     CheckBox emergencyBox;
-
-    Timer setcheckTimer;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -86,8 +78,6 @@ public class incidentFragment extends Fragment {
 
         statusView = (TextView) v.findViewById(R.id.statusView);
 
-        setIncidentData();
-
         return v;
     }
 
@@ -95,7 +85,8 @@ public class incidentFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         setUnitsGVData();
-        setcheckStatus();
+
+        setIncidentData();
     }
 
     @Override
@@ -107,12 +98,17 @@ public class incidentFragment extends Fragment {
     }
 
     public void setIncidentData() {
+
+        SetIncidentStatus sis = new SetIncidentStatus(getActivity());
+
         String stboaddress = IncidentData.getInstance().getBoaddress();
         String stinfo = IncidentData.getInstance().getBoinfo();
         String sttasktype = IncidentData.getInstance().getTasktype();
         String stbgrund = IncidentData.getInstance().getBogrund();
         String stcaller = IncidentData.getInstance().getCaller();
         Boolean stemergency = IncidentData.getInstance().getEmergency();
+
+        String incistatus = IncidentData.getInstance().getIncistatus();
 
         tasktype.setText(sttasktype);
         bgrund.setText(stbgrund);
@@ -127,19 +123,26 @@ public class incidentFragment extends Fragment {
         if (emergencyBox.isChecked()) {
             emergencyBox.setTextColor(Color.BLUE);
         }
-    }
 
-    public void setcheckStatus() {
-        setcheckTimer = new Timer();
-        setcheckTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
+        if (incistatus.equals("QU")) {
+            sis.qu();
+        }
 
-                String istatus = IncidentData.getInstance().getIncistatus();
-                statusView.setText(istatus);
+        if (incistatus.equals("ZBO")) {
+            sis.st3();
+        }
 
-            }
-        }, 0, 1000 * 1 * 10); // 10sec
+        if (incistatus.equals("ABO")) {
+            sis.st4();
+        }
+
+        if (incistatus.equals("ZAO")) {
+            sis.st7();
+        }
+
+        if (incistatus.equals("AAO")) {
+            sis.st8();
+        }
     }
 
     public void setUnitsGVData() {
@@ -190,12 +193,10 @@ public class incidentFragment extends Fragment {
     @Override
     public void onPause() {
         super.onPause();
-        setcheckTimer.cancel();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        setcheckTimer.cancel();
     }
 }

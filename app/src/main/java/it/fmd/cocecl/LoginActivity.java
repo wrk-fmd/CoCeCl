@@ -146,7 +146,8 @@ public class LoginActivity extends MainActivity {
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CheckSignIn();
+                //CheckSignIn();
+                SignIn();
             }
         });
 

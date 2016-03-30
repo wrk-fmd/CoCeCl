@@ -2,46 +2,26 @@ package it.fmd.cocecl.fragments;
 
 import android.app.NotificationManager;
 import android.content.Context;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-import org.w3c.dom.Text;
-
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
-import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.IncidentAdapter;
 import it.fmd.cocecl.contentviews.Incidents;
 import it.fmd.cocecl.contentviews.ListViewUtil;
 import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.MainData;
+import it.fmd.cocecl.dataStorage.UnitData;
 import it.fmd.cocecl.dataStorage.UnitStatus;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.ReportIncident;
@@ -59,6 +39,12 @@ public class mainstatusFragment extends Fragment {
     Button button38;
     Button button39;
     Button button40;
+
+    CharSequence statusText;
+
+    TextView ambtypetv;
+    TextView ambnametv;
+    TextView unitnametv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -101,6 +87,10 @@ public class mainstatusFragment extends Fragment {
         countlv = (TextView) v.findViewById(R.id.textView113);
         statustv = (TextView) v.findViewById(R.id.textView111);
 
+        ambnametv = (TextView) v.findViewById(R.id.textView79);
+        ambtypetv = (TextView) v.findViewById(R.id.textView130);
+        unitnametv = (TextView) v.findViewById(R.id.textView80);
+
         return v;
     }
 
@@ -108,6 +98,9 @@ public class mainstatusFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         setIncidentLVData();
+
+        setUnitstatus();
+        setAmbInfo();
     }
 
     public void setIncidentLVData() {
@@ -133,7 +126,7 @@ public class mainstatusFragment extends Fragment {
         final String boaddress = IncidentData.getInstance().getBoaddress();
         String info = IncidentData.getInstance().getBoinfo();
         // Berufungsgrund, Info, Adresse, Status
-        Incidents newIncidents = new Incidents("Sturz", "unklar", "Neubaugasse 64", "QU");
+        Incidents newIncidents = new Incidents("Kollaps", "unklar", "Weinhausergasse 13", "QU");
         Incidents newIncidents1 = new Incidents("Auftrag", "Material holen", "Nottendorfer Gasse 21-23, 1030", "ZBO");
         Incidents newIncidents2 = new Incidents(bggrund, info, boaddress, "ZBO");
 
@@ -187,7 +180,58 @@ public class mainstatusFragment extends Fragment {
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
 
-        UnitStatus.getInstance().getUstatus();
+        statusText = statustv.getText();
+        savedInstanceState.putCharSequence("statusText", statusText);
+
+    }
+
+    @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+    }
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            statusText = savedInstanceState.getCharSequence("statusText");
+            statustv.setText(statusText);
+        }
+    }
+
+    public void setUnitstatus() {
+
+        SetUnitStatus sus = new SetUnitStatus(getActivity());
+
+        String ustatus = UnitStatus.getInstance().getUstatus();
+        String ustaddition = UnitStatus.getInstance().getUstaddition();
+
+        if (ustatus.equals("EB")) {
+            sus.ebst();
+        }
+
+        if (ustatus.equals("NEB")) {
+            sus.nebst();
+        }
+
+        if (ustatus.equals("AD")) {
+            sus.adst();
+        }
+    }
+
+    public void setAmbInfo() {
+
+        String unit = UnitData.getInstance().getUnitname();
+
+        String ambname = MainData.getInstance().getAmb();
+        String ambtype = MainData.getInstance().getAmbtype();
+
+        unitnametv.setText(unit);
+
+        ambnametv.setText(ambname);
+        ambtypetv.setText(ambtype);
+
 
     }
 }

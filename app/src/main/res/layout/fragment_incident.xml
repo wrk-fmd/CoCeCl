@@ -217,7 +217,8 @@
                             android:hint="@string/bo"
                             android:textAppearance="?android:attr/textAppearanceMedium"
                             android:textColor="@color/primary_dark_material_dark"
-                            android:textColorHint="@color/primary_dark_material_dark" />
+                            android:textColorHint="@color/primary_dark_material_dark"
+                            android:autoLink="map" />
 
                         <Button
                             android:id="@+id/button18"
@@ -247,10 +248,10 @@
                         android:enabled="false"
                         android:gravity="center"
                         android:hint="@string/info"
-                        android:inputType="text"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark" />
+                        android:textColorHint="@color/primary_dark_material_dark"
+                        android:maxHeight="200dp" />
 
                     <TextView
                         android:id="@+id/textView92"

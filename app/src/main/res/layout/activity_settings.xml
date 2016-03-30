@@ -41,29 +41,24 @@
                         android:id="@+id/textView9"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:text="@string/action_settings"
                         android:textAppearance="?android:attr/textAppearanceLarge"
                         android:textColor="#00b0ff"
                         android:textSize="15pt" />
 
                     <TextView
+                        android:id="@+id/textView185"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:layout_marginBottom="10dp"
                         android:text="Allgemein"
-                        android:id="@+id/textView185"
-                        android:textColor="#00b0ff"
-                        android:layout_marginBottom="10dp" />
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:textColor="#00b0ff" />
 
                     <LinearLayout
                         android:id="@+id/linearLayout12"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentEnd="true"
-                        android:layout_alignParentRight="true"
-                        android:layout_below="@+id/textView9"
                         android:layout_marginLeft="25dp"
                         android:layout_marginRight="25dp"
                         android:orientation="vertical">
@@ -72,9 +67,6 @@
                             android:id="@+id/switch3"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_below="@+id/space4"
                             android:layout_gravity="left"
                             android:checked="false"
                             android:drawableLeft="@drawable/ic_aspect_ratio_black_18dp"
@@ -86,9 +78,6 @@
                             android:id="@+id/switch1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_below="@+id/switch3"
                             android:layout_gravity="left"
                             android:layout_marginTop="10dp"
                             android:checked="false"
@@ -101,9 +90,6 @@
                             android:id="@+id/switch2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_below="@+id/switch1"
                             android:layout_gravity="left"
                             android:layout_marginTop="10dp"
                             android:checked="false"
@@ -116,9 +102,6 @@
                             android:id="@+id/switch4"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_alignParentLeft="true"
-                            android:layout_alignParentStart="true"
-                            android:layout_below="@+id/switch2"
                             android:layout_gravity="left"
                             android:layout_marginTop="10dp"
                             android:drawableLeft="@drawable/ic_volume_off_black_18dp"
@@ -158,9 +141,6 @@
                         android:id="@+id/textView176"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
-                        android:layout_below="@+id/view2"
                         android:text="Navigation"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="#00b0ff" />
@@ -168,12 +148,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:layout_above="@+id/button37"
-                        android:layout_alignEnd="@+id/linearLayout12"
-                        android:layout_alignLeft="@+id/linearLayout12"
-                        android:layout_alignRight="@+id/linearLayout12"
-                        android:layout_alignStart="@+id/linearLayout12"
-                        android:layout_below="@+id/textView176"
+                        android:layout_marginLeft="25dp"
+                        android:layout_marginRight="25dp"
                         android:orientation="vertical">
 
                         <Switch
@@ -232,9 +208,6 @@
                         android:id="@+id/button37"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignEnd="@+id/view2"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignRight="@+id/view2"
                         android:onClick="changelang"
                         android:text="@string/language" />
 
@@ -242,16 +215,10 @@
                         android:id="@+id/button71"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentBottom="true"
-                        android:layout_alignParentLeft="true"
-                        android:layout_alignParentStart="true"
                         android:text="Call FMD-IT Support" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>
-
         </LinearLayout>
-
     </ScrollView>
-
 </LinearLayout>

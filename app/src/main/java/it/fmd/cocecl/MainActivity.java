@@ -48,6 +48,7 @@ import java.util.HashMap;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.jsonstringtestdata;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
@@ -290,11 +291,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void loadincident() {
 
-        String ejson = "{\"tasktype\": \"EINSATZ\", \"priority\": \"Normal\", \"emergency\": true, \"boaddress\": \"Neubaugasse 168///\n1090 Wien\", \"bogrund\": \"17D04\", \"boinfo\": \"Sturz aus dem 4.ten Stock\", \"caller\": \"Hr. Müller +43 664 474 786 2\"}";
+        jsonstringtestdata jtest = new jsonstringtestdata();
 
         String data = "";
         try {
-            JSONObject jsonO = new JSONObject(ejson);
+            JSONObject jsonO = new JSONObject(jtest.ejson);
 
             String tasktype = jsonO.optString("tasktype");
             String bo = jsonO.optString("boaddress");

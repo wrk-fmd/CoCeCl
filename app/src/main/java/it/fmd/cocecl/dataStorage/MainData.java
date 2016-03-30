@@ -7,6 +7,7 @@ public class MainData {
 
 
     public String amb;
+    public String ambtype; // AMBULANZ, ÜBUNG, EINSATZ
 
     public static MainData getInstance() {
         if (mInstance == null) {
@@ -25,5 +26,13 @@ public class MainData {
 
     public void setAmb(String amb) {
         this.amb = amb;
+    }
+
+    public String getAmbtype() {
+        return ambtype;
+    }
+
+    public void setAmbtype(String ambtype) {
+        this.ambtype = ambtype;
     }
 }

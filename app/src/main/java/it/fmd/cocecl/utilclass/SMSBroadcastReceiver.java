@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.dataStorage.SMSData;
 import it.fmd.cocecl.incidentaction.SMS_Alert;
 
@@ -15,7 +14,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
 
     public static final String SMS_BUNDLE = "pdus";
     final SmsManager sms = SmsManager.getDefault();
-    MainActivity ourSMS;
 
     SMSData sd = new SMSData();
 
@@ -28,7 +26,7 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
-                String smsBody = smsMessage.getMessageBody().toString();
+                String smsBody = smsMessage.getMessageBody();
                 String address = smsMessage.getOriginatingAddress();
 
                 smsMessageStr += "SMS From: " + address + "\n";

@@ -14,7 +14,11 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import it.fmd.cocecl.dataStorage.GetPersonnel;
+import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.dataStorage.MainData;
+import it.fmd.cocecl.dataStorage.UnitData;
+import it.fmd.cocecl.dataStorage.UnitStatus;
+import it.fmd.cocecl.dataStorage.jsonstringtestdata;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.SessionManagement;
 
@@ -33,7 +37,7 @@ public class InfoActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info);
+        setContentView(R.layout.activity_info2);
 
         loadambinf();
 
@@ -78,8 +82,10 @@ public class InfoActivity extends MainActivity {
             //start.setClickable(false);
         }
 
+        getJSONdata();
         loadamb();
-        loadunituser();
+        loaduser();
+        loadunit();
     }
 
     public void acbtnClick() {
@@ -140,47 +146,101 @@ public class InfoActivity extends MainActivity {
         wv.loadUrl("file:///android_asset/ambinf.html");
     }
 
-    public void loadamb() {
+    public void getJSONdata() {
 
-        TextView ambtv = (TextView) findViewById(R.id.textView2);
-
-        String ambjson = "{\"amb\": \"2016/00123 VCM\"}";
+        jsonstringtestdata jtest = new jsonstringtestdata();
 
         String data = "";
         try {
-            JSONObject jsonO = new JSONObject(ambjson);
+            JSONObject jsonO = new JSONObject(jtest.ambjson);
 
             String amb = jsonO.optString("amb");
+            String ambtype = jsonO.optString("ambtype");
 
             MainData.getInstance().setAmb(amb);
+            MainData.getInstance().setAmbtype(ambtype);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
+
+        try {
+            JSONObject jsonO = new JSONObject(jtest.unit);
+
+            String unitnames = jsonO.optString("unitname");
+            String unitkennz = jsonO.optString("kennz");
+            String unitfkenn = jsonO.optString("fkenn");
+
+            Boolean mdunitc = jsonO.optBoolean("mdunit");
+            Boolean mobileunitc = jsonO.optBoolean("mobileunit");
+
+            UnitData.getInstance().setUnitname(unitnames);
+            UnitData.getInstance().setVehicleplate(unitkennz);
+            UnitData.getInstance().setUnitnumber(unitfkenn);
+
+            UnitData.getInstance().setMdunit(mdunitc);
+            UnitData.getInstance().setMobileunit(mobileunitc);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonO = new JSONObject(jtest.ustatus);
+
+            String ustatus = jsonO.optString("ustatus");
+            String ustaddition = jsonO.optString("ustaddition");
+
+            UnitStatus.getInstance().setUstatus(ustatus);
+            UnitStatus.getInstance().setUstaddition(ustaddition);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonO = new JSONObject(jtest.incistatus);
+
+            String incistatus = jsonO.optString("incistatus");
+
+            IncidentData.getInstance().setIncistatus(incistatus);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            JSONObject jsonO = new JSONObject(jtest.user);
+
+            String madnr = jsonO.optString("userdnr");
+            String mafname = jsonO.optString("userfname");
+            String masname = jsonO.optString("usersname");
+
+            GetPersonnel.getInstance().setMADnr(madnr);
+            GetPersonnel.getInstance().setMAFamilyname(mafname);
+            GetPersonnel.getInstance().setMAName(masname);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void loadamb() {
+        TextView ambtv = (TextView) findViewById(R.id.textView2);
 
         ambtv.setText(MainData.getInstance().getAmb());
     }
 
-    public void loadunituser() {
-        TextView unit = (TextView) findViewById(R.id.textView3);
+    public void loaduser() {
         TextView user = (TextView) findViewById(R.id.textView5);
 
-        String unituser = "{\"unit\": \"RTW-01\", \"userdnr\": \"1999\"}";
-
-        String data = "";
-        try {
-            JSONObject jsonO = new JSONObject(unituser);
-
-            String madnr = jsonO.optString("userdnr");
-
-            GetPersonnel.getInstance().setMADnr(madnr);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
         user.setText(GetPersonnel.getInstance().getMADnr());
-        //unit.setText(MainData.getInstance().getAmb());
+    }
+
+    public void loadunit() {
+        TextView unit = (TextView) findViewById(R.id.textView3);
+
+        unit.setText(UnitData.getInstance().getUnitname());
     }
 }
 

@@ -14,11 +14,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.dataStorage.UnitStatus;
 
 /**
  * emergency and radio call server function
  *
  * Selectiv, Emergency, EB, NEB, AD
+ * NEB Addition: Refuel, get Material, Pause, Other
  */
 
 public class SetUnitStatus implements View.OnClickListener {
@@ -43,16 +45,49 @@ public class SetUnitStatus implements View.OnClickListener {
 
             case R.id.button38:
                 st1();
+                EBstoreStatus();
                 break;
 
             case R.id.button39:
                 st6();
+                NEBstoreStatus();
                 break;
 
             case R.id.button40:
                 st9();
+                ADstoreStatus();
                 break;
         }
+    }
+
+    //Store in UnitStatus
+
+    public void EBstoreStatus() {
+        UnitStatus.getInstance().setUstatus("EB");
+    }
+
+    public void NEBstoreStatus() {
+        UnitStatus.getInstance().setUstatus("NEB");
+    }
+
+    public void ADstoreStatus() {
+        UnitStatus.getInstance().setUstatus("AD");
+    }
+
+    public void RefuelInfoStore() {
+        UnitStatus.getInstance().setUstaddition("Tanken");
+    }
+
+    public void GetMatInfoStore() {
+        UnitStatus.getInstance().setUstaddition("Material nachfassen");
+    }
+
+    public void BreakInfoStore() {
+        UnitStatus.getInstance().setUstaddition("Bereitschaft");
+    }
+
+    public void OtherInfoStore() {
+        UnitStatus.getInstance().setUstaddition("anderer Grund");
     }
 
     //Radio
@@ -273,24 +308,28 @@ public class SetUnitStatus implements View.OnClickListener {
                                 //Toast.makeText(getActivity(), "Nicht EB", Toast.LENGTH_SHORT).show();
                                 textView111.setVisibility(View.VISIBLE);
                                 textView111.setText("Nicht EB");
+                                OtherInfoStore();
                                 break;
                             case 1:
                                 nebst();
                                 //Toast.makeText(getActivity(), "Tanken", Toast.LENGTH_SHORT).show();
                                 textView111.setVisibility(View.VISIBLE);
                                 textView111.setText("Tanken");
+                                RefuelInfoStore();
                                 break;
                             case 2:
                                 nebst();
                                 //Toast.makeText(getActivity(), "Mat. nachfassen", Toast.LENGTH_SHORT).show();
                                 textView111.setVisibility(View.VISIBLE);
                                 textView111.setText("Material nachfassen");
+                                GetMatInfoStore();
                                 break;
                             case 3:
                                 nebst();
                                 //Toast.makeText(getActivity(), "Bereitschaft", Toast.LENGTH_SHORT).show();
                                 textView111.setVisibility(View.VISIBLE);
                                 textView111.setText("Bereitschaft");
+                                BreakInfoStore();
                                 break;
                             case 4:
                                 //Toast.makeText(getActivity(), "weiter EB", Toast.LENGTH_SHORT).show();
@@ -406,4 +445,6 @@ public class SetUnitStatus implements View.OnClickListener {
         //cardviewst.setCardBackgroundColor(Color.parseColor("#9C27B0"));
         statusbtnlinlay.setBackgroundColor(Color.parseColor("#9C27B0"));
     }
+
+
 }

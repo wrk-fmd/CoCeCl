@@ -1,6 +1,7 @@
 package it.fmd.cocecl.utilclass;
 
 import android.app.Activity;
+import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,7 +10,15 @@ import android.net.NetworkInfo;
 
 import java.io.IOException;
 
-public class ConnectionManager extends Activity {
+import it.fmd.cocecl.APPConstants;
+
+public class ConnectionManager {
+
+    private Context context;
+
+    public ConnectionManager(Context context) {
+        this.context = context;
+    }
 
     ToolbarIconStates tis = new ToolbarIconStates();
 
@@ -41,7 +50,7 @@ public class ConnectionManager extends Activity {
     };
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         //return netInfo != null && netInfo.isConnectedOrConnecting();
 
@@ -69,7 +78,7 @@ public class ConnectionManager extends Activity {
         Runtime runtime = Runtime.getRuntime();
         try {
 
-            Process ipProcess = runtime.exec("/system/bin/ping -c 1 8.8.8.8");
+            Process ipProcess = runtime.exec("/system/bin/ping -c 1 " + APPConstants.MLS_DOMAIN);
             int exitValue = ipProcess.waitFor();
 
             //

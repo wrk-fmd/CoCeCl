@@ -188,6 +188,8 @@ public class mainstatusFragment extends Fragment {
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
+
+        setUnitstatus();
     }
 
     @Override
@@ -209,14 +211,22 @@ public class mainstatusFragment extends Fragment {
 
         if (ustatus.equals("EB")) {
             sus.ebst();
+            statustv.setText(ustaddition);
         }
 
         if (ustatus.equals("NEB")) {
             sus.nebst();
+            statustv.setText(ustaddition);
         }
 
         if (ustatus.equals("AD")) {
             sus.adst();
+            statustv.setText(ustaddition);
+        }
+
+        if (ustaddition != null) {
+            statustv.setVisibility(View.VISIBLE);
+            statustv.setText(ustaddition);
         }
     }
 

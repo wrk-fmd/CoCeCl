@@ -90,6 +90,13 @@ public class incidentFragment extends Fragment {
     }
 
     @Override
+    public void onViewStateRestored(Bundle savedInstanceState) {
+        super.onViewStateRestored(savedInstanceState);
+
+        setIncidentData();
+    }
+
+    @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         activity = getActivity();
@@ -118,8 +125,14 @@ public class incidentFragment extends Fragment {
         boinfo.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
         caller.setText(stcaller);
 
-        emergencyBox.setChecked(stemergency);
-        emergencyBox.setVisibility(View.VISIBLE);
+        if (emergencyBox == null) {
+            emergencyBox.setChecked(false);
+            if (stemergency != null) {
+                emergencyBox.setChecked(stemergency);
+            }
+            emergencyBox.setVisibility(View.VISIBLE);
+        }
+
         if (emergencyBox.isChecked()) {
             emergencyBox.setTextColor(Color.BLUE);
         }
@@ -166,16 +179,10 @@ public class incidentFragment extends Fragment {
         gridView.setAdapter(adapter);
 
         // Add item to adapter
-        // TEST DATA - later from server JSON, stored in shared prefs
-        AssignedUnits newUnits = new AssignedUnits("RTW-01", "ABO");
-        AssignedUnits newUnits2 = new AssignedUnits("RTW-02", "ZBO");
-        AssignedUnits newUnits3 = new AssignedUnits("NEF-01", "ZBO");
-        AssignedUnits newUnits4 = new AssignedUnits("VOK", "ZBO");
+        // TODO: TEST DATA - later from server JSON, stored in shared prefs
+        AssignedUnits newUnits = new AssignedUnits();
 
         adapter.add(newUnits);
-        adapter.add(newUnits2);
-        adapter.add(newUnits3);
-        adapter.add(newUnits4);
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
         gridView.setClickable(true);

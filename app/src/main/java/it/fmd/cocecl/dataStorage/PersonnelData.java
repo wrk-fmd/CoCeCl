@@ -1,23 +1,21 @@
 package it.fmd.cocecl.dataStorage;
 
-import android.app.Application;
-
 /**
  * Get personnel from DB, write into UnitInfo Screen
  */
 
-public class GetPersonnel {
+public class PersonnelData {
 
-    private static GetPersonnel mInstance = null;
+    private static PersonnelData mInstance = null;
 
     String MAName;
     String MAFamilyname;
     String MADnr;
     String MAEmail;
 
-    public static GetPersonnel getInstance() {
+    public static PersonnelData getInstance() {
         if (mInstance == null) {
-            mInstance = new GetPersonnel();
+            mInstance = new PersonnelData();
         }
         return mInstance;
     }

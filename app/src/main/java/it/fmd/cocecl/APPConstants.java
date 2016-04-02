@@ -28,9 +28,12 @@ public class APPConstants {
     public static final String TAG_TRANSPORT_NR = "tnr";
 
     //MLS URL
-    public static final String MLS_DOMAIN = "http://www.google.com";
+    public static final String MLS_DOMAIN = "8.8.8.8";
+    public static final String COCESO_API = "http://10.0.2.2/jsonapi/full.json";
     //Configuration file link
     public static final String cocecl_config = "";
+    //Info HTML
+    public static final String cocecl_html = "http://10.0.2.2/cocecl_files/ambinf.html";
     // Phone numbers
     //MLS
     public static final String mlsmain = "+ 43 660 123 456 78";

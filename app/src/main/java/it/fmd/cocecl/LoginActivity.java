@@ -114,7 +114,7 @@ public class LoginActivity extends MainActivity {
     private boolean isReceiverRegistered;
 
     CheckPlayServices cps = new CheckPlayServices();
-    ConnectionManager cm = new ConnectionManager();
+    ConnectionManager cm = new ConnectionManager(this);
 
 
     // OnCreate Method // -------------------------------------- //
@@ -146,8 +146,7 @@ public class LoginActivity extends MainActivity {
         signinbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //CheckSignIn();
-                SignIn();
+                CheckSignIn();
             }
         });
 

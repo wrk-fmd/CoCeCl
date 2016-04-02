@@ -271,12 +271,9 @@
                         android:background="@drawable/edittext_style_3"
                         android:gravity="center"
                         android:hint="@string/brfr"
-                        android:inputType="phone"
-                        android:phoneNumber="true"
                         android:textAppearance="?android:attr/textAppearanceMedium"
                         android:textColor="@color/primary_dark_material_dark"
-                        android:textColorHint="@color/primary_dark_material_dark"
-                        android:textIsSelectable="true" />
+                        android:textColorHint="@color/primary_dark_material_dark" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

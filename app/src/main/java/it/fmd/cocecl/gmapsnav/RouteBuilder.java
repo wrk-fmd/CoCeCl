@@ -39,7 +39,7 @@ public class RouteBuilder implements OnMapReadyCallback,
         this.activity = _activity;
     }
 
-    ConnectionManager conman = new ConnectionManager();
+    ConnectionManager conman = new ConnectionManager(activity);
 
     // Direction
     private GoogleApiClient googleApiClient;

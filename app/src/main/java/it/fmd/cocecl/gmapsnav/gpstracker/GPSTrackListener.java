@@ -32,8 +32,6 @@ public class GPSTrackListener extends Service {
 
     PowerManager.WakeLock wakeLock;
 
-    ConnectionManager cm = new ConnectionManager();
-
     private LocationManager locationManager;
 
 
@@ -45,6 +43,8 @@ public class GPSTrackListener extends Service {
     }
 
     ToolbarIconStates tis = new ToolbarIconStates();
+
+    ConnectionManager cm = new ConnectionManager(activity);
 
     public GPSTrackListener() {
         // TODO Auto-generated constructor stub
@@ -162,7 +162,8 @@ public class GPSTrackListener extends Service {
         // TODO Auto-generated method stub
         super.onDestroy();
 
-        wakeLock.release();
-
+        if (wakeLock.isHeld()) {
+            wakeLock.release();
+        }
     }
 }

@@ -1,8 +1,8 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
-import android.app.Fragment;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,8 +46,8 @@ import java.util.HashMap;
 
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
+import it.fmd.cocecl.dataStorage.GetData;
 import it.fmd.cocecl.dataStorage.IncidentData;
-import it.fmd.cocecl.dataStorage.jsonstringtestdata;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
@@ -82,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    public ConnectionManager conman = new ConnectionManager();
+    public ConnectionManager conman = new ConnectionManager(this);
 
     public CheckPlayServices cps = new CheckPlayServices();
 
@@ -102,10 +101,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // Broadcast Receiver Connection State
-        // register
-        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         //GPS Tracker Service
         // register
@@ -283,55 +278,13 @@ public class MainActivity extends AppCompatActivity {
             navDrawerAction(0);
         }
 
-        loadincident();
-        ifEmergency();
+        //ifEmergency();
+
+        GetData gd = new GetData(this);
+        gd.execute();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
-
-    public void loadincident() {
-
-        jsonstringtestdata jtest = new jsonstringtestdata();
-
-        String data = "";
-        try {
-            JSONObject jsonO = new JSONObject(jtest.ejson);
-
-            String tasktype = jsonO.optString("tasktype");
-            String bo = jsonO.optString("boaddress");
-            String boinfo = jsonO.optString("boinfo");
-            String bogrund = jsonO.optString("bogrund");
-            String caller = jsonO.optString("caller");
-            Boolean emergency = jsonO.optBoolean("emergency");
-/*
-            //Get the instance of JSONArray that contains JSONObjects
-            JSONArray jsonArray = jsonO.optJSONArray("Employee");
-
-            //Iterate the jsonArray and print the info of JSONObjects
-            for(int i=0; i < jsonArray.length(); i++){
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-
-                int id = Integer.parseInt(jsonObject.optString("id").toString());
-                String name = jsonObject.optString("name").toString();
-                float salary = Float.parseFloat(jsonObject.optString("salary").toString());
-
-                data += "Node"+i+" : \n id= "+ id +" \n Name= "+ name +" \n Salary= "+ salary +" \n ";
-            }
-*/
-            //output.setText(data);
-            IncidentData.getInstance().setTasktype(tasktype);
-            IncidentData.getInstance().setBogrund(bogrund);
-            IncidentData.getInstance().setBoaddress(bo);
-            IncidentData.getInstance().setBoinfo(boinfo);
-            IncidentData.getInstance().setCaller(caller);
-            IncidentData.getInstance().setEmergency(emergency);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-    }
-
 
     //NAV DRAWER //
 
@@ -472,6 +425,10 @@ public class MainActivity extends AppCompatActivity {
         super.onPostCreate(savedInstanceState);
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
+
+        // Broadcast Receiver Connection State
+        // register
+        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -666,6 +623,9 @@ public class MainActivity extends AppCompatActivity {
         // remove persistent appbar icon
         NotifiBarIcon nbi = new NotifiBarIcon(this);
         nbi.removeSBAI();
+
+        //stop GPS service
+        stopService(new Intent(this, GPSTrackListener.class));
     }
 
     // SavedInstanceState
@@ -753,7 +713,7 @@ public class MainActivity extends AppCompatActivity {
     */
 
     public void ifEmergency() {
-        if (IncidentData.getInstance().getEmergency()) {
+        if (IncidentData.getInstance().getEmergency() && IncidentData.getInstance().getEmergency() != null) {
             itts.tasktypeemergencytabcolor();
         }
     }

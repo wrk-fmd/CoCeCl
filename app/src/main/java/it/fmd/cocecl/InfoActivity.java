@@ -1,6 +1,5 @@
 package it.fmd.cocecl;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -10,15 +9,9 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import it.fmd.cocecl.dataStorage.GetPersonnel;
-import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.dataStorage.MainData;
+import it.fmd.cocecl.dataStorage.PersonnelData;
 import it.fmd.cocecl.dataStorage.UnitData;
-import it.fmd.cocecl.dataStorage.UnitStatus;
-import it.fmd.cocecl.dataStorage.jsonstringtestdata;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.SessionManagement;
 
@@ -37,7 +30,7 @@ public class InfoActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info2);
+        setContentView(R.layout.activity_info3);
 
         loadambinf();
 
@@ -82,7 +75,6 @@ public class InfoActivity extends MainActivity {
             //start.setClickable(false);
         }
 
-        getJSONdata();
         loadamb();
         loaduser();
         loadunit();
@@ -143,86 +135,7 @@ public class InfoActivity extends MainActivity {
         wv = (WebView) findViewById(R.id.webView);
         wv.setBackgroundColor(0x00000000);
         wv.setVisibility(View.VISIBLE);
-        wv.loadUrl("file:///android_asset/ambinf.html");
-    }
-
-    public void getJSONdata() {
-
-        jsonstringtestdata jtest = new jsonstringtestdata();
-
-        String data = "";
-        try {
-            JSONObject jsonO = new JSONObject(jtest.ambjson);
-
-            String amb = jsonO.optString("amb");
-            String ambtype = jsonO.optString("ambtype");
-
-            MainData.getInstance().setAmb(amb);
-            MainData.getInstance().setAmbtype(ambtype);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject jsonO = new JSONObject(jtest.unit);
-
-            String unitnames = jsonO.optString("unitname");
-            String unitkennz = jsonO.optString("kennz");
-            String unitfkenn = jsonO.optString("fkenn");
-
-            Boolean mdunitc = jsonO.optBoolean("mdunit");
-            Boolean mobileunitc = jsonO.optBoolean("mobileunit");
-
-            UnitData.getInstance().setUnitname(unitnames);
-            UnitData.getInstance().setVehicleplate(unitkennz);
-            UnitData.getInstance().setUnitnumber(unitfkenn);
-
-            UnitData.getInstance().setMdunit(mdunitc);
-            UnitData.getInstance().setMobileunit(mobileunitc);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject jsonO = new JSONObject(jtest.ustatus);
-
-            String ustatus = jsonO.optString("ustatus");
-            String ustaddition = jsonO.optString("ustaddition");
-
-            UnitStatus.getInstance().setUstatus(ustatus);
-            UnitStatus.getInstance().setUstaddition(ustaddition);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject jsonO = new JSONObject(jtest.incistatus);
-
-            String incistatus = jsonO.optString("incistatus");
-
-            IncidentData.getInstance().setIncistatus(incistatus);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            JSONObject jsonO = new JSONObject(jtest.user);
-
-            String madnr = jsonO.optString("userdnr");
-            String mafname = jsonO.optString("userfname");
-            String masname = jsonO.optString("usersname");
-
-            GetPersonnel.getInstance().setMADnr(madnr);
-            GetPersonnel.getInstance().setMAFamilyname(mafname);
-            GetPersonnel.getInstance().setMAName(masname);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+        wv.loadUrl(APPConstants.cocecl_html);
     }
 
     public void loadamb() {
@@ -234,7 +147,7 @@ public class InfoActivity extends MainActivity {
     public void loaduser() {
         TextView user = (TextView) findViewById(R.id.textView5);
 
-        user.setText(GetPersonnel.getInstance().getMADnr());
+        user.setText(PersonnelData.getInstance().getMADnr());
     }
 
     public void loadunit() {

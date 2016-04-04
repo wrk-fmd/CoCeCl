@@ -1,5 +1,7 @@
 package it.fmd.cocecl.contentviews;
 
+import java.util.HashMap;
+
 /**
  * Incident ListView on mainstatusFragment
  **/
@@ -14,6 +16,8 @@ public class AssignedUnits {
         }
         return mInstance;
     }
+
+    HashMap<String, String> assunits = new HashMap<String, String>();
 
     public String aunit;
 
@@ -42,5 +46,13 @@ public class AssignedUnits {
 
     public void setStatusaunit(String statusaunit) {
         this.statusaunit = statusaunit;
+    }
+
+    public HashMap<String, String> getAssunits() {
+        return assunits;
+    }
+
+    public void setAssunits(HashMap<String, String> assunits) {
+        this.assunits = assunits;
     }
 }

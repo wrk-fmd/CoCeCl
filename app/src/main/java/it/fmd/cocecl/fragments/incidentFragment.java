@@ -15,12 +15,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
 import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
 import it.fmd.cocecl.contentviews.GridViewUtil;
+import it.fmd.cocecl.contentviews.MyTestAdapter;
+import it.fmd.cocecl.dataStorage.GetData;
 import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.PatData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
 import it.fmd.cocecl.patadminaction.CreatePat;
 import it.fmd.cocecl.patadminaction.PatStatus;
@@ -38,6 +42,10 @@ public class incidentFragment extends Fragment {
     TextView statusView;
     CheckBox emergencyBox;
 
+    GridViewUtil gridView;
+
+    Button createpatbtn;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,7 +59,7 @@ public class incidentFragment extends Fragment {
         final Button button11 = (Button) v.findViewById(R.id.button11);
         final Button button13 = (Button) v.findViewById(R.id.button13);
         final Button statusbtn = (Button) v.findViewById(R.id.button41);
-        final Button createpatbtn = (Button) v.findViewById(R.id.button46);
+        createpatbtn = (Button) v.findViewById(R.id.button46);
         final Button navbo = (Button) v.findViewById(R.id.button18);
 
         button10.setOnClickListener(new PatStatus(getActivity()));
@@ -78,15 +86,20 @@ public class incidentFragment extends Fragment {
 
         statusView = (TextView) v.findViewById(R.id.statusView);
 
+        gridView = (GridViewUtil) v.findViewById(R.id.asUnitGV);
+
         return v;
     }
 
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+
         setUnitsGVData();
 
         setIncidentData();
+
+        checkPat();
     }
 
     @Override
@@ -94,6 +107,8 @@ public class incidentFragment extends Fragment {
         super.onViewStateRestored(savedInstanceState);
 
         setIncidentData();
+
+        checkPat();
     }
 
     @Override
@@ -158,17 +173,23 @@ public class incidentFragment extends Fragment {
         }
     }
 
+    public void checkPat() {
+
+        final LinearLayout patmanbtnlinlay = (LinearLayout) activity.findViewById(R.id.patmanbtnlinlay);
+
+        String patID = PatData.getInstance().getPatID();
+
+        if (patID != null) {
+            createpatbtn.setPressed(true);
+            // Set Pat. Management Buttons visible
+            patmanbtnlinlay.setVisibility(View.VISIBLE);
+
+            createpatbtn.setEnabled(false);
+            createpatbtn.setClickable(false);
+        }
+    }
+
     public void setUnitsGVData() {
-
-        // Construct the data source
-
-        ArrayList<AssignedUnits> arrayOfUnitses = new ArrayList<AssignedUnits>();
-
-        // Create the adapter to convert the array to views
-
-        AssignedUnitsAdapter adapter = new AssignedUnitsAdapter(getContext(), arrayOfUnitses);
-
-        // Attach the adapter to a GridView
 
         //final GridView gridView = (GridView) getActivity().findViewById(R.id.asUnitGV);
         final GridViewUtil gridView = (GridViewUtil) getActivity().findViewById(R.id.asUnitGV);
@@ -176,13 +197,13 @@ public class incidentFragment extends Fragment {
         gridView.setExpanded(true);
         gridView.setNumColumns(2);
 
-        gridView.setAdapter(adapter);
-
         // Add item to adapter
-        // TODO: TEST DATA - later from server JSON, stored in shared prefs
-        AssignedUnits newUnits = new AssignedUnits();
 
-        adapter.add(newUnits);
+        //AssignedUnits newUnits = new AssignedUnits();
+        HashMap<String, String> assunits = AssignedUnits.getInstance().getAssunits();
+
+        //adapter.add(newUnits);
+        showasUnits(assunits);
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
         gridView.setClickable(true);
@@ -195,6 +216,11 @@ public class incidentFragment extends Fragment {
 
             }
         });
+    }
+
+    public void showasUnits(HashMap<String, String> assunits) {
+        MyTestAdapter adapter = new MyTestAdapter(assunits);
+        gridView.setAdapter(adapter);
     }
 
     @Override

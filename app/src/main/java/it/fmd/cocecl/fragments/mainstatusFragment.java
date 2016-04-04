@@ -125,15 +125,12 @@ public class mainstatusFragment extends Fragment {
         final String bggrund = IncidentData.getInstance().getBogrund();
         final String boaddress = IncidentData.getInstance().getBoaddress();
         String info = IncidentData.getInstance().getBoinfo();
-        // Berufungsgrund, Info, Adresse, Status
-        Incidents newIncidents = new Incidents("Kollaps", "unklar", "Weinhausergasse 13", "QU");
-        Incidents newIncidents1 = new Incidents("Auftrag", "Material holen", "Nottendorfer Gasse 21-23, 1030", "ZBO");
-        Incidents newIncidents2 = new Incidents(bggrund, info, boaddress, "ZBO");
+        String incistatus = IncidentData.getInstance().getIncistatus();
 
+        // Berufungsgrund, Info, Adresse, Status
+        Incidents newIncidents = new Incidents(bggrund, info, boaddress, incistatus);
 
         adapter.add(newIncidents);
-        adapter.add(newIncidents1);
-        adapter.add(newIncidents2);
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
         incidentlv.setClickable(true);

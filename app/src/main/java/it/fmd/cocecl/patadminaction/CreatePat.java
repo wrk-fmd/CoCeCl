@@ -2,9 +2,7 @@ package it.fmd.cocecl.patadminaction;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.SharedPreferences;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -15,6 +13,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.dataStorage.PatData;
 
 public class CreatePat implements View.OnClickListener {
 
@@ -45,38 +44,36 @@ public class CreatePat implements View.OnClickListener {
 
     //Shared Preferences
     String patfirstname, patlastname, patdatebirth, patsvnr, patplsnr, patgender, patward;
-    String getpatfirstname, getpatlastname, getpatdatebirth, getpatsvnr, getpatplsnr, getpatgender, getpatward;
-    public static final String PatData = "patprefs";
 
+    //Spinner int
+    int spinnerint;
 
     // Patient Management dialog builder //
-    // data stored in shared preferences
-
     // Pat. anlegen
     public void createpat() {
 
-        RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
+        RelativeLayout patmanlayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.patman, null);
         final Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
-        final Button button46 = (Button) this.activity.findViewById(R.id.button46);
+        final Button button46 = (Button) activity.findViewById(R.id.button46);
 
-        final TextView textView116 = (TextView) this.activity.findViewById(R.id.textView116);
-        TextView textView120 = (TextView) this.activity.findViewById(R.id.textView120);
+        final TextView textView116 = (TextView) activity.findViewById(R.id.textView116);
 
+        final LinearLayout patmanbtnlinlay = (LinearLayout) activity.findViewById(R.id.patmanbtnlinlay);
 
-        final LinearLayout patmanbtnlinlay = (LinearLayout) this.activity.findViewById(R.id.patmanbtnlinlay);
+        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
+
+        final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
 
         final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
         final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
         final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
-        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.);
-        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
-        final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
-        //Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
+        final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.editText32);
 
-        //Shared Prefs// Create Patient
-        final SharedPreferences spref = this.activity.getSharedPreferences(PatData, Context.MODE_PRIVATE);
+        final Spinner addpatward = (Spinner) patmanlayout.findViewById(R.id.spinner17);
 
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
+
+        // Create Patient
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
         //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
@@ -86,27 +83,34 @@ public class CreatePat implements View.OnClickListener {
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
-                // Store in sharedprefs
-                patfirstname = addpatfirstname.getText().toString();
-                patlastname = addpatlastname.getText().toString();
-                patdatebirth = addpatdatebirth.getText().toString();
-                //patsvnr = addactoradd.getText().toString();
+                // Store in Instance State
                 patplsnr = addpatplsnr.getText().toString();
-                //patgender = addpatgender.getText().toString();
-                patward = addpatward.getText().toString();
+                patlastname = addpatlastname.getText().toString();
+                patfirstname = addpatfirstname.getText().toString();
+                patdatebirth = addpatdatebirth.getText().toString();
+                patsvnr = addpatsvnr.getText().toString();
+                patgender = addpatgender.getSelectedItem().toString();
+                patward = addpatward.getSelectedItem().toString();
+
+                spinnerint = addpatgender.getSelectedItemPosition();
 
 
-                SharedPreferences.Editor patedit = spref.edit();
+                if (!patplsnr.isEmpty())
+                    PatData.getInstance().setPatplsnr(patplsnr);
 
-                patedit.putString("patfirstname", patfirstname);
-                patedit.putString("patlastname", patlastname);
-                patedit.putString("patdatebirth", patdatebirth);
-                //patedit.putString("patsvnr", patsvnr);
-                patedit.putString("patplsnr", patplsnr);
-                //patedit.putString("patgender", patgender);
-                patedit.putString("patward", patward);
+                if (!patlastname.isEmpty())
+                    PatData.getInstance().setPatfname(patlastname);
+                if (!patfirstname.isEmpty())
+                    PatData.getInstance().setPatname(patfirstname);
+                if (!patdatebirth.isEmpty())
+                    PatData.getInstance().setPatbdate(patdatebirth);
+                if (!patsvnr.isEmpty())
+                    PatData.getInstance().setPatsvnr(patsvnr);
+                if (!patgender.isEmpty())
+                    PatData.getInstance().setPatgender(patgender);
 
-                patedit.apply();
+                if (!patward.isEmpty())
+                    PatData.getInstance().setPatward(patward);
 
                 //TODO: send data
 
@@ -123,34 +127,38 @@ public class CreatePat implements View.OnClickListener {
             }
         });
 
-        dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener()
-
-                {
-
+        dlgBuilder.setNegativeButton("Zurück", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 
-                        // Store in sharedprefs
-                        patfirstname = addpatfirstname.getText().toString();
-                        patlastname = addpatlastname.getText().toString();
-                        patdatebirth = addpatdatebirth.getText().toString();
-                        //patsvnr = addactoradd.getText().toString();
+                        /// Store in Instance State
                         patplsnr = addpatplsnr.getText().toString();
-                        //patgender = addpatgender.getText().toString();
-                        patward = addpatward.getText().toString();
+                        patlastname = addpatlastname.getText().toString();
+                        patfirstname = addpatfirstname.getText().toString();
+                        patdatebirth = addpatdatebirth.getText().toString();
+                        patsvnr = addpatsvnr.getText().toString();
+                        patgender = addpatgender.getSelectedItem().toString();
+                        patward = addpatward.getSelectedItem().toString();
+
+                        spinnerint = addpatgender.getSelectedItemPosition();
 
 
-                        SharedPreferences.Editor patedit = spref.edit();
+                        if (!patplsnr.isEmpty())
+                            PatData.getInstance().setPatplsnr(patplsnr);
 
-                        patedit.putString("patfirstname", patfirstname);
-                        patedit.putString("patlastname", patlastname);
-                        patedit.putString("patdatebirth", patdatebirth);
-                        //patedit.putString("patsvnr", patsvnr);
-                        patedit.putString("patplsnr", patplsnr);
-                        //patedit.putString("patgender", patgender);
-                        patedit.putString("patward", patward);
+                        if (!patlastname.isEmpty())
+                            PatData.getInstance().setPatfname(patlastname);
+                        if (!patfirstname.isEmpty())
+                            PatData.getInstance().setPatname(patfirstname);
+                        if (!patdatebirth.isEmpty())
+                            PatData.getInstance().setPatbdate(patdatebirth);
+                        if (!patsvnr.isEmpty())
+                            PatData.getInstance().setPatsvnr(patsvnr);
+                        if (!patgender.isEmpty())
+                            PatData.getInstance().setPatgender(patgender);
 
-                        patedit.apply();
+                        if (!patward.isEmpty())
+                            PatData.getInstance().setPatward(patward);
 
                         button46.setEnabled(true);
                         button46.setClickable(true);
@@ -179,33 +187,33 @@ public class CreatePat implements View.OnClickListener {
 
     public void changepat() {
 
-        RelativeLayout patmanlayout = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.patman, null);
+        RelativeLayout patmanlayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.patman, null);
         Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
         TextView textView11 = (TextView) patmanlayout.findViewById(R.id.textView11);
 
-        final TextView textView120 = (TextView) this.activity.findViewById(R.id.textView120);
+        final TextView textView120 = (TextView) activity.findViewById(R.id.textView120);
+
+        final LinearLayout patmanbtnlinlay = (LinearLayout) activity.findViewById(R.id.patmanbtnlinlay);
+
+        final EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
+
+        final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
+
+        final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
+        final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
+        final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
+        final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.editText32);
+
+        final TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
 
 
-        LinearLayout patmanbtnlinlay = (LinearLayout) this.activity.findViewById(R.id.patmanbtnlinlay);
-
-        EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
-        EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
-        EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
-        //final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.);
-        EditText addpatplsnr = (EditText) patmanlayout.findViewById(R.id.editText4);
-        TextView addpatward = (TextView) patmanlayout.findViewById(R.id.textView11);
-        Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
-
-        //Shared Prefs// Create Patient
-        SharedPreferences spref = this.activity.getSharedPreferences(PatData, Context.MODE_PRIVATE);
-
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(this.activity);
+        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
         //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
         bettbtn.setEnabled(false);
 
-        dlgBuilder = new AlertDialog.Builder(this.activity);
+        dlgBuilder = new AlertDialog.Builder(activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
 
@@ -217,23 +225,22 @@ public class CreatePat implements View.OnClickListener {
         bettbtn.setVisibility(View.GONE);
         textView11.setVisibility(View.GONE);
 
-        //Getting Stored data from SharedPreferences
-        getpatfirstname = spref.getString("patfirstname", "");
-        getpatlastname = spref.getString("patlastname", "");
-        getpatdatebirth = spref.getString("patdatebirth", "");
-        //getpatsvnr = spref.getString("patsvnr", "");
-        getpatplsnr = spref.getString("patplsnr", "");
-        //getpatgender = spref.getString("patgender", "");
-        getpatward = spref.getString("patward", "");
+        // Get Patient
+        patplsnr = PatData.getInstance().getPatplsnr();
+        patlastname = PatData.getInstance().getPatfname();
+        patfirstname = PatData.getInstance().getPatname();
+        patdatebirth = PatData.getInstance().getPatbdate();
+        patsvnr = PatData.getInstance().getPatsvnr();
+        patgender = PatData.getInstance().getPatgender();
+        patward = PatData.getInstance().getPatward();
 
-        //write to textview
-        addpatfirstname.setText("" + getpatfirstname);
-        addpatlastname.setText("" + getpatlastname);
-        addpatdatebirth.setText("" + getpatdatebirth);
-        //addpatsvnr.setText(""+getpatsvnr);
-        addpatplsnr.setText("" + getpatplsnr);
-        addpatward.setText("" + getpatgender);
-        //addpatgender.setText(""+getpatward);
+        addpatplsnr.setText(patplsnr);
+        addpatlastname.setText(patlastname);
+        addpatfirstname.setText(patfirstname);
+        addpatdatebirth.setText(patdatebirth);
+        addpatsvnr.setText(patsvnr);
+        addpatgender.setSelection(spinnerint);
+        addpatward.setText(patward);
 
         dlgBuilder.setPositiveButton("Senden", new DialogInterface.OnClickListener() {
             @Override
@@ -269,7 +276,7 @@ public class CreatePat implements View.OnClickListener {
     }
 
     public void removelayout() {
-        View viewToRemove = this.activity.findViewById(R.id.patmanrelayout);
+        View viewToRemove = activity.findViewById(R.id.patmanrelayout);
         if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
             ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
     }

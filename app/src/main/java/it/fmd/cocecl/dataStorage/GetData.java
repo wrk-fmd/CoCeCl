@@ -1,7 +1,10 @@
 package it.fmd.cocecl.dataStorage;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ListAdapter;
+import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -17,10 +20,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.fmd.cocecl.APPConstants;
+import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
 import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
 
 public class GetData extends AsyncTask<String, String, String> {
+/*
+    private Context context;
+
+public GetData(Context context){
+        this.context=context;
+    }
+*/
 
     HttpURLConnection urlConnection;
 
@@ -178,7 +189,7 @@ public class GetData extends AsyncTask<String, String, String> {
     private static final String TAG_ASSUNIT_ARRAY = "assunits";
 
 
-    private ArrayList<HashMap<String, String>> ParseJSON(String result) {
+    public ArrayList<HashMap<String, String>> ParseJSON(String result) {
 
         if (result != null) {
 
@@ -206,9 +217,10 @@ public class GetData extends AsyncTask<String, String, String> {
                     assunits.put(TAG_ASSUNIT_NAME, assunitname);
                     assunits.put(TAG_ASSUNIT_STATUS, assstatus);
 
-                    AssignedUnits.getInstance().setAunit(assunitname);
-                    AssignedUnits.getInstance().setStatusaunit(assstatus);
+                    //AssignedUnits.getInstance().setAunit(assunitname);
+                    //AssignedUnits.getInstance().setStatusaunit(assstatus);
 
+                    AssignedUnits.getInstance().setAssunits(assunits);
                     // adding unit to units list
                     assunitList.add(assunits);
 

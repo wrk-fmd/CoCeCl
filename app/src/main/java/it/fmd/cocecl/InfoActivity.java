@@ -30,7 +30,7 @@ public class InfoActivity extends MainActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_info3);
+        setContentView(R.layout.activity_info);
 
         loadambinf();
 

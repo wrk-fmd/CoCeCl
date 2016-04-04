@@ -10,10 +10,25 @@ import android.widget.TextView;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.TabletFeatures;
+import it.fmd.cocecl.dataStorage.PatData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
+import it.fmd.cocecl.patadminaction.CreatePat;
 
 public class deliverylocFragment extends Fragment {
 
+    String patplsnr;
+    String patfname;
+    String patlname;
+    String patbdate;
+    String patgender;
+    String patsvnr;
+    String patward;
+
+    TextView patplstv;
+    TextView patfnametv;
+    TextView patlnametv;
+    TextView patsvbdtv;
+    TextView patgendertv;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -25,23 +40,46 @@ public class deliverylocFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_deliveryloc, container, false);
 
+        //Pat Table View
+        patplstv = (TextView) v.findViewById(R.id.textView106);//PLS
+        patfnametv = (TextView) v.findViewById(R.id.textView177);//Nachname
+        patlnametv = (TextView) v.findViewById(R.id.textView178);//Vorname
+        patsvbdtv = (TextView) v.findViewById(R.id.textView179);//SVNR + Geb.Tag
+        patgendertv = (TextView) v.findViewById(R.id.textView180);//Gender
+
+
         final Button changepatbtn = (Button) v.findViewById(R.id.changepatbtn);
         Button navao = (Button) v.findViewById(R.id.button19);
 
         //Nav
         navao.setOnClickListener(new StartNavigation(getActivity()));
 
-        changepatbtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
+        changepatbtn.setOnClickListener(new CreatePat(getActivity()));
 
         TabletFeatures tf = new TabletFeatures(getActivity());
 
         //TODO NPE
         //tf.patman_enable();
 
+        setPatDatatoTV();
+
         return v;
+    }
+
+    public void setPatDatatoTV() {
+        patplsnr = PatData.getInstance().getPatplsnr();
+        patfname = PatData.getInstance().getPatfname();
+        patlname = PatData.getInstance().getPatname();
+        patbdate = PatData.getInstance().getPatbdate();
+        patgender = PatData.getInstance().getPatgender();
+        patsvnr = PatData.getInstance().getPatsvnr();
+        patward = PatData.getInstance().getPatward();
+
+
+        patplstv.setText(patplsnr);
+        patlnametv.setText(patlname);
+        patfnametv.setText(patfname);
+        patsvbdtv.setText(patsvnr + " - " + patbdate);
+        patgendertv.setText(patgender);
     }
 }

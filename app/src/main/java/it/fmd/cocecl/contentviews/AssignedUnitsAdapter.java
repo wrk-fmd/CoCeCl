@@ -8,6 +8,8 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import it.fmd.cocecl.R;
 
@@ -16,7 +18,11 @@ public class AssignedUnitsAdapter extends ArrayAdapter<AssignedUnits> {
     public AssignedUnitsAdapter(Context context, ArrayList<AssignedUnits> aunitses) {
 
         super(context, 0, aunitses);
+/*
+    public AssignedUnitsAdapter(Context context, ArrayList<AssignedUnits> aunitses) {
 
+        super(context, 0, aunitses);
+*/
     }
 
     // Constructor
@@ -57,5 +63,4 @@ public class AssignedUnitsAdapter extends ArrayAdapter<AssignedUnits> {
         return convertView;
 
     }
-
 }

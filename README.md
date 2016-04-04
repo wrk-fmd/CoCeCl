@@ -1,6 +1,6 @@
 # CoCeCl
 _Coordination Center Client_  
-current version: 0.1.14
+current version: 0.1.92
 
 Android App for CoCeSo - _Coordination Center Software_  
 
@@ -10,4 +10,4 @@ Phone & Tablet
 
 ### Screen sizes:  
 Phone normal-large  
-Tablet nornal-large-xlarge
+Tablet normal-large-xlarge

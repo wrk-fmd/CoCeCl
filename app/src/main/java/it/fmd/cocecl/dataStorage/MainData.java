@@ -9,15 +9,15 @@ public class MainData {
     public String amb;
     public String ambtype; // AMBULANZ, ÜBUNG, EINSATZ
 
+    public MainData() {
+
+    }
+
     public static MainData getInstance() {
         if (mInstance == null) {
             mInstance = new MainData();
         }
         return mInstance;
-    }
-
-    public MainData() {
-
     }
 
     public String getAmb() {

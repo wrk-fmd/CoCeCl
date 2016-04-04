@@ -284,7 +284,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="PLS Nr."
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="#000000" />
+                                android:textColor="#AB47BC" />
 
                             <TextView
                                 android:id="@+id/textView106"
@@ -304,7 +304,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Nachname"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="#000000" />
+                                android:textColor="#AB47BC" />
 
                             <TextView
                                 android:id="@+id/textView177"
@@ -324,7 +324,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Vorname"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="#000000" />
+                                android:textColor="#AB47BC" />
 
                             <TextView
                                 android:id="@+id/textView178"
@@ -344,7 +344,8 @@
                                 android:layout_height="wrap_content"
                                 android:text="SVNR.Geburtstag"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="#000000" />
+                                android:textColor="#AB47BC"
+                                android:layout_marginRight="10dp" />
 
                             <TextView
                                 android:id="@+id/textView179"
@@ -365,7 +366,7 @@
                                 android:layout_height="wrap_content"
                                 android:text="Gender"
                                 android:textAppearance="?android:attr/textAppearanceSmall"
-                                android:textColor="#000000" />
+                                android:textColor="#AB47BC" />
 
                             <TextView
                                 android:id="@+id/textView180"

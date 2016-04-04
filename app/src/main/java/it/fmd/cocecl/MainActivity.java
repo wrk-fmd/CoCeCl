@@ -280,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
 
         //ifEmergency();
 
-        GetData gd = new GetData(this);
+        GetData gd = new GetData();
         gd.execute();
     }
 
@@ -629,7 +629,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // SavedInstanceState
-
+/*
     @Override
     public void onSaveInstanceState(Bundle savedInstanceState) {
         super.onSaveInstanceState(savedInstanceState);
@@ -680,7 +680,7 @@ public class MainActivity extends AppCompatActivity {
         buttonAD.setEnabled(buttonADstate);
 
     }
-
+*/
     //TODO: create method to save app/fragment state
     /*
         @Override

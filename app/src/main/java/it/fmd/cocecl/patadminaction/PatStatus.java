@@ -68,7 +68,7 @@ public class PatStatus implements View.OnClickListener {
         //button41.setBackgroundResource(android.R.drawable.btn_default);
         button41.setText("Einsatz abschliessen");
         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-        textView83.setText("EB");
+        textView83.setText("ENDE");
 
         Button button46 = (Button) this.activity.findViewById(R.id.button13);
         button46.setEnabled(false);
@@ -105,7 +105,7 @@ public class PatStatus implements View.OnClickListener {
         //button41.setBackgroundResource(android.R.drawable.btn_default);
         button41.setText("Einsatz abschliessen");
         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-        textView83.setText("EB");
+        textView83.setText("ENDE");
 
         Button button46 = (Button) this.activity.findViewById(R.id.button13);
         button46.setEnabled(false);
@@ -142,7 +142,7 @@ public class PatStatus implements View.OnClickListener {
         //button41.setBackgroundResource(android.R.drawable.btn_default);
         button41.setText("Einsatz abschliessen");
         button41.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_play_arrow_black_18dp, 0, 0, 0);
-        textView83.setText("EB");
+        textView83.setText("ENDE");
 
         Button button46 = (Button) this.activity.findViewById(R.id.button46);
         button46.setEnabled(false);

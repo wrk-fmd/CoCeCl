@@ -26,10 +26,10 @@ public class StartNavigation implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        final TextView botext = (TextView) this.activity.findViewById(R.id.bofield);
-        final TextView aotext = (TextView) this.activity.findViewById(R.id.aofield);
+        final TextView botext = (TextView) activity.findViewById(R.id.bofield);
+        final TextView aotext = (TextView) activity.findViewById(R.id.aofield);
         //TODO create custom navigation address edittext
-        final TextView custom = (TextView) this.activity.findViewById(R.id.textView135); //Dummy TextView
+        final TextView custom = (TextView) activity.findViewById(R.id.textView135); //Dummy TextView
 
         //Get first address line for google maps navigation
 /*        Layout layout = botext.getLayout();
@@ -46,39 +46,39 @@ public class StartNavigation implements View.OnClickListener {
             case R.id.button18:
                 if (botext.getText().toString().trim().length() > 0) {
 
-                    String navadress = "google.navigation:" + botext.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    this.activity.startActivity(nav);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + botext.getText().toString());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    activity.startActivity(mapIntent);
 
                 } else {
-                    Toast.makeText(this.activity, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Kein Berufungsort eingetragen!", Toast.LENGTH_LONG).show();
                 }
                 break;
 
             case R.id.button19:
                 if (aotext.getText().toString().trim().length() > 0) {
 
-                    String navadress = "google.navigation:" + aotext.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    this.activity.startActivity(nav);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + aotext.getText().toString());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    activity.startActivity(mapIntent);
 
                 } else {
-                    Toast.makeText(this.activity, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Kein Abgabeort eingetragen!", Toast.LENGTH_LONG).show();
                 }
                 break;
 
             case R.id.button45: //commfragment, custom navigation
                 if (custom.getText().toString().trim().length() > 0) {
 
-                    String navadress = "google.navigation:" + custom.getText().toString();
-                    Intent nav = new Intent(android.content.Intent.ACTION_VIEW);
-                    nav.setData(Uri.parse(navadress));
-                    this.activity.startActivity(nav);
+                    Uri gmmIntentUri = Uri.parse("google.navigation:q=" + custom.getText().toString());
+                    Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                    mapIntent.setPackage("com.google.android.apps.maps");
+                    activity.startActivity(mapIntent);
 
                 } else {
-                    Toast.makeText(this.activity, "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(activity, "Kein POI ausgewählt!", Toast.LENGTH_LONG).show();
                 }
                 break;
         }

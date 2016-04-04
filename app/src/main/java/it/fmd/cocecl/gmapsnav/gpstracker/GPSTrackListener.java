@@ -73,11 +73,21 @@ public class GPSTrackListener extends Service {
     }
 
     @Override
-    @Deprecated
     public void onStart(Intent intent, int startId) {
         // TODO Auto-generated method stub
         super.onStart(intent, startId);
 
+        handleStart(intent, startId);
+
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        handleStart(intent, startId);
+        return START_NOT_STICKY;
+    }
+
+    void handleStart(Intent intent, int startId) {
         Log.e("Google", "Service Started");
 
         locationManager = (LocationManager) getApplicationContext()
@@ -95,7 +105,6 @@ public class GPSTrackListener extends Service {
         }
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER,
                 5000, 5, listener);
-
     }
 
     private LocationListener listener = new LocationListener() {
@@ -140,6 +149,7 @@ public class GPSTrackListener extends Service {
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
             tis.gpsdisabled();
+            stopService(new Intent(activity, GPSTrackListener.class));
 
         }
 
@@ -147,6 +157,7 @@ public class GPSTrackListener extends Service {
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
             tis.gpsenabled();
+            startService(new Intent(activity, GPSTrackListener.class));
 
         }
 

@@ -19,10 +19,15 @@ build.xml
 *.iml
 .idea
 
+.gradle
+
 # ignore database configuration
 coceso.properties
 ports.properties
 local.properties
+
+# ignore google services configuration
+google-services.json
 
 # ignore generated .class files
 *.class

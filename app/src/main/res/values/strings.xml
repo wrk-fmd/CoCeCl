@@ -33,7 +33,7 @@
 
     //App strings//
     <string name="app_name">CoCeCl</string>
-    <string name="app_fullname">Communication Center Client</string>
+    <string name="app_fullname">Coordination Center Client</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_patman">Patienten Manager</string>
     <string name="title_activity_login">CoCeCl LogIn</string>

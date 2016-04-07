@@ -20,6 +20,8 @@ import it.fmd.cocecl.gmapsnav.StAskOnLocChange;
 
 public class SetIncidentStatus implements View.OnClickListener {
 
+    IncidentData id = new IncidentData();
+
     public Activity activity;
 
     public SetIncidentStatus(Activity _activity) {
@@ -27,8 +29,8 @@ public class SetIncidentStatus implements View.OnClickListener {
         this.activity = _activity;
     }
 
-    final String status = IncidentData.getInstance().getIncistatus();
-    final String aoaddress = IncidentData.getInstance().getAoaddress();
+    final String status = id.getIncistatus();
+    final String aoaddress = id.getAoaddress();
 
     final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
     final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.GERMAN);
@@ -60,21 +62,21 @@ public class SetIncidentStatus implements View.OnClickListener {
                 if (statusView.getText().equals("") || statusView.getText().equals("EB")) {
 
                     qu();
-                    IncidentData.getInstance().setIncistatus("QU");
+                    id.setIncistatus("QU");
                     textView85.setText(sdf.format(cal.getTime()));
 
                     // ZBO
                 } else if (statusView.getText().equals("QU")) {
 
                     st3();
-                    IncidentData.getInstance().setIncistatus("ZBO");
+                    id.setIncistatus("ZBO");
                     textView85.setText(sdf.format(cal.getTime()));
 
                     // ABO
                 } else if (statusView.getText().equals("ZBO")) {
 
                     st4();
-                    IncidentData.getInstance().setIncistatus("ABO");
+                    id.setIncistatus("ABO");
                     textView85.setText(sdf.format(cal.getTime()));
 
                     //Set BO location coordiantes
@@ -87,14 +89,14 @@ public class SetIncidentStatus implements View.OnClickListener {
                     st7();
 
                     if (aoaddress != null) {
-                        IncidentData.getInstance().setIncistatus("ZAO");
+                        id.setIncistatus("ZAO");
                         textView85.setText(sdf.format(cal.getTime()));
                     }
                     // AAO
                 } else if (statusView.getText().equals("ZAO")) {
 
                     st8();
-                    IncidentData.getInstance().setIncistatus("AAO");
+                    id.setIncistatus("AAO");
                     textView85.setText(sdf.format(cal.getTime()));
 
                     // Einsatz abschliessen
@@ -108,7 +110,7 @@ public class SetIncidentStatus implements View.OnClickListener {
                 } else if (statusView.getText().equals("ENDE")) {
 
                     removeIncident();
-                    IncidentData.getInstance().setIncistatus("auto_detach");
+                    id.setIncistatus("auto_detach");
                 }
 
                 //Reset pressed button

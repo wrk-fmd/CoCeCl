@@ -11,6 +11,8 @@ import it.fmd.cocecl.dataStorage.UnitData;
 
 public class UnitInfoDialog {
 
+    UnitData ud = new UnitData();
+
     public Activity activity;
 
     public UnitInfoDialog(Activity _activity) {
@@ -27,12 +29,12 @@ public class UnitInfoDialog {
 
     public void unitinfo() {
 
-        String uname = UnitData.getInstance().getUnitname();
-        String unumber = UnitData.getInstance().getUnitnumber();
-        String uvplate = UnitData.getInstance().getVehicleplate();
+        String uname = ud.getUnitname();
+        String unumber = ud.getUnitnumber();
+        String uvplate = ud.getVehicleplate();
 
-        Boolean mdunit = UnitData.getInstance().getMdunit();
-        Boolean mobileunit = UnitData.getInstance().getMobileunit();
+        Boolean mdunit = ud.getMdunit();
+        Boolean mobileunit = ud.getMobileunit();
 
         // Create custom dialog object
         final Dialog dialog = new Dialog(activity);
@@ -48,11 +50,14 @@ public class UnitInfoDialog {
         unametv = (TextView) dialog.findViewById(R.id.textView99);
         unametv.setText(uname);
 
-        mobileunitcb = (CheckBox) dialog.findViewById(R.id.checkBox18);
-        mobileunitcb.setChecked(mobileunit);
-
-        mdunitcb = (CheckBox) dialog.findViewById(R.id.checkBox19);
-        mdunitcb.setChecked(mdunit);
+        if (mobileunit != null) {
+            mobileunitcb = (CheckBox) dialog.findViewById(R.id.checkBox18);
+            mobileunitcb.setChecked(mobileunit);
+        }
+        if (mdunit != null) {
+            mdunitcb = (CheckBox) dialog.findViewById(R.id.checkBox19);
+            mdunitcb.setChecked(mdunit);
+        }
 
         fkenntv = (TextView) dialog.findViewById(R.id.textView102);
         fkenntv.setText(unumber);

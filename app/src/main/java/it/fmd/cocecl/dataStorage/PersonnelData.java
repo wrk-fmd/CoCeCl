@@ -1,24 +1,22 @@
 package it.fmd.cocecl.dataStorage;
 
+import java.io.Serializable;
+
 /**
  * Get personnel from DB, write into UnitInfo Screen
+ * LogIn Request
  */
 
-public class PersonnelData {
-
-    private static PersonnelData mInstance = null;
+public class PersonnelData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     String MAName;
     String MAFamilyname;
     String MADnr;
     String MAEmail;
 
-    public static PersonnelData getInstance() {
-        if (mInstance == null) {
-            mInstance = new PersonnelData();
-        }
-        return mInstance;
-    }
+    String MAPassword;
+    String gcmID;
 
     public String getMAFamilyname() {
         return MAFamilyname;
@@ -50,5 +48,21 @@ public class PersonnelData {
 
     public void setMAEmail(String MAEmail) {
         this.MAEmail = MAEmail;
+    }
+
+    public String getMAPassword() {
+        return MAPassword;
+    }
+
+    public void setMAPassword(String MAPassword) {
+        this.MAPassword = MAPassword;
+    }
+
+    public String getGcmID() {
+        return gcmID;
+    }
+
+    public void setGcmID(String gcmID) {
+        this.gcmID = gcmID;
     }
 }

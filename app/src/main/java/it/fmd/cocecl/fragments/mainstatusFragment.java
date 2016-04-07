@@ -31,6 +31,11 @@ public class mainstatusFragment extends Fragment {
 
     IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(getActivity());
 
+    IncidentData id = new IncidentData();
+    MainData md = new MainData();
+    UnitStatus us = new UnitStatus();
+    UnitData ud = new UnitData();
+
     TextView countlv;
     ArrayList<Incidents> arrayOfIncidentses;
 
@@ -97,10 +102,11 @@ public class mainstatusFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
+        /*
         setIncidentLVData();
-
         setUnitstatus();
         setAmbInfo();
+        */
     }
 
     public void setIncidentLVData() {
@@ -122,10 +128,10 @@ public class mainstatusFragment extends Fragment {
 
         // Add item to adapter
         // TEST DATA - later from server JSON, stored in shared prefs
-        final String bggrund = IncidentData.getInstance().getBogrund();
-        final String boaddress = IncidentData.getInstance().getBoaddress();
-        String info = IncidentData.getInstance().getBoinfo();
-        String incistatus = IncidentData.getInstance().getIncistatus();
+        final String bggrund = id.getBogrund();
+        final String boaddress = id.getBoaddress();
+        String info = id.getBoinfo();
+        String incistatus = id.getIncistatus();
 
         // Berufungsgrund, Info, Adresse, Status
         Incidents newIncidents = new Incidents(bggrund, info, boaddress, incistatus);
@@ -186,7 +192,7 @@ public class mainstatusFragment extends Fragment {
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
 
-        setUnitstatus();
+        //setUnitstatus();
     }
 
     @Override
@@ -203,8 +209,8 @@ public class mainstatusFragment extends Fragment {
 
         SetUnitStatus sus = new SetUnitStatus(getActivity());
 
-        String ustatus = UnitStatus.getInstance().getUstatus();
-        String ustaddition = UnitStatus.getInstance().getUstaddition();
+        String ustatus = us.getUstatus();
+        String ustaddition = us.getUstaddition();
 
         if (ustatus.equals("EB")) {
             sus.ebst();
@@ -229,10 +235,10 @@ public class mainstatusFragment extends Fragment {
 
     public void setAmbInfo() {
 
-        String unit = UnitData.getInstance().getUnitname();
+        String unit = ud.getUnitname();
 
-        String ambname = MainData.getInstance().getAmb();
-        String ambtype = MainData.getInstance().getAmbtype();
+        String ambname = md.getAmb();
+        String ambtype = md.getAmbtype();
 
         unitnametv.setText(unit);
 

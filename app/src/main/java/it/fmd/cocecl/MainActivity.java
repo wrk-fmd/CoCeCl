@@ -2,7 +2,6 @@ package it.fmd.cocecl;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
@@ -35,7 +34,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONException;
@@ -46,7 +44,6 @@ import java.util.HashMap;
 
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
-import it.fmd.cocecl.dataStorage.GetData;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.fragments.mapFragment;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
@@ -86,6 +83,8 @@ public class MainActivity extends AppCompatActivity {
     public CheckPlayServices cps = new CheckPlayServices();
 
     IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(this);
+
+    IncidentData idata = new IncidentData();
 
     private CoordinatorLayout coordinatorLayout;
 
@@ -279,9 +278,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //ifEmergency();
-
-        GetData gd = new GetData();
-        gd.execute();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
@@ -713,7 +709,7 @@ public class MainActivity extends AppCompatActivity {
     */
 
     public void ifEmergency() {
-        if (IncidentData.getInstance().getEmergency() && IncidentData.getInstance().getEmergency() != null) {
+        if (idata.getEmergency() && idata.getEmergency() != null) {
             itts.tasktypeemergencytabcolor();
         }
     }

@@ -29,7 +29,21 @@ public class APPConstants {
 
     //MLS URL
     public static final String MLS_DOMAIN = "8.8.8.8";
+    public static final String MLS_CONFIG = "8.8.8.8/config";
+    public static final String MLS_INFO = "8.8.8.8/config";
+
+    //COCESO API
     public static final String COCESO_API = "http://10.0.2.2/jsonapi/full.json";
+
+    //get Incidents
+    public static final String INCIDENT_API = "";
+    //get event
+    public static final String EVENT_API = "";
+    //get units
+    public static final String UNIT_API = "";
+    //get user
+    public static final String USER_API = "";
+
     //Configuration file link
     public static final String cocecl_config = "";
     //Info HTML

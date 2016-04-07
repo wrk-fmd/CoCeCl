@@ -16,6 +16,8 @@ import it.fmd.cocecl.patadminaction.CreatePat;
 
 public class deliverylocFragment extends Fragment {
 
+    PatData pd = new PatData();
+
     String patplsnr;
     String patfname;
     String patlname;
@@ -67,13 +69,13 @@ public class deliverylocFragment extends Fragment {
     }
 
     public void setPatDatatoTV() {
-        patplsnr = PatData.getInstance().getPatplsnr();
-        patfname = PatData.getInstance().getPatfname();
-        patlname = PatData.getInstance().getPatname();
-        patbdate = PatData.getInstance().getPatbdate();
-        patgender = PatData.getInstance().getPatgender();
-        patsvnr = PatData.getInstance().getPatsvnr();
-        patward = PatData.getInstance().getPatward();
+        patplsnr = pd.getPatplsnr();
+        patfname = pd.getPatfname();
+        patlname = pd.getPatname();
+        patbdate = pd.getPatbdate();
+        patgender = pd.getPatgender();
+        patsvnr = pd.getPatsvnr();
+        patward = pd.getPatward();
 
 
         patplstv.setText(patplsnr);

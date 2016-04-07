@@ -1,6 +1,9 @@
 package it.fmd.cocecl.dataStorage;
 
-import android.app.Application;
+import java.io.Serializable;
+
+import it.fmd.cocecl.dataStorage.incidentaddition.IncidentState;
+import it.fmd.cocecl.dataStorage.incidentaddition.IncidentType;
 
 /**
  * Incident Information
@@ -15,47 +18,49 @@ import android.app.Application;
  * TNummer: Transportnummer
  */
 
-public class IncidentData {
+public class IncidentData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    private static IncidentData mInstance = null;
+    private int id;
+    private IncidentState incidentState;
+    private IncidentType type;
 
     // HEADER
     //Auftrag, Abtransport, Standortwechsel, Transfer
-    public String tasktype;
+    private String tasktype;
     //Emergency
-    public Boolean emergency;
+    private Boolean emergency;
     //PriorityTask
-    public String priority;
+    private Integer priority;
 
     // BODY
     //Adress
-    public String boaddress;
-    public String bogrund;
-    public String boinfo;
-    public String caller;
+    private String boaddress;
+    private String bogrund;
+    private String boinfo;
+    private String caller;
 
     // FOOTER
     //AO
-    public String aoaddress;
-    public String tnumber;
+    private String aoaddress;
+    private String tnumber;
 
     //STATUS
-    public String incistatus;
+    private String incistatus; // QU(ASSIGNED), ZBO, ABO, ZAO, AAO, END(AUTO_DETACH)
 
-    /*
-        public IncidentData(String tasktype, String emergency, String priority, String boaddress, String bogrund, String boinfo, String caller, String aoaddress, String tnumber) {
+/*
+    public IncidentData(String tasktype, Boolean emergency, String priority, String boaddress, String bogrund, String boinfo, String caller, String aoaddress, String tnumber) {
 
-            this.tasktype = tasktype;
-            this.emergency = emergency;
-            this.priority = priority;
-            this.boaddress = boaddress;
-            this.bogrund = bogrund;
-            this.boinfo = boinfo;
-            this.caller = caller;
-            this.aoaddress = aoaddress;
-            this.tnumber = tnumber;
-        }
-    */
+        this.tasktype = tasktype;
+        this.emergency = emergency;
+        this.priority = priority;
+        this.boaddress = boaddress;
+        this.bogrund = bogrund;
+        this.boinfo = boinfo;
+        this.caller = caller;
+        this.aoaddress = aoaddress;
+        this.tnumber = tnumber;
+    }
 
     public IncidentData() {
 
@@ -69,13 +74,21 @@ public class IncidentData {
         this.aoaddress = aoaddress;
         this.tnumber = tnumber;
     }
+*/
 
-    public static IncidentData getInstance() {
-        if (mInstance == null) {
-            mInstance = new IncidentData();
-        }
-        return mInstance;
+    public IncidentData() {
+        super();
     }
+
+    private IncidentData(final int id) {
+        super();
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
 
     public String getTasktype() {
         return tasktype;
@@ -133,11 +146,11 @@ public class IncidentData {
         this.caller = caller;
     }
 
-    public String getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(final Integer priority) {
         this.priority = priority;
     }
 
@@ -156,6 +169,26 @@ public class IncidentData {
 
     public void setIncistatus(String incistatus) {
         this.incistatus = incistatus;
+    }
+
+    public IncidentState getIncidentState() {
+        return incidentState;
+    }
+
+    public void setIncidentState(final IncidentState incidentState) {
+        this.incidentState = incidentState;
+    }
+
+    public IncidentType getType() {
+        return type;
+    }
+
+    public void setType(final IncidentType type) {
+        this.type = type;
+    }
+
+    public static IncidentData create(final int id) {
+        return new IncidentData(id);
     }
 
 }

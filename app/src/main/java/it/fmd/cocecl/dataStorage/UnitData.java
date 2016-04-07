@@ -1,17 +1,11 @@
 package it.fmd.cocecl.dataStorage;
 
-public class UnitData {
+import java.io.Serializable;
 
-    private static UnitData mInstance = null;
+public class UnitData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
-    public static UnitData getInstance() {
-        if (mInstance == null) {
-            mInstance = new UnitData();
-        }
-        return mInstance;
-    }
-
-    String unitID;
+    int unitID;
 
     String unitname;
     String unameshort;
@@ -25,11 +19,11 @@ public class UnitData {
     Boolean mdunit;
     Boolean mobileunit;
 
-    public String getUnitID() {
+    public int getUnitID() {
         return unitID;
     }
 
-    public void setUnitID(String unitID) {
+    public void setUnitID(int unitID) {
         this.unitID = unitID;
     }
 

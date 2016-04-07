@@ -17,6 +17,8 @@ import it.fmd.cocecl.dataStorage.PatData;
 
 public class CreatePat implements View.OnClickListener {
 
+    PatData pd = new PatData();
+
     public Activity activity;
 
     public CreatePat(Activity _activity) {
@@ -96,21 +98,21 @@ public class CreatePat implements View.OnClickListener {
 
 
                 if (!patplsnr.isEmpty())
-                    PatData.getInstance().setPatplsnr(patplsnr);
+                    pd.setPatplsnr(patplsnr);
 
                 if (!patlastname.isEmpty())
-                    PatData.getInstance().setPatfname(patlastname);
+                    pd.setPatfname(patlastname);
                 if (!patfirstname.isEmpty())
-                    PatData.getInstance().setPatname(patfirstname);
+                    pd.setPatname(patfirstname);
                 if (!patdatebirth.isEmpty())
-                    PatData.getInstance().setPatbdate(patdatebirth);
+                    pd.setPatbdate(patdatebirth);
                 if (!patsvnr.isEmpty())
-                    PatData.getInstance().setPatsvnr(patsvnr);
+                    pd.setPatsvnr(patsvnr);
                 if (!patgender.isEmpty())
-                    PatData.getInstance().setPatgender(patgender);
+                    pd.setPatgender(patgender);
 
                 if (!patward.isEmpty())
-                    PatData.getInstance().setPatward(patward);
+                    pd.setPatward(patward);
 
                 //TODO: send data
 
@@ -144,21 +146,21 @@ public class CreatePat implements View.OnClickListener {
 
 
                         if (!patplsnr.isEmpty())
-                            PatData.getInstance().setPatplsnr(patplsnr);
+                            pd.setPatplsnr(patplsnr);
 
                         if (!patlastname.isEmpty())
-                            PatData.getInstance().setPatfname(patlastname);
+                            pd.setPatfname(patlastname);
                         if (!patfirstname.isEmpty())
-                            PatData.getInstance().setPatname(patfirstname);
+                            pd.setPatname(patfirstname);
                         if (!patdatebirth.isEmpty())
-                            PatData.getInstance().setPatbdate(patdatebirth);
+                            pd.setPatbdate(patdatebirth);
                         if (!patsvnr.isEmpty())
-                            PatData.getInstance().setPatsvnr(patsvnr);
+                            pd.setPatsvnr(patsvnr);
                         if (!patgender.isEmpty())
-                            PatData.getInstance().setPatgender(patgender);
+                            pd.setPatgender(patgender);
 
                         if (!patward.isEmpty())
-                            PatData.getInstance().setPatward(patward);
+                            pd.setPatward(patward);
 
                         button46.setEnabled(true);
                         button46.setClickable(true);
@@ -226,13 +228,13 @@ public class CreatePat implements View.OnClickListener {
         textView11.setVisibility(View.GONE);
 
         // Get Patient
-        patplsnr = PatData.getInstance().getPatplsnr();
-        patlastname = PatData.getInstance().getPatfname();
-        patfirstname = PatData.getInstance().getPatname();
-        patdatebirth = PatData.getInstance().getPatbdate();
-        patsvnr = PatData.getInstance().getPatsvnr();
-        patgender = PatData.getInstance().getPatgender();
-        patward = PatData.getInstance().getPatward();
+        patplsnr = pd.getPatplsnr();
+        patlastname = pd.getPatfname();
+        patfirstname = pd.getPatname();
+        patdatebirth = pd.getPatbdate();
+        patsvnr = pd.getPatsvnr();
+        patgender = pd.getPatgender();
+        patward = pd.getPatward();
 
         addpatplsnr.setText(patplsnr);
         addpatlastname.setText(patlastname);

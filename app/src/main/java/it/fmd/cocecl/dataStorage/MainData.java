@@ -1,23 +1,16 @@
 package it.fmd.cocecl.dataStorage;
 
 
-public class MainData {
+import java.io.Serializable;
 
-    private static MainData mInstance = null;
-
+public class MainData implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public String amb;
     public String ambtype; // AMBULANZ, ÜBUNG, EINSATZ
 
     public MainData() {
 
-    }
-
-    public static MainData getInstance() {
-        if (mInstance == null) {
-            mInstance = new MainData();
-        }
-        return mInstance;
     }
 
     public String getAmb() {

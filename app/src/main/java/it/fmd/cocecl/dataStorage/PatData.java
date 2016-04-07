@@ -1,8 +1,8 @@
 package it.fmd.cocecl.dataStorage;
 
-public class PatData {
+import java.io.Serializable;
 
-    private static PatData mInstance = null;
+public class PatData implements Serializable {
 
     String patID;
     String patplsnr;
@@ -17,13 +17,6 @@ public class PatData {
     String patdiagnosis;
 
     public PatData() {
-    }
-
-    public static PatData getInstance() {
-        if (mInstance == null) {
-            mInstance = new PatData();
-        }
-        return mInstance;
     }
 
     public String getPatID() {

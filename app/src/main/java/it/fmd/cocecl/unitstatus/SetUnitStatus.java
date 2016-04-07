@@ -25,6 +25,8 @@ import it.fmd.cocecl.dataStorage.UnitStatus;
 
 public class SetUnitStatus implements View.OnClickListener {
 
+    UnitStatus us = new UnitStatus();
+
     public Activity activity;
 
     public SetUnitStatus(Activity _activity) {
@@ -63,31 +65,31 @@ public class SetUnitStatus implements View.OnClickListener {
     //Store in UnitStatus
 
     public void EBstoreStatus() {
-        UnitStatus.getInstance().setUstatus("EB");
+        us.setUstatus("EB");
     }
 
     public void NEBstoreStatus() {
-        UnitStatus.getInstance().setUstatus("NEB");
+        us.setUstatus("NEB");
     }
 
     public void ADstoreStatus() {
-        UnitStatus.getInstance().setUstatus("AD");
+        us.setUstatus("AD");
     }
 
     public void RefuelInfoStore() {
-        UnitStatus.getInstance().setUstaddition("Tanken");
+        us.setUstaddition("Tanken");
     }
 
     public void GetMatInfoStore() {
-        UnitStatus.getInstance().setUstaddition("Material nachfassen");
+        us.setUstaddition("Material nachfassen");
     }
 
     public void BreakInfoStore() {
-        UnitStatus.getInstance().setUstaddition("Bereitschaft");
+        us.setUstaddition("Bereitschaft");
     }
 
     public void OtherInfoStore() {
-        UnitStatus.getInstance().setUstaddition("anderer Grund");
+        us.setUstaddition("anderer Grund");
     }
 
     //Radio

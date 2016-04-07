@@ -23,6 +23,8 @@ import static android.graphics.Color.BLUE;
 
 public class IncidentTaskTypeSetting {
 
+    IncidentData id = new IncidentData();
+
     public Activity activity;
 
     public IncidentTaskTypeSetting(Activity _activity) {
@@ -43,7 +45,7 @@ public class IncidentTaskTypeSetting {
 
     public void tasktypeCardcolor() {
 
-        String tasktype = IncidentData.getInstance().getTasktype();
+        String tasktype = id.getTasktype();
 
         CardView estatcard = (CardView) activity.findViewById(R.id.estatcard);
 

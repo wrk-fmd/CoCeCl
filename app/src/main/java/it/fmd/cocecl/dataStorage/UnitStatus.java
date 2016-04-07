@@ -1,28 +1,21 @@
 package it.fmd.cocecl.dataStorage;
 
-public class UnitStatus {
+import java.io.Serializable;
 
-    private static UnitStatus mInstance = null;
-
-    public static UnitStatus getInstance() {
-        if (mInstance == null) {
-            mInstance = new UnitStatus();
-        }
-        return mInstance;
-    }
+public class UnitStatus implements Serializable {
+    private static final long serialVersionUID = 1L;
 
     public String ustatus; // EB, NEB, AD
 
     public String ustaddition; // Tanken, Material, Bereitschaft, NEB (andere)
-
     /*
-        public UnitStatus(String ustatus, String ustaddition) {
+    public UnitStatus(String ustatus, String ustaddition) {
 
-            this.ustatus = ustatus;
+        this.ustatus = ustatus;
 
-            this.ustaddition = ustaddition;
-        }
-    */
+        this.ustaddition = ustaddition;
+    }
+*/
     public String getUstaddition() {
         return ustaddition;
     }

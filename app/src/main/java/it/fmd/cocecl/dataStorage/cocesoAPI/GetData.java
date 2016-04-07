@@ -1,10 +1,7 @@
-package it.fmd.cocecl.dataStorage;
+package it.fmd.cocecl.dataStorage.cocesoAPI;
 
-import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.ListAdapter;
-import android.widget.SimpleAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -20,9 +17,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.fmd.cocecl.APPConstants;
-import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
-import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
+import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.MainData;
+import it.fmd.cocecl.dataStorage.PersonnelData;
+import it.fmd.cocecl.dataStorage.UnitData;
+import it.fmd.cocecl.dataStorage.UnitStatus;
 
 public class GetData extends AsyncTask<String, String, String> {
 /*
@@ -32,6 +32,12 @@ public GetData(Context context){
         this.context=context;
     }
 */
+
+    MainData md = new MainData();
+    IncidentData id = new IncidentData();
+    UnitData ud = new UnitData();
+    UnitStatus us = new UnitStatus();
+    PersonnelData pd = new PersonnelData();
 
     HttpURLConnection urlConnection;
 
@@ -97,12 +103,13 @@ public GetData(Context context){
                 data += "Node"+i+" : \n id= "+ id +" \n Name= "+ name +" \n Salary= "+ salary +" \n ";
             }
 */
-            IncidentData.getInstance().setTasktype(tasktype);
-            IncidentData.getInstance().setBogrund(bogrund);
-            IncidentData.getInstance().setBoaddress(bo);
-            IncidentData.getInstance().setBoinfo(boinfo);
-            IncidentData.getInstance().setCaller(caller);
-            IncidentData.getInstance().setEmergency(emergency);
+
+            id.setTasktype(tasktype);
+            id.setBogrund(bogrund);
+            id.setBoaddress(bo);
+            id.setBoinfo(boinfo);
+            id.setCaller(caller);
+            id.setEmergency(emergency);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -114,8 +121,8 @@ public GetData(Context context){
             String amb = jsonO.optString("amb");
             String ambtype = jsonO.optString("ambtype");
 
-            MainData.getInstance().setAmb(amb);
-            MainData.getInstance().setAmbtype(ambtype);
+            md.setAmb(amb);
+            md.setAmbtype(ambtype);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -131,12 +138,12 @@ public GetData(Context context){
             Boolean mdunitc = jsonO.optBoolean("mdunit");
             Boolean mobileunitc = jsonO.optBoolean("mobileunit");
 
-            UnitData.getInstance().setUnitname(unitnames);
-            UnitData.getInstance().setVehicleplate(unitkennz);
-            UnitData.getInstance().setUnitnumber(unitfkenn);
+            ud.setUnitname(unitnames);
+            ud.setVehicleplate(unitkennz);
+            ud.setUnitnumber(unitfkenn);
 
-            UnitData.getInstance().setMdunit(mdunitc);
-            UnitData.getInstance().setMobileunit(mobileunitc);
+            ud.setMdunit(mdunitc);
+            ud.setMobileunit(mobileunitc);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -148,8 +155,8 @@ public GetData(Context context){
             String ustatus = jsonO.optString("ustatus");
             String ustaddition = jsonO.optString("ustaddition");
 
-            UnitStatus.getInstance().setUstatus(ustatus);
-            UnitStatus.getInstance().setUstaddition(ustaddition);
+            us.setUstatus(ustatus);
+            us.setUstaddition(ustaddition);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -160,7 +167,7 @@ public GetData(Context context){
 
             String incistatus = jsonO.optString("incistatus");
 
-            IncidentData.getInstance().setIncistatus(incistatus);
+            id.setIncistatus(incistatus);
 
         } catch (JSONException e) {
             e.printStackTrace();
@@ -173,14 +180,15 @@ public GetData(Context context){
             String mafname = jsonO.optString("userfname");
             String masname = jsonO.optString("usersname");
 
-            PersonnelData.getInstance().setMADnr(madnr);
-            PersonnelData.getInstance().setMAFamilyname(mafname);
-            PersonnelData.getInstance().setMAName(masname);
+            pd.setMADnr(madnr);
+            pd.setMAFamilyname(mafname);
+            pd.setMAName(masname);
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
 
     // Get JSON Arrays
 

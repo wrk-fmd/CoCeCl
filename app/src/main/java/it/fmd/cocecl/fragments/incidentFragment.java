@@ -14,15 +14,12 @@ import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
-import it.fmd.cocecl.contentviews.AssignedUnitsAdapter;
 import it.fmd.cocecl.contentviews.GridViewUtil;
 import it.fmd.cocecl.contentviews.MyTestAdapter;
-import it.fmd.cocecl.dataStorage.GetData;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.dataStorage.PatData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
@@ -31,6 +28,9 @@ import it.fmd.cocecl.patadminaction.PatStatus;
 import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 
 public class incidentFragment extends Fragment {
+
+    IncidentData id = new IncidentData();
+    PatData pd = new PatData();
 
     Activity activity;
 
@@ -94,21 +94,20 @@ public class incidentFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         // TODO Auto-generated method stub
-
+/*
         setUnitsGVData();
-
         setIncidentData();
-
         checkPat();
+        */
     }
 
     @Override
     public void onViewStateRestored(Bundle savedInstanceState) {
         super.onViewStateRestored(savedInstanceState);
-
+/*
         setIncidentData();
-
         checkPat();
+        */
     }
 
     @Override
@@ -123,14 +122,14 @@ public class incidentFragment extends Fragment {
 
         SetIncidentStatus sis = new SetIncidentStatus(getActivity());
 
-        String stboaddress = IncidentData.getInstance().getBoaddress();
-        String stinfo = IncidentData.getInstance().getBoinfo();
-        String sttasktype = IncidentData.getInstance().getTasktype();
-        String stbgrund = IncidentData.getInstance().getBogrund();
-        String stcaller = IncidentData.getInstance().getCaller();
-        Boolean stemergency = IncidentData.getInstance().getEmergency();
+        String stboaddress = id.getBoaddress();
+        String stinfo = id.getBoinfo();
+        String sttasktype = id.getTasktype();
+        String stbgrund = id.getBogrund();
+        String stcaller = id.getCaller();
+        Boolean stemergency = id.getEmergency();
 
-        String incistatus = IncidentData.getInstance().getIncistatus();
+        String incistatus = id.getIncistatus();
 
         tasktype.setText(sttasktype);
         bgrund.setText(stbgrund);
@@ -177,7 +176,7 @@ public class incidentFragment extends Fragment {
 
         final LinearLayout patmanbtnlinlay = (LinearLayout) activity.findViewById(R.id.patmanbtnlinlay);
 
-        String patID = PatData.getInstance().getPatID();
+        String patID = pd.getPatID();
 
         if (patID != null) {
             createpatbtn.setPressed(true);

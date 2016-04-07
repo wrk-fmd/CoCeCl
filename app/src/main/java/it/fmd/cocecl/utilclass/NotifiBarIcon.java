@@ -21,7 +21,6 @@ public class NotifiBarIcon {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity)
                 .setSmallIcon(R.mipmap.coceclstbar)
                 .setContentTitle("CoCeCl")
-                        //TODO get current incident
                 .setContentText("keine Einsatz")
                 .setOngoing(true);
 

@@ -9,6 +9,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
+import it.fmd.cocecl.dataStorage.cocesoAPI.GetData;
 import it.fmd.cocecl.dataStorage.MainData;
 import it.fmd.cocecl.dataStorage.PersonnelData;
 import it.fmd.cocecl.dataStorage.UnitData;
@@ -17,6 +18,10 @@ import it.fmd.cocecl.utilclass.SessionManagement;
 
 //START PAGE after LogIn//
 public class InfoActivity extends MainActivity {
+
+    MainData md = new MainData();
+    UnitData ud = new UnitData();
+    PersonnelData pd = new PersonnelData();
 
     private TextView ambname;
     private TextView unitname;
@@ -75,9 +80,13 @@ public class InfoActivity extends MainActivity {
             //start.setClickable(false);
         }
 
+        GetData gd = new GetData();
+        gd.execute();
+/*
         loadamb();
         loaduser();
         loadunit();
+*/
     }
 
     public void acbtnClick() {
@@ -141,19 +150,19 @@ public class InfoActivity extends MainActivity {
     public void loadamb() {
         TextView ambtv = (TextView) findViewById(R.id.textView2);
 
-        ambtv.setText(MainData.getInstance().getAmb());
+        ambtv.setText(md.getAmb());
     }
 
     public void loaduser() {
         TextView user = (TextView) findViewById(R.id.textView5);
 
-        user.setText(PersonnelData.getInstance().getMADnr());
+        user.setText(pd.getMADnr());
     }
 
     public void loadunit() {
         TextView unit = (TextView) findViewById(R.id.textView3);
 
-        unit.setText(UnitData.getInstance().getUnitname());
+        unit.setText(ud.getUnitname());
     }
 }
 

@@ -59,7 +59,7 @@
                     android:layout_marginTop="10dp"
                     android:background="@drawable/edittext_style_login"
                     android:gravity="center"
-                    android:hint="Dienstnummer"
+                    android:hint="@string/dnr"
                     android:inputType="number"
                     android:maxLines="1"
                     android:singleLine="true"
@@ -101,7 +101,6 @@
                 android:layout_alignParentStart="true"
                 android:layout_below="@+id/input_layout_password"
                 android:layout_marginBottom="10dp"
-                android:onClick="signin"
                 android:text="Sign In"
                 android:textStyle="bold"
                 android:enabled="false" />
@@ -129,7 +128,7 @@
             android:layout_below="@+id/linearLayout20"
             android:clickable="true"
             android:enabled="true"
-            android:text="Register" />
+            android:text="@string/action_register" />
 
     </RelativeLayout>
 </android.support.design.widget.CoordinatorLayout>

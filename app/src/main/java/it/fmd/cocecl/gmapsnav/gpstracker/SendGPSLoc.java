@@ -1,14 +1,5 @@
 package it.fmd.cocecl.gmapsnav.gpstracker;
 
-import android.os.AsyncTask;
-import android.util.Log;
-
-import com.google.api.client.http.HttpResponse;
-
-import org.apache.http.params.HttpParams;
-
-import java.io.IOException;
-
 /**
  * Created by schneider on 27.03.16.
  */

@@ -121,6 +121,7 @@ public class JSONParser {
 
         conn.disconnect();
 
+        // TODO null check on result => on timeout null is returned
         // try parse the string to a JSON object
         try {
             jObj = new JSONObject(result.toString());

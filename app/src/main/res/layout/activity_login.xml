@@ -43,7 +43,7 @@
                 android:layout_marginTop="10dp"
                 android:background="@drawable/edittext_style_login"
                 android:gravity="center"
-                android:hint="Dienstnummer"
+                android:hint="@string/dnr"
                 android:inputType="number"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -86,8 +86,7 @@
             android:layout_below="@+id/input_layout_password"
             android:layout_marginBottom="10dp"
             android:enabled="false"
-            android:onClick="signin"
-            android:text="Sign In"
+            android:text="@string/action_sign_in_short"
             android:textStyle="bold" />
 
         <Button
@@ -99,7 +98,7 @@
             android:layout_below="@+id/signinbtn"
             android:clickable="true"
             android:enabled="true"
-            android:text="Register" />
+            android:text="@string/action_register" />
 
         <ProgressBar
             android:id="@+id/progressBar"

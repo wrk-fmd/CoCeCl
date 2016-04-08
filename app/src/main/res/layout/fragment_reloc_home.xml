@@ -139,8 +139,7 @@
                         android:layout_gravity="center"
                         android:clickable="true"
                         android:enabled="true"
-                        android:hint="status weiterschalten"
-                        android:onClick="stbtnClick" />
+                        android:hint="status weiterschalten" />
 
                 </LinearLayout>
             </android.support.v7.widget.CardView>

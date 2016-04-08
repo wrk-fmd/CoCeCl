@@ -3,7 +3,7 @@ package it.fmd.cocecl.utilclass;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.text.ParseException;
@@ -71,6 +71,7 @@ public class DialogPTCAInfo {
             if (x.after(calendar1.getTime()) && x.before(calendar2.getTime())) {
                 //check whether the current time is between 08:00:00 and 16:00:00
                 System.out.println(true);
+                return true;
             }
         } catch (ParseException e) {
             e.printStackTrace();
@@ -91,6 +92,7 @@ public class DialogPTCAInfo {
                 khtv1.setText("AKH");
                 khsttv1.setText("6D");
                 phnbr1.setText(akhphone);
+                break;
 
             case Calendar.MONDAY:
                 daytv1.setText("MO");
@@ -98,11 +100,13 @@ public class DialogPTCAInfo {
                 khsttv1.setText("12A");
                 phnbr1.setText("+43 1 71165 - 92290");
 
-                if (checkTime())
+                if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
-                khtv2.setText("AKH");
-                khsttv2.setText("6D");
-                phnbr2.setText(akhphone);
+                    khtv2.setText("AKH");
+                    khsttv2.setText("6D");
+                    phnbr2.setText(akhphone);
+                }
+                break;
 
             case Calendar.TUESDAY:
                 daytv1.setText("DI");
@@ -110,11 +114,13 @@ public class DialogPTCAInfo {
                 khsttv1.setText("Pav.3, 3.Stock");
                 phnbr1.setText("+43 1 28802 - 743199");
 
-                if (checkTime())
+                if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
-                khtv2.setText("AKH");
-                khsttv2.setText("6D");
-                phnbr2.setText(akhphone);
+                    khtv2.setText("AKH");
+                    khsttv2.setText("6D");
+                    phnbr2.setText(akhphone);
+                }
+                break;
 
             case Calendar.WEDNESDAY:
                 daytv1.setText("MI");
@@ -122,11 +128,13 @@ public class DialogPTCAInfo {
                 khsttv1.setText("Pav.8, 4.Stock");
                 phnbr1.setText("+43 664 8445271");
 
-                if (checkTime())
+                if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
-                khtv2.setText("AKH");
-                khsttv2.setText("6D");
-                phnbr2.setText(akhphone);
+                    khtv2.setText("AKH");
+                    khsttv2.setText("6D");
+                    phnbr2.setText(akhphone);
+                }
+                break;
 
             case Calendar.THURSDAY:
                 daytv1.setText("DO");
@@ -134,11 +142,13 @@ public class DialogPTCAInfo {
                 khsttv1.setText("Pav.29, C Süd");
                 phnbr1.setText("+43 1 49150 - 2306");
 
-                if (checkTime())
+                if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
-                khtv2.setText("AKH");
-                khsttv2.setText("6D");
-                phnbr2.setText(akhphone);
+                    khtv2.setText("AKH");
+                    khsttv2.setText("6D");
+                    phnbr2.setText(akhphone);
+                }
+                break;
 
             case Calendar.FRIDAY:
                 daytv1.setText("FR");
@@ -146,36 +156,38 @@ public class DialogPTCAInfo {
                 khsttv1.setText("Pav.2, 2.Stock");
                 phnbr1.setText("+43 1 91021 - 85250");
 
-                if (checkTime())
+                if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
-                khtv2.setText("AKH");
-                khsttv2.setText("6D");
-                phnbr2.setText(akhphone);
+                    khtv2.setText("AKH");
+                    khsttv2.setText("6D");
+                    phnbr2.setText(akhphone);
+                }
+                break;
 
             case Calendar.SATURDAY:
                 daytv1.setText("SO");
                 khtv1.setText("AKH");
                 khsttv1.setText("6D");
                 phnbr1.setText(akhphone);
+                break;
         }
     }
 
-
     public void openPTCAPlan() {
 
-        RelativeLayout ptcaplan = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.ptca_plan_layout, null);
+        LinearLayout ptcaplan = (LinearLayout) activity.getLayoutInflater().inflate(R.layout.ptca_plan_layout, null);
 
         daytv1 = (TextView) ptcaplan.findViewById(R.id.textView192);
         daytv2 = (TextView) ptcaplan.findViewById(R.id.textView193);
 
         khtv1 = (TextView) ptcaplan.findViewById(R.id.textView194);
-        khtv1 = (TextView) ptcaplan.findViewById(R.id.textView195);
+        khtv2 = (TextView) ptcaplan.findViewById(R.id.textView195);
 
         khsttv1 = (TextView) ptcaplan.findViewById(R.id.textView196);
-        khsttv1 = (TextView) ptcaplan.findViewById(R.id.textView197);
+        khsttv2 = (TextView) ptcaplan.findViewById(R.id.textView197);
 
         phnbr1 = (TextView) ptcaplan.findViewById(R.id.textView198);
-        phnbr1 = (TextView) ptcaplan.findViewById(R.id.textView199);
+        phnbr2 = (TextView) ptcaplan.findViewById(R.id.textView199);
 
 
         checkTime();

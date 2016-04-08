@@ -51,6 +51,7 @@ import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
+import it.fmd.cocecl.utilclass.DialogPTCAInfo;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
@@ -230,11 +231,11 @@ public class MainActivity extends AppCompatActivity {
         // 4 User
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
         // 5 PATMAN
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
         // 6 ICD-10
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
         // 7 PTCA Plan
-        //navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
         // 8 KH Pläne
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
 
@@ -253,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setHomeButtonEnabled(true);
 
         mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                //R.drawable.menu_24, //nav menu toggle icon
+                //R.drawable.ic_home, //nav menu toggle icon
                 R.string.app_name, // nav drawer open - description for accessibility
                 R.string.app_name // nav drawer close - description for accessibility
         ) {
@@ -332,6 +333,9 @@ public class MainActivity extends AppCompatActivity {
                 gotoicd();
                 break;
             case 7:
+                //PTCA Dialog
+                DialogPTCAInfo ptca = new DialogPTCAInfo(this);
+                ptca.openPTCAPlan();
                 break;
 
             default:
@@ -342,7 +346,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerList.setItemChecked(position, true);
         mDrawerList.setSelection(position);
         setTitle(navMenuTitles[position]);
-        mDrawerLayout.closeDrawer(mDrawerList);
+        //mDrawerLayout.closeDrawer(mDrawerList);
 
     }
 
@@ -357,53 +361,6 @@ public class MainActivity extends AppCompatActivity {
         return super.onPrepareOptionsMenu(menu);
     }
 
-    /**
-     * Diplaying fragment view for selected nav drawer list item
-     */
-    /*
-    private void displayView(int position) {
-        // update the main content by replacing fragments
-        Fragment fragment = null;
-        switch (position) {
-            case 0:
-                fragment = new HomeFragment();
-                break;
-            case 1:
-                fragment = new FindPeopleFragment();
-                break;
-            case 2:
-                fragment = new PhotosFragment();
-                break;
-            case 3:
-                fragment = new CommunityFragment();
-                break;
-            case 4:
-                fragment = new PagesFragment();
-                break;
-            case 5:
-                fragment = new WhatsHotFragment();
-                break;
-
-            default:
-                break;
-        }
-
-        if (fragment != null) {
-            FragmentManager fragmentManager = getFragmentManager();
-            fragmentManager.beginTransaction()
-                    .replace(R.id.frame_container, fragment).commit();
-
-            // update selected item and title, then close the drawer
-            mDrawerList.setItemChecked(position, true);
-            mDrawerList.setSelection(position);
-            setTitle(navMenuTitles[position]);
-            mDrawerLayout.closeDrawer(mDrawerList);
-        } else {
-            // error in creating fragment
-            Log.e("MainActivity", "Error in creating fragment");
-        }
-    }
-*/
     @Override
     public void setTitle(CharSequence title) {
         mTitle = title;

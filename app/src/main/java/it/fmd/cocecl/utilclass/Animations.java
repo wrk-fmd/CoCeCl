@@ -3,8 +3,10 @@ package it.fmd.cocecl.utilclass;
 import android.app.Activity;
 import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
 
 import it.fmd.cocecl.R;
 
@@ -52,5 +54,24 @@ public class Animations {
             Log.d("map_fab", "open");
 
         }
+    }
+
+    public void blinkingBtn() {
+        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+        animation.setDuration(500); // duration - half a second
+        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE); // Reverse animation at the end so the button will fade back in
+
+        /*
+        final Button btn = (Button) findViewById(R.id.your_btn);
+    btn.startAnimation(animation);
+    btn.setOnClickListener(new OnClickListener() {
+        @Override
+        public void onClick(final View view) {
+            view.clearAnimation();
+        }
+    });
+         */
     }
 }

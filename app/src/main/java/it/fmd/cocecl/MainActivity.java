@@ -51,6 +51,7 @@ import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
 import it.fmd.cocecl.utilclass.ConnectionManager;
+import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
@@ -60,6 +61,11 @@ import it.fmd.cocecl.utilclass.TabPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
+
+    // VIEWPAGER //
+    TabLayout tabLayout;
+    ViewPager viewPager;
+    PagerAdapter pageradapter;
 
     // NAV DRAWER //
     private DrawerLayout mDrawerLayout;
@@ -148,16 +154,14 @@ public class MainActivity extends AppCompatActivity {
 
         // VIEWPAGER //
         {
-            TabLayout tabLayout = (TabLayout) findViewById(R.id.tab_layout);
+            tabLayout = (TabLayout) findViewById(R.id.tab_layout);
 
             if ((getResources().getConfiguration().screenLayout &
                     Configuration.SCREENLAYOUT_SIZE_MASK) >=
                     Configuration.SCREENLAYOUT_SIZE_LARGE) {
 
-                // on a normal screen device ...
+                // Tablet screen - LARGE
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
-
-                //TODO: set tabs depending on unit status
 
                 tabLayout.addTab(tabLayout.newTab().setText("Main"));
                 tabLayout.addTab(tabLayout.newTab().setText("Status"));
@@ -168,23 +172,23 @@ public class MainActivity extends AppCompatActivity {
                     Configuration.SCREENLAYOUT_SIZE_MASK) <=
                     Configuration.SCREENLAYOUT_SIZE_NORMAL) {
 
+                // Phone screen - NORMAL
                 this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-                tabLayout.addTab(tabLayout.newTab().setText("Main"));
-                tabLayout.addTab(tabLayout.newTab().setText("Status"));
-                tabLayout.addTab(tabLayout.newTab().setText("AO"));
-                tabLayout.addTab(tabLayout.newTab().setText("Map"));
+                tabLayout.addTab(tabLayout.newTab().setText("Main"), 0);
+                tabLayout.addTab(tabLayout.newTab().setText("Status"), 1);
+                tabLayout.addTab(tabLayout.newTab().setText("AO"), 2);
+                tabLayout.addTab(tabLayout.newTab().setText("Map"), 3);
             }
+
+            // Disabled in primary version
             //tabLayout.addTab(tabLayout.newTab().setText("Com"));
             tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
             //tabLayout.setTabMode(TabLayout.MODE_SCROLLABLE);
 
-            //TODO: on incident emergency set tablayout_color to blue #1565C0
-            //tabLayout.setBackgroundColor(BLUE);
-
-            final ViewPager viewPager = (ViewPager) findViewById(R.id.viewPager);
-            final PagerAdapter adapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
-            viewPager.setAdapter(adapter);
+            viewPager = (ViewPager) findViewById(R.id.viewPager);
+            pageradapter = new TabPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount());
+            viewPager.setAdapter(pageradapter);
             viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
             tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
                 @Override
@@ -223,13 +227,13 @@ public class MainActivity extends AppCompatActivity {
         // 0 Home
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
         // 1 Settings
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1), true, "7"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // 2 Kommunikation
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[2], navMenuIcons.getResourceId(2, -1)));
         // 3 AmbulanzInfo
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // 4 User
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, SessionManagement.KEY_DNR));
         // 5 PATMAN
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
         // 6 ICD-10
@@ -315,25 +319,33 @@ public class MainActivity extends AppCompatActivity {
                 //MainStatus Fragment
                 break;
             case 1:
+                // goto Settings Activity
                 Intent isett = new Intent(getApplicationContext(), SettingsActivity.class);
                 startActivity(isett);
                 break;
             case 2:
-                tabLayout.addTab(tabLayout.newTab().setText("Com"));
+                // goto/Load Communication fragment
+                //tabLayout.addTab(tabLayout.newTab().setText("Com"));
                 break;
             case 3:
+                // Info Webview from InfoActivity
+                DialogAmbInfo dai = new DialogAmbInfo(this);
+                dai.openAmbInfo();
                 break;
             case 4:
+                // UserDialog
+                showuserdialog();
                 break;
             case 5:
                 Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
                 startActivity(ipatman);
                 break;
             case 6:
+                // load icd-10 website in browser
                 gotoicd();
                 break;
             case 7:
-                //PTCA Dialog
+                // PTCA Dialog
                 DialogPTCAInfo ptca = new DialogPTCAInfo(this);
                 ptca.openPTCAPlan();
                 break;

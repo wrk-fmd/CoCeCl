@@ -2,9 +2,6 @@ package it.fmd.cocecl.dataStorage;
 
 import java.io.Serializable;
 
-import it.fmd.cocecl.dataStorage.incidentaddition.IncidentState;
-import it.fmd.cocecl.dataStorage.incidentaddition.IncidentType;
-
 /**
  * Incident Information
  * Tasktype: Auftrag, Standortwechsel, Transfer, Einsatz
@@ -22,8 +19,6 @@ public class IncidentData implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private int id;
-    private IncidentState incidentState;
-    private IncidentType type;
 
     // HEADER
     //Auftrag, Abtransport, Standortwechsel, Transfer
@@ -169,22 +164,6 @@ public class IncidentData implements Serializable {
 
     public void setIncistatus(String incistatus) {
         this.incistatus = incistatus;
-    }
-
-    public IncidentState getIncidentState() {
-        return incidentState;
-    }
-
-    public void setIncidentState(final IncidentState incidentState) {
-        this.incidentState = incidentState;
-    }
-
-    public IncidentType getType() {
-        return type;
-    }
-
-    public void setType(final IncidentType type) {
-        this.type = type;
     }
 
     public static IncidentData create(final int id) {

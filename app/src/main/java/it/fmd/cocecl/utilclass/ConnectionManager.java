@@ -50,29 +50,42 @@ public class ConnectionManager {
     };
 
     public boolean isOnline() {
-        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-        //return netInfo != null && netInfo.isConnectedOrConnecting();
 
-        if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
-
-                cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
-                cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
-
-
-            return true;
-
-        } else if (
-                cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
-                        cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
-
-
-            return false;
+        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
+        boolean isAvailable = false;
+        if (networkInfo != null && networkInfo.isConnected()) {
+            // Network is present and connected
+            isAvailable = true;
         }
-        return false;
+        return isAvailable;
     }
 
+    /*
+        public boolean isOnline() {
+            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+            //return netInfo != null && netInfo.isConnectedOrConnecting();
+
+            if (cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTED ||
+
+                    cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                    cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTING ||
+                    cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.CONNECTED) {
+
+
+                return true;
+
+            } else if (
+                    cm.getNetworkInfo(0).getState() == android.net.NetworkInfo.State.DISCONNECTED ||
+                            cm.getNetworkInfo(1).getState() == android.net.NetworkInfo.State.DISCONNECTED) {
+
+
+                return false;
+            }
+            return false;
+        }
+    */
     public boolean ping() {
 
         Runtime runtime = Runtime.getRuntime();

@@ -75,7 +75,7 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Abteilung buchen"
             android:id="@+id/textView4"
-            android:layout_marginTop="30dp" />
+            android:layout_marginTop="20dp" />
 
         <Spinner
             android:layout_width="match_parent"
@@ -86,38 +86,24 @@
 
     </LinearLayout>
 
-    <LinearLayout
+    <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentLeft="true"
+        android:text="Pat. anlegen"
+        android:id="@+id/button"
+        android:layout_below="@+id/bettbtn"
         android:layout_alignParentRight="true"
-        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/bettbtn"
+        android:layout_alignStart="@+id/bettbtn" />
+
+    <Button
+        android:id="@+id/bettbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bett abbuchen"
         android:layout_below="@+id/linearLayout21"
-        android:layout_marginTop="50dp"
-        android:orientation="horizontal"
-        android:weightSum="1">
-
-        <Button
-            android:id="@+id/bettbtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:onClick="bettbuchen"
-            android:text="Bett abbuchen"
-            android:visibility="gone" />
-
-        <TextView
-            android:id="@+id/textView11"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:editable="true"
-            android:enabled="true"
-            android:gravity="center"
-            android:hint="Abteilung"
-            android:textSize="20dp"
-            android:visibility="gone" />
-
-    </LinearLayout>
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

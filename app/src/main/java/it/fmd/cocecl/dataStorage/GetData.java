@@ -1,4 +1,4 @@
-package it.fmd.cocecl.dataStorage.cocesoAPI;
+package it.fmd.cocecl.dataStorage;
 
 import android.os.AsyncTask;
 import android.util.Log;
@@ -18,11 +18,6 @@ import java.util.HashMap;
 
 import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.contentviews.AssignedUnits;
-import it.fmd.cocecl.dataStorage.IncidentData;
-import it.fmd.cocecl.dataStorage.MainData;
-import it.fmd.cocecl.dataStorage.PersonnelData;
-import it.fmd.cocecl.dataStorage.UnitData;
-import it.fmd.cocecl.dataStorage.UnitStatus;
 
 public class GetData extends AsyncTask<String, String, String> {
 /*

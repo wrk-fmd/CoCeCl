@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
@@ -88,25 +87,18 @@ public class ReportIncident implements View.OnClickListener {
         AlertDialog alert = dlgBuilder.create();
         alert.show();
         button42.setClickable(true);
-
-        // remove layout
-        View viewToRemove = this.activity.findViewById(R.id.reportincidentrelayout);
-        if (viewToRemove != null && viewToRemove.getParent() != null && viewToRemove instanceof ViewGroup)
-            ((ViewGroup) viewToRemove.getParent()).removeView(viewToRemove);
-
-
     }
 
     public void onPositive() {
 
-        final TextView textView112 = (TextView) this.activity.findViewById(R.id.textView112);
-        final Button button42 = (Button) this.activity.findViewById(R.id.button42);
+        final TextView textView112 = (TextView) activity.findViewById(R.id.textView112);
+        final Button button42 = (Button) activity.findViewById(R.id.button42);
 
         button42.setEnabled(false);
         button42.setClickable(false);
         //button42.setBackgroundColor(YELLOW);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            button42.setBackground(this.activity.getDrawable(R.drawable.button_yellow_pressed));
+            button42.setBackground(activity.getDrawable(R.drawable.button_yellow_pressed));
         }
 
         Handler h = new Handler();
@@ -128,19 +120,19 @@ public class ReportIncident implements View.OnClickListener {
     }
 
     public void refreshDialog() {
-        RelativeLayout reportincident = (RelativeLayout) this.activity.getLayoutInflater().inflate(R.layout.reportincident, null);
+        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
 
         final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
         final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
         final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
-        final TextView textView112 = (TextView) this.activity.findViewById(R.id.textView112);
-        final Button button42 = (Button) this.activity.findViewById(R.id.button42);
+        final TextView textView112 = (TextView) activity.findViewById(R.id.textView112);
+        final Button button42 = (Button) activity.findViewById(R.id.button42);
 
         button42.setEnabled(true);
         button42.setClickable(true);
         //button42.setBackgroundColor(Color.parseColor("#bdbdbd"));
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            button42.setBackground(this.activity.getDrawable(R.drawable.custom_button_normal));
+            button42.setBackground(activity.getDrawable(R.drawable.custom_button_normal));
         }
 
         editText24.setText("");

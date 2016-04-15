@@ -9,7 +9,7 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.TextView;
 
-import it.fmd.cocecl.dataStorage.cocesoAPI.GetData;
+import it.fmd.cocecl.dataStorage.GetData;
 import it.fmd.cocecl.dataStorage.MainData;
 import it.fmd.cocecl.dataStorage.PersonnelData;
 import it.fmd.cocecl.dataStorage.UnitData;

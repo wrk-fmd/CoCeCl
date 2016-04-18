@@ -1,4 +1,4 @@
-package it.fmd.cocecl.fragmentspatman;
+package it.fmd.cocecl.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,8 +8,7 @@ import android.view.ViewGroup;
 
 import it.fmd.cocecl.R;
 
-
-public class anamnesisFragment extends Fragment {
+public class CommanderFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,9 +16,8 @@ public class anamnesisFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_anamnesis, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_commander, container, false);
         return v;
     }
 }

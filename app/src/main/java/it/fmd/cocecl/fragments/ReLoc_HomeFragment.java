@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import it.fmd.cocecl.R;
 
-public class commanderFragment extends Fragment {
+public class ReLoc_HomeFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -17,7 +17,7 @@ public class commanderFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_commander, container, false);
+        View v = inflater.inflate(R.layout.fragment_reloc_home, container, false);
         return v;
     }
 }

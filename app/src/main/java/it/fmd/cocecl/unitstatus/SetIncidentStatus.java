@@ -136,7 +136,7 @@ public class SetIncidentStatus implements View.OnClickListener {
     }
 
 
-    // Status Button incidentFragment //
+    // Status Button IncidentFragment //
     // change unit status
     //TODO: set fragments on status change?? / sync with server
 

@@ -1,7 +1,7 @@
 package it.fmd.cocecl.gmapsnav;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.Bundle;
 import android.widget.Toast;
 
@@ -20,7 +20,6 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.gmapsnav.routing.AbstractRouting;
 import it.fmd.cocecl.gmapsnav.routing.Route;
@@ -32,14 +31,13 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 public class RouteBuilder implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
 
-    public Activity activity;
+    private Context context;
 
-    public RouteBuilder(Activity _activity) {
-
-        this.activity = _activity;
+    public RouteBuilder(Context context) {
+        this.context = context;
     }
 
-    ConnectionManager conman = new ConnectionManager(activity);
+    ConnectionManager cm = new ConnectionManager(context);
 
     // Direction
     private GoogleApiClient googleApiClient;
@@ -57,7 +55,7 @@ public class RouteBuilder implements OnMapReadyCallback,
 
 
     public void sendRequest() {
-        if (conman.isOnline()) {
+        if (cm.isOnline(context)) {
             route();
         } else {
             //Toast.makeText(getActivity(), "No internet connectivity", Toast.LENGTH_SHORT).show();
@@ -89,12 +87,12 @@ public class RouteBuilder implements OnMapReadyCallback,
             }
         } else*/
         {
-            ProgressDialog progressDialog = new ProgressDialog(activity);
-            ProgressDialog.show(activity, "Please wait.",
+            ProgressDialog progressDialog = new ProgressDialog(context);
+            ProgressDialog.show(context, "Route",
                     "Fetching route information.", true);
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
-                            //.optimize(true)
+                    //.optimize(true)
                     .withListener(this)
                     .alternativeRoutes(true)
                     .waypoints(start, end)
@@ -105,13 +103,13 @@ public class RouteBuilder implements OnMapReadyCallback,
 
     @Override
     public void onRoutingFailure(RouteException e) {
-        ProgressDialog progressDialog = new ProgressDialog(activity);
+        ProgressDialog progressDialog = new ProgressDialog(context);
         // The Routing request failed
         progressDialog.dismiss();
         if (e != null) {
-            Toast.makeText(activity, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Toast.makeText(context, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
         } else {
-            Toast.makeText(activity, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Something went wrong, Try again", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -122,7 +120,7 @@ public class RouteBuilder implements OnMapReadyCallback,
 
     @Override
     public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-        ProgressDialog progressDialog = new ProgressDialog(activity);
+        ProgressDialog progressDialog = new ProgressDialog(context);
         progressDialog.dismiss();
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
@@ -141,17 +139,16 @@ public class RouteBuilder implements OnMapReadyCallback,
         for (int i = 0; i < route.size(); i++) {
 
             //In case of more than 5 alternative routes
-            //TODO colorindex
             int colorIndex = i % colors.length;
 
             PolylineOptions polyOptions = new PolylineOptions();
-            polyOptions.color(activity.getResources().getColor(colors[colorIndex]));
+            polyOptions.color(context.getResources().getColor(colors[colorIndex]));
             polyOptions.width(10 + i * 3);
             polyOptions.addAll(route.get(i).getPoints());
             Polyline polyline = googleMap.addPolyline(polyOptions);
             polylines.add(polyline);
 
-            Toast.makeText(activity, "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Route " + (i + 1) + ": distance - " + route.get(i).getDistanceValue() + ": duration - " + route.get(i).getDurationValue(), Toast.LENGTH_SHORT).show();
         }
 
         // Start marker

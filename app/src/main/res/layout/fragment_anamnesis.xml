@@ -12,7 +12,7 @@
     android:paddingLeft="@dimen/cardview_horizontal_margin"
     android:paddingRight="@dimen/cardview_horizontal_margin"
     android:paddingTop="@dimen/cardview_vertical_margin"
-    tools:context=".fragmentspatman.anamnesisFragment">
+    tools:context=".fragmentspatman.AnamnesisFragment">
 
     <LinearLayout
         android:layout_width="match_parent"

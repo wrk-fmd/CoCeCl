@@ -30,11 +30,6 @@ import it.fmd.cocecl.utilclass.ToolbarIconStates;
 
 public class GPSTrackListener extends Service {
 
-    PowerManager.WakeLock wakeLock;
-
-    private LocationManager locationManager;
-
-
     public Activity activity;
 
     public GPSTrackListener(Activity _activity) {
@@ -42,9 +37,13 @@ public class GPSTrackListener extends Service {
         this.activity = _activity;
     }
 
-    ToolbarIconStates tis = new ToolbarIconStates();
+    PowerManager.WakeLock wakeLock;
 
-    ConnectionManager cm = new ConnectionManager(activity);
+    private LocationManager locationManager;
+
+    ConnectionManager cm;
+
+    ToolbarIconStates tis;
 
     public GPSTrackListener() {
         // TODO Auto-generated constructor stub
@@ -60,6 +59,9 @@ public class GPSTrackListener extends Service {
     public void onCreate() {
         // TODO Auto-generated method stub
         super.onCreate();
+
+        cm = new ConnectionManager(getApplicationContext());
+        tis = new ToolbarIconStates(getApplicationContext(), activity);
 
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
 
@@ -78,7 +80,6 @@ public class GPSTrackListener extends Service {
         super.onStart(intent, startId);
 
         handleStart(intent, startId);
-
     }
 
     @Override
@@ -118,7 +119,7 @@ public class GPSTrackListener extends Service {
             if (location == null)
                 return;
 
-            if (cm.isOnline()) {
+            if (cm.isOnline(getApplicationContext())) {
                 JSONArray jsonArray = new JSONArray();
                 JSONObject jsonObject = new JSONObject();
 
@@ -149,7 +150,7 @@ public class GPSTrackListener extends Service {
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
             tis.gpsdisabled();
-            stopService(new Intent(activity, GPSTrackListener.class));
+            stopService(new Intent(getApplicationContext(), GPSTrackListener.class));
 
         }
 
@@ -157,7 +158,7 @@ public class GPSTrackListener extends Service {
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
             tis.gpsenabled();
-            startService(new Intent(activity, GPSTrackListener.class));
+            startService(new Intent(getApplicationContext(), GPSTrackListener.class));
 
         }
 

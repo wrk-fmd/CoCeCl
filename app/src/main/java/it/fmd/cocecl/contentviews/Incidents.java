@@ -1,7 +1,7 @@
 package it.fmd.cocecl.contentviews;
 
 /**
- * Incident ListView on mainstatusFragment
+ * Incident ListView on MainstatusFragment
  * Incident ShortView
  **/
 

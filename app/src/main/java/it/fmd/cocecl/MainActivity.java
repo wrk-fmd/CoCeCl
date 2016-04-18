@@ -45,11 +45,12 @@ import java.util.HashMap;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.dataStorage.IncidentData;
-import it.fmd.cocecl.fragments.mapFragment;
+import it.fmd.cocecl.fragments.MapFragment;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
 import it.fmd.cocecl.utilclass.CheckPlayServices;
+import it.fmd.cocecl.utilclass.ConnectionBroadcastReceiver;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
@@ -57,7 +58,8 @@ import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
-import it.fmd.cocecl.utilclass.TabPagerAdapter;
+import it.fmd.cocecl.viewpager.TabPagerAdapter;
+import it.fmd.cocecl.utilclass.ToolbarIconStates;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -85,8 +87,6 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
 
-    public ConnectionManager conman = new ConnectionManager(this);
-
     public CheckPlayServices cps = new CheckPlayServices();
 
     IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(this);
@@ -95,6 +95,10 @@ public class MainActivity extends AppCompatActivity {
 
     private CoordinatorLayout coordinatorLayout;
 
+    ConnectionManager cm;
+    ToolbarIconStates tis;
+    ConnectionBroadcastReceiver cbr;
+
     // Location
     public static Location loc;
     private static double longitude;
@@ -102,11 +106,20 @@ public class MainActivity extends AppCompatActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
+
     // OnCreate Method // ------------------------------------- //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        cm = new ConnectionManager(getApplicationContext());
+        tis = new ToolbarIconStates(getApplicationContext(), this);
+        cbr = new ConnectionBroadcastReceiver(getApplicationContext(), this);
+
+        // register
+        registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
 
         //GPS Tracker Service
         // register
@@ -393,7 +406,9 @@ public class MainActivity extends AppCompatActivity {
 
         // Broadcast Receiver Connection State
         // register
-        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        // register toolbar receiver
+        //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -484,6 +499,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+
+        // register toolbar receiver
+        registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -541,17 +559,17 @@ public class MainActivity extends AppCompatActivity {
             // Begin the transaction
             if (findViewById(R.id.framelayout_1) != null) {
 
-                ft.add(R.id.framelayout_1, new mainstatusFragment());
+                ft.add(R.id.framelayout_1, new MainstatusFragment());
             }
 
             if (findViewById(R.id.framelayout_2) != null) {
 
-                ft.add(R.id.framelayout_2, new incidentFragment());
+                ft.add(R.id.framelayout_2, new IncidentFragment());
             }
 */
             if (findViewById(R.id.framelayout_3) != null) {
 
-                ft.add(R.id.framelayout_3, new mapFragment());
+                ft.add(R.id.framelayout_3, new MapFragment());
             }
 
             ft.addToBackStack(null);
@@ -560,7 +578,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         // register
-        registerReceiver(conman.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -568,8 +587,8 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         // unregister the receiver
-        unregisterReceiver(conman.mReceiver);
-
+        unregisterReceiver(cm.mReceiver);
+        //unregisterReceiver(cbr.toolbarBReceiver);
     }
 
     @Override
@@ -581,9 +600,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-
-        // unregister the receiver
-        //unregisterReceiver(conman.mReceiver);
 
         // remove persistent appbar icon
         NotifiBarIcon nbi = new NotifiBarIcon(this);

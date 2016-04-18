@@ -215,7 +215,7 @@ public class SetUnitStatus implements View.OnClickListener {
         textView112.setVisibility(View.GONE);
     }
 
-    // Status EB NEB AD mainstatusFragment //
+    // Status EB NEB AD MainstatusFragment //
     // TODO: set by server ebst(); nebst(); adst(); not by user (for now)
 
     public void st1() {

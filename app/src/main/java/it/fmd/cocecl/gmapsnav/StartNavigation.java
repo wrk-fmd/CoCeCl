@@ -151,9 +151,9 @@ public class StartNavigation implements View.OnClickListener {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 /*
-                MapFragment mapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map);
-                if (mapFragment != null)
-                    this.getFragmentManager().beginTransaction().remove(mapFragment).commit();
+                MapFragment MapFragment = (MapFragment) this.getFragmentManager().findFragmentById(R.id.map);
+                if (MapFragment != null)
+                    this.getFragmentManager().beginTransaction().remove(MapFragment).commit();
 *//*
                     }
                 });

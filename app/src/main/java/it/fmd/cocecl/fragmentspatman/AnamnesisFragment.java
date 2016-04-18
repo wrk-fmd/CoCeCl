@@ -8,7 +8,8 @@ import android.view.ViewGroup;
 
 import it.fmd.cocecl.R;
 
-public class abcdeFragment extends Fragment {
+
+public class AnamnesisFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -18,7 +19,7 @@ public class abcdeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_abcde, container, false);
+        View v = inflater.inflate(R.layout.fragment_anamnesis, container, false);
         return v;
     }
 }

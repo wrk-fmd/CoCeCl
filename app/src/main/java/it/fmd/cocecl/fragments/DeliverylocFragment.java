@@ -14,7 +14,7 @@ import it.fmd.cocecl.dataStorage.PatData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
 import it.fmd.cocecl.patadminaction.CreatePat;
 
-public class deliverylocFragment extends Fragment {
+public class DeliverylocFragment extends Fragment {
 
     PatData pd = new PatData();
 

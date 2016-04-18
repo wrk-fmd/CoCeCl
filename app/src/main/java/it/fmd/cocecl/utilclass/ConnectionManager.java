@@ -1,7 +1,5 @@
 package it.fmd.cocecl.utilclass;
 
-import android.app.Activity;
-import android.app.Application;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -14,51 +12,41 @@ import it.fmd.cocecl.APPConstants;
 
 public class ConnectionManager {
 
+    ConnectivityManager cm;
+
     private Context context;
 
     public ConnectionManager(Context context) {
         this.context = context;
     }
 
-    ToolbarIconStates tis = new ToolbarIconStates();
-
     public final BroadcastReceiver mReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
 
-            ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
             if (activeNetwork != null) {
 
                 // connected to the internet
                 if (activeNetwork.getType() == ConnectivityManager.TYPE_WIFI) {
-
                     // connected to wifi
-                    //tis.setwifigreen();
 
                 } else if (activeNetwork.getType() == ConnectivityManager.TYPE_MOBILE) {
 
                     // connected to the mobile network
-                    //tis.setmobilegreen();
                 }
             } else {
 
                 // not connected to the internet
-                //tis.setred();
             }
         }
     };
 
-    public boolean isOnline() {
-
-        ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo networkInfo = manager.getActiveNetworkInfo();
-        boolean isAvailable = false;
-        if (networkInfo != null && networkInfo.isConnected()) {
-            // Network is present and connected
-            isAvailable = true;
-        }
-        return isAvailable;
+    public boolean isOnline(Context context) {
+        cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     /*

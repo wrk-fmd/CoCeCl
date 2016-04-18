@@ -1,4 +1,4 @@
-package it.fmd.cocecl.fragments;
+package it.fmd.cocecl.fragmentspatman;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 
 import it.fmd.cocecl.R;
 
-public class reloc_homeFragment extends Fragment {
+public class ABCDEFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -16,8 +16,9 @@ public class reloc_homeFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_reloc_home, container, false);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_abcde, container, false);
         return v;
     }
 }

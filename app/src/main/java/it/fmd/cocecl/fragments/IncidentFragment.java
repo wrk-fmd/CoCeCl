@@ -27,7 +27,7 @@ import it.fmd.cocecl.patadminaction.CreatePat;
 import it.fmd.cocecl.patadminaction.PatStatus;
 import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 
-public class incidentFragment extends Fragment {
+public class IncidentFragment extends Fragment {
 
     IncidentData id = new IncidentData();
     PatData pd = new PatData();
@@ -204,7 +204,7 @@ public class incidentFragment extends Fragment {
         //adapter.add(newUnits);
         showasUnits(assunits);
 
-        // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
+        // OnClick Event load Incident Data from Storage (if more than one) to fields in IncidentFragment
         gridView.setClickable(true);
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 

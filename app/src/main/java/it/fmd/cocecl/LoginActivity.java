@@ -114,7 +114,7 @@ public class LoginActivity extends MainActivity {
     private boolean isReceiverRegistered;
 
     CheckPlayServices cps = new CheckPlayServices();
-    ConnectionManager cm = new ConnectionManager(this);
+
 
 
     // OnCreate Method // -------------------------------------- //
@@ -122,6 +122,8 @@ public class LoginActivity extends MainActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        ConnectionManager cm = new ConnectionManager(getApplicationContext());
 
         // User Session Manager
         session = new SessionManagement(getApplicationContext());

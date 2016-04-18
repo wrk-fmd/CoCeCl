@@ -9,7 +9,7 @@ import android.view.ViewGroup;
 import it.fmd.cocecl.R;
 
 
-public class traumaFragment extends Fragment {
+public class TraumaFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

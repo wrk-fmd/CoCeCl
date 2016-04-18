@@ -31,7 +31,7 @@ import it.fmd.cocecl.gmapsnav.RouteBuilder;
 import it.fmd.cocecl.utilclass.Animations;
 import it.fmd.cocecl.utilclass.GPSManager;
 
-public class mapFragment extends SupportMapFragment implements OnMapReadyCallback,
+public class MapFragment extends SupportMapFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     // GET MapFragment
@@ -43,7 +43,7 @@ public class mapFragment extends SupportMapFragment implements OnMapReadyCallbac
     double latitude = gps.getLatitude();
     double longitude = gps.getLongitude();
 
-    RouteBuilder rb = new RouteBuilder(getActivity());
+    RouteBuilder rb;
 
     @Override
     public void onAttach(Activity activity) {
@@ -55,6 +55,7 @@ public class mapFragment extends SupportMapFragment implements OnMapReadyCallbac
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        rb = new RouteBuilder(getContext());
     }
 
     @Override
@@ -83,7 +84,7 @@ public class mapFragment extends SupportMapFragment implements OnMapReadyCallbac
         fab1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rb.route();
+                rb.sendRequest();
             }
         });
 

@@ -23,41 +23,60 @@ import static android.graphics.Color.RED;
  * MLS Connection State TextView on LoginActivity
  */
 
-public class ToolbarIconStates extends Activity {
+public class ToolbarIconStates {
+
+    private Context context;
+
+    public Activity activity;
+
+    public ToolbarIconStates(Context context, Activity activity) {
+        this.context = context;
+        this.activity = activity;
+    }
 
     public TextView wifitext;
     public TextView mobiletext;
 
     public void gpsenabled() {
-        TextView gpstext = (TextView) findViewById(R.id.textView108);
-        gpstext.setBackgroundColor(GREEN);
+        TextView gpstext = (TextView) activity.findViewById(R.id.textView108);
+        if (gpstext != null) {
+            gpstext.setBackgroundColor(GREEN);
+        }
     }
 
     public void gpsdisabled() {
-        TextView gpstext = (TextView) findViewById(R.id.textView108);
-        gpstext.setBackgroundColor(RED);
+        TextView gpstext = (TextView) activity.findViewById(R.id.textView108);
+        if (gpstext != null) {
+            gpstext.setBackgroundColor(RED);
+        }
     }
 
     public void setwifigreen() {
-        wifitext = (TextView) findViewById(R.id.textView7);
-        wifitext.setBackgroundColor(GREEN);
+        wifitext = (TextView) activity.findViewById(R.id.textView7);
+        if (wifitext != null) {
+            wifitext.setBackgroundColor(GREEN);
+        }
     }
 
     public void setmobilegreen() {
-        mobiletext = (TextView) findViewById(R.id.textView83);
-        mobiletext.setBackgroundColor(GREEN);
+        mobiletext = (TextView) activity.findViewById(R.id.textView83);
+        if (mobiletext != null) {
+            mobiletext.setBackgroundColor(GREEN);
+        }
     }
 
     public void setred() {
-        wifitext = (TextView) findViewById(R.id.textView7);
-        mobiletext = (TextView) findViewById(R.id.textView83);
-        wifitext.setBackgroundColor(RED);
-        mobiletext.setBackgroundColor(RED);
+        wifitext = (TextView) activity.findViewById(R.id.textView7);
+        mobiletext = (TextView) activity.findViewById(R.id.textView83);
+        if (wifitext != null && mobiletext != null) {
+            wifitext.setBackgroundColor(RED);
+            mobiletext.setBackgroundColor(RED);
+        }
     }
 
     // MLS SERVER
     public void mlsonline() {
-        TextView errormsg = (TextView) findViewById(R.id.textView94);
+        TextView errormsg = (TextView) activity.findViewById(R.id.textView94);
         if (errormsg != null)
             errormsg.setText("MLS Online");
         errormsg.setTextColor(Color.GREEN);
@@ -65,20 +84,20 @@ public class ToolbarIconStates extends Activity {
     }
 
     public void mlsoffline() {
-        TextView errormsg = (TextView) findViewById(R.id.textView94);
+        TextView errormsg = (TextView) activity.findViewById(R.id.textView94);
         if (errormsg != null)
             errormsg.setText("MLS Offline");
         errormsg.setTextColor(Color.RED);
     }
 
     public void mlsonlineicon() {
-        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
+        ImageView mlscon = (ImageView) activity.findViewById(R.id.imageView_mlscon);
         if (mlscon != null)
             mlscon.setImageResource(R.drawable.connected64);
     }
 
     public void mlsofflineicon() {
-        ImageView mlscon = (ImageView) findViewById(R.id.imageView_mlscon);
+        ImageView mlscon = (ImageView) activity.findViewById(R.id.imageView_mlscon);
         if (mlscon != null)
             mlscon.setImageResource(R.drawable.disconnected64);
     }
@@ -91,7 +110,7 @@ public class ToolbarIconStates extends Activity {
     //Animated sync symbol in toolbar//
     //rotate imageview animation
     public void onSyncIconStart() {
-        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
+        ImageView syncicon = (ImageView) activity.findViewById(R.id.imageView2);
 
         RotateAnimation r = new RotateAnimation(360, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -101,8 +120,8 @@ public class ToolbarIconStates extends Activity {
     }
 
     public void onSyncIconStop() {
-        ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
-        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
+        ImageView syncicon = (ImageView) activity.findViewById(R.id.imageView2);
+        final TextView serveranswer = (TextView) activity.findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 
@@ -124,9 +143,9 @@ public class ToolbarIconStates extends Activity {
     }
 
     public void onSyncError() {
-        final ImageView syncicon = (ImageView) findViewById(R.id.imageView2);
-        final ImageView erroricon = (ImageView) findViewById(R.id.erroriconView);
-        final TextView serveranswer = (TextView) findViewById(R.id.textView49);
+        final ImageView syncicon = (ImageView) activity.findViewById(R.id.imageView2);
+        final ImageView erroricon = (ImageView) activity.findViewById(R.id.erroriconView);
+        final TextView serveranswer = (TextView) activity.findViewById(R.id.textView49);
 
         RotateAnimation r = new RotateAnimation(0, 0, Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF, 0.5f);
 

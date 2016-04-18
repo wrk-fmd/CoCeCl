@@ -3,21 +3,13 @@ package it.fmd.cocecl.incidentaction;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import it.fmd.cocecl.MainActivity;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.dataStorage.IncidentData;
-import it.fmd.cocecl.fragments.incidentFragment;
 
 import static android.graphics.Color.BLUE;
 

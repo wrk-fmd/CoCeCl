@@ -9,9 +9,9 @@ import android.view.ViewGroup;
 import it.fmd.cocecl.R;
 
 
-public class patmanFragment extends Fragment {
+public class PatManFragment extends Fragment {
 
-    public patmanFragment() {
+    public PatManFragment() {
     }
 
     @Override

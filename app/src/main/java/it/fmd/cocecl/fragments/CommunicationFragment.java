@@ -16,7 +16,7 @@ import android.widget.Toast;
 import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.R;
 
-public class communicationFragment extends Fragment {
+public class CommunicationFragment extends Fragment {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -27,7 +27,7 @@ import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.ReportIncident;
 import it.fmd.cocecl.unitstatus.SetUnitStatus;
 
-public class mainstatusFragment extends Fragment {
+public class MainstatusFragment extends Fragment {
 
     IncidentTaskTypeSetting itts = new IncidentTaskTypeSetting(getActivity());
 
@@ -138,7 +138,7 @@ public class mainstatusFragment extends Fragment {
 
         adapter.add(newIncidents);
 
-        // OnClick Event load Incident Data from Storage (if more than one) to fields in incidentFragment
+        // OnClick Event load Incident Data from Storage (if more than one) to fields in IncidentFragment
         incidentlv.setClickable(true);
         incidentlv.setChoiceMode(AbsListView.CHOICE_MODE_SINGLE);
         incidentlv.setOnItemClickListener(new AdapterView.OnItemClickListener() {

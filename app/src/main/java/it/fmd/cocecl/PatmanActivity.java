@@ -15,10 +15,10 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import it.fmd.cocecl.fragmentspatman.abcdeFragment;
-import it.fmd.cocecl.fragmentspatman.anamnesisFragment;
-import it.fmd.cocecl.fragmentspatman.patmanFragment;
-import it.fmd.cocecl.fragmentspatman.traumaFragment;
+import it.fmd.cocecl.fragmentspatman.ABCDEFragment;
+import it.fmd.cocecl.fragmentspatman.AnamnesisFragment;
+import it.fmd.cocecl.fragmentspatman.PatManFragment;
+import it.fmd.cocecl.fragmentspatman.TraumaFragment;
 
 public class PatmanActivity extends FragmentActivity {
     private static final String TAG = "DialogActivity";
@@ -38,16 +38,16 @@ public class PatmanActivity extends FragmentActivity {
 
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab1").setIndicator("PatDat", null),
-                patmanFragment.class, null);
+                PatManFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab2").setIndicator("ABCDE", null),
-                abcdeFragment.class, null);
+                ABCDEFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab3").setIndicator("Trauma", null),
-                traumaFragment.class, null);
+                TraumaFragment.class, null);
         mTabHost.addTab(
                 mTabHost.newTabSpec("tab4").setIndicator("Anamnese&Diagnose", null),
-                anamnesisFragment.class, null);
+                AnamnesisFragment.class, null);
     }
 
     public void btnClick() {

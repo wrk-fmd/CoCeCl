@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.gmapsnav.RouteBuilder;
+import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 import it.fmd.cocecl.utilclass.Animations;
 import it.fmd.cocecl.utilclass.GPSManager;
 
@@ -88,12 +89,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             }
         });
 
-        fab2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //setStatus
-            }
-        });
+        fab2.setOnClickListener(new SetIncidentStatus(getActivity()));
 
         return view;
     }

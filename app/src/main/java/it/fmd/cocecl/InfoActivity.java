@@ -126,6 +126,8 @@ public class InfoActivity extends MainActivity {
                     SM.logoutUser();
                     finish();
                     System.exit(0);
+
+                    //TODO: unregister from broadcastreceivers & unregister from gcm
                 }
             });
 

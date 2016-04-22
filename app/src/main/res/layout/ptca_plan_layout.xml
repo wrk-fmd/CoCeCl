@@ -29,40 +29,36 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
-                    android:text="Tag oben"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView194"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:text="KH oben"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceLarge"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView196"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:text="Stat oben"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView198"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="3"
-                    android:text="Tel oben"
+                    android:autoLink="phone"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000000"
-                    android:autoLink="phone" />
+                    android:textColor="#000000" />
             </TableRow>
 
             <TableRow
@@ -74,44 +70,39 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="0"
-                    android:text="Tag unten"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView195"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="1"
-                    android:text="KH unten"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView197"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="2"
-                    android:text="Stat unten"
+                    android:layout_marginRight="5dp"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="#000000"
-                    android:layout_marginRight="5dp" />
+                    android:textColor="#000000" />
 
                 <TextView
                     android:id="@+id/textView199"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_column="3"
-                    android:text="tel unten"
+                    android:autoLink="phone"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="#000000"
-                    android:autoLink="phone" />
+                    android:textColor="#000000" />
             </TableRow>
         </TableLayout>
 
     </android.support.v7.widget.CardView>
-
 
 </LinearLayout>

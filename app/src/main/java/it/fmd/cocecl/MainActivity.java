@@ -2,9 +2,12 @@ package it.fmd.cocecl;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,11 +18,13 @@ import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
@@ -46,6 +51,7 @@ import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.fragments.MapFragment;
+import it.fmd.cocecl.gcm.GCMListener;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
@@ -54,6 +60,7 @@ import it.fmd.cocecl.utilclass.ConnectionBroadcastReceiver;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
+import it.fmd.cocecl.utilclass.GPSToolbarIcon;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
@@ -98,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     ConnectionManager cm;
     ToolbarIconStates tis;
     ConnectionBroadcastReceiver cbr;
+    GPSToolbarIcon gpsti;
 
     // Location
     public static Location loc;
@@ -106,6 +114,9 @@ public class MainActivity extends AppCompatActivity {
     private static String lngString = String.valueOf(longitude);
     private static String latString = String.valueOf(latitude);
 
+    //GCM 3.0
+    private BroadcastReceiver mRegistrationBroadcastReceiver;
+    private boolean isReceiverRegistered;
 
     // OnCreate Method // ------------------------------------- //
     @Override
@@ -116,10 +127,27 @@ public class MainActivity extends AppCompatActivity {
         cm = new ConnectionManager(getApplicationContext());
         tis = new ToolbarIconStates(getApplicationContext(), this);
         cbr = new ConnectionBroadcastReceiver(getApplicationContext(), this);
+        gpsti = new GPSToolbarIcon(getApplicationContext(), this);
 
         // register
         registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
+        //Register GCM 3.0
+        mRegistrationBroadcastReceiver = new BroadcastReceiver() {
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                SharedPreferences sharedPreferences =
+                        PreferenceManager.getDefaultSharedPreferences(context);
+                boolean sentToken = sharedPreferences
+                        .getBoolean(APPConstants.SENT_TOKEN_TO_SERVER, false);
+                if (sentToken) {
+                } else {
+                }
+            }
+        };
+
+        registerGCMReceiver();
 
         //GPS Tracker Service
         // register
@@ -294,8 +322,6 @@ public class MainActivity extends AppCompatActivity {
             //displayView(0);
             navDrawerAction(0);
         }
-
-        //ifEmergency();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
@@ -577,9 +603,12 @@ public class MainActivity extends AppCompatActivity {
             ft.commit();
         }
 
-        // register
+        // register BReceivers
         registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        //GCM 3.0
+        registerGCMReceiver();
+
     }
 
     @Override
@@ -589,6 +618,10 @@ public class MainActivity extends AppCompatActivity {
         // unregister the receiver
         unregisterReceiver(cm.mReceiver);
         //unregisterReceiver(cbr.toolbarBReceiver);
+
+        //GCM
+        LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
+        isReceiverRegistered = false;
     }
 
     @Override
@@ -693,9 +726,11 @@ public class MainActivity extends AppCompatActivity {
         }
     */
 
-    public void ifEmergency() {
-        if (idata.getEmergency() && idata.getEmergency() != null) {
-            itts.tasktypeemergencytabcolor();
+    private void registerGCMReceiver() {
+        if (!isReceiverRegistered) {
+            LocalBroadcastManager.getInstance(this).registerReceiver(mRegistrationBroadcastReceiver,
+                    new IntentFilter(APPConstants.REGISTRATION_COMPLETE));
+            isReceiverRegistered = true;
         }
     }
 

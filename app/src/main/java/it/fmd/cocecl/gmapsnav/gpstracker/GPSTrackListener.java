@@ -30,20 +30,11 @@ import it.fmd.cocecl.utilclass.ToolbarIconStates;
 
 public class GPSTrackListener extends Service {
 
-    public Activity activity;
-
-    public GPSTrackListener(Activity _activity) {
-
-        this.activity = _activity;
-    }
-
     PowerManager.WakeLock wakeLock;
 
     private LocationManager locationManager;
 
     ConnectionManager cm;
-
-    ToolbarIconStates tis;
 
     public GPSTrackListener() {
         // TODO Auto-generated constructor stub
@@ -61,7 +52,6 @@ public class GPSTrackListener extends Service {
         super.onCreate();
 
         cm = new ConnectionManager(getApplicationContext());
-        tis = new ToolbarIconStates(getApplicationContext(), activity);
 
         PowerManager pm = (PowerManager) getSystemService(POWER_SERVICE);
 
@@ -71,7 +61,6 @@ public class GPSTrackListener extends Service {
         // Toast.LENGTH_SHORT).show();
 
         Log.e("Google", "Service Created");
-
     }
 
     @Override
@@ -89,7 +78,7 @@ public class GPSTrackListener extends Service {
     }
 
     void handleStart(Intent intent, int startId) {
-        Log.e("Google", "Service Started");
+        Log.e("GPSTracker", "Service Started");
 
         locationManager = (LocationManager) getApplicationContext()
                 .getSystemService(Context.LOCATION_SERVICE);
@@ -114,7 +103,7 @@ public class GPSTrackListener extends Service {
         public void onLocationChanged(Location location) {
             // TODO Auto-generated method stub
 
-            Log.e("Google", "Location Changed");
+            Log.e("GPSTracker", "Location Changed");
 
             if (location == null)
                 return;
@@ -149,7 +138,6 @@ public class GPSTrackListener extends Service {
         @Override
         public void onProviderDisabled(String provider) {
             // TODO Auto-generated method stub
-            tis.gpsdisabled();
             stopService(new Intent(getApplicationContext(), GPSTrackListener.class));
 
         }
@@ -157,7 +145,6 @@ public class GPSTrackListener extends Service {
         @Override
         public void onProviderEnabled(String provider) {
             // TODO Auto-generated method stub
-            tis.gpsenabled();
             startService(new Intent(getApplicationContext(), GPSTrackListener.class));
 
         }

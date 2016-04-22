@@ -41,9 +41,7 @@ public class MainstatusFragment extends Fragment {
 
     //Status Views&Buttons
     TextView statustv;
-    Button button38;
-    Button button39;
-    Button button40;
+    Button button5, button12, button38, button39, button40, button42;
 
     CharSequence statusText;
 
@@ -62,13 +60,13 @@ public class MainstatusFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mainstatus, container, false);
 
         button38 = (Button) v.findViewById(R.id.button38);
-        final Button button39 = (Button) v.findViewById(R.id.button39);
-        final Button button40 = (Button) v.findViewById(R.id.button40);
+        button39 = (Button) v.findViewById(R.id.button39);
+        button40 = (Button) v.findViewById(R.id.button40);
 
-        final Button button5 = (Button) v.findViewById(R.id.button5);
-        final Button button12 = (Button) v.findViewById(R.id.button12);
+        button5 = (Button) v.findViewById(R.id.button5);
+        button12 = (Button) v.findViewById(R.id.button12);
 
-        final Button button42 = (Button) v.findViewById(R.id.button42);
+        button42 = (Button) v.findViewById(R.id.button42);
 
         //Status EB
         button38.setOnClickListener(new SetUnitStatus(getActivity()));
@@ -87,7 +85,7 @@ public class MainstatusFragment extends Fragment {
 
 
         // ReportIncident PlacesAutoComplete
-        button42.setOnClickListener(new ReportIncident(getActivity()));
+        button42.setOnClickListener(new ReportIncident(getActivity(), getContext()));
 
         countlv = (TextView) v.findViewById(R.id.textView113);
         statustv = (TextView) v.findViewById(R.id.textView111);

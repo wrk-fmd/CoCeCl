@@ -13,7 +13,6 @@ import android.util.Log;
 import com.google.android.gms.gcm.GcmListenerService;
 
 import it.fmd.cocecl.MainActivity;
-import it.fmd.cocecl.R;
 
 public class GCMListener extends GcmListenerService {
 
@@ -29,11 +28,17 @@ public class GCMListener extends GcmListenerService {
     // [START receive_message]
     @Override
     public void onMessageReceived(String from, Bundle data) {
-        String message = data.getString("message");
+        //String message = data.getString("message");
+        String messagetype = data.getString("mtype");
+        String messagetitle = data.getString("mtitle");
+        String messagebody = data.getString("mbody");
+
         Log.d(TAG, "From: " + from);
-        Log.d(TAG, "Message: " + message);
+        Log.d(TAG, "Messagetype: " + messagetype);
+        Log.d(TAG, "Messagebody: " + messagebody);
 
         if (from.startsWith("/topics/")) {
+            // TODO: get topic from server and subscribe
             // message received from some topic.
         } else {
             // normal downstream message.
@@ -51,17 +56,33 @@ public class GCMListener extends GcmListenerService {
          * In some cases it may be useful to show a notification indicating to the user
          * that a message was received.
          */
-        sendNotification(message);
+        //sendNotification(message);
         // [END_EXCLUDE]
+
+        if (messagetype == "typemessage") {
+            GCM_MessageDialog gcmmd = new GCM_MessageDialog();
+            gcmmd.showMessageDialog(getApplicationContext(), messagebody);
+        }
+
+        if (messagetype == "WakeUPCall") {
+            //TODO estabish server connection
+        }
+
+        if (messagetype == "typenotification") {
+            sendNotification(messagetitle, messagebody);
+
+            GCM_MessageNotification gcmmn = new GCM_MessageNotification();
+            //gcmmn.messageNotification(getApplicationContext(), messagetitle, messagebody);
+        }
     }
     // [END receive_message]
 
     /**
      * Create and show a simple notification containing the received GCM message.
      *
-     * @param message GCM message received.
+     * @param messagebody GCM message received.
      */
-    private void sendNotification(String message) {
+    private void sendNotification(String messagetitle, String messagebody) {
         Intent intent = new Intent(this, MainActivity.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -70,8 +91,8 @@ public class GCMListener extends GcmListenerService {
         Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
                 //.setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("GCM Message")
-                .setContentText(message)
+                .setContentTitle(messagetitle)
+                .setContentText(messagebody)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);

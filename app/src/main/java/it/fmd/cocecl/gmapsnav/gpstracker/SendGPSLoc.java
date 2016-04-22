@@ -9,9 +9,6 @@ import org.apache.http.params.HttpParams;
 
 import java.io.IOException;
 
-/**
- * Created by schneider on 27.03.16.
- */
 public class SendGPSLoc /*extends AsyncTask<String, String, Boolean>*/ {
 
     public SendGPSLoc() {

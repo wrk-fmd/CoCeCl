@@ -8,6 +8,8 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <include layout="@layout/fab3x_layout" />
+
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -22,33 +24,33 @@
             app:backgroundTint="@color/colorAccent"
             app:pressedTranslationZ="12dp"
             android:src="@drawable/ic_add_circle_black_18dp" />
+        <!--
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab2_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="160dp"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:visibility="invisible"
+                    app:backgroundTint="@color/colorFAB2"
+                    app:elevation="6dp"
+                    app:pressedTranslationZ="12dp"
+                    android:src="@drawable/ic_done_black_18dp" />
 
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab2_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="160dp"
-            android:layout_gravity="left|bottom"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:visibility="invisible"
-            app:backgroundTint="@color/colorFAB2"
-            app:elevation="6dp"
-            app:pressedTranslationZ="12dp"
-            android:src="@drawable/ic_done_black_18dp" />
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/fab1_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="90dp"
-            android:layout_gravity="left|bottom"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:visibility="invisible"
-            app:elevation="6dp"
-            app:backgroundTint="@color/colorFAB1"
-            app:pressedTranslationZ="12dp"
-            android:src="@drawable/ic_play_light" />
-
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/fab1_map"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="90dp"
+                    android:layout_gravity="left|bottom"
+                    android:layout_marginRight="@dimen/fab_margin"
+                    android:visibility="invisible"
+                    app:elevation="6dp"
+                    app:backgroundTint="@color/colorFAB1"
+                    app:pressedTranslationZ="12dp"
+                    android:src="@drawable/ic_play_light" />
+        -->
         <fragment xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:tools="http://schemas.android.com/tools"
             android:id="@+id/supportmap"
@@ -56,5 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             tools:layout="@layout/fragment_map" />
+
     </FrameLayout>
+
 </android.support.design.widget.CoordinatorLayout>

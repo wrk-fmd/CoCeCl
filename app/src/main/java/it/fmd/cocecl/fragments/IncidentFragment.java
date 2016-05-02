@@ -19,7 +19,6 @@ import java.util.HashMap;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.AssignedUnits;
 import it.fmd.cocecl.contentviews.GridViewUtil;
-import it.fmd.cocecl.contentviews.MyTestAdapter;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.dataStorage.PatData;
 import it.fmd.cocecl.gmapsnav.StartNavigation;
@@ -202,7 +201,6 @@ public class IncidentFragment extends Fragment {
         HashMap<String, String> assunits = AssignedUnits.getInstance().getAssunits();
 
         //adapter.add(newUnits);
-        showasUnits(assunits);
 
         // OnClick Event load Incident Data from Storage (if more than one) to fields in IncidentFragment
         gridView.setClickable(true);
@@ -215,11 +213,6 @@ public class IncidentFragment extends Fragment {
 
             }
         });
-    }
-
-    public void showasUnits(HashMap<String, String> assunits) {
-        MyTestAdapter adapter = new MyTestAdapter(assunits);
-        gridView.setAdapter(adapter);
     }
 
     @Override

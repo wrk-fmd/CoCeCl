@@ -146,6 +146,10 @@ public class MainstatusFragment extends Fragment {
 
                 incidentlv.setItemChecked(position, true);
 
+                /*
+                Set incident data on persistent App Notification
+                 */
+
                 //Update NotificationBar
                 NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(getActivity())
                         .setSmallIcon(R.mipmap.coceclstbar)

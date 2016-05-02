@@ -81,6 +81,13 @@ public class Phonecalls extends MainActivity {
             Toast.makeText(getApplicationContext(), "Keine Nummer ausgewählt!", Toast.LENGTH_LONG).show();
         }
     }
+
+    public void callfmdit(Context context) {
+
+        PackageManager pm = context.getPackageManager();
+        callIntent.setData(Uri.parse("tel:" + APPConstants.fmdit));
+        context.startActivity(callIntent);
+    }
 /*
     public void lscall() {
         Intent callIntent = new Intent(Intent.ACTION_CALL);

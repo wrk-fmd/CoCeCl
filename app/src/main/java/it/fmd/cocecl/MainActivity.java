@@ -60,6 +60,7 @@ import it.fmd.cocecl.utilclass.ConnectionBroadcastReceiver;
 import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
+import it.fmd.cocecl.utilclass.GCMMessagesDialog;
 import it.fmd.cocecl.utilclass.GPSToolbarIcon;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
@@ -283,7 +284,8 @@ public class MainActivity extends AppCompatActivity {
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
         // 8 KH Pläne
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
-
+        // 9 MessageLOG
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1), true, "5 msg"/*message counter*/));
 
         // Recycle the typed array
         navMenuIcons.recycle();
@@ -387,6 +389,11 @@ public class MainActivity extends AppCompatActivity {
                 // PTCA Dialog
                 DialogPTCAInfo ptca = new DialogPTCAInfo(this);
                 ptca.openPTCAPlan();
+                break;
+            case 8:
+                // GCM Messages
+                GCMMessagesDialog gcmmd = new GCMMessagesDialog(this);
+                gcmmd.openGCMMessageDialog();
                 break;
 
             default:

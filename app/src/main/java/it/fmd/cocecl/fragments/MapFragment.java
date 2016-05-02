@@ -46,6 +46,8 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
 
     RouteBuilder rb;
 
+    private boolean FAB_Status = false;
+
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
@@ -78,7 +80,17 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
             @Override
             public void onClick(View view) {
                 Animations anim = new Animations(getActivity());
-                anim.animateFAB();
+                //anim.animateFAB();
+
+                if (FAB_Status == false) {
+                    //Display FAB menu
+                    anim.expandFAB();
+                    FAB_Status = true;
+                } else {
+                    //Close FAB menu
+                    anim.hideFAB();
+                    FAB_Status = false;
+                }
             }
         });
 

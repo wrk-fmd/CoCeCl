@@ -1,16 +1,24 @@
 package it.fmd.cocecl.gcm;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GcmPubSub;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.google.android.gms.iid.InstanceID;
 
 import java.io.IOException;
+
+import it.fmd.cocecl.R;
 
 public class SubscribeToTopicGCM {
 
     private GcmPubSub pubSub;
     private String token;
+    private final String TAG = "SubscribeToTopicGCM";
 
     /**
      * RegisterGCM subscribeToTopic method
@@ -20,7 +28,7 @@ public class SubscribeToTopicGCM {
 
         private String topic;
 
-        private static final String TAG = "MyActivity";
+        private static final String TAG = "SubscribeToTopicGCM";
         private static final String TOPIC_PREFIX = "/topics/";
 
         @Override
@@ -67,4 +75,55 @@ public class SubscribeToTopicGCM {
             */
         }
     }
+
+    /**
+     * Subscribe to a topic
+     */
+    public void subscribeToTopic(Context context, String topic) {
+        GcmPubSub pubSub = GcmPubSub.getInstance(context);
+        InstanceID instanceID = InstanceID.getInstance(context);
+        String token = null;
+        try {
+            token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId),
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            if (token != null) {
+                pubSub.subscribe(token, "/topics/" + topic, null);
+                Log.e(TAG, "Subscribed to topic: " + topic);
+            } else {
+                Log.e(TAG, "error: gcm registration id is null");
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Topic subscribe error. Topic: " + topic + ", error: " + e.getMessage());
+            Toast.makeText(context, "Topic subscribe error. Topic: " + topic + ", error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void unsubscribeFromTopic(Context context, String topic) {
+        GcmPubSub pubSub = GcmPubSub.getInstance(context);
+        InstanceID instanceID = InstanceID.getInstance(context);
+        String token = null;
+        try {
+            token = instanceID.getToken(context.getString(R.string.gcm_defaultSenderId),
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+            if (token != null) {
+                pubSub.unsubscribe(token, "");
+                Log.e(TAG, "Unsubscribed from topic: " + topic);
+            } else {
+                Log.e(TAG, "error: gcm registration id is null");
+            }
+        } catch (IOException e) {
+            Log.e(TAG, "Topic unsubscribe error. Topic: " + topic + ", error: " + e.getMessage());
+            Toast.makeText(context, "Topic subscribe error. Topic: " + topic + ", error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // subscribing to global topic
+    /*
+    private void subscribeToGlobalTopic() {
+        Intent intent = new Intent(this, GcmIntentService.class);
+        intent.putExtra(GcmIntentService.KEY, GcmIntentService.SUBSCRIBE);
+        intent.putExtra(GcmIntentService.TOPIC, Config.TOPIC_GLOBAL);
+        startService(intent);
+    }
+    */
 }

@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string-array name="country_names">
-        <item>Bhutan</item>
-        <item>Colombia</item>
-        <item>Italy</item>
-    </string-array>
     <array name="country_icons">
         <item>@drawable/home_24</item>
         <item>@drawable/info_24</item>
@@ -78,6 +73,8 @@
         <item>PATMAN</item>
         <item>ICD-10 2015</item>
         <item>PTCA Bereitschaft</item>
+        <item>Nachrichten</item>
+        <item>KH Pläne</item>
     </string-array>
 
     <!-- Nav Drawer List Item Icons -->
@@ -90,6 +87,7 @@
         <item>@drawable/contacts_24</item>
         <item>@drawable/briefcase_24</item>
         <item>@drawable/plus_24</item>
+        <item>@drawable/about_24</item>
         <item>@drawable/about_24</item>
     </array>
 

@@ -5,9 +5,13 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
@@ -116,4 +120,25 @@ public class GCMNotificationIntentService extends IntentService {
         // Showing Alert Message
         alertDialog.show();
     }
+/*
+    // Clears notification tray messages
+    public static void clearNotifications() {
+        NotificationManager notificationManager = (NotificationManager) MyApplication.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+    }
+    */
+
+    // Playing notification sound
+    /*
+    public void playNotificationSound() {
+        try {
+            Uri alarmSound = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                    + "://" + MyApplication.getInstance().getApplicationContext().getPackageName() + "/raw/notification");
+            Ringtone r = RingtoneManager.getRingtone(MyApplication.getInstance().getApplicationContext(), alarmSound);
+            r.play();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    */
 }

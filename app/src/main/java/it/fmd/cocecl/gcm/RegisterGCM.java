@@ -25,6 +25,61 @@ public class RegisterGCM extends IntentService {
         super(TAG);
     }
 
+    public static final String KEY = "key";
+    public static final String TOPIC = "topic";
+    public static final String SUBSCRIBE = "subscribe";
+    public static final String UNSUBSCRIBE = "unsubscribe";
+
+    /*
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        String key = intent.getStringExtra(KEY);
+        switch (key) {
+            case SUBSCRIBE:
+                // subscribe to a topic
+                String topic = intent.getStringExtra(TOPIC);
+                subscribeToTopic(topic);
+                break;
+            case UNSUBSCRIBE:
+                String topic1 = intent.getStringExtra(TOPIC);
+                unsubscribeFromTopic(topic1);
+                break;
+            default:
+                // if key is not specified, register with GCM
+                registerGCM();
+        }
+
+    }
+
+    /**
+     * Registering with GCM and obtaining the gcm registration id
+     *//*
+    private void registerGCM() {
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        String token = null;
+
+        try {
+            InstanceID instanceID = InstanceID.getInstance(this);
+            token = instanceID.getToken(getString(R.string.gcm_defaultSenderId),
+                    GoogleCloudMessaging.INSTANCE_ID_SCOPE, null);
+
+            Log.e(TAG, "GCM Registration Token: " + token);
+
+            // sending the registration id to our server
+            sendRegistrationToServer(token);
+
+            sharedPreferences.edit().putBoolean(Config.SENT_TOKEN_TO_SERVER, true).apply();
+        } catch (Exception e) {
+            Log.e(TAG, "Failed to complete token refresh", e);
+
+            sharedPreferences.edit().putBoolean(Config.SENT_TOKEN_TO_SERVER, false).apply();
+        }
+        // Notify UI that registration has completed, so the progress indicator can be hidden.
+        Intent registrationComplete = new Intent(Config.REGISTRATION_COMPLETE);
+        registrationComplete.putExtra("token", token);
+        LocalBroadcastManager.getInstance(this).sendBroadcast(registrationComplete);
+    }
+*/
     @Override
     protected void onHandleIntent(Intent intent) {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -72,7 +127,7 @@ public class RegisterGCM extends IntentService {
      *
      * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
+    private void sendRegistrationToServer(final String token) {
         // Add custom implementation, as needed.
     }
 

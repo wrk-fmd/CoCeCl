@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    android:title="Settings">
+
+    <PreferenceCategory android:title="Allgemein">
+
+        <SwitchPreference
+            android:key="pref_fullscreen"
+            android:title="Fullscreen"
+            android:defaultValue="false" />
+
+        <SwitchPreference
+            android:key="pref_gps"
+            android:title="GPS"
+            android:defaultValue="true"
+            android:enabled="false" />
+
+        <SwitchPreference
+            android:key="pref_radio"
+            android:title="Funk"
+            android:defaultValue="false"
+            android:enabled="false" />
+
+        <SwitchPreference
+            android:key="pref_alarmsound"
+            android:title="Alarm Sounds"
+            android:defaultValue="true"
+            android:enabled="false" />
+
+        <SwitchPreference
+            android:key="pref_darklight"
+            android:title="Hell/Dunkel"
+            android:defaultValue="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Navigation">
+
+        <SwitchPreference
+            android:key="pref_maps"
+            android:title="Maps on/off"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="pref_mapsfastshort"
+            android:title="Fast or Short"
+            android:defaultValue="true" />
+
+        <SwitchPreference
+            android:key="pref_avoidmotorway"
+            android:title="Avoid Motorway"
+            android:defaultValue="false"
+            android:enabled="false" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Optional">
+        <ListPreference
+            android:title="Sprache"
+            android:key="pref_lang"
+            android:defaultValue="de"
+            android:entries="@array/language"
+            android:entryValues="@array/languageAlias"></ListPreference>
+
+        <Preference
+            android:title="Call FMD-IT"
+            android:key="pref_callfmdit"></Preference>
+
+        <intent android:action="android.intent.action.CALL"></intent>
+    </PreferenceCategory>
+
+</PreferenceScreen>

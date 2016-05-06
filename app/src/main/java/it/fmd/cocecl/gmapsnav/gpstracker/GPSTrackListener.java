@@ -30,6 +30,8 @@ import it.fmd.cocecl.utilclass.ToolbarIconStates;
 
 public class GPSTrackListener extends Service {
 
+    private static final String TAG = "GPSTracker";
+
     PowerManager.WakeLock wakeLock;
 
     private LocationManager locationManager;
@@ -60,7 +62,7 @@ public class GPSTrackListener extends Service {
         // Toast.makeText(getApplicationContext(), "Service Created",
         // Toast.LENGTH_SHORT).show();
 
-        Log.e("Google", "Service Created");
+        Log.e("GPSTracker", "Service Created");
     }
 
     @Override
@@ -78,7 +80,7 @@ public class GPSTrackListener extends Service {
     }
 
     void handleStart(Intent intent, int startId) {
-        Log.e("GPSTracker", "Service Started");
+        Log.e(TAG, "Service Started");
 
         locationManager = (LocationManager) getApplicationContext()
                 .getSystemService(Context.LOCATION_SERVICE);
@@ -103,7 +105,7 @@ public class GPSTrackListener extends Service {
         public void onLocationChanged(Location location) {
             // TODO Auto-generated method stub
 
-            Log.e("GPSTracker", "Location Changed");
+            Log.e(TAG, "Location Changed");
 
             if (location == null)
                 return;

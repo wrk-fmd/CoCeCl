@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import java.util.HashMap;
 
 import it.fmd.cocecl.LoginActivity;
+import it.fmd.cocecl.dataStorage.UserData;
 
 public class SessionManagement {
 
@@ -27,6 +28,11 @@ public class SessionManagement {
     // Shared pref mode
     int PRIVATE_MODE = 0;
 
+    //TODO: redundant
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_USER_NAME = "user_name";
+    private static final String KEY_USER_EMAIL = "user_email";
+
 
     // Constructor
     public SessionManagement(Context context) {
@@ -39,6 +45,7 @@ public class SessionManagement {
      * Create login session
      */
     public void createUserLoginSession(String name, String dnr, String email) {
+
         // Storing login value as TRUE
         editor.putBoolean(IS_LOGIN, true);
 
@@ -53,6 +60,28 @@ public class SessionManagement {
 
         // commit changes
         editor.commit();
+    }
+
+    public void storeUser(UserData user) {
+
+        editor.putString(KEY_USER_ID, user.getUserID());
+        editor.putString(KEY_USER_NAME, user.getUserFName());
+        editor.putString(KEY_USER_EMAIL, user.getUserEmail());
+
+        editor.commit();
+    }
+
+    public UserData getUser() {
+        if (pref.getString(KEY_USER_ID, null) != null) {
+            String id, name, email;
+            id = pref.getString(KEY_USER_ID, null);
+            name = pref.getString(KEY_USER_NAME, null);
+            email = pref.getString(KEY_USER_EMAIL, null);
+
+            //UserData user = new UserData(id, name, email);
+            //return user;
+        }
+        return null;
     }
 
     /**

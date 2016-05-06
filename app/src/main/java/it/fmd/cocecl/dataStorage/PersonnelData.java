@@ -2,9 +2,9 @@ package it.fmd.cocecl.dataStorage;
 
 import java.io.Serializable;
 
-/**
- * Get personnel from DB, write into UnitInfo Screen
- * LogIn Request
+/*
+ * Load personnel, add to unitinfo screen
+ * Shows all attached members
  */
 
 public class PersonnelData implements Serializable {
@@ -14,9 +14,7 @@ public class PersonnelData implements Serializable {
     String MAFamilyname;
     String MADnr;
     String MAEmail;
-
-    String MAPassword;
-    String gcmID;
+    String MAPhnnbr;
 
     public String getMAFamilyname() {
         return MAFamilyname;
@@ -50,19 +48,11 @@ public class PersonnelData implements Serializable {
         this.MAEmail = MAEmail;
     }
 
-    public String getMAPassword() {
-        return MAPassword;
+    public String getMAPhnnbr() {
+        return MAPhnnbr;
     }
 
-    public void setMAPassword(String MAPassword) {
-        this.MAPassword = MAPassword;
-    }
-
-    public String getGcmID() {
-        return gcmID;
-    }
-
-    public void setGcmID(String gcmID) {
-        this.gcmID = gcmID;
+    public void setMAPhnnbr(String MAPhnnbr) {
+        this.MAPhnnbr = MAPhnnbr;
     }
 }

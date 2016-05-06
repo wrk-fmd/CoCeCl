@@ -16,6 +16,8 @@ public class NotifiBarIcon {
         this.activity = _activity;
     }
 
+    private int NOTIFICATION_ID = 991;
+
     public void StatusBarAppIcon() {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(activity)
@@ -25,11 +27,11 @@ public class NotifiBarIcon {
                 .setOngoing(true);
 
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(991, mBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 
     public void removeSBAI() {
         NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.cancel(991);
+        notificationManager.cancel(NOTIFICATION_ID);
     }
 }

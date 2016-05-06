@@ -3,7 +3,9 @@ package it.fmd.cocecl.dataStorage;
 import java.io.Serializable;
 
 public class GCMMessage implements Serializable {
-    String id, title, message, createdAt;
+    private static final long serialVersionUID = 1L;
+
+    public String id, title, message, createdAt;
 
     public GCMMessage() {
     }

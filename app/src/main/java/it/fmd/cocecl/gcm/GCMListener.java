@@ -1,6 +1,5 @@
 package it.fmd.cocecl.gcm;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -10,13 +9,9 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.support.v4.content.LocalBroadcastManager;
 import android.support.v7.app.AlertDialog;
 import android.text.Html;
-import android.text.TextUtils;
-import android.util.Config;
 import android.util.Log;
-import android.widget.ListView;
 
 import com.google.android.gms.gcm.GcmListenerService;
 
@@ -27,12 +22,17 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import it.fmd.cocecl.MainActivity;
-import it.fmd.cocecl.R;
-import it.fmd.cocecl.contentviews.GCMMessageAdapter;
 import it.fmd.cocecl.dataStorage.GCMMessage;
 import it.fmd.cocecl.utilclass.CheckBackground;
 
 public class GCMListener extends GcmListenerService {
+
+    public static final String KEY = "key";
+    public static final String TOPIC = "topic";
+
+    public static final String WAKEUPCALL = "wakeupcall";
+    public static final String TYPEMESSSAGE = "typemessage";
+    public static final String TYPENOTIFICATION = "typenotification";
 
     private static final String TAG = "GCMListener";
 
@@ -50,11 +50,13 @@ public class GCMListener extends GcmListenerService {
     public void onMessageReceived(String from, Bundle data) {
         //String message = data.getString("message");
         messagetype = data.getString("mtype");
+
         messagetitle = data.getString("mtitle");
         messagebody = data.getString("mbody");
 
         Log.d(TAG, "From: " + from);
         Log.d(TAG, "Messagetype: " + messagetype);
+        Log.d(TAG, "Messagetitle: " + messagetitle);
         Log.d(TAG, "Messagebody: " + messagebody);
 
 
@@ -64,7 +66,7 @@ public class GCMListener extends GcmListenerService {
         } else {
             // normal downstream message.
         }
-
+/*
         if (!CheckBackground.isAppIsInBackground(getApplicationContext())) {
 
             // app is in foreground, broadcast the push message
@@ -74,17 +76,17 @@ public class GCMListener extends GcmListenerService {
             pushNotification.putExtra("message", message);
             LocalBroadcastManager.getInstance(this).sendBroadcast(pushNotification);
             */
-            // play notification sound
+        // play notification sound
             /*
             NotificationUtils notificationUtils = new NotificationUtils();
             notificationUtils.playNotificationSound();
-            */
+            *//*
         } else {
 
             //TODO: create notification or snackbar
 
         }
-
+*/
         // [START_EXCLUDE]
         /**
          * Production applications would usually process the message here.
@@ -100,17 +102,48 @@ public class GCMListener extends GcmListenerService {
         //sendNotification(message);
         // [END_EXCLUDE]
 
-        if (messagetype == "typemessage") {
-            GCM_MessageDialog gcmmd = new GCM_MessageDialog();
-            gcmmd.showMessageDialog(getApplicationContext(), messagebody);
+        switch (messagetype) {
 
-            // store message & show in listview dialog
-            //storeMessage();
-        }
+            case TYPEMESSSAGE:
+                if (!CheckBackground.isAppIsInBackground(getApplicationContext())) {
 
-        if (messagetype == "WakeUPCall") {
-            //TODO estabish server connection
+                    // foreground, create message dialog
+/*
+                    GCM_MessageDialog gcmmd = new GCM_MessageDialog();
+                    gcmmd.showMessageDialog(getApplicationContext(), messagebody, messagetitle);
+*/
+
+                    // store message & show in listview dialog
+                    storeMessage();
+
+                } else {
+
+                    // background, create notification
+                    //sendNotification(messagetitle, messagebody);
+
+                    GCM_MessageNotification gcmnotifi = new GCM_MessageNotification();
+                    gcmnotifi.messageNotification(getApplicationContext(), messagetitle, messagebody);
+                    // play notification sound
+                    /*
+                    NotificationUtils notificationUtils = new NotificationUtils();
+                    notificationUtils.playNotificationSound();
+                    */
+                    //TODO: create notification or snackbar
+
+                    // store message & show in listview dialog
+                    storeMessage();
+
+                }
+
+                break;
+            case WAKEUPCALL: // WakeUp Device and connect to server
+                //TODO estabish server connection
+                sendNotification(messagetitle, messagebody);
+                break;
         }
+    }
+/*
+
 
         if (messagetype == "typenotification") {
             sendNotification(messagetitle, messagebody);
@@ -119,6 +152,7 @@ public class GCMListener extends GcmListenerService {
             //gcmmn.messageNotification(getApplicationContext(), messagetitle, messagebody);
         }
     }
+    */
     // [END receive_message]
 
     /**
@@ -157,17 +191,15 @@ public class GCMListener extends GcmListenerService {
         builder.show();
     }
 
-    private ArrayList<GCMMessage> messageArrayList;
-
     public void storeMessage() {
+
+        Intent pushNotification = new Intent();
+        pushNotification.putExtra("msgtype", messagetype);
+        pushNotification.putExtra("msgtitle", messagetitle);
+        pushNotification.putExtra("msgbody", messagebody);
 
         // Construct the data source
         ArrayList<GCMMessage> messageArrayList = new ArrayList<GCMMessage>();
-        // Create the adapter to convert the array to views
-        GCMMessageAdapter adapter = new GCMMessageAdapter(this, messageArrayList);
-        // Attach the adapter to a ListView
-        //ListView listView = (ListView) findViewById(R.id.listView3);
-        //listView.setAdapter(adapter);
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.GERMAN);
@@ -180,5 +212,17 @@ public class GCMListener extends GcmListenerService {
         message.setCreatedAt(currenttime);
 
         messageArrayList.add(message);
+
+        Bundle gcmarray = new Bundle();
+        gcmarray.putSerializable("gcmmsgarray", messageArrayList);
+
+        // Intent Creation and Initialization
+        Intent passIntent = new Intent();
+        passIntent.setClass(getApplicationContext(), MainActivity.class);
+
+        // Put Bundle in to Intent and call start Activity
+        passIntent.putExtras(gcmarray);
+        passIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        startActivity(passIntent);
     }
 }

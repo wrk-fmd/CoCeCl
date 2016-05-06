@@ -6,9 +6,13 @@ import android.content.DialogInterface;
 
 public class GCM_MessageDialog {
 
-    public void showMessageDialog(Context context, String messagebody) {
+    /*
+    opens AlertDialog with message content if App is in foreground
+     */
+
+    public void showMessageDialog(Context context, String messagebody, String messagetitle) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        alertDialog.setTitle("Nachricht");
+        alertDialog.setTitle(messagetitle);
         alertDialog.setMessage(messagebody);
         alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                 new DialogInterface.OnClickListener() {

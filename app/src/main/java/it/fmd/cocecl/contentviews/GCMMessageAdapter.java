@@ -37,7 +37,7 @@ public class GCMMessageAdapter extends ArrayAdapter<GCMMessage> {
 
         // Get the data item for this position
 
-        GCMMessage gcmMessage = getItem(position);
+        GCMMessage gcmMessages = getItem(position);
 
         // Check if an existing view is being reused, otherwise inflate the view
 
@@ -59,13 +59,13 @@ public class GCMMessageAdapter extends ArrayAdapter<GCMMessage> {
 
         // Populate the data into the template view using the data object
 
-        sender.setText(gcmMessage.getId());
+        sender.setText(gcmMessages.getId());
 
-        date.setText(gcmMessage.getCreatedAt());
+        date.setText(gcmMessages.getCreatedAt());
 
-        title.setText(gcmMessage.getTitle());
+        title.setText(gcmMessages.getTitle());
 
-        body.setText(gcmMessage.getMessage());
+        body.setText(gcmMessages.getMessage());
 
         // Return the completed view to render on screen
 

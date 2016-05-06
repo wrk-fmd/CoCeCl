@@ -9,6 +9,8 @@ import it.fmd.cocecl.R;
 
 public class GCM_MessageNotification {
 
+    private int NOTIFICATION_ID = 992;
+
     public void messageNotification(Context context, String messagetitle, String messagebody) {
 
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
@@ -18,6 +20,6 @@ public class GCM_MessageNotification {
                 .setOngoing(false);
 
         NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(992, mBuilder.build());
+        notificationManager.notify(NOTIFICATION_ID, mBuilder.build());
     }
 }

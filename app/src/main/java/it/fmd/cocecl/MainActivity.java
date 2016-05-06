@@ -32,6 +32,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -47,8 +48,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import it.fmd.cocecl.contentviews.GCMMessageAdapter;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
+import it.fmd.cocecl.dataStorage.GCMMessage;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.fragments.MapFragment;
 import it.fmd.cocecl.gcm.GCMListener;
@@ -118,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
     //GCM 3.0
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
+
+    //MsgArray
+    ArrayList<GCMMessage> messageArrayList;
 
     // OnCreate Method // ------------------------------------- //
     @Override
@@ -393,7 +399,7 @@ public class MainActivity extends AppCompatActivity {
             case 8:
                 // GCM Messages
                 GCMMessagesDialog gcmmd = new GCMMessagesDialog(this);
-                gcmmd.openGCMMessageDialog();
+                gcmmd.openGCMMessageDialog(getIntent());
                 break;
 
             default:
@@ -529,6 +535,14 @@ public class MainActivity extends AppCompatActivity {
         alert.show();
     }
 
+    public void createMessageArray() {
+
+        if (messageArrayList == null) {
+            // Construct the data source
+            messageArrayList = new ArrayList<GCMMessage>();
+        }
+    }
+
     @Override
     protected void onStart() {
         super.onStart();
@@ -624,7 +638,7 @@ public class MainActivity extends AppCompatActivity {
 
         // unregister the receiver
         unregisterReceiver(cm.mReceiver);
-        //unregisterReceiver(cbr.toolbarBReceiver);
+        unregisterReceiver(cbr.toolbarBReceiver);
 
         //GCM
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);

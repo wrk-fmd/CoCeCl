@@ -32,6 +32,9 @@ public class APPConstants {
     public static final String MLS_CONFIG = "8.8.8.8/config";
     public static final String MLS_INFO = "8.8.8.8/config";
 
+    //MLS SMS GATEWAY PHN_NBR
+    public static final String MLS_SMS_GATEWAY = "+144";
+
     //COCESO API
     public static final String COCESO_API = "http://10.0.2.2/jsonapi/full.json";
 

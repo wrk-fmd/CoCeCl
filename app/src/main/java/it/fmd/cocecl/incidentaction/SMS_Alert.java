@@ -5,16 +5,18 @@ import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.widget.TextView;
 
+import it.fmd.cocecl.APPConstants;
 import it.fmd.cocecl.R;
 
 /**
- * Class used when Alert comes via SMS, if no network connection available
+ *  Used when Alert sent via SMS, if no network connection available
  */
 
 public class SMS_Alert extends Activity {
 
     static String phoneNumber1;
     static String SMSBody1;
+
     //SMS RECEIVER
     TextView SMSm;
     private CoordinatorLayout coordinatorLayout;
@@ -29,7 +31,7 @@ public class SMS_Alert extends Activity {
     public void setSMS() {
         //SMS Alert// write content to incident fields
 
-        if (phoneNumber1 == "+144") {
+        if (phoneNumber1.equals(APPConstants.MLS_SMS_GATEWAY)) {
             SMSm = (TextView) findViewById(R.id.bofield);
 
             SMSm.setText(SMSBody1);

@@ -22,8 +22,11 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 import it.fmd.cocecl.MainActivity;
+import it.fmd.cocecl.contentviews.GCMMessageAdapter;
 import it.fmd.cocecl.dataStorage.GCMMessage;
+import it.fmd.cocecl.dataStorage.MsgArray;
 import it.fmd.cocecl.utilclass.CheckBackground;
+import it.fmd.cocecl.utilclass.GetDateTime;
 
 public class GCMListener extends GcmListenerService {
 
@@ -113,8 +116,6 @@ public class GCMListener extends GcmListenerService {
                     gcmmd.showMessageDialog(getApplicationContext(), messagebody, messagetitle);
 */
 
-                    // store message & show in listview dialog
-                    storeMessage();
 
                 } else {
 
@@ -130,9 +131,6 @@ public class GCMListener extends GcmListenerService {
                     */
                     //TODO: create notification or snackbar
 
-                    // store message & show in listview dialog
-                    storeMessage();
-
                 }
 
                 break;
@@ -140,6 +138,11 @@ public class GCMListener extends GcmListenerService {
                 //TODO estabish server connection
                 sendNotification(messagetitle, messagebody);
                 break;
+        }
+
+        // store message & show in listview dialog
+        if (!messagetype.equals(WAKEUPCALL)) {
+            storeMessage();
         }
     }
 /*
@@ -191,38 +194,28 @@ public class GCMListener extends GcmListenerService {
         builder.show();
     }
 
-    public void storeMessage() {
-
-        Intent pushNotification = new Intent();
-        pushNotification.putExtra("msgtype", messagetype);
-        pushNotification.putExtra("msgtitle", messagetitle);
-        pushNotification.putExtra("msgbody", messagebody);
-
-        // Construct the data source
-        ArrayList<GCMMessage> messageArrayList = new ArrayList<GCMMessage>();
+    public String getTime(String currenttime) {
 
         final Calendar cal = Calendar.getInstance(TimeZone.getDefault());
         final SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss", Locale.GERMAN);
-        String currenttime = (sdf.format(cal.getTime()));
+        currenttime = (sdf.format(cal.getTime()));
+
+        return currenttime;
+    }
+
+    public void storeMessage() {
+
+        messagesender = "MLS";
+
+        GetDateTime dateTime = new GetDateTime();
 
         GCMMessage message = new GCMMessage();
         message.setId(messagesender);
         message.setTitle(messagetitle);
         message.setMessage(messagebody);
-        message.setCreatedAt(currenttime);
+        message.setCreatedAt(dateTime.getcurrentTime());
 
-        messageArrayList.add(message);
+        MsgArray.gcmMessages.add(message);
 
-        Bundle gcmarray = new Bundle();
-        gcmarray.putSerializable("gcmmsgarray", messageArrayList);
-
-        // Intent Creation and Initialization
-        Intent passIntent = new Intent();
-        passIntent.setClass(getApplicationContext(), MainActivity.class);
-
-        // Put Bundle in to Intent and call start Activity
-        passIntent.putExtras(gcmarray);
-        passIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        startActivity(passIntent);
     }
 }

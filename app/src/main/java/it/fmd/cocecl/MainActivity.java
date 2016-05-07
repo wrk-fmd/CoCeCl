@@ -53,6 +53,7 @@ import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
 import it.fmd.cocecl.dataStorage.GCMMessage;
 import it.fmd.cocecl.dataStorage.IncidentData;
+import it.fmd.cocecl.dataStorage.MsgArray;
 import it.fmd.cocecl.fragments.MapFragment;
 import it.fmd.cocecl.gcm.GCMListener;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
@@ -65,6 +66,7 @@ import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
 import it.fmd.cocecl.utilclass.GCMMessagesDialog;
 import it.fmd.cocecl.utilclass.GPSToolbarIcon;
+import it.fmd.cocecl.utilclass.GetDateTime;
 import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+    // slide menu items END
 
     public CheckPlayServices cps = new CheckPlayServices();
 
@@ -121,9 +124,6 @@ public class MainActivity extends AppCompatActivity {
     //GCM 3.0
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
-
-    //MsgArray
-    ArrayList<GCMMessage> messageArrayList;
 
     // OnCreate Method // ------------------------------------- //
     @Override
@@ -271,9 +271,18 @@ public class MainActivity extends AppCompatActivity {
 
         navDrawerItems = new ArrayList<NavDrawerItem>();
 
+        SessionManagement SM = new SessionManagement(this);
+        HashMap<String, String> user = SM.getUserDetails();
+
+        // get dnr
+        String dnr = user.get(SessionManagement.KEY_DNR);
+
+        GetDateTime dateTime = new GetDateTime();
+        String day = dateTime.getcurrentDay();
+
         // adding nav drawer items to array
         // 0 Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, "online"));
         // 1 Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // 2 Kommunikation
@@ -281,17 +290,17 @@ public class MainActivity extends AppCompatActivity {
         // 3 AmbulanzInfo
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[3], navMenuIcons.getResourceId(3, -1)));
         // 4 User
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, SessionManagement.KEY_DNR));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, dnr));
         // 5 PATMAN
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
         // 6 ICD-10
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1), true, "50+"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
         // 7 PTCA Plan
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[7], navMenuIcons.getResourceId(7, -1), true, day));
         // 8 KH Pläne
         //navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1)));
         // 9 MessageLOG
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1), true, "5 msg"/*message counter*/));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[8], navMenuIcons.getResourceId(8, -1), true, ""/*message counter*/));
 
         // Recycle the typed array
         navMenuIcons.recycle();
@@ -321,6 +330,9 @@ public class MainActivity extends AppCompatActivity {
                 getSupportActionBar().setTitle(mDrawerTitle);
                 // calling onPrepareOptionsMenu() to hide action bar icons
                 invalidateOptionsMenu();
+
+                navDrawerItems.get(8).setCount("" + MsgArray.gcmMessages.size());
+                adapter.notifyDataSetChanged();
             }
         };
         mDrawerLayout.addDrawerListener(mDrawerToggle);
@@ -330,6 +342,10 @@ public class MainActivity extends AppCompatActivity {
             //displayView(0);
             navDrawerAction(0);
         }
+
+        //Initialize GCM & SMS Msg ArrayList
+        /* Stored until MainActivity closes */
+        MsgArray.gcmMessages = new ArrayList<>();
     }
 
     //ONCREATE END ------------------------------------------------------------------------------
@@ -399,7 +415,7 @@ public class MainActivity extends AppCompatActivity {
             case 8:
                 // GCM Messages
                 GCMMessagesDialog gcmmd = new GCMMessagesDialog(this);
-                gcmmd.openGCMMessageDialog(getIntent());
+                gcmmd.openGCMMessageDialog(this);
                 break;
 
             default:
@@ -533,14 +549,6 @@ public class MainActivity extends AppCompatActivity {
         });
         AlertDialog alert = dlgBuilder.create();
         alert.show();
-    }
-
-    public void createMessageArray() {
-
-        if (messageArrayList == null) {
-            // Construct the data source
-            messageArrayList = new ArrayList<GCMMessage>();
-        }
     }
 
     @Override

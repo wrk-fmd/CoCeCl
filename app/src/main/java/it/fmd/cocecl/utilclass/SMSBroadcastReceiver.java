@@ -7,6 +7,14 @@ import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.telephony.SmsMessage;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import it.fmd.cocecl.APPConstants;
+import it.fmd.cocecl.dataStorage.GCMMessage;
+import it.fmd.cocecl.dataStorage.MsgArray;
 import it.fmd.cocecl.dataStorage.SMSData;
 import it.fmd.cocecl.incidentaction.SMS_Alert;
 
@@ -14,6 +22,9 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
 
     public static final String SMS_BUNDLE = "pdus";
     final SmsManager sms = SmsManager.getDefault();
+
+    private String smsBody;
+    private String smsAddress;
 
     SMSData sd = new SMSData();
 
@@ -26,23 +37,38 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
             for (int i = 0; i < sms.length; ++i) {
                 SmsMessage smsMessage = SmsMessage.createFromPdu((byte[]) sms[i]);
 
-                String smsBody = smsMessage.getMessageBody();
-                String address = smsMessage.getOriginatingAddress();
+                smsBody = smsMessage.getMessageBody();
+                smsAddress = smsMessage.getOriginatingAddress();
 
-                smsMessageStr += "SMS From: " + address + "\n";
+                smsMessageStr += "SMS From: " + smsAddress + "\n";
                 smsMessageStr += smsBody + "\n";
 
-                SMS_Alert.getSmsDetails(address, smsBody);
+                SMS_Alert.getSmsDetails(smsAddress, smsBody);
 
                 sd.setSmscontent(smsBody);
             }
 
-            //Toast.makeText(context, smsMessageStr, Toast.LENGTH_LONG).show();
-/*
-            //this will update the UI with message
-            SmsActivity inst = SmsActivity.instance();
-            inst.updateList(smsMessageStr);
-*/
+
+            /* If SMS sent by MCM store msg in ArrayList until app closed */
+            if (smsAddress.equals(APPConstants.MLS_SMS_GATEWAY)) {
+                storeSMS();
+            }
         }
+    }
+
+    private void storeSMS() {
+        // write msg in arraylist
+        GetDateTime dateTime = new GetDateTime();
+
+        String messagesender = "MLS";
+        String messagetitle = "SMS";
+
+        GCMMessage message = new GCMMessage();
+        message.setId(messagesender);
+        message.setTitle(messagetitle);
+        message.setMessage(smsBody);
+        message.setCreatedAt(dateTime.getcurrentTime());
+
+        MsgArray.gcmMessages.add(message);
     }
 }

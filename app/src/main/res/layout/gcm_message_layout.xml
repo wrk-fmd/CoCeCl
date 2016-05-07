@@ -46,5 +46,6 @@
         android:layout_below="@+id/textView11"
         android:layout_toRightOf="@+id/textView143"
         android:hint="MessageBody"
+        android:maxHeight="200dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 </RelativeLayout>

@@ -2,22 +2,19 @@ package it.fmd.cocecl.utilclass;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.os.Bundle;
-import android.widget.Adapter;
 import android.widget.RelativeLayout;
-
-import java.util.ArrayList;
+import android.widget.Toast;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.contentviews.GCMMessageAdapter;
-import it.fmd.cocecl.dataStorage.GCMMessage;
+import it.fmd.cocecl.dataStorage.MsgArray;
 
 public class GCMMessagesDialog {
 
     /*
-    Shows all received messages
+    Shows all received messages, including SMS from MCC GATEWAY
      */
 
     public Activity activity;
@@ -26,63 +23,45 @@ public class GCMMessagesDialog {
         this.activity = _activity;
     }
 
-    GCMMessageAdapter adapter;
+    public void openGCMMessageDialog(Context context) {
 
-    public void getArray(Intent intent) {
+        if (MsgArray.gcmMessages.isEmpty()) {
+            Toast.makeText(context, "Keine Nachrichten", Toast.LENGTH_SHORT).show();
 
-        try {
-            // Get the Bundle Object
-            Bundle bundleObject = intent.getExtras();
+        } else {
 
-            // Get ArrayList Bundle
-            ArrayList<GCMMessage> messageArrayList = (ArrayList<GCMMessage>) bundleObject.getSerializable("gcmmsgarray");
+            RelativeLayout gcmmessagelayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.gcm_message_listview, null);
 
             // Create the adapter to convert the array to views
-            adapter = new GCMMessageAdapter(activity, messageArrayList);
+            GCMMessageAdapter adapter = new GCMMessageAdapter(activity, MsgArray.gcmMessages);
 
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+            AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
+            dlgBuilder.setTitle("Nachrichten");
+            dlgBuilder.setCancelable(true);
 
-    public void openGCMMessageDialog(Intent intent) {
+            dlgBuilder.setView(gcmmessagelayout);
 
-        getArray(intent);
+            dlgBuilder.setAdapter(adapter, new DialogInterface.OnClickListener() {
 
-        RelativeLayout gcmmessagelayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.gcm_message_listview, null);
-        /*
-        // Construct the data source // TODO:get array from GCMListener storeMessage()
-        ArrayList<GCMMessage> messageArrayList = new ArrayList<GCMMessage>();
-
-        // Create the adapter to convert the array to views
-        GCMMessageAdapter adapter = new GCMMessageAdapter(activity, messageArrayList);
-*/
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
-        dlgBuilder.setTitle("Nachrichten");
-        dlgBuilder.setCancelable(true);
-
-        dlgBuilder.setView(gcmmessagelayout);
-
-        dlgBuilder.setAdapter(adapter, new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //TODO: set checked
-            }
-        });
-
-        dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        dialog.cancel();
-                    }
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //TODO: set checked
                 }
+            });
 
-        );
+            dlgBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 
-        AlertDialog alert = dlgBuilder.create();
-        alert.show();
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+
+                    dialog.cancel();
+                }
+                    }
+
+            );
+
+            AlertDialog alert = dlgBuilder.create();
+            alert.show();
+        }
     }
 }

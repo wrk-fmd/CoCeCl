@@ -15,20 +15,19 @@ import java.util.TimeZone;
 
 import it.fmd.cocecl.R;
 
-/**
+/*
  * TV 192-198 upper
  * TV 193-199 lower
+ */
+
+/**
+ * PTCA duty goes from 08:00 till 08:00 the next day
  */
 
 public class DialogPTCAInfo {
 
     public Activity activity;
-
-    public DialogPTCAInfo(Activity _activity) {
-
-        this.activity = _activity;
-    }
-
+    protected String akhphone = "+43 1 40400 - 7660";
     TextView daytv1;
     TextView daytv2;
 
@@ -42,7 +41,13 @@ public class DialogPTCAInfo {
     TextView phnbr2;
 
     String currenttime;
-    String akhphone = "+43 1 71165 - 92290";
+    private String time8 = "08:00:00";
+    private String time16 = "16:00:00";
+
+    public DialogPTCAInfo(Activity _activity) {
+
+        this.activity = _activity;
+    }
 
     public boolean checkTime() {
 
@@ -51,20 +56,18 @@ public class DialogPTCAInfo {
         currenttime = (sdf.format(cal.getTime()));
 
         try {
-            String string1 = "08:00:00";
-            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(string1);
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(time8);
             Calendar calendar1 = Calendar.getInstance();
             calendar1.setTime(time1);
 
-            String string2 = "16:00:00";
-            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(string2);
+            Date time2 = new SimpleDateFormat("HH:mm:ss").parse(time16);
             Calendar calendar2 = Calendar.getInstance();
             calendar2.setTime(time2);
             calendar2.add(Calendar.DATE, 1);
 
-            Date d = new SimpleDateFormat("HH:mm:ss").parse(currenttime);
+            Date timenow = new SimpleDateFormat("HH:mm:ss").parse(currenttime);
             Calendar calendar3 = Calendar.getInstance();
-            calendar3.setTime(d);
+            calendar3.setTime(timenow);
             calendar3.add(Calendar.DATE, 1);
 
             Date x = calendar3.getTime();
@@ -73,10 +76,34 @@ public class DialogPTCAInfo {
                 System.out.println(true);
                 return true;
             }
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
 
+        return false;
+    }
+
+    public boolean before8() {
+
+        try {
+
+            Date time1 = new SimpleDateFormat("HH:mm:ss").parse(time8);
+            Calendar calendar1 = Calendar.getInstance();
+            calendar1.setTime(time1);
+
+            Date timenow = new SimpleDateFormat("HH:mm:ss").parse(currenttime);
+            Calendar calendar3 = Calendar.getInstance();
+            calendar3.setTime(timenow);
+            calendar3.add(Calendar.DATE, 1);
+
+            Date bv8 = calendar3.getTime();
+            if (bv8.before(calendar1.getTime())) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         return false;
     }
@@ -88,17 +115,17 @@ public class DialogPTCAInfo {
 
         switch (day) {
             case Calendar.SUNDAY:
-                daytv1.setText("SO");
-                khtv1.setText("AKH");
-                khsttv1.setText("6D");
-                phnbr1.setText(akhphone);
+                if (before8()) {
+                    sat();
+                }
+                sun();
                 break;
 
             case Calendar.MONDAY:
-                daytv1.setText("MO");
-                khtv1.setText("RUD");
-                khsttv1.setText("12A");
-                phnbr1.setText("+43 1 71165 - 92290");
+                if (before8()) {
+                    sun();
+                }
+                mon();
 
                 if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
@@ -109,10 +136,10 @@ public class DialogPTCAInfo {
                 break;
 
             case Calendar.TUESDAY:
-                daytv1.setText("DI");
-                khtv1.setText("SMZO");
-                khsttv1.setText("Pav.3, 3.Stock");
-                phnbr1.setText("+43 1 28802 - 743199");
+                if (before8()) {
+                    mon();
+                }
+                tue();
 
                 if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
@@ -123,10 +150,10 @@ public class DialogPTCAInfo {
                 break;
 
             case Calendar.WEDNESDAY:
-                daytv1.setText("MI");
-                khtv1.setText("KHH");
-                khsttv1.setText("Pav.8, 4.Stock");
-                phnbr1.setText("+43 664 8445271");
+                if (before8()) {
+                    tue();
+                }
+                wed();
 
                 if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
@@ -137,10 +164,10 @@ public class DialogPTCAInfo {
                 break;
 
             case Calendar.THURSDAY:
-                daytv1.setText("DO");
-                khtv1.setText("WIL");
-                khsttv1.setText("Pav.29, C Süd");
-                phnbr1.setText("+43 1 49150 - 2306");
+                if (before8()) {
+                    wed();
+                }
+                thu();
 
                 if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
@@ -151,10 +178,10 @@ public class DialogPTCAInfo {
                 break;
 
             case Calendar.FRIDAY:
-                daytv1.setText("FR");
-                khtv1.setText("HAN");
-                khsttv1.setText("Pav.2, 2.Stock");
-                phnbr1.setText("+43 1 91021 - 85250");
+                if (before8()) {
+                    thu();
+                }
+                fry();
 
                 if (checkTime()) {
                     daytv2.setText("8-16 Uhr");
@@ -165,10 +192,10 @@ public class DialogPTCAInfo {
                 break;
 
             case Calendar.SATURDAY:
-                daytv1.setText("SO");
-                khtv1.setText("AKH");
-                khsttv1.setText("6D");
-                phnbr1.setText(akhphone);
+                if (before8()) {
+                    fry();
+                }
+                sat();
                 break;
         }
     }
@@ -213,5 +240,54 @@ public class DialogPTCAInfo {
 
         AlertDialog alert = dlgBuilder.create();
         alert.show();
+    }
+
+    private void sun() {
+        daytv1.setText("SO");
+        khtv1.setText("AKH");
+        khsttv1.setText("6D");
+        phnbr1.setText(akhphone);
+    }
+
+    private void mon() {
+        daytv1.setText("MO");
+        khtv1.setText("RUD");
+        khsttv1.setText("12A");
+        phnbr1.setText("+43 1 71165 - 92290");
+    }
+
+    private void tue() {
+        daytv1.setText("DI");
+        khtv1.setText("SMZO");
+        khsttv1.setText("Pav.3, 3.Stock");
+        phnbr1.setText("+43 1 28802 - 743199");
+    }
+
+    private void wed() {
+        daytv1.setText("MI");
+        khtv1.setText("KHH");
+        khsttv1.setText("Pav.8, 4.Stock");
+        phnbr1.setText("+43 664 8445271");
+    }
+
+    private void thu() {
+        daytv1.setText("DO");
+        khtv1.setText("WIL");
+        khsttv1.setText("Pav.29, C Süd");
+        phnbr1.setText("+43 1 49150 - 2306");
+    }
+
+    private void fry() {
+        daytv1.setText("FR");
+        khtv1.setText("HAN");
+        khsttv1.setText("Pav.2, 2.Stock");
+        phnbr1.setText("+43 1 91021 - 85250");
+    }
+
+    private void sat() {
+        daytv1.setText("SO");
+        khtv1.setText("AKH");
+        khsttv1.setText("6D");
+        phnbr1.setText(akhphone);
     }
 }

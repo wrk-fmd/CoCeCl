@@ -12,6 +12,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.dataStorage.MsgArray;
 
 public class NavDrawerListAdapter extends BaseAdapter {
 

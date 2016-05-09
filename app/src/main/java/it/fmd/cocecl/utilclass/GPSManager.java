@@ -65,9 +65,11 @@ public class GPSManager extends Service implements LocationListener {
                 this.canGetLocation = true;
                 // First get location from Network Provider
                 if (isNetworkEnabled) {
+                    /*
                     if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
                     }
+                    */
                     locationManager.requestLocationUpdates(
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
@@ -116,6 +118,7 @@ public class GPSManager extends Service implements LocationListener {
      * */
     public void stopUsingGPS() {
         if (locationManager != null) {
+            /*
             if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 // TODO: Consider calling
                 //    ActivityCompat#requestPermissions
@@ -126,6 +129,7 @@ public class GPSManager extends Service implements LocationListener {
                 // for ActivityCompat#requestPermissions for more details.
                 return;
             }
+            */
             locationManager.removeUpdates(GPSManager.this);
             }
         }

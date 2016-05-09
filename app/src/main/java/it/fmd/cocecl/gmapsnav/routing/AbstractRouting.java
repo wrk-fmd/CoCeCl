@@ -3,23 +3,23 @@ package it.fmd.cocecl.gmapsnav.routing;
 /**
  * Async Task to access the Google Direction API and return the routing data
  * which is then parsed and converting to a route overlay using some classes created by Hesham Saeed.
- *
  * @author Joel Dean
  * @author Furkan Tektas
  * Requires an instance of the map activity and the application's current context for the progress dialog.
+ *
  */
 
 import android.os.AsyncTask;
 
-import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
-public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Route>> {
-    protected ArrayList<RoutingListener> _aListeners;
+public abstract class AbstractRouting extends AsyncTask<Void, Void, List<Route>> {
+    protected List<RoutingListener> _aListeners;
 
     protected static final String DIRECTIONS_API_URL = "https://maps.googleapis.com/maps/api/directions/json?";
 
@@ -61,14 +61,13 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
         }
 
         protected static String getRequestParam(int bit) {
-            String ret = "";
+            StringBuilder ret = new StringBuilder();
             for (AvoidKind kind : AvoidKind.values()) {
                 if ((bit & kind._sBitValue) == kind._sBitValue) {
-                    ret += kind._sRequestParam;
-                    ret += "|";
+                    ret.append(kind._sRequestParam).append('|');
                 }
             }
-            return ret;
+            return ret.toString();
         }
     }
 
@@ -95,7 +94,7 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
         }
     }
 
-    protected void dispatchOnSuccess(ArrayList<Route> route, int shortestRouteIndex) {
+    protected void dispatchOnSuccess(List<Route> route, int shortestRouteIndex) {
         for (RoutingListener mListener : _aListeners) {
             mListener.onRoutingSuccess(route, shortestRouteIndex);
         }
@@ -114,8 +113,8 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
      * @return an array list containing the routes
      */
     @Override
-    protected ArrayList<Route> doInBackground(Void... voids) {
-        ArrayList<Route> result = new ArrayList<Route>();
+    protected List<Route> doInBackground(Void... voids) {
+        List<Route> result = new ArrayList<Route>();
         try {
             result = new GoogleParser(constructURL()).parse();
         } catch (RouteException e) {
@@ -131,7 +130,8 @@ public abstract class AbstractRouting extends AsyncTask<Void, Void, ArrayList<Ro
         dispatchOnStart();
     }
 
-    protected void onPostExecute(ArrayList<Route> result, GoogleMap googleMap) {
+    @Override
+    protected void onPostExecute(List<Route> result) {
         if (!result.isEmpty()) {
             int shortestRouteIndex = 0;
             int minDistance = Integer.MAX_VALUE;

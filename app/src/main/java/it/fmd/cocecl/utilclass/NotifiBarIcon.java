@@ -12,7 +12,6 @@ public class NotifiBarIcon {
     public Activity activity;
 
     public NotifiBarIcon(Activity _activity) {
-
         this.activity = _activity;
     }
 

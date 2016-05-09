@@ -2,9 +2,8 @@ package it.fmd.cocecl.unitstatus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.nfc.Tag;
+import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -28,12 +27,9 @@ import it.fmd.cocecl.utilclass.GPSManager;
 public class ReportIncident implements View.OnClickListener {
 
     public Activity activity;
-    public Context context;
 
-    public ReportIncident(Activity _activity, Context _context) {
-
+    public ReportIncident(Activity _activity) {
         this.activity = _activity;
-        this.context = _context;
     }
 
     @Override
@@ -53,9 +49,12 @@ public class ReportIncident implements View.OnClickListener {
 
         dlgBuilder.setView(reportincident);
 
-        GPSManager gps = new GPSManager(context);
+        GPSManager gps = new GPSManager(activity);
         double latitude = gps.getLatitude();
         double longitude = gps.getLongitude();
+
+        Log.d("GPS", "lat" + latitude);
+        Log.d("GPS", "lon" + longitude);
 
         GPSGeolocation.getAddressFromLocation(latitude, longitude,
                 activity, new GeocoderHandler());

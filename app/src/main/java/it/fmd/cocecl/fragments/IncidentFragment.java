@@ -12,6 +12,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.HashMap;
@@ -44,6 +45,9 @@ public class IncidentFragment extends Fragment {
     GridViewUtil gridView;
 
     Button createpatbtn;
+    Button sendPatDat; // Button on createPatient layout, send input to Server
+
+    RelativeLayout patmanlayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -60,6 +64,9 @@ public class IncidentFragment extends Fragment {
         final Button statusbtn = (Button) v.findViewById(R.id.button41);
         createpatbtn = (Button) v.findViewById(R.id.button46);
         final Button navbo = (Button) v.findViewById(R.id.button18);
+
+        patmanlayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.patman, null);
+        sendPatDat = (Button) patmanlayout.findViewById(R.id.sendPat);
 
         button10.setOnClickListener(new PatStatus(getActivity()));
 
@@ -86,6 +93,14 @@ public class IncidentFragment extends Fragment {
         statusView = (TextView) v.findViewById(R.id.statusView);
 
         gridView = (GridViewUtil) v.findViewById(R.id.asUnitGV);
+
+        sendPatDat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CreatePat createpat = new CreatePat(activity);
+                createpat.createpat();
+            }
+        });
 
         return v;
     }

@@ -48,7 +48,6 @@ public class SMSBroadcastReceiver extends BroadcastReceiver {
                 sd.setSmscontent(smsBody);
             }
 
-
             /* If SMS sent by MCM store msg in ArrayList until app closed */
             if (smsAddress.equals(APPConstants.MLS_SMS_GATEWAY)) {
                 storeSMS();

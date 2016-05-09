@@ -132,9 +132,7 @@ public class GPSTrackListener extends Service {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-
             }
-
         }
 
         @Override

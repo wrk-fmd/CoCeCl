@@ -12,6 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.w3c.dom.Text;
+
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.dataStorage.PatData;
 
@@ -115,6 +117,32 @@ public class CreatePat implements View.OnClickListener {
         alert.show();
     }
 
+    private void createNewPat() {
+
+        patplsnr = addpatplsnr.getText().toString();
+        patlastname = addpatlastname.getText().toString();
+        patfirstname = addpatfirstname.getText().toString();
+        patdatebirth = addpatdatebirth.getText().toString();
+        patsvnr = addpatsvnr.getText().toString();
+        patgender = addpatgender.getSelectedItem().toString();
+        patward = addpatward.getSelectedItem().toString();
+
+        spinnerint = addpatgender.getSelectedItemPosition();
+
+
+        PatData patdat = new PatData();
+        patdat.setPatbdate(patdatebirth);
+        patdat.setPatsvnr(patsvnr);
+        patdat.setPatgender(""); // TODO get value from spinner
+        patdat.setPatname(patlastname); // last-/familyname
+        patdat.setPatfname(patfirstname); // firstname
+        patdat.setPatID(""); // TODO: get from server
+        patdat.setPatgender(patgender);
+        patdat.setPatplsnr(patplsnr);
+        patdat.setPatward(patward);
+        //patdat.setPatdiagnosis();
+    }
+
     public void storePatData() {
         // Store in Instance State
         patplsnr = addpatplsnr.getText().toString();
@@ -159,6 +187,7 @@ public class CreatePat implements View.OnClickListener {
 
         RelativeLayout patmanlayout = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.patman, null);
         Button bettbtn = (Button) patmanlayout.findViewById(R.id.bettbtn);
+        Button sendPat = (Button) patmanlayout.findViewById(R.id.sendPat);
 
         final TextView textView120 = (TextView) activity.findViewById(R.id.textView120);
 
@@ -168,16 +197,24 @@ public class CreatePat implements View.OnClickListener {
 
         final Spinner addpatgender = (Spinner) patmanlayout.findViewById(R.id.spinner);
 
+        addpatward = (Spinner) patmanlayout.findViewById(R.id.spinner17);
+
         final EditText addpatfirstname = (EditText) patmanlayout.findViewById(R.id.editText2);
         final EditText addpatlastname = (EditText) patmanlayout.findViewById(R.id.editText);
         final EditText addpatdatebirth = (EditText) patmanlayout.findViewById(R.id.editText3);
         final EditText addpatsvnr = (EditText) patmanlayout.findViewById(R.id.editText32);
 
+        TextView textView4 = (TextView) patmanlayout.findViewById(R.id.textView4);
+
         AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
         //dlgBuilder.setMessage("Patient anlegen");
         dlgBuilder.setTitle("PATADMIN");
-        //LayoutInflater inflater = (MainActivity.this.getLayoutInflater());
+
+        //Change layout to match "change patient"
         bettbtn.setEnabled(false);
+        sendPat.setText("Pat. aktualisieren");
+        addpatward.setVisibility(View.GONE);
+        textView4.setVisibility(View.GONE);
 
         dlgBuilder = new AlertDialog.Builder(activity);
         //dlgBuilder.setMessage("Patient anlegen");

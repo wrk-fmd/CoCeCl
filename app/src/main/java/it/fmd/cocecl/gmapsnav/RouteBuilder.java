@@ -1,16 +1,22 @@
 package it.fmd.cocecl.gmapsnav;
 
+import android.app.Activity;
+import android.app.FragmentTransaction;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -19,8 +25,10 @@ import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import it.fmd.cocecl.R;
+import it.fmd.cocecl.fragments.MapFragment;
 import it.fmd.cocecl.gmapsnav.routing.AbstractRouting;
 import it.fmd.cocecl.gmapsnav.routing.Route;
 import it.fmd.cocecl.gmapsnav.routing.RouteException;
@@ -30,6 +38,10 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 
 public class RouteBuilder implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
+
+    //TODO: access googleMap from MapFragment and use this class
+
+    private static String TAG = "RouteBuilder";
 
     private Context context;
 
@@ -42,7 +54,7 @@ public class RouteBuilder implements OnMapReadyCallback,
     // Direction
     private GoogleApiClient googleApiClient;
     private PlaceAutoCompleteAdapter mAdapter;
-    //private ProgressDialog progressDialog;
+    private ProgressDialog progressDialog;
     private ArrayList<Polyline> polylines;
     //
     //protected LatLng start;
@@ -56,8 +68,23 @@ public class RouteBuilder implements OnMapReadyCallback,
 
     public void sendRequest() {
         if (cm.isOnline(context)) {
+
+            polylines = new ArrayList<>();
+            googleApiClient = new GoogleApiClient.Builder(context)
+                    .addApi(Places.GEO_DATA_API)
+                    .addConnectionCallbacks(this)
+                    .addOnConnectionFailedListener(this)
+                    .build();
+            MapsInitializer.initialize(context);
+            googleApiClient.connect();
+
+            mAdapter = new PlaceAutoCompleteAdapter(context, android.R.layout.simple_list_item_1,
+                    googleApiClient, BOUNDS_VIENNA, null);
+
             route();
+
         } else {
+
             //Toast.makeText(getActivity(), "No internet connectivity", Toast.LENGTH_SHORT).show();
         }
     }
@@ -87,14 +114,13 @@ public class RouteBuilder implements OnMapReadyCallback,
             }
         } else*/
         {
-            ProgressDialog progressDialog = new ProgressDialog(context);
             ProgressDialog.show(context, "Route",
                     "Fetching route information.", true);
             Routing routing = new Routing.Builder()
                     .travelMode(AbstractRouting.TravelMode.DRIVING)
                     //.optimize(true)
                     .withListener(this)
-                    .alternativeRoutes(true)
+                    .alternativeRoutes(false)
                     .waypoints(start, end)
                     .build();
             routing.execute();
@@ -103,7 +129,6 @@ public class RouteBuilder implements OnMapReadyCallback,
 
     @Override
     public void onRoutingFailure(RouteException e) {
-        ProgressDialog progressDialog = new ProgressDialog(context);
         // The Routing request failed
         progressDialog.dismiss();
         if (e != null) {
@@ -119,8 +144,7 @@ public class RouteBuilder implements OnMapReadyCallback,
     }
 
     @Override
-    public void onRoutingSuccess(ArrayList<Route> route, int shortestRouteIndex) {
-        ProgressDialog progressDialog = new ProgressDialog(context);
+    public void onRoutingSuccess(List<Route> route, int shortestRouteIndex) {
         progressDialog.dismiss();
         CameraUpdate center = CameraUpdateFactory.newLatLng(start);
         CameraUpdate zoom = CameraUpdateFactory.zoomTo(16);
@@ -169,27 +193,29 @@ public class RouteBuilder implements OnMapReadyCallback,
 
     @Override
     public void onConnected(Bundle bundle) {
-        //Log.i(LogUtil.TAG, "CONNECTED");
+        Log.i(TAG, "CONNECTED");
     }
 
     @Override
     public void onRoutingCancelled() {
-        //Log.i(LOG_TAG, "Routing was cancelled.");
+        Log.i(TAG, "Routing was cancelled.");
     }
 
     // GOOGLE API
     @Override
     public void onConnectionSuspended(int i) {
-        //Log.i(LogUtil.TAG, "CONNECTION SUSPENDED");
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
+        Log.i(TAG, "CONNECTION SUSPENDED");
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult) {
-        //Log.e(LogUtil.TAG, "CONNECTION FAILED");
-        //Log.v(LOG_TAG,connectionResult.toString());
+        Log.e(TAG, "CONNECTION FAILED");
+        Log.v(TAG, connectionResult.toString());
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        Log.i(TAG, "MAP READY");
+        Log.i(TAG, String.valueOf(googleMap.getMapType()));
     }
 }

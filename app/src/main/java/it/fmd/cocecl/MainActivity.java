@@ -1,7 +1,6 @@
 package it.fmd.cocecl;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -16,7 +15,6 @@ import android.content.res.TypedArray;
 import android.location.Location;
 import android.net.ConnectivityManager;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.CoordinatorLayout;
@@ -32,30 +30,21 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ListView;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import it.fmd.cocecl.contentviews.GCMMessageAdapter;
 import it.fmd.cocecl.contentviews.NavDrawerItem;
 import it.fmd.cocecl.contentviews.NavDrawerListAdapter;
-import it.fmd.cocecl.dataStorage.GCMMessage;
 import it.fmd.cocecl.dataStorage.IncidentData;
 import it.fmd.cocecl.dataStorage.MsgArray;
 import it.fmd.cocecl.fragments.MapFragment;
-import it.fmd.cocecl.gcm.GCMListener;
 import it.fmd.cocecl.gmapsnav.gpstracker.GPSTrackListener;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.UnitInfoDialog;
@@ -65,14 +54,14 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
 import it.fmd.cocecl.utilclass.GCMMessagesDialog;
+import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.GPSToolbarIcon;
 import it.fmd.cocecl.utilclass.GetDateTime;
-import it.fmd.cocecl.utilclass.JSONParser;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
 import it.fmd.cocecl.utilclass.Phonecalls;
 import it.fmd.cocecl.utilclass.SessionManagement;
-import it.fmd.cocecl.viewpager.TabPagerAdapter;
 import it.fmd.cocecl.utilclass.ToolbarIconStates;
+import it.fmd.cocecl.viewpager.TabPagerAdapter;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -99,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
 
     private ArrayList<NavDrawerItem> navDrawerItems;
     private NavDrawerListAdapter adapter;
+
+    private Boolean patman;
     // slide menu items END
 
     public CheckPlayServices cps = new CheckPlayServices();
@@ -124,6 +115,9 @@ public class MainActivity extends AppCompatActivity {
     //GCM 3.0
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private boolean isReceiverRegistered;
+
+    //Snackbar
+    private Snackbar snackbar;
 
     // OnCreate Method // ------------------------------------- //
     @Override
@@ -179,7 +173,7 @@ public class MainActivity extends AppCompatActivity {
             coordinatorLayout = (CoordinatorLayout) findViewById(R.id
                     .coordinatorLayout);
 
-            Snackbar snackbar = Snackbar
+            snackbar = Snackbar
                     .make(coordinatorLayout, "Welcome to CoCeCl", Snackbar.LENGTH_LONG)
                     .setAction("OK", new View.OnClickListener() {
                         @Override
@@ -280,9 +274,19 @@ public class MainActivity extends AppCompatActivity {
         GetDateTime dateTime = new GetDateTime();
         String day = dateTime.getcurrentDay();
 
+        TabletFeatures tf = new TabletFeatures(this);
+        patman = tf.patman_enable();
+
+        String online = "";
+        if (cm.isOnline(this)) {
+            online = "online";
+        } else {
+            online = "offlne";
+        }
+
         // adding nav drawer items to array
         // 0 Home
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, "online"));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[0], navMenuIcons.getResourceId(0, -1), true, online));
         // 1 Settings
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[1], navMenuIcons.getResourceId(1, -1)));
         // 2 Kommunikation
@@ -292,7 +296,7 @@ public class MainActivity extends AppCompatActivity {
         // 4 User
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[4], navMenuIcons.getResourceId(4, -1), true, dnr));
         // 5 PATMAN
-        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1)));
+        navDrawerItems.add(new NavDrawerItem(navMenuTitles[5], navMenuIcons.getResourceId(5, -1), true, "" + patman));
         // 6 ICD-10
         navDrawerItems.add(new NavDrawerItem(navMenuTitles[6], navMenuIcons.getResourceId(6, -1)));
         // 7 PTCA Plan
@@ -400,8 +404,21 @@ public class MainActivity extends AppCompatActivity {
                 showuserdialog();
                 break;
             case 5:
-                Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
-                startActivity(ipatman);
+                if (patman) {
+                    Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
+                    startActivity(ipatman);
+                } else {
+                    snackbar = Snackbar
+                            .make(coordinatorLayout, "PatMan disabled, only on tablet", Snackbar.LENGTH_LONG)
+                            .setAction("OK", new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    snackbar.dismiss();
+                                }
+                            });
+                    snackbar.show();
+                }
+
                 break;
             case 6:
                 // load icd-10 website in browser
@@ -787,182 +804,6 @@ public class MainActivity extends AppCompatActivity {
                 phcl.lsmaincall(this);
                 break;
         }
-    }
-
-    // PatMan start btn //
-    // TODO: not needed in test version
-
-    public void patmanstart(View v) {
-        if (v.getId() == R.id.button21) {
-
-            Button button21 = (Button) findViewById(R.id.button21);
-            button21.setOnClickListener(new View.OnClickListener() {
-
-                @Override
-                public void onClick(View arg0) {
-                    Intent ipatman = new Intent(getApplicationContext(), PatmanActivity.class);
-                    startActivity(ipatman);
-                }
-            });
-
-        }
-    }
-
-
-    //JSON GET and POST method// ----------------------------------------------------
-    // Async Task
-
-    //POST
-    class PostAsync extends AsyncTask<String, String, JSONObject> {
-
-        JSONParser jsonParser = new JSONParser();
-
-        private ProgressDialog pDialog;
-
-        private static final String TAG_SUCCESS = "success";
-        private static final String TAG_MESSAGE = "message";
-
-
-        @Override
-        protected void onPreExecute() {
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Attempting login...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... args) {
-
-            try {
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("name", args[0]);
-                params.put("password", args[1]);
-
-                Log.d("request", "starting");
-
-                JSONObject json = jsonParser.makeHttpRequest(
-                        APPConstants.URL_LOGIN, "POST", params);
-
-                if (json != null) {
-                    Log.d("JSON result", json.toString());
-
-                    return json;
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        protected void onPostExecute(JSONObject json) {
-
-            int success = 0;
-            String message = "";
-
-            if (pDialog != null && pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-
-            if (json != null) {
-                Toast.makeText(MainActivity.this, json.toString(),
-                        Toast.LENGTH_LONG).show();
-
-                try {
-                    success = json.getInt(TAG_SUCCESS);
-                    message = json.getString(TAG_MESSAGE);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (success == 1) {
-                Log.d("Success!", message);
-            } else {
-                Log.d("Failure", message);
-            }
-        }
-
-    }
-
-    //GET
-    class GetAsync extends AsyncTask<String, String, JSONObject> {
-
-        JSONParser jsonParser = new JSONParser();
-
-        private ProgressDialog pDialog;
-
-        private static final String TAG_SUCCESS = "success";
-        private static final String TAG_MESSAGE = "message";
-
-        @Override
-        protected void onPreExecute() {
-            pDialog = new ProgressDialog(MainActivity.this);
-            pDialog.setMessage("Attempting login...");
-            pDialog.setIndeterminate(false);
-            pDialog.setCancelable(true);
-            pDialog.show();
-        }
-
-        @Override
-        protected JSONObject doInBackground(String... args) {
-
-            try {
-
-                HashMap<String, String> params = new HashMap<>();
-                params.put("name", args[0]);
-                params.put("password", args[1]);
-
-                Log.d("request", "starting");
-
-                JSONObject json = jsonParser.makeHttpRequest(
-                        APPConstants.URL_LOGIN, "GET", params);
-
-                if (json != null) {
-                    Log.d("JSON result", json.toString());
-
-                    return json;
-                }
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            return null;
-        }
-
-        protected void onPostExecute(JSONObject json) {
-
-            int success = 0;
-            String message = "";
-
-            if (pDialog != null && pDialog.isShowing()) {
-                pDialog.dismiss();
-            }
-
-            if (json != null) {
-                Toast.makeText(MainActivity.this, json.toString(),
-                        Toast.LENGTH_LONG).show();
-
-                try {
-                    success = json.getInt(TAG_SUCCESS);
-                    message = json.getString(TAG_MESSAGE);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            if (success == 1) {
-                Log.d("Success!", message);
-            } else {
-                Log.d("Failure", message);
-            }
-        }
-
     }
 /*
     //Spinner on commFragment

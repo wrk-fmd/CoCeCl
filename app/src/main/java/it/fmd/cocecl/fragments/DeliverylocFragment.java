@@ -1,5 +1,6 @@
 package it.fmd.cocecl.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import it.fmd.cocecl.PatmanActivity;
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.TabletFeatures;
 import it.fmd.cocecl.dataStorage.PatData;
@@ -32,6 +34,8 @@ public class DeliverylocFragment extends Fragment {
     TextView patsvbdtv;
     TextView patgendertv;
 
+    Button patman;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +53,7 @@ public class DeliverylocFragment extends Fragment {
         patsvbdtv = (TextView) v.findViewById(R.id.textView179);//SVNR + Geb.Tag
         patgendertv = (TextView) v.findViewById(R.id.textView180);//Gender
 
+        patman = (Button) v.findViewById(R.id.button21);
 
         final Button changepatbtn = (Button) v.findViewById(R.id.changepatbtn);
         Button navao = (Button) v.findViewById(R.id.button19);
@@ -60,12 +65,34 @@ public class DeliverylocFragment extends Fragment {
 
         TabletFeatures tf = new TabletFeatures(getActivity());
 
-        //TODO NPE
-        //tf.patman_enable();
+        if (tf.patman_enable()) {
+            patman.setEnabled(true);
+            patman.setClickable(true);
+
+        } else {
+
+            patman.setEnabled(false);
+            patman.setEnabled(false);
+        }
+
+        patman.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                patmanstart();
+            }
+        });
 
         setPatDatatoTV();
 
         return v;
+    }
+
+    // PatMan start btn //
+    // TODO: not needed in test version
+
+    public void patmanstart() {
+        Intent ipatman = new Intent(getContext(), PatmanActivity.class);
+        startActivity(ipatman);
     }
 
     public void setPatDatatoTV() {

@@ -36,21 +36,20 @@ public class Routing extends AbstractRouting {
 
         // origin
         final LatLng origin = waypoints.get(0);
-        stringBuilder.append("origin=");
-        stringBuilder.append(origin.latitude);
-        stringBuilder.append(',');
-        stringBuilder.append(origin.longitude);
+        stringBuilder.append("origin=")
+                .append(origin.latitude)
+                .append(',')
+                .append(origin.longitude);
 
         // destination
         final LatLng destination = waypoints.get(waypoints.size() - 1);
-        stringBuilder.append("&destination=");
-        stringBuilder.append(destination.latitude);
-        stringBuilder.append(',');
-        stringBuilder.append(destination.longitude);
+        stringBuilder.append("&destination=")
+                .append(destination.latitude)
+                .append(',')
+                .append(destination.longitude);
 
         // travel
-        stringBuilder.append("&mode=");
-        stringBuilder.append(travelMode.getValue());
+        stringBuilder.append("&mode=").append(travelMode.getValue());
 
         // waypoints
         if (waypoints.size() > 2) {
@@ -61,9 +60,9 @@ public class Routing extends AbstractRouting {
                 final LatLng p = waypoints.get(i);
                 stringBuilder.append("via:"); // we don't want to parse the resulting JSON for 'legs'.
                 stringBuilder.append(p.latitude);
-                stringBuilder.append(",");
+                stringBuilder.append(',');
                 stringBuilder.append(p.longitude);
-                stringBuilder.append("|");
+                stringBuilder.append('|');
             }
         }
 

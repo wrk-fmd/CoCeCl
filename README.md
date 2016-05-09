@@ -1,6 +1,6 @@
 # CoCeCl
 _Coordination Center Client_  
-current version: 0.1.92
+current version: 0.2.16
 
 Android App for CoCeSo - _Coordination Center Software_  
 

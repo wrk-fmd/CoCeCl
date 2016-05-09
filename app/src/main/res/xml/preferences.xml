@@ -41,6 +41,11 @@
             android:title="Maps on/off"
             android:defaultValue="true" />
 
+        <CheckBoxPreference
+            android:key="pref_autorouting"
+            android:title="Route"
+            android:defaultValue="false" />
+
         <SwitchPreference
             android:key="pref_mapsfastshort"
             android:title="Fast or Short"

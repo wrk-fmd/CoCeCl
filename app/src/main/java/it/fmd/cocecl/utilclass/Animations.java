@@ -38,6 +38,7 @@ public class Animations {
         fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1_map);
         fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2_map);
         fab3 = (FloatingActionButton) activity.findViewById(R.id.fab3_map);
+
         fab_open = AnimationUtils.loadAnimation(activity, R.anim.fab_open);
         fab_close = AnimationUtils.loadAnimation(activity, R.anim.fab_close);
         rotate_forward = AnimationUtils.loadAnimation(activity, R.anim.rotate_forward);
@@ -67,6 +68,11 @@ public class Animations {
     }
 
     public void expandFAB() {
+
+        fab = (FloatingActionButton) activity.findViewById(R.id.fab_map);
+        fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1_map);
+        fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2_map);
+        fab3 = (FloatingActionButton) activity.findViewById(R.id.fab3_map);
 
         //Animations
         show_fab_1 = AnimationUtils.loadAnimation(activity, R.anim.fab1_show);
@@ -103,6 +109,11 @@ public class Animations {
 
 
     public void hideFAB() {
+
+        fab = (FloatingActionButton) activity.findViewById(R.id.fab_map);
+        fab1 = (FloatingActionButton) activity.findViewById(R.id.fab1_map);
+        fab2 = (FloatingActionButton) activity.findViewById(R.id.fab2_map);
+        fab3 = (FloatingActionButton) activity.findViewById(R.id.fab3_map);
 
         //Animations
         show_fab_1 = AnimationUtils.loadAnimation(activity, R.anim.fab1_show);

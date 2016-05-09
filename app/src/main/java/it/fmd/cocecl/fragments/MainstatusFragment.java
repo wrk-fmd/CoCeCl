@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.NotificationCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,7 @@ import it.fmd.cocecl.dataStorage.UnitStatus;
 import it.fmd.cocecl.incidentaction.IncidentTaskTypeSetting;
 import it.fmd.cocecl.unitstatus.ReportIncident;
 import it.fmd.cocecl.unitstatus.SetUnitStatus;
+import it.fmd.cocecl.utilclass.GPSManager;
 
 public class MainstatusFragment extends Fragment {
 
@@ -85,7 +87,7 @@ public class MainstatusFragment extends Fragment {
 
 
         // ReportIncident PlacesAutoComplete
-        button42.setOnClickListener(new ReportIncident(getActivity(), getContext()));
+        button42.setOnClickListener(new ReportIncident(getActivity()));
 
         countlv = (TextView) v.findViewById(R.id.textView113);
         statustv = (TextView) v.findViewById(R.id.textView111);

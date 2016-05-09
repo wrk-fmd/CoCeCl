@@ -53,22 +53,10 @@ public class TabletFeatures {
 
     // enable PATMAN Documentation System on Tablet
 
-    public void patman_enable() {
+    public boolean patman_enable() {
 
-        Button button21 = (Button) this.activity.findViewById(R.id.button21);
-
-        if ((this.activity.getResources().getConfiguration().screenLayout &
+        return (this.activity.getResources().getConfiguration().screenLayout &
                 Configuration.SCREENLAYOUT_SIZE_MASK) >=
-                Configuration.SCREENLAYOUT_SIZE_LARGE) {
-
-            button21.setEnabled(true);
-            button21.setClickable(true);
-
-        } else {
-
-            button21.setEnabled(false);
-            button21.setClickable(false);
-
-        }
+                Configuration.SCREENLAYOUT_SIZE_LARGE;
     }
 }

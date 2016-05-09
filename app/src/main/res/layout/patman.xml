@@ -90,7 +90,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Pat. anlegen"
-        android:id="@+id/button"
+        android:id="@+id/sendPat"
         android:layout_below="@+id/bettbtn"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"

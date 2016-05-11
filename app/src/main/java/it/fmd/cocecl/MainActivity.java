@@ -54,7 +54,6 @@ import it.fmd.cocecl.utilclass.ConnectionManager;
 import it.fmd.cocecl.utilclass.DialogAmbInfo;
 import it.fmd.cocecl.utilclass.DialogPTCAInfo;
 import it.fmd.cocecl.utilclass.GCMMessagesDialog;
-import it.fmd.cocecl.utilclass.GPSManager;
 import it.fmd.cocecl.utilclass.GPSToolbarIcon;
 import it.fmd.cocecl.utilclass.GetDateTime;
 import it.fmd.cocecl.utilclass.NotifiBarIcon;
@@ -101,9 +100,13 @@ public class MainActivity extends AppCompatActivity {
     private CoordinatorLayout coordinatorLayout;
 
     ConnectionManager cm;
-    ToolbarIconStates tis;
     ConnectionBroadcastReceiver cbr;
+
     GPSToolbarIcon gpsti;
+    ToolbarIconStates tis;
+
+    private boolean cmRegistered;
+    private boolean cbrRegistered;
 
     // Location
     public static Location loc;
@@ -133,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
         // register
         registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        cmRegistered = true;
 
         //Register GCM 3.0
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
@@ -277,7 +281,7 @@ public class MainActivity extends AppCompatActivity {
         TabletFeatures tf = new TabletFeatures(this);
         patman = tf.patman_enable();
 
-        String online = "";
+        String online;
         if (cm.isOnline(this)) {
             online = "online";
         } else {
@@ -480,7 +484,8 @@ public class MainActivity extends AppCompatActivity {
         // register
         registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
         // register toolbar receiver
-        //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        cbrRegistered = true;
     }
 
     @Override
@@ -564,8 +569,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(DialogInterface dialog, int which) {
             }
         });
-        AlertDialog alert = dlgBuilder.create();
-        alert.show();
+
+        dlgBuilder.show();
     }
 
     @Override
@@ -573,7 +578,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
 
         // register toolbar receiver
-        registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
     @Override
@@ -651,7 +656,9 @@ public class MainActivity extends AppCompatActivity {
 
         // register BReceivers
         registerReceiver(cm.mReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+        cmRegistered = true;
         //registerReceiver(cbr.toolbarBReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
+
         //GCM 3.0
         registerGCMReceiver();
 
@@ -662,8 +669,18 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
 
         // unregister the receiver
-        unregisterReceiver(cm.mReceiver);
-        unregisterReceiver(cbr.toolbarBReceiver);
+        if (cmRegistered) {
+            unregisterReceiver(cm.mReceiver);
+            cmRegistered = false;
+        }
+        if (cbrRegistered) {
+            try {
+                unregisterReceiver(cbr.toolbarBReceiver);
+                cbrRegistered = false;
+            } catch (Exception e) {
+                Log.e("MainActivity", "unregisterReceiver Exception" + e);
+            }
+        }
 
         //GCM
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);

@@ -2,10 +2,12 @@ package it.fmd.cocecl.patadminaction;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -13,6 +15,10 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Locale;
 
 import it.fmd.cocecl.R;
 import it.fmd.cocecl.dataStorage.PatData;
@@ -71,6 +77,12 @@ public class CreatePat implements View.OnClickListener {
     //Spinner int
     int spinnerint;
 
+    SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy", Locale.GERMAN);
+    Calendar c = Calendar.getInstance();
+    int startYear = c.get(Calendar.YEAR);
+    int startMonth = c.get(Calendar.MONTH);
+    int startDay = c.get(Calendar.DAY_OF_MONTH);
+
     // Patient Management dialog builder //
     // Pat. anlegen
     public void createpat() {
@@ -94,6 +106,7 @@ public class CreatePat implements View.OnClickListener {
 
         addpatward = (Spinner) patmanlayout.findViewById(R.id.spinner17);
 
+        addpatdatebirth.setText("01.01.1900");
 
         // Create Patient
         AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);

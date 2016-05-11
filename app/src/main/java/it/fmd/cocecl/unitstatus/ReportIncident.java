@@ -3,7 +3,6 @@ package it.fmd.cocecl.unitstatus;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.location.Location;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -32,35 +31,45 @@ public class ReportIncident implements View.OnClickListener {
         this.activity = _activity;
     }
 
+    private String location;
+    private double latitude;
+    private double longitude;
+
+    private RelativeLayout reportincident;
+    private AlertDialog.Builder dlgBuilder;
+
+    //TextViews
+    private TextView textView86;
+    private TextView textView93;
+    private EditText editText24;
+    private Button button42;
+
     @Override
     public void onClick(View v) {
 
-        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
+        getLocation();
+    }
 
-        final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
-        final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
-        final Button button42 = (Button) activity.findViewById(R.id.button42);
+    private void createAlertDialog() {
+        reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
 
-        AlertDialog.Builder dlgBuilder = new AlertDialog.Builder(activity);
+        textView86 = (TextView) reportincident.findViewById(R.id.textView86);
+        textView93 = (TextView) reportincident.findViewById(R.id.textView93);
+        button42 = (Button) activity.findViewById(R.id.button42);
+        editText24 = (EditText) reportincident.findViewById(R.id.editText24);
+
+        dlgBuilder = new AlertDialog.Builder(activity);
         dlgBuilder.setMessage("Neuen Einsatz bei derzeitiger Position melden?");
         dlgBuilder.setCancelable(false);
 
         button42.setClickable(false);
 
-        dlgBuilder.setView(reportincident);
-
-        GPSManager gps = new GPSManager(activity);
-        double latitude = gps.getLatitude();
-        double longitude = gps.getLongitude();
-
-        Log.d("GPS", "lat" + latitude);
-        Log.d("GPS", "lon" + longitude);
-
-        GPSGeolocation.getAddressFromLocation(latitude, longitude,
-                activity, new GeocoderHandler());
-
         textView86.setText("lat: " + latitude);
         textView93.setText("lon: " + longitude);
+
+        editText24.setText(location);
+
+        dlgBuilder.setView(reportincident);
 
         dlgBuilder.setPositiveButton("Ja", new DialogInterface.OnClickListener() {
 
@@ -88,12 +97,23 @@ public class ReportIncident implements View.OnClickListener {
 
         );
 
-        AlertDialog alert = dlgBuilder.create();
-        alert.show();
+        dlgBuilder.show();
         button42.setClickable(true);
     }
 
-    public void onPositive() {
+    private void getLocation() {
+        GPSManager gps = new GPSManager(activity);
+        latitude = gps.getLatitude();
+        longitude = gps.getLongitude();
+
+        Log.i("GPS", "lat" + latitude);
+        Log.i("GPS", "lon" + longitude);
+
+        GPSGeolocation.getAddressFromLocation(latitude, longitude,
+                activity, new GeocoderHandler());
+    }
+
+    private void onPositive() {
 
         final TextView textView112 = (TextView) activity.findViewById(R.id.textView112);
         final Button button42 = (Button) activity.findViewById(R.id.button42);
@@ -124,11 +144,11 @@ public class ReportIncident implements View.OnClickListener {
     }
 
     public void refreshDialog() {
-        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
+        reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
 
         final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
-        final TextView textView86 = (TextView) reportincident.findViewById(R.id.textView86);
-        final TextView textView93 = (TextView) reportincident.findViewById(R.id.textView93);
+        textView86 = (TextView) reportincident.findViewById(R.id.textView86);
+        textView93 = (TextView) reportincident.findViewById(R.id.textView93);
         final TextView textView112 = (TextView) activity.findViewById(R.id.textView112);
         final Button button42 = (Button) activity.findViewById(R.id.button42);
 
@@ -146,10 +166,7 @@ public class ReportIncident implements View.OnClickListener {
         textView112.setVisibility(View.GONE);
     }
 
-    public class GeocoderHandler extends Handler {
-
-        RelativeLayout reportincident = (RelativeLayout) activity.getLayoutInflater().inflate(R.layout.reportincident, null);
-        final EditText editText24 = (EditText) reportincident.findViewById(R.id.editText24);
+    private class GeocoderHandler extends Handler {
 
         @Override
         public void handleMessage(Message message) {
@@ -162,7 +179,9 @@ public class ReportIncident implements View.OnClickListener {
                 default:
                     locationAddress = null;
             }
-            editText24.setText(locationAddress);
+            location = locationAddress;
+            Log.i("Report incident", location);
+            createAlertDialog();
         }
     }
 }

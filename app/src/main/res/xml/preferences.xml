@@ -5,73 +5,96 @@
     <PreferenceCategory android:title="Allgemein">
 
         <SwitchPreference
-            android:key="pref_fullscreen"
-            android:title="Fullscreen"
-            android:defaultValue="false" />
-
-        <SwitchPreference
-            android:key="pref_gps"
-            android:title="GPS"
-            android:defaultValue="true"
-            android:enabled="false" />
-
-        <SwitchPreference
-            android:key="pref_radio"
-            android:title="Funk"
             android:defaultValue="false"
-            android:enabled="false" />
+            android:key="pref_fullscreen"
+            android:title="Fullscreen" />
 
-        <SwitchPreference
-            android:key="pref_alarmsound"
-            android:title="Alarm Sounds"
+        <CheckBoxPreference
             android:defaultValue="true"
-            android:enabled="false" />
+            android:enabled="false"
+            android:key="pref_gps"
+            android:summary="Enable or disable gps"
+            android:summaryOff="GPS is off"
+            android:summaryOn="GPS is on"
+            android:title="GPS" />
+
+        <CheckBoxPreference
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="pref_radio"
+            android:summary="Enable analog radio stream in toolbar"
+            android:summaryOff="Radio is off"
+            android:summaryOn="Radio is on"
+            android:title="Funk" />
+
+        <CheckBoxPreference
+            android:defaultValue="true"
+            android:enabled="false"
+            android:key="pref_alarmsound"
+            android:summaryOff="Alarm off"
+            android:summaryOn="Alarm on"
+            android:title="Alarm Sounds" />
 
         <SwitchPreference
+            android:defaultValue="false"
+            android:enabled="false"
             android:key="pref_darklight"
-            android:title="Hell/Dunkel"
-            android:defaultValue="false" />
+            android:summary="Set Day/Night mode"
+            android:title="Hell/Dunkel" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Navigation">
 
         <SwitchPreference
+            android:defaultValue="true"
             android:key="pref_maps"
-            android:title="Maps on/off"
-            android:defaultValue="true" />
+            android:summary="GoogleMaps fragment in App"
+            android:summaryOff="Google Maps off"
+            android:summaryOn="Google Maps on"
+            android:title="Maps off/on" />
 
         <CheckBoxPreference
-            android:key="pref_autorouting"
-            android:title="Route"
-            android:defaultValue="false" />
-
-        <SwitchPreference
-            android:key="pref_mapsfastshort"
-            android:title="Fast or Short"
-            android:defaultValue="true" />
-
-        <SwitchPreference
-            android:key="pref_avoidmotorway"
-            android:title="Avoid Motorway"
             android:defaultValue="false"
-            android:enabled="false" />
+            android:key="pref_autorouting"
+            android:summary="automatic routing"
+            android:summaryOff="routing off"
+            android:summaryOn="routing on"
+            android:title="AutoNavigation" />
+
+        <SwitchPreference
+            android:defaultValue="true"
+            android:key="pref_mapsfastshort"
+            android:summary="use fastes or shortes route"
+            android:summaryOff="using fastest route"
+            android:summaryOn="using shortest route"
+            android:title="Fast or Short" />
+
+        <SwitchPreference
+            android:defaultValue="false"
+            android:enabled="false"
+            android:key="pref_avoidmotorway"
+            android:summaryOff="include motorway"
+            android:summaryOn="avoid motorway"
+            android:title="Avoid Motorway" />
 
     </PreferenceCategory>
 
     <PreferenceCategory android:title="Optional">
         <ListPreference
-            android:title="Sprache"
-            android:key="pref_lang"
-            android:defaultValue="de"
+            android:defaultValue="de-DE"
             android:entries="@array/language"
-            android:entryValues="@array/languageAlias"></ListPreference>
+            android:entryValues="@array/languageAlias"
+            android:key="pref_lang"
+            android:title="Sprache"
+            android:summary="%s" />
 
         <Preference
-            android:title="Call FMD-IT"
-            android:key="pref_callfmdit"></Preference>
+            android:key="pref_callfmdit"
+            android:summary="Call FMT-IT Support directly"
+            android:title="Call FMD-IT" />
 
-        <intent android:action="android.intent.action.CALL"></intent>
+        <intent android:action="android.intent.action.CALL" />
     </PreferenceCategory>
 
 </PreferenceScreen>

@@ -8,13 +8,14 @@ android {
         minSdkVersion 16
         targetSdkVersion 23
         versionCode 1
-        versionName '0.2.16'
+        versionName '0.2.18'
 
         multiDexEnabled true
     }
     buildTypes {
         release {
-            minifyEnabled false
+            shrinkResources true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -31,8 +32,7 @@ dependencies {
     compile 'com.google.android.gms:play-services-gcm:8.4.0'
     compile 'com.android.support:cardview-v7:23.3.0'
     compile 'com.google.code.gson:gson:2.6.2'
-    compile 'com.android.support:support-v4:23.3.0'
-
+    compile 'com.itextpdf:itextg:5.5.9'
     compile 'com.android.support:multidex:1.0.1'
 }
 

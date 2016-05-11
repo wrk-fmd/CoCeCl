@@ -20,7 +20,6 @@ public class StartNavigation implements View.OnClickListener {
     public Activity activity;
 
     public StartNavigation(Activity _activity) {
-
         this.activity = _activity;
     }
 

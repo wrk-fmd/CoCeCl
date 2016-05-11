@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.ListPreference;
 import android.support.design.widget.TabLayout;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +28,10 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
 
     private static final String TAG = "SettingsActivity";
 
+    private String language = "de_DE";
+    Locale locale_de;
+    Locale locale_en;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,39 +40,20 @@ public class SettingsActivity extends Activity implements SharedPreferences.OnSh
         getFragmentManager().beginTransaction()
                 .replace(android.R.id.content, new SettingsFragment())
                 .commit();
+        //setDefaultLocale();
     }
 
+    private void setDefaultLocale() {
+        locale_de = new Locale(language);
+        Locale.setDefault(locale_de);
+        Configuration config_de = new Configuration();
+        config_de.locale = locale_de;
+        getBaseContext().getResources().updateConfiguration(config_de, getBaseContext().getResources().getDisplayMetrics());
+    }
 
-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences,
+    public void onSharedPreferenceChanged(SharedPreferences preferences,
                                           String key) {
 
-        if (key.equals("listPref1")) {
-            String language = sharedPreferences.getString("pref_lang", "Deutsch (DE)");
-            if ("de_DE".equals(language)) {
-                language = "de_DE";
-
-                Locale locale_de = new Locale(language);
-                Locale.setDefault(locale_de);
-                Configuration config_de = new Configuration();
-                config_de.locale = locale_de;
-                getBaseContext().getResources().updateConfiguration(config_de, getBaseContext().getResources().getDisplayMetrics());
-            }
-
-        }
-
-        if (key.equals("listPref2")) {
-            String language = sharedPreferences.getString("pref_lang", "English (US)");
-            if ("en_EN".equals(language)) {
-                language = "en_EN";
-
-                Locale locale_en = new Locale(language);
-                Locale.setDefault(locale_en);
-                Configuration config_en = new Configuration();
-                config_en.locale = locale_en;
-                getBaseContext().getResources().updateConfiguration(config_en, getBaseContext().getResources().getDisplayMetrics());
-
-            }
-        }
     }
 
 

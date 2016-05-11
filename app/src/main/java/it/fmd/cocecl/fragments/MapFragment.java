@@ -19,11 +19,9 @@ import android.widget.Toast;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.LocationServices;
-import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapsInitializer;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
@@ -49,7 +47,6 @@ import it.fmd.cocecl.gmapsnav.routing.RoutingListener;
 import it.fmd.cocecl.unitstatus.SetIncidentStatus;
 import it.fmd.cocecl.utilclass.Animations;
 import it.fmd.cocecl.utilclass.ConnectionManager;
-import it.fmd.cocecl.utilclass.GPSManager;
 
 public class MapFragment extends SupportMapFragment implements OnMapReadyCallback,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, RoutingListener {
@@ -251,7 +248,8 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
 
                 googleMap.moveCamera(center);
                 googleMap.animateCamera(zoom);
-                route();
+
+                //route();
             }
 
             @Override
@@ -279,7 +277,7 @@ public class MapFragment extends SupportMapFragment implements OnMapReadyCallbac
                 latitude = location.getLatitude();
                 longitude = location.getLongitude();
 
-                route();
+                //route();
             }
 
             @Override

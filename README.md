@@ -2,7 +2,9 @@
 _Coordination Center Client_  
 current version: 0.2.18
 
-Android App for CoCeSo - _Coordination Center Software_  
+Android App for CoCeSo - _Coordination Center Software_
+
+> Please note that this client is not yet working with CoCeSo application. This repository is currently not maintained.
 
 ### Requirements
 GMaps API Key  
